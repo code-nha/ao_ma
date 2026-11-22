@@ -1,0 +1,3 @@
+[Parsed_idet_0 @ 0000015d4c4808c0] Repeated Fields: Neither:  2630 Top:   167 Bottom:   204
+[Parsed_idet_0 @ 0000015d4c4808c0] Single frame detection: TFF:  2501 BFF:     0 Progressive:    16 Undetermined:   484
+[Parsed_idet_0 @ 0000015d4c4808c0] Multi frame detection: TFF:  3001 BFF:     0 Progressive:     0 Undetermined:     0

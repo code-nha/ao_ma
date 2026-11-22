@@ -1,0 +1,4 @@
+# chỉ cần cho ocr_vobsub.py; prep_upscale.py và mux_subs.py chỉ dùng thư viện chuẩn
+av
+pillow
+pytesseract
