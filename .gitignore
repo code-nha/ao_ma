@@ -12,3 +12,6 @@ __pycache__/
 
 # log chạy
 *.log
+
+# trạng thái chạy trên máy này
+pre_upscale_phase/history.csv

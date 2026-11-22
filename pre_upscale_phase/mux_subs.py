@@ -32,6 +32,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from history import record
 from prep_upscale import input_args, iso_best_title, log, run
 
 SUB_EXT = (".srt", ".ass", ".ssa", ".sup", ".idx")
@@ -132,6 +133,7 @@ def mux(up: Path, orig: Path, start: float | None, upscaled_audio: bool, keep_bi
     for p in (up, orig):
         if not p.exists():
             log(f"  KHÔNG TÌM THẤY: {p}")
+            record("mux", "missing", p)
             return False
     title = iso_best_title(orig) if orig.suffix.lower() == ".iso" else None
     o_in = input_args(orig, title)
@@ -174,9 +176,12 @@ def mux(up: Path, orig: Path, start: float | None, upscaled_audio: bool, keep_bi
             "-disposition:s:0", "default", str(part)]
     if subprocess.run(cmd).returncode != 0:
         log(f"  LỖI ffmpeg; giữ lại {part.name}")
+        record("mux", "error", up, part, f"gốc={orig.name}")
         return False
     part.replace(out)
     log(f"  xong: {out}")
+    subs = "+".join([s.name[len(orig.stem) + 1:] for s in ext_subs] + (["bitmap"] if use_bitmap else [])) or "không sub"
+    record("mux", "ok", up, out, f"gốc={orig.name} start={start:g}s sub={subs}")
     return True
 
 

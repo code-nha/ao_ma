@@ -34,6 +34,14 @@ bản upscale khi tải về. Senlab chỉ lo video; phụ đề do bên này lo
    ```
    Offset lấy từ `job.json` → HHMMSS trong tên file → 0.
 
+## Lịch sử xử lý
+Cả 3 script ghi mỗi file đã xử lý (ok / error / skip / missing) vào
+`history.csv` (UTF-8 BOM, mở bằng Excel được; gitignore vì là trạng thái máy này).
+```
+python history.py              # xem tóm tắt
+python history.py --step prep  # chỉ bước prep (hoặc ocr / mux)
+```
+
 ## Ghi chú kỹ thuật
 - Phim HK trên DVD NTSC: idet báo interlaced TFF nhưng `fieldmatch` khớp
   72–87% → telecine/hybrid → `fieldmatch,yadif=deint=interlaced,decimate` (23.976).

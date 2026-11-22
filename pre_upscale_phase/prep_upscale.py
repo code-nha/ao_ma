@@ -31,6 +31,8 @@ import sys
 import time
 from pathlib import Path
 
+from history import record
+
 FILTERS = {
     "ivtc": "fieldmatch,yadif=deint=interlaced,decimate",
     "bwdif": "bwdif=mode=send_frame",
@@ -126,6 +128,7 @@ def detect_mode(src: Path, title: int | None) -> str:
 def convert(src: Path, mode_opt: str, test: float | None, crf: int = 12) -> None:
     if not src.exists():
         log(f"KHÔNG TÌM THẤY: {src}")
+        record("prep", "missing", src)
         return
     log(f"=== {src}")
     title = None
@@ -138,6 +141,7 @@ def convert(src: Path, mode_opt: str, test: float | None, crf: int = 12) -> None
     dst = src.with_name(src.stem + tag + ".mkv")
     if dst.exists():
         log(f"  đã có, bỏ qua: {dst.name}")
+        record("prep", "skip", src, dst, f"mode={mode} đã có")
         return
     part = dst.with_name(dst.stem + ".part.mkv")
 
@@ -159,9 +163,12 @@ def convert(src: Path, mode_opt: str, test: float | None, crf: int = 12) -> None
     rc = subprocess.run(cmd).returncode
     if rc != 0:
         log(f"  LỖI ffmpeg (rc={rc}); giữ lại {part.name} để xem")
+        record("prep", "error", src, part, f"mode={mode} ffmpeg rc={rc}", (time.time() - t0) / 60)
         return
     part.replace(dst)
-    log(f"  xong sau {(time.time() - t0) / 60:.1f} phút: {dst}")
+    mins = (time.time() - t0) / 60
+    log(f"  xong sau {mins:.1f} phút: {dst}")
+    record("prep", "ok", src, dst, f"mode={mode} crf={crf}" + (f" test={test:g}s" if test else ""), mins)
 
 
 def main() -> int:
@@ -184,6 +191,7 @@ def main() -> int:
             convert(src, a.mode, a.test, a.crf)
         except Exception as e:  # một file lỗi không chặn các file sau
             log(f"  LỖI: {e!r}")
+            record("prep", "error", src, None, repr(e))
     log("HẾT")
     return 0
 

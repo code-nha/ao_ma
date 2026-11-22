@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+import time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
@@ -29,6 +30,8 @@ from pathlib import Path
 import av
 import pytesseract
 from PIL import Image, ImageOps
+
+from history import record
 
 SCALE = 3          # phóng bitmap trước khi OCR (sub DVD chữ cao ~20px)
 PAD = 20
@@ -172,6 +175,7 @@ def main() -> int:
     a = ap.parse_args()
 
     src = Path(a.source.strip('"'))
+    t0 = time.time()
     print(f"Đọc phụ đề: {src}")
     events, lang = extract(src, a.stream)
     tlang = a.lang or "eng"
@@ -203,6 +207,7 @@ def main() -> int:
         for ev in events:
             ev.img.save(d / f"{ts(ev.start).replace(':', '-').replace(',', '.')}.png")
     print(f"  xong: {srt.name} ({n} dòng); cần soát: {len(bad)} -> {review.name}")
+    record("ocr", "ok", src, srt, f"{n} dòng, cần soát {len(bad)}", (time.time() - t0) / 60)
     return 0
 
 
