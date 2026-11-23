@@ -17,10 +17,21 @@ bản upscale khi tải về. Senlab chỉ lo video; phụ đề do bên này lo
    ```
    python prep_upscale.py               # --test 60 để thử 60s, --crf 15 cho file nhỏ hơn
    ```
-   Ra `<tên gốc>.ivtc.mkv` (hoặc `.bwdif` / `.prog`) cạnh file gốc: tự chọn
-   IVTC / deinterlace theo idet, x264 crf 12, giữ 720x480 + SAR, audio a:0, giữ sub.
-2. **Upscale** — user tự chuyển file lên senlab, chạy node (deinterlace=off,
-   crop_black_bars=auto). Tải về file output **kèm `job.json`** của job
+   `python prep_upscale.py --check` chỉ in bảng phân loại. Tự chọn theo idet +
+   fieldmatch + fps: `.ivtc` (telecine NTSC → 23.976), `.fm` (khớp field, không
+   decimate), `.bwdif` (interlaced thật), `.copy` (ISO progressive, chỉ tách),
+   `skip` (progressive sẵn, gửi file gốc). x264 crf 12, giữ độ phân giải + SAR,
+   audio a:0, giữ sub.
+   File progressive 29.97 nên chạy thêm `python dupcheck.py "file"` (đếm frame lặp
+   theo nhịp 1/5). Nếu báo DECIMATE → `--mode decimate`; nếu decoder ra ~24
+   frame/s dù header 29.97 (soft telecine) → `--mode cfr24`. Cả hai ra 23.976,
+   x4 nhanh hơn ~20%.
+2. **Upscale** — user tự chuyển file lên senlab, chạy node với
+   **deinterlace=off cho MỌI file đã qua prep_upscale** (.ivtc / .fm / .bwdif /
+   .copy và cả file `skip` gửi nguyên gốc), crop_black_bars=auto.
+   Lý do: MPEG-2 encode kiểu xen dòng báo interlaced=True ở mọi frame dù nội
+   dung progressive, nên auto sẽ bwdif nhầm và làm mềm hình (senlab đã test).
+   Chỉ để auto với file chưa ai kiểm tra. Tải về file output **kèm `job.json`** của job
    (`output/relayvsr_film/<tên>_<jobid>_chunks/job.json`), không cần các chunk.
 3. **OCR phụ đề** (khi phim có sub bitmap DVD — sub bitmap sẽ bị dẹt vì node cắt viền):
    ```
