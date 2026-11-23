@@ -1,0 +1,33 @@
+{
+ "model": "gemma4:e4b-it-q4_K_M",
+ "results": [
+  {
+   "num_ctx": 4096,
+   "size_gib": 3.05,
+   "gpu_pct": 100,
+   "tok_s": 53.8,
+   "load_s": 9
+  },
+  {
+   "num_ctx": 8192,
+   "size_gib": 3.06,
+   "gpu_pct": 100,
+   "tok_s": 56.1,
+   "load_s": 8
+  },
+  {
+   "num_ctx": 16384,
+   "size_gib": 3.06,
+   "gpu_pct": 100,
+   "tok_s": 47.2,
+   "load_s": 8
+  },
+  {
+   "num_ctx": 32768,
+   "size_gib": 3.08,
+   "gpu_pct": 100,
+   "tok_s": 59.0,
+   "load_s": 8
+  }
+ ]
+}

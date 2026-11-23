@@ -1,0 +1,364 @@
+
+=== SCENE 0: Buổi chiều ở bến cá Cửa Đại. Lão Bảy đang ngồi vá lưới thì Minh từ Sài Gòn về chơi, ghé lại chào.
+s00t00b0 minh p=  352 dlg=    57 sim=0.00 OK  raw=[] | Ông Bảy ơi, cái lưới của ông nhìn 'chill' ghê ha, vá kiểu này có bí quyết gì không ông? Cô
+s00t01b0 lao  p=  504 dlg=   134 sim=0.00 OK  raw=[] | Cái lưới này hả, cái nghề này là truyền từ đời cha ông qua, cháu hỏi chi mà phức tạp. Lúc 
+s00t02b0 minh p=  455 dlg=   208 sim=0.03 OK  raw=[] | À, con hiểu rồi, cái nghề này nó cần sự kiên nhẫn ha ông. Mấy cái app mà con làm á, nó cũn
+s00t03b0 lao  p=  663 dlg=   294 sim=0.07 OK  raw=[] | Mấy cái thứ cháu nói ra, lão nghe qua thấy nó lạ hoắc, lão không rành mấy cái đó đâu. Cái 
+s00t04b0 minh p=  623 dlg=   361 sim=0.03 OK  raw=[] | Dạ, con cũng thấy cái không khí ở đây nó 'grounding' ghê, khác hẳn cái sự ồn ào của Sài Gò
+s00t05b1 lao  p=  859 dlg=   443 sim=0.04 OK  raw=[] | Mấy cái ngư cụ này thì toàn là đồ cũ, nó thấm cái mùi biển cả bao năm rồi. Cái nào cũng th
+s00t06b1 minh p=  780 dlg=   527 sim=0.07 OK  raw=[] | Dạ không có gì đâu ông, con chỉ là về đây 'recharge' pin thôi ạ. Công nhận không khí ở đây
+s00t07b1 lao  p=  998 dlg=   607 sim=0.04 OK  raw=[] | Cái gì là AI, cái mô hình gì đó, lão nghe qua thấy nó khó hiểu quá, lão không biết nó hoạt
+s00t08b1 minh p=  952 dlg=   670 sim=0.03 OK  raw=[] | À, vậy hả ông Bảy, con hiểu rồi, mấy cái thứ công nghệ này nó hơi 'overcomplicating' quá. 
+s00t09b1 lao  p= 1149 dlg=   743 sim=0.07 OK  raw=[] | Cá ở đây thì nhiều lắm, hôm nay bắt được mấy con cá mú to lắm, thịt chắc ngọt ơi là ngọt. 
+s00t10b2 minh p= 1133 dlg=   810 sim=0.06 OK  raw=[] | Nghe ông kể con thấy mê quá trời luôn, cá mú nghe hấp dẫn ghê ha. Mà ông Bảy ơi, hay là sá
+s00t11b2 lao  p= 1297 dlg=   881 sim=0.07 OK  raw=[] | Ra khơi thì khó lắm cháu ơi, cái ghe này nó quen cái vùng nước gần bờ thôi. Mà sáng mai lã
+s00t12b2 minh p= 1242 dlg=   948 sim=0.07 OK  raw=[] | Dạ được ạ, con ngồi đây với ông Bảy coi ông vá lưới cũng được, coi như là con 'support' ôn
+s00t13b2 lao  p= 1443 dlg=  1034 sim=0.07 OK  raw=[] | Mấy cái thay đổi nhỏ của nước hả, cái nghề này mà không để ý thì coi như chết biển rồi. Lã
+s00t14b2 minh p= 1403 dlg=  1085 sim=0.00 OK  raw=[] | Dạ, tại con thấy cái tay ông nó điêu luyện quá, nó giống như một cái 'algorithm' hoàn hảo 
+s00t15b2 lao  p= 1588 dlg=  1164 sim=0.11 OK  raw=[] | Cháu nói lão giống cái thứ máy móc gì đó, nghe nó lạ tai quá. Cái tay lão nó quen cái nghề
+s00t16b2 minh p= 1541 dlg=  1223 sim=0.07 OK  raw=[] | Dạ, con hứa là con sẽ ngoan ngoãn ngồi xem ông làm việc hết luôn ông Bảy ơi. Ông kể chuyện
+s00t17b2 lao  p= 1765 dlg=  1305 sim=0.12 OK  raw=[] | Hồi xưa cái ghe của lão nó đi cái khúc cửa sông này nè, có ngày nó bị mắc lưới vào mấy cái
+   >> CUT (budget). Summary: Minh đã ghé thăm Lão Bảy ở bến cá và khen ngợi tay nghề vá lưới của ông. Lão Bảy tiết lộ nghề lưới này là nghề truyền từ đời cha ông, và Minh là người đến từ Sài Gòn.
+   >> MEMORY +{'lao_ke': ['Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 'Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 'Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.'], 'minh_ke': ['Minh làm các ứng dụng (app) và công việc cần sự kiên nhẫn.', "Minh về đây để 'recharge' pin và tìm không khí 'calm'."], 'lao_biet_ve_minh': ['Minh đến từ Sài Gòn.', 'Minh làm các ứng dụng (app) và công việc liên quan đến công nghệ.', "Minh muốn tìm hiểu về hệ sinh thái biển để 'research'."], 'minh_biet_ve_lao': ['Lão Bảy có kinh nghiệm vá lưới từ đời cha ông.', 'Lão Bảy từng đi tàu lớn và quen thuộc với biển cả.', 'Lão Bảy có những câu chuyện về ghe mắc lưới ở cửa sông.'], 'su_kien': ['Minh ghé thăm Lão Bảy ở bến cá Cửa Đại.', 'Lão Bảy và Minh ngồi cùng nhau tại bến cá, Lão Bảy vá lưới và kể chuyện cho Minh nghe.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 1), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 1), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 1)]
+
+=== SCENE 1: Sáng hôm sau, trời còn tối, Minh theo Lão Bảy ra khơi trên chiếc ghe nhỏ.
+s01t00b0 lao  p=  741 dlg=  1421 sim=0.07 OK  raw=[] | Trời ra khơi sớm thế này, sóng nước nó cứ nhấp nhô cái kiểu làm người ta buồn nôn muốn ói 
+s01t01b0 minh p=  669 dlg=  1505 sim=0.12 OK  raw=[] | Ủa ông Bảy ơi, sao cái ghe mình cứ phải đi theo cái dòng nước nó đẩy vậy? Mấy cái mô hình 
+s01t02b0 lao  p=  977 dlg=  1621 sim=0.20 fix raw=['eng/emoji'] | Mấy cái mô hình gì đó lão không rành, ra biển này phải theo cái dòng nước nó kéo chứ sao đ
+s01t03b0 minh p=  877 dlg=  1711 sim=0.10 OK  raw=[] | Trời ơi, con thiệt là "dở hơi" quá, muốn quay phim mà điện thoại nó "out of battery" luôn.
+s01t04b0 lao  p= 1128 dlg=  1843 sim=0.14 OK  raw=[] | Cháu cái thói này, ra chỗ người ta thì toàn nói chuyện cái điện tử cái màn hình. Muốn lấy 
+s01t05b1 minh p= 1144 dlg=  1922 sim=0.07 OK  raw=[] | Ông Bảy ơi, để con ngồi nhìn ông căng dây lưới này một lát nha, cái cảm giác nó "real" hơn
+s01t06b1 lao  p= 1347 dlg=  2040 sim=0.22 OK  raw=[] | Mấy cái thay đổi của nước, lão nhìn bằng mắt này là biết ngay, nó không cần phải hỏi gì ph
+s01t07b1 minh p= 1312 dlg=  2110 sim=0.05 OK  raw=[] | Ông Bảy ơi, nói tới chuyện rạn san hô với cá nó làm con thấy nó "chill" hẳn ra luôn á. Vậy
+s01t08b1 lao  p= 1543 dlg=  2230 sim=0.27 OK  raw=[] | Cái chỗ nào nó ăn tiền nhất á, thì phải là cái khúc rạn sâu dưới cửa sông hồi xưa lão hay 
+s01t09b1 minh p= 1510 dlg=  2326 sim=0.09 OK  raw=[] | Ông Bảy kể chuyện cuốn quá, con thấy cái công việc nó đòi hỏi cái sự "patience" ghê luôn, 
+s01t10b2 lao  p= 1806 dlg=  2427 sim=0.10 OK  raw=[] | Cháu cứ nghĩ xa vời mấy cái máy móc gì đó, lão thì chỉ quen với mùi muối, mùi cá nó mới th
+s01t11b2 minh p= 1715 dlg=  2531 sim=0.11 OK  raw=[] | Wow, con nhìn cái màu nó lạ thiệt á ông Bảy, con tự hỏi không biết nó là loài gì, có cái "
+s01t12b2 lao  p= 1980 dlg=  2659 sim=0.19 OK  raw=[] | Cái cá này lão cũng chưa thấy, chắc là nó là loài mới hay là nó trôi dạt vô đây thôi. Cháu
+s01t13b2 minh p= 1955 dlg=  2739 sim=0.02 OK  raw=[] | Ông Bảy ơi, cái nhịp thở của ông nó đúng là cái "therapy" nhất con từng gặp luôn á, nó làm
+s01t14b2 lao  p= 2196 dlg=  2831 sim=0.12 OK  raw=[] | Cháu cứ tập theo cái nhịp điệu của con sóng nó vỗ vào mạn ghe này, nó đều đều như cái nhịp
+s01t15b2 minh p= 2135 dlg=  2926 sim=0.10 OK  raw=[] | Ông Bảy ơi, con thấy cái sự "steady" của ông nó cuốn quá, nó làm con thấy cái sự "hustle" 
+s01t16b2 lao  p= 2391 dlg=  3017 sim=0.08 OK  raw=[] | Cái biển này nó theo cái quy luật của tự nhiên, nó không theo cái bảng tính toán nào hết t
+s01t17b2 minh p= 2329 dlg=  3101 sim=0.07 OK  raw=[] | Ông Bảy nói cái này làm con nghĩ tới mấy cái mô hình dự đoán thời tiết hay gì đó, kiểu nó 
+   >> CUT (budget). Summary: Minh hỏi Lão Bảy về các quy luật tự nhiên của biển, và Lão Bảy đã giải thích rằng biển vận hành theo quy luật tự nhiên của thủy triều và sự ăn sâu vào rạn san hô, chứ không theo bất kỳ thuật toán nào. Minh biết Lão Bảy là người quen thuộc với biển cả qua nhiều năm và có kinh nghiệm đọc biển bằng mắt, còn Lão Bảy biết Minh là người trẻ tuổi, liên tục nhắc đến các khái niệm công nghệ và năng lượng.
+   >> MEMORY +{'lao_ke': ['Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 'Ngày xưa hồi mười bốn tuổi, nắng cháy da, muối mặn chát.', 'Hồi xưa ghe lão mắc lưới ở rạn sâu dưới cửa sông.'], 'minh_ke': ['Minh làm việc với mô hình AI tính toán theo kiểu flow state.', 'Minh đang cần sự tĩnh tâm để recharge sau công việc căng thẳng.'], 'lao_biet_ve_minh': ['Minh muốn quay phim và đang hết pin điện thoại.', 'Minh quan tâm đến các mô hình AI và thuật toán.'], 'minh_biet_ve_lao': ['Lão Bảy có kinh nghiệm đi biển lâu năm, biết độ sâu thay đổi.', 'Lão Bảy quen với mùi muối và mùi cá hơn sách vở.', 'Lão Bảy có thể nhận biết sự thay đổi của nước bằng mắt.'], 'su_kien': ['Hai người cùng ra khơi trên chiếc ghe nhỏ vào sáng sớm.', 'Lão Bảy dạy Minh cách căng dây neo và cho xem cách mắc lưới ngày xưa.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 1), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 1), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 2), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 1)]
+
+=== SCENE 2: Giữa trưa ở chợ cá, Lão Bảy mang mẻ cá ra bán, Minh phụ một tay.
+s02t00b0 minh p=  773 dlg=  3162 sim=0.03 OK  raw=[] | Trời nắng chang chang vậy ông Bảy ơi, con thấy mớ cá này bán chắc cũng được kha khá tiền đ
+s02t01b0 lao  p=  944 dlg=  3280 sim=0.12 OK  raw=[] | Cháu đừng lo cái vụ bán đồ online với mấy cái công nghệ đó, ra biển là phải bằng tay chân 
+s02t02b0 minh p=  927 dlg=  3365 sim=0.05 OK  raw=[] | Dạ, con hiểu là cái cảm giác tự nhiên của người làm nghề là nhất, ông nói đúng thiệt. Nhưn
+s02t03b0 lao  p= 1155 dlg=  3487 sim=0.17 OK  raw=[] | Mấy cái ứng dụng với cái thuật toán gì đó, lão nghe qua thì rối tai quá cháu ơi. Lão quen 
+s02t04b0 minh p= 1142 dlg=  3553 sim=0.14 OK  raw=[] | Thôi được rồi ông Bảy, con không ép ông về cái vụ công nghệ nữa. Vậy ông kể con nghe thêm 
+s02t05b1 lao  p= 1386 dlg=  3674 sim=0.12 OK  raw=[] | Cái lưới này á, nó không phải chỉ mắc theo cái thước đo cháu ơi, mà phải nhìn cái màu nước
+s02t06b1 minh p= 1337 dlg=  3734 sim=0.13 OK  raw=[] | À, con hiểu rồi, cái sự nhạy cảm với màu nước nó quan trọng thiệt ha. Vậy ngoài màu nước, 
+s02t07b1 lao  p= 1540 dlg=  3863 sim=0.14 OK  raw=[] | Cái mùi biển nó phức tạp lắm cháu, không phải chỉ một mùi đâu, lúc nước lớn nó có cái mùi 
+s02t08b1 minh p= 1532 dlg=  3923 sim=0.15 OK  raw=[] | Ông nói cái chuyện mùi nước thay đổi làm con thấy nó khác hẳn mấy cái dữ liệu mà con phải 
+s02t09b1 lao  p= 1735 dlg=  4040 sim=0.11 OK  raw=[] | Mấy cái mô hình của cháu cứ tính bằng số với bằng cái mánh khóe đó, chứ biển nó đâu có the
+s02t10b2 minh p= 1755 dlg=  4102 sim=0.11 OK  raw=[] | Trời đất, mấy cái vụ "học hỏi" này nó ra cái cảm giác nó hơi bị "overthinking" quá ông Bảy
+s02t11b2 lao  p= 1922 dlg=  4199 sim=0.24 OK  raw=[] | Bà bán cá kia á, nó quen nhau lâu rồi, nó thấy lão với cháu nói chuyện tới lúc nào cũng vu
+s02t12b2 minh p= 1884 dlg=  4281 sim=0.16 OK  raw=[] | Thôi được rồi ông Bảy, con xin lỗi vì cứ hay lải nhải mấy cái vụ "logic" này quá. Nhưng mà
+s02t13b2 lao  p= 2111 dlg=  4386 sim=0.11 OK  raw=[] | Cái vá lưới này nó không phải tính toán bằng cái gì đâu cháu, nó là cái tay nó nó quen cái
+s02t14b2 minh p= 2080 dlg=  4465 sim=0.09 OK  raw=[] | Ông Bảy ơi, con thấy cái sự kiên nhẫn của ông nó kinh khủng thiệt, làm cái nghề này chắc c
+s02t15b2 lao  p= 2303 dlg=  4576 sim=0.15 OK  raw=[] | Chuyện xưa nó thay đổi nhiều lắm cháu, cái lúc lão còn trẻ, cái ghe nó còn nhỏ xíu, mà cái
+s02t16b2 minh p= 2276 dlg=  4639 sim=0.09 OK  raw=[] | Ông Bảy ơi, con thấy cái lưới này nó chắc thiệt luôn, con phải công nhận cái tay nghề của 
+s02t17b2 lao  p= 2483 dlg=  4764 sim=0.08 OK  raw=[] | Cái "routine" của lão á, nó là cái việc thức dậy trước mặt trời lên, rồi ra bến để xem nướ
+   >> CUT (budget). Summary: Minh đề xuất bán đồ online và lập ứng dụng quản lý đơn hàng cho Lão Bảy tại chợ cá, người này liên tục khẳng định kinh nghiệm thực tế và sự quen thuộc với mọi người trong chợ là quan trọng hơn công nghệ. Cuối cùng, Lão Bảy đã kiểm tra chiếc ghe của Minh và xác nhận móc neo của nó ăn khớp với tình trạng nước hiện tại.
+   >> MEMORY +{'lao_ke': ['Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 'Lão quen hết người trong chợ, từ bà Tư bán mắm tới thằng Ba chài kia, gặp là biết mặt nhau.', 'Lão còn nhớ cái ghe mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 'Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 'Lão còn nhớ hồi đi tàu lớn ra Hoàng Sa, màu nước khác hẳn hôm nay.', 'Lão còn nhớ hồi mười bốn tuổi mới xuống đây, lần đầu thấy nước lên xuống, cảm giác lạ hoắc.'], 'minh_ke': ['Đang nghĩ tới vụ bán đồ online cho các ngư dân.', 'Lập cái app quản lý đơn hàng cho mấy chỗ này.', 'Phải nhập dữ liệu vào mô hình AI để tính toán.'], 'lao_biet_ve_minh': ['Minh đang nghĩ đến việc bán đồ online.', 'Minh muốn lập một ứng dụng quản lý đơn hàng.', 'Minh so sánh việc quan sát với dữ liệu mô hình AI.'], 'minh_biet_ve_lao': ['Lão quen biết rất nhiều người trong chợ cá.', 'Lão có kinh nghiệm mắc lưới ở rạn san hô sâu.', 'Lão có kiến thức về sự thay đổi mùi biển theo quy luật tự nhiên.', 'Lão có thói quen thức dậy trước mặt trời và quan sát bến cá.'], 'su_kien': ['Hai người cùng bán cá ở chợ cá.', 'Lão Bảy xem xét và vá lưới cho Minh.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 1), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 2), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 3), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 2), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 1), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 1)]
+
+=== SCENE 3: Chiều tối trời chuyển giông, Minh chạy ra bến giúp Lão Bảy kéo ghe lên bờ tránh bão.
+s03t00b0 lao  p= 1049 dlg=  4843 sim=0.10 OK  raw=[] | Trời nó chuyển màu kìa cháu, gió nó giật mạnh quá sức thường ngày. Cái dây neo này nhìn cá
+s03t01b0 minh p=  937 dlg=  4913 sim=0.07 OK  raw=[] | Trời ơi, bão lớn vậy sao ông Bảy không lo gì hết hả? Con thấy cái nước nó dữ quá, kiểu này
+s03t02b0 lao  p= 1178 dlg=  4995 sim=0.16 OK  raw=[] | Mấy cái màn hình với cái code đó, lão không rành đâu cháu. Cái biển này nó có cái hơi thở 
+s03t03b0 minh p= 1099 dlg=  5075 sim=0.06 OK  raw=[] | Dạ, con hiểu là ông Bảy quen với cái 'vibe' của biển hơn là mấy cái màn hình này thật. Mà 
+s03t04b0 lao  p= 1417 dlg=  5163 sim=0.23 fix raw=['mình'] | Cái sóng nó dữ thì lão quen rồi, cháu đừng lo cái đó. Nhìn cái màu nước nó nhạt dần này là
+s03t05b1 minh p= 1296 dlg=  5222 sim=0.14 OK  raw=[] | Nghe ông kể chuyện xưa nó cuốn thiệt, con thấy cái sự trải nghiệm nó khác hẳn với việc con
+s03t06b1 lao  p= 1497 dlg=  5294 sim=0.14 OK  raw=[] | Hồi xưa cũng mưa gió thế này lắm cháu, cái mùi muối biển nó xộc thẳng vào mũi luôn. Lão ch
+s03t07b1 minh p= 1403 dlg=  5366 sim=0.07 OK  raw=[] | Trời ơi, con chưa bao giờ thấy cái 'raw' của biển nó dữ dằn vậy luôn, vừa sợ mà cũng thấy 
+s03t08b1 lao  p= 1653 dlg=  5460 sim=0.29 OK  raw=[] | Cháu nói mấy cái thuật toán đó, lão không hiểu cái cái đó nó là sao hết trơn. Cái biển nó 
+s03t09b1 minh p= 1584 dlg=  5530 sim=0.05 OK  raw=[] | Con nhìn ông Bảy lúc này nó cũng có cái thần thái khác hẳn lúc nãy, kiểu vừa mệt vừa rất t
+s03t10b2 lao  p= 1860 dlg=  5594 sim=0.02 OK  raw=[] | Thôi, mệt cái trò nói chuyện phức tạp đó đi cháu, để lão dìu cháu về trú mưa cho ấm thân đ
+s03t11b2 minh p= 1728 dlg=  5665 sim=0.06 OK  raw=[] | Dạ, để con đi xem mái hiên liền ông Bảy ơi. Con thấy cái cơn bão này nó làm con thấy nó hơ
+s03t12b2 lao  p= 1965 dlg=  5755 sim=0.10 OK  raw=[] | Mấy cái chuyện nó cứ cuốn đi, lão kể cháu nghe cái hồi lão còn trai tráng, lần đầu tiên đi
+s03t13b2 minh p= 1895 dlg=  5831 sim=0.16 OK  raw=[] | Trời ơi, cái cảm giác của ông hồi đó nó khác gì cái mình ngồi code hoài trời ơi, kiểu nó r
+s03t14b2 lao  p= 2146 dlg=  5910 sim=0.14 OK  raw=[] | Cháu cứ ngồi đây mà ngoan, để lão ngồi nghỉ một lát cho cái lưng nó đỡ đau cái đã. Nhớ hồi
+s03t15b2 minh p= 2058 dlg=  5976 sim=0.10 OK  raw=[] | Ông Bảy ơi, con thấy cái sự khác biệt về màu nước nó nó giống y chang như cái việc con phả
+s03t16b2 lao  p= 2298 dlg=  6070 sim=0.27 OK  raw=[] | Cháu cứ ngồi yên đó đi, lão kể cháu nghe chuyện hồi lão còn mới lớn, cái lúc lần đầu tiên 
+s03t17b2 minh p= 2224 dlg=  6153 sim=0.13 OK  raw=[] | Ông Bảy ơi, con thấy cái sự tỉ mỉ của ông lúc vá lưới nó nó khác hẳn cái việc con phải cod
+   >> CUT (budget). Summary: Minh giúp Lão Bảy kéo ghe vào bờ khi trời giông bão, trong lúc đó Minh đã biết Lão Bảy từng mất bạn khi bão năm chín chín, và Lão Bảy nhận thấy Minh là người rất tập trung nhưng lại chưa quen với biển cả.
+   >> MEMORY +{'error': '{\n  "lao_ke": [\n    "Nhớ cái lần sóng lớn năm chín chín, tưởng chừng cái ghe mình nó bung ra luôn rồi.",\n    "Nhớ thằng Tám ngày xưa, nó cũng lần đầu thấy cái sóng dữ như này.",\n    "Nhớ cái lần bão năm chín chín, người bạn đi cùng lão cũng mất ở cái chỗ nước nó cuộn thế này đấy.",\n    "Lão kể hồi l'}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 1), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 2), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 3), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 2), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 1), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 1)]
+
+=== SCENE 4: Đêm mưa bão, Minh trú lại nhà Lão Bảy, hai người ngồi bên bếp lửa.
+s04t00b0 minh p=  922 dlg=  6220 sim=0.09 OK  raw=[] | Mấy cái chuyện công nghệ của con nó cứ nói mãi, chắc ông cũng thấy hơi *overload* ha. Mà n
+s04t01b0 lao  p= 1132 dlg=  6320 sim=0.20 OK  raw=[] | Nướng khô mực thì chỉ có cái lửa hồng và tay quen thôi cháu ạ, cái bí quyết nó thấm vào da
+s04t02b0 minh p= 1076 dlg=  6417 sim=0.12 OK  raw=[] | Ông nói đúng á, cái sự 'feel' nó không có trong code được đâu. Con thấy ông cứ kể chuyện c
+s04t03b0 lao  p= 1347 dlg=  6523 sim=0.18 OK  raw=[] | Cháu nói cái chuyện cái dòng chảy nó cũng giống như cái con nước triều lên xuống vậy đó, k
+s04t04b0 minh p= 1290 dlg=  6613 sim=0.18 OK  raw=[] | Nói tới cái sự kiên nhẫn, con cũng đang hơi 'stuck' giống như cái luồng dữ liệu bị kẹt vậy
+s04t05b1 lao  p= 1583 dlg=  6706 sim=0.16 OK  raw=[] | Cháu ngồi đây nghe lão kể chuyện, cái mệt mỏi của cái phố thị chắc nó cũng qua hết rồi đó.
+s04t06b1 minh p= 1481 dlg=  6801 sim=0.16 OK  raw=[] | Cái cảm giác nó được 'recharge' kiểu này nó khác hẳn cái cảm giác 'reboot' máy tính luôn á
+s04t07b1 lao  p= 1748 dlg=  6900 sim=0.25 OK  raw=[] | Cháu cứ lo cái việc giấy mực cái màn hình đó đi, cái nghề này nó phải bằng cái tay mình ch
+s04t08b1 minh p= 1712 dlg=  6995 sim=0.13 OK  raw=[] | Con hiểu ý ông Bảy rồi, cái cái 'hand-feel' nó quan trọng thiệt. Thay vì nghĩ tới cái app 
+s04t09b1 lao  p= 1947 dlg=  7102 sim=0.16 OK  raw=[] | Cái nhịp điệu nước nó cũng như cái hơi thở của người mình sống vậy đó cháu, lúc thì chậm l
+s04t10b2 minh p= 1954 dlg=  7180 sim=0.12 OK  raw=[] | Nhắc tới cái sự nhẫn nại... con cũng đang nghĩ tới cái chuyện công việc nó cuốn con đi nhi
+s04t11b2 lao  p= 2140 dlg=  7276 sim=0.24 OK  raw=[] | Lão nhớ cái lần ghe mắc lưới ở cái rạn sâu đó, phải ngồi đếm từng nhịp nước rút xuống mới 
+s04t12b2 minh p= 2073 dlg=  7356 sim=0.20 OK  raw=[] | Dạ, con hiểu rồi ông Bảy, sự kiên nhẫn nó không chỉ là chờ đợi mà là cái cách mình duy trì
+s04t13b2 lao  p= 2329 dlg=  7436 sim=0.22 OK  raw=[] | Cháu cứ ngồi yên đó, đừng suy nghĩ nhiều cái chuyện cái máy móc đó. Lão kể cháu nghe cái h
+s04t14b2 minh p= 2241 dlg=  7510 sim=0.10 OK  raw=[] | Ông Bảy ơi, cái lúc con ngồi nghe ông kể chuyện, con nhận ra cái sự 'offline' nó nó quan t
+s04t15b2 lao  p= 2488 dlg=  7595 sim=0.21 OK  raw=[] | Cháu cứ ngồi yên đó, đừng nghĩ tới cái thứ điện đó nữa. Lão nhớ hồi xưa, lúc mới ra khơi, 
+s04t16b2 minh p= 2410 dlg=  7645 sim=0.03 OK  raw=[] | Ông Bảy ơi, con cảm thấy cái 'connection' giữa con và cái biển này nó sâu hơn mấy cái API 
+s04t17b2 lao  p= 2631 dlg=  7723 sim=0.40 OK  raw=[] | Cháu cứ ngồi nghe lão kể chuyện cái cái đi biển ngày xưa đi, cái lúc còn trẻ lão mới lần đ
+   >> CUT (budget). Summary: Minh nhận thấy sự khác biệt giữa trải nghiệm công nghệ và sự thủ công khi xem Lão Bảy vá lưới, đồng thời Lão Bảy nhắc Minh về những lần phải kiên nhẫn chờ đợi khi mắc lưới ở rạn sâu. Lão Bảy cũng kể về lần đầu tiên đi tàu và sự cần thiết phải quan sát màu nước để định hướng khi đi qua luồng nước lạ.
+   >> MEMORY +{'error': '{\n  "lao_ke": [\n    "Nhớ hồi đi Hoàng Sa, nắng gió cái mặt biển nó khác với cái thứ điện đó nhiều lắm.",\n    "Lão nhớ hồi trẻ, cái lúc ghe mắc lưới ở cái rạn sâu dưới cửa sông, nó cũng cần mình phải kiên nhẫn ngồi chờ cho tới khi con nước nó rút ra mới biết đường mà gỡ đó.",\n    "Lão nhớ cái lần ghe'}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 1), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 2), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 3), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 2), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 1), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 1)]
+
+=== SCENE 5: Sáng sau bão, chiếc ghe của Lão Bảy bị thủng, Minh ngồi xem lão trét lại thân ghe.
+s05t00b0 lao  p= 1184 dlg=  7825 sim=0.08 OK  raw=[] | Thấy thân ghe thủng thế này thì không thể để vậy được, cháu xem kỹ coi chỗ nào rỉ nước rồi
+s05t01b0 minh p= 1099 dlg=  7904 sim=0.04 OK  raw=[] | Trời ơi, nhìn cái vết thủng này là con thấy *stress* ghê luôn á, kiểu cái app bị bug nặng 
+s05t02b0 lao  p= 1354 dlg=  7993 sim=0.12 OK  raw=[] | Cháu nói chuyện cái gì mà app hay bug, biển cả nó đâu có cái thứ tính toán đó đâu. Cái ngh
+s05t03b0 minh p= 1269 dlg=  8079 sim=0.19 OK  raw=[] | Thiệt tình là con cũng thấy cái cảm giác tập trung vô cái việc này nó lạ á, kiểu khác hẳn 
+s05t04b0 lao  p= 1530 dlg=  8174 sim=0.27 OK  raw=[] | Cái sự tập trung đó thì ai làm việc chân tay cũng phải có, nó khác với ngồi nhìn màn hình 
+s05t05b1 minh p= 1501 dlg=  8248 sim=0.09 OK  raw=[] | Ủa, con nghe có vẻ muốn con hỏi về chuyện gì tiếp vậy ông Bảy? Mà thiệt tình là con đang c
+s05t06b1 lao  p= 1707 dlg=  8335 sim=0.25 OK  raw=[] | Trời mưa gió thế này thì đứa nào cũng phải lo toan hết, không ai yên ổn được đâu cháu ạ. Đ
+s05t07b1 minh p= 1663 dlg=  8418 sim=0.11 OK  raw=[] | Ông Bảy ơi, nhìn cái nhịp điệu ông làm này, con thấy nó có cái *rhythm* riêng thiệt sự. Ha
+s05t08b1 lao  p= 1876 dlg=  8515 sim=0.25 OK  raw=[] | Cái cái cái gì mà công nghệ với cái luồng chảy này, biển nó đâu có cái thứ quy trình nào đ
+s05t09b1 minh p= 1838 dlg=  8618 sim=0.27 OK  raw=[] | Ông Bảy ơi, nói thiệt con thấy cái lúc ông tỉ mỉ vá cái vết thủng này, con cũng có cảm giá
+s05t10b2 lao  p= 2118 dlg=  8697 sim=0.20 OK  raw=[] | Cái màu nước nó là do lão đi biển bao nhiêu năm mới nhìn ra được, không phải cái cái gì mà
+s05t11b2 minh p= 2038 dlg=  8802 sim=0.12 OK  raw=[] | Thôi ông Bảy ơi, con không dám tính mua mới đâu, để con coi làm sao cho nó đỡ hơn là được.
+s05t12b2 lao  p= 2277 dlg=  8890 sim=0.17 OK  raw=[] | Cháu ngồi xem đi, cái nghề này nó là cái lẽ tự nhiên của biển, chứ không phải cái thứ điện
+s05t13b2 minh p= 2241 dlg=  9004 sim=0.09 OK  raw=[] | Ông Bảy ơi, con thấy cái nhịp điệu của sóng đánh vào bờ nó có cái *timing* riêng, nó cuốn 
+s05t14b2 lao  p= 2500 dlg=  9089 sim=0.18 OK  raw=[] | Cháu cứ nhịn cái cái cái điện thoại đó ra đi, cái này nó thấm bằng cái tay lão nó chà xát,
+s05t15b2 minh p= 2447 dlg=  9191 sim=0.15 OK  raw=[] | Ông Bảy ơi, con thấy cái cách ông dùng tay nó như là một cái *tool* siêu xịn luôn á, không
+s05t16b2 lao  p= 2690 dlg=  9276 sim=0.18 OK  raw=[] | Cái ghe này là vợ lão gom góp tiền mới mua, nên cái vết thủng này lão phải coi như là cái 
+s05t17b2 minh p= 2648 dlg=  9378 sim=0.18 OK  raw=[] | Ông Bảy ơi, nhìn ông tỉ mỉ cỡ này, con tự dưng thấy mình cũng muốn làm cái gì đó nó... *ta
+   >> CUT (budget). Summary: Lão Bảy đã chỉ cho Minh cách vá vết thủng trên thân ghe bằng cách dùng dầu rái và miếng ván, đồng thời nhắc nhở Minh rằng chiếc ghe này là do vợ lão gom góp tiền mua. Minh đã bày tỏ sự ngưỡng mộ về kỹ năng thủ công của lão Bảy, nhận xét rằng việc vá ghe đòi hỏi sự tỉ mỉ và khác biệt với công việc lập trình của mình.
+   >> MEMORY +{'lao_ke': ['Lão vá lưới cần cái tâm người mới làm được.', 'Lão quen việc ra khơi, nhìn màu nước biết khu vực.', 'Lão nhớ cảm giác lần đầu kéo lưới ở rạn sâu ngày xưa.'], 'minh_ke': ['Minh thấy việc này khác hẳn hệ thống tính toán của con.', 'Minh thấy việc này khác hẳn lúc phải code mấy hàm phức tạp.', 'Minh thấy việc này khác hẳn việc debug code qua màn hình.', 'Minh thấy việc này khác hẳn cái cảm giác bấm nút trên máy tính.', 'Minh thấy việc này khác hẳn việc debug code qua màn hình.'], 'lao_biet_ve_minh': ['Minh so sánh việc sửa ghe với việc app bị bug nặng.', 'Minh so sánh việc sửa ghe với việc code hàm phức tạp.', 'Minh so sánh việc sửa ghe với việc bấm nút trên máy tính.', 'Minh muốn áp dụng logic workflow quản lý đơn hàng online cho ngư dân.'], 'minh_biet_ve_lao': ['Lão Bảy rất coi trọng chiếc ghe này vì vợ đã gom góp tiền mua.', 'Lão Bảy có kinh nghiệm nhận biết khu vực qua màu nước biển.', 'Lão Bảy có kỹ năng vá lưới bằng tay rất thành thạo.'], 'su_kien': ['Minh ngồi xem Lão Bảy trét và vá vết thủng trên thân ghe bị rò rỉ nước sau bão.', 'Hai người trò chuyện về sự khác biệt giữa kỹ năng thủ công và công nghệ số.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 3), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 3), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 3), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 1), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 1)]
+
+=== SCENE 6: Làng có đám giỗ, Lão Bảy dẫn Minh đi ăn giỗ, gặp mấy ông bạn già của lão.
+s06t00b0 minh p= 1168 dlg=  9457 sim=0.03 OK  raw=[] | Trời cũng xế chiều rồi ông, mấy ông bạn kia ngồi xúm lại kìa, coi bộ không để con yên đâu.
+s06t01b0 lao  p= 1384 dlg=  9543 sim=0.08 OK  raw=[] | Mấy ông bạn nó cũng quen cái cảnh này rồi, cứ thấy người ngoài là nó lôi chuyện ngày xưa r
+s06t02b0 minh p= 1310 dlg=  9644 sim=0.07 OK  raw=[] | Ông Bảy ơi, mấy cái câu chuyện ngày xưa của ông nó hay thiệt đó, nghe cuốn ghê luôn. Mà nó
+s06t03b0 lao  p= 1577 dlg=  9729 sim=0.14 OK  raw=[] | Thôi cháu đừng có nói mấy cái thứ lạ hoắc đó nữa, chuyện ngày xưa nó là cái nhịp sống, nó 
+s06t04b0 minh p= 1504 dlg=  9808 sim=0.20 OK  raw=[] | Ông Bảy ơi, cái không khí ở đây nó khác hẳn mấy cái văn phòng 'air-con' con quen. Nghe ông
+s06t05b1 lao  p= 1852 dlg=  9896 sim=0.12 fix raw=['self-ông'] | Mấy ông nó nói chuyện xưa là nó cứ nhắc đến cái nghề đi biển ngày trước, hồi lão còn cái t
+s06t06b1 minh p= 1683 dlg=  9988 sim=0.33 OK  raw=[] | Ông Bảy nè, cái việc vá lưới của ông nó đòi hỏi sự tập trung kiểu khác hẳn luôn á, nó khôn
+   >> EVENT (sim 0.33): Một chiếc ghe cập bến, có người gọi lớn: "Bảy ơi, ra phụ kéo lưới coi!"
+s06t07b1 lao  p= 1968 dlg= 10067 sim=0.18 OK  raw=[] | Mấy ông nó nhắc chuyện đó là nó quen nhau từ cái lúc mới ra khơi đánh cá kiếm cơm đó cháu.
+s06t08b1 minh p= 1894 dlg= 10142 sim=0.25 OK  raw=[] | Ủa, nghe ông nói là con thấy hơi 'hyped' lên rồi đó ông. Mấy cái chuyện đi biển này nó nó 
+s06t09b1 lao  p= 2129 dlg= 10215 sim=0.10 OK  raw=[] | Trời ơi, mấy ông nó nói chuyện này là cái chuyện của đời người nó gắn bó với nhau từ lúc c
+s06t10b2 minh p= 2082 dlg= 10291 sim=0.10 OK  raw=[] | Ông Bảy ơi, nói chuyện đời người nó nó có cái chất riêng thiệt á ông. Nhìn mấy ông bạn ngồ
+s06t11b2 lao  p= 2250 dlg= 10377 sim=0.18 OK  raw=[] | Mấy ông nó nói chuyện thì toàn chuyện ngày xưa, chuyện cái nghề chài lưới này nó quấn quýt
+s06t12b2 minh p= 2216 dlg= 10450 sim=0.17 OK  raw=[] | Ông Bảy đi coi lưới đi đi, để con ngồi đây 'vibe' với mấy ông bạn nữa. Mà ông nhớ hôm trướ
+s06t13b2 lao  p= 2419 dlg= 10531 sim=0.15 OK  raw=[] | Thôi cháu ngồi đó mà nhìn cho kỹ đi, cái nghề này nó ăn vào cái tay, nó thấm vào cái xương
+s06t14b2 minh p= 2380 dlg= 10619 sim=0.14 OK  raw=[] | Ông Bảy đi coi lưới đi đi, để con ngồi đây ngắm cái không khí này nó 'vibe' quá. Mấy ông n
+s06t15b2 lao  p= 2594 dlg= 10713 sim=0.14 OK  raw=[] | Mấy ông nó quen nhau từ cái ngày còn chài lưới ở cái cửa sông này đó cháu. Hồi đó không có
+s06t16b2 minh p= 2570 dlg= 10799 sim=0.15 OK  raw=[] | Ông Bảy ơi, con thấy mấy cái câu chuyện ông kể nó nó có cái độ 'deep' gì đó thiệt á, nó kh
+s06t17b2 lao  p= 2787 dlg= 10874 sim=0.19 OK  raw=[] | Hoàng hôn này đẹp thiệt, nhưng lão nó cũng phải đi coi lưới với mấy ông bạn chứ. Chuyện ng
+   >> CUT (budget). Summary: Lão Bảy dẫn Minh đi ăn giỗ và gặp các bạn cũ, những người quen nhau từ thời đi tàu ra Hoàng Sa và cùng nghề chài lưới. Lão Bảy nhắc Minh về những chuyện xưa khi họ còn trẻ, đặc biệt là về những lần gặp nguy hiểm khi đi biển, trong khi Minh liên tục so sánh những trải nghiệm đó với các khái niệm công nghệ phức tạp. Cuối cùng, do ghe cập bến và có việc lưới cần xem, Lão Bảy buộc phải rời đi cùng các bạn cũ, còn Minh ở lại một mình với trà.
+   >> MEMORY +{'lao_ke': ['Mấy ông quen nhau từ thời đi tàu ra Hoàng Sa.', 'Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 'Lão bị mắc sâu vô rạn san hô cửa sông.', 'Mấy ông quen nhau từ lúc chài lưới ở cửa sông này.'], 'minh_ke': ['Minh đang hơi phê pha vì không khí giỗ.', 'Minh đang bị bộ não quá tải vì logic phức tạp.', "Minh quen với không khí văn phòng 'air-con'.", 'Minh không biết về chuyện tình cảm phức tạp của Lão Bảy.'], 'lao_biet_ve_minh': ["Minh so sánh chuyện truyền miệng với 'dataset lớn' cần 'process'.", "Minh quen với môi trường văn phòng 'air-con'.", "Minh có thể bị 'overstimulated' khi nghe chuyện.", "Minh tò mò về 'network' kết nối của mọi người."], 'minh_biet_ve_lao': ['Lão Bảy có những câu chuyện ngày xưa rất hay.', 'Lão Bảy từng đi tàu ra Hoàng Sa.', 'Lão Bảy từng bị mắc sâu trong rạn san hô.', 'Lão Bảy quen tay với nghề chài lưới từ tuổi xuân xanh.'], 'su_kien': ['Lão Bảy và Minh đi ăn giỗ và gặp bạn bè cũ.', 'Lão Bảy và Minh cùng đi coi lưới với các ông bạn.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 3), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 4), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 3), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 1), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1)]
+
+=== SCENE 7: Minh lấy điện thoại ra, định dạy Lão Bảy gọi video cho thằng con trai ở Đà Nẵng.
+s07t00b0 lao  p= 1365 dlg= 10962 sim=0.15 OK  raw=[] | Cái điện thoại của cháu nó cứ nhấp nháy cái gì ấy, lão coi chừng nó hết pin là tiêu. Mấy c
+s07t01b0 minh p= 1306 dlg= 11062 sim=0.13 OK  raw=[] | Trời ơi, cái không khí ở đây nó khác hẳn cái văn phòng 'air-con' con quen quá, nó chill lắ
+s07t02b0 lao  p= 1522 dlg= 11146 sim=0.14 OK  raw=[] | Thằng con nó thì ở Đà Nẵng, lão biết nó thương lão nhưng mà lão không muốn làm phiền nó bữ
+s07t03b0 minh p= 1493 dlg= 11237 sim=0.45 OK  raw=[] | Công nhận cái không khí ở đây nó khác hẳn cái văn phòng 'air-con' con quen quá, nó chill l
+s07t04b0 lao  p= 1735 dlg= 11317 sim=0.10 OK  raw=[] | Mấy cái hệ thống dự báo gì đó, để lão nói thiệt là lão không rành cái đó. Ngày xưa đi tàu,
+s07t05b1 minh p= 1708 dlg= 11408 sim=0.55 OK  raw=[] | Trời ơi, con thấy cái không khí ở đây nó khác hẳn cái văn phòng 'air-con' con quen quá, nó
+   >> EVENT (sim 0.55): Một con chó mực chạy tới, ngoạm mất con cá trong rổ rồi chạy biến.
+s07t06b1 lao  p= 1922 dlg= 11482 sim=0.16 OK  raw=[] | Chuyện điện thoại đó thì lão không biết, mấy chuyện ngoài biển này nó không có cái nút bấm
+s07t07b1 minh p= 1873 dlg= 11582 sim=0.19 OK  raw=[] | Ông Bảy ơi, con thấy mấy ông bạn ngồi đây nói chuyện vui ghê, không khí nó ấm áp kiểu ngườ
+s07t08b1 lao  p= 2105 dlg= 11666 sim=1.00 OK  raw=[] | Thằng con nó thì ở Đà Nẵng, lão biết nó thương lão nhưng mà lão không muốn làm phiền nó bữ
+s07t09b1 minh p= 2096 dlg= 11771 sim=0.18 OK  raw=[] | Dạ, nói tới cái chuyện làm thủ công này, con mới thấy cái sự tỉ mỉ của ông nó khác hẳn cái
+s07t10b2 lao  p= 2342 dlg= 11866 sim=0.14 OK  raw=[] | Thôi, chuyện sửa cái ghe này nó là cái tâm, cái nghề nó ăn sâu vô người người. Nhắc tới co
+s07t11b2 minh p= 2283 dlg= 11959 sim=0.16 OK  raw=[] | Ông Bảy ơi, con tự nhiên thấy cái sự bình yên ở đây nó khác cái cảm giác ngồi đối diện cái
+s07t12b2 lao  p= 2506 dlg= 12049 sim=0.07 OK  raw=[] | Cái nghề này nó không có cái logic nào viết ra được bằng bút đâu cháu. Nó là cái sự nhẫn n
+s07t13b2 minh p= 2483 dlg= 12135 sim=0.13 OK  raw=[] | Ông Bảy nói cái khoản cần sự nhẫn nại này, con thấy nó nó giống cái lúc con phải ngồi tối 
+s07t14b2 lao  p= 2694 dlg= 12226 sim=0.21 OK  raw=[] | Cái cảm giác chờ cá nó là cái tự nhiên nó buộc người ta phải tĩnh tâm, nó không có cái nút
+s07t15b2 minh p= 2669 dlg= 12325 sim=0.14 OK  raw=[] | Ông Bảy ơi, con tự nhiên nhớ cái không khí ở nhà mình ở Sài Gòn quá, cái mùi đồ ăn nó nó k
+s07t16b2 lao  p= 2883 dlg= 12417 sim=0.15 OK  raw=[] | Mấy cái mùi đồ ăn ở nhà nó khác với mùi gió biển thiệt, cái đó là cái hồn cốt nó. Lão nhớ 
+s07t17b2 minh p= 2864 dlg= 12516 sim=0.17 OK  raw=[] | Ông Bảy ơi, cái cảm giác được ở đây, nó như kiểu con đang được "recharge" năng lượng sau m
+   >> CUT (budget). Summary: Minh định gọi video cho con trai ở Đà Nẵng nhưng Lão Bảy đã can ngăn vì lo điện thoại và muốn Minh nghỉ ngơi. Lão Bảy nhắc đến việc kinh nghiệm đi biển cần "mắt quen màu nước với cái mùi hơi muối" chứ không phải thứ bấm nút được, và Minh nhận thấy sự tỉ mỉ khi Lão Bảy sửa ghe gợi cho anh liên tưởng về sự tập trung cao độ khi tối ưu hóa mô hình AI.
+   >> MEMORY +{'lao_ke': ['Trường hợp định vị bằng sao trời trên biển rất khác.', 'Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 'Lúc mắc lưới dưới rạn sâu, phải theo kinh nghiệm mới biết làm sao.', 'Nhớ bà Ba chài đầu ngõ bán cá rô phi tươi rói.'], 'minh_ke': ['Nhớ bữa cơm nhà ở Sài Gòn của bố mẹ.', "Công việc quen ở văn phòng 'air-con'.", 'Phải ngồi code mấy hàm phức tạp.', 'Phải ngồi tối ưu hóa một cái model AI.'], 'lao_biet_ve_minh': ["Minh quen với không khí văn phòng 'air-con'.", 'Minh nhớ bữa cơm nhà ở Sài Gòn.', 'Minh có con trai ở Đà Nẵng.'], 'minh_biet_ve_lao': ['Lão Bảy có kinh nghiệm đi biển sâu và mắc lưới.', 'Lão Bảy có kỹ năng vá lưới và sửa ghe.', 'Lão Bảy có ký ức về bà Ba chài đầu ngõ.'], 'su_kien': ['Minh định dạy Lão Bảy gọi video cho con trai ở Đà Nẵng.', 'Một con chó mực chạy tới, ngoạm mất con cá trong rổ.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 3), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 5), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 3), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1)]
+
+=== SCENE 8: Một đêm trăng, Lão Bảy dẫn Minh đi câu mực ngoài cửa biển.
+   >> SWAP lao: 'Lão kể chuyện đi tàu lớn ra Hoàng Sa.' (đã kể: Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.) -> hồi mới cưới, lão chèo ghe sang làng bên rước dâu, giữa đường ghe mắc cạn
+s08t00b0 minh p= 1260 dlg= 12598 sim=0.15 OK  raw=[] | Trời đêm này sao mà tĩnh vậy ông, con thấy cái không khí nó khác hẳn mấy cái văn phòng ful
+s08t01b0 lao  p= 1463 dlg= 12707 sim=0.10 OK  raw=[] | Hồi đó lão mới cưới vợ, chèo ghe qua làng bên rước dâu, giữa đường ghe nó mắc cạn ngay cái
+s08t02b0 minh p= 1418 dlg= 12819 sim=0.17 OK  raw=[] | Ông Bảy ơi, nghe ông kể chuyện này con thấy cái cảm giác nó khác hẳn lúc con phải ngồi tối
+s08t03b0 lao  p= 1694 dlg= 12923 sim=0.74 OK  raw=[] | Mấy chuyện trên biển nó không có cái công thức gì hết trơn đâu cháu ạ.Ngày xưa lão mới cướ
+   >> EVENT (sim 0.74): Trời đổ mưa lất phất, gió biển thổi mạnh hơn.
+s08t04b0 minh p= 1681 dlg= 13010 sim=0.14 OK  raw=[] | Ông nói chuyện này con thấy nó cứ rất *analog* luôn, kiểu nó không có cái output nào để co
+s08t05b1 lao  p= 1942 dlg= 13112 sim=0.20 OK  raw=[] | Mực nó nó quẫy cái một cái, cái mánh này mắc lưới sâu dưới rạn hồi xưa mới quen tay.Cháu n
+s08t06b1 minh p= 1886 dlg= 13210 sim=0.09 OK  raw=[] | Ông Bảy ơi, lúc ông nói về việc "mắt quen màu nước", con cứ bị cuốn vô cái sự quan sát tự 
+s08t07b1 lao  p= 2123 dlg= 13322 sim=0.87 OK  raw=[] | Cái cái biển nó nó lạ lắm cháu, nó đâu có cái nút bấm nào cho mình biết hết đâu.Mấy cái ch
+s08t08b1 minh p= 2110 dlg= 13424 sim=0.11 OK  raw=[] | Ông Bảy ơi, hôm bữa ông kể vụ ghe bị mắc cạn, con đang nghĩ tới việc con nên làm gì với cá
+s08t09b1 lao  p= 2321 dlg= 13526 sim=0.62 OK  raw=[] | Cháu nghĩ cái đó cũng hay đấy nhưng mà cái biển nó nó tự nhiên quá cháu ơi.Nó đâu có cái c
+   >> EVENT (sim 0.62): Bà bán nước đi ngang, mời hai người ly nước mía.
+s08t10b2 minh p= 2360 dlg= 13646 sim=0.28 OK  raw=[] | Ông Bảy ơi, nói tới chuyện hồi xưa đi tàu á, nó khiến con cứ nghĩ đến cái sự kiên nhẫn khi
+s08t11b2 lao  p= 2598 dlg= 13785 sim=0.85 OK  raw=[] | Cái chuyện biển nó nó cái cái cái cái nó nó nó nó là cái cái cái cái nó là cái cái cái nó 
+s08t12b2 minh p= 2628 dlg= 13874 sim=0.07 OK  raw=[] | Ông Bảy nè, con thấy ông cứ tỉ mỉ với mấy cái lưới này quá, nó khác hẳn cái việc con phải 
+s08t13b2 lao  p= 2876 dlg= 13985 sim=0.23 OK  raw=[] | Cái lưới này á, nó đâu có cái cuốn sách hướng dẫn nào đâu cháu.Nó là cái cái cái là cái cá
+s08t14b2 minh p= 2795 dlg= 14065 sim=0.13 OK  raw=[] | Ông Bảy ơi, cái cách ông chỉ cần nhìn màu nước là biết luồng đi an toàn á, nó làm con nghĩ
+s08t15b2 lao  p= 3079 dlg= 14172 sim=0.64 OK  raw=[] | Cháu đừng có nghĩ ra mấy cái cái cái cái bản đồ vô hình gì hết trơn.Mấy cái dòng chảy trên
+   >> EVENT (sim 0.64): Điện thoại của Minh reo lên, là sếp ở Sài Gòn gọi.
+s08t16b2 minh p= 3014 dlg= 14277 sim=0.10 OK  raw=[] | Ông Bảy ơi, nói ông làm việc với thiên nhiên nó tự nhiên quá, con thấy nó nó cuốn hút một 
+s08t17b2 lao  p= 3306 dlg= 14385 sim=0.12 OK  raw=[] | Mấy cái con thuyền nó nó nó nó nó nó nó nó nó nó nó nó nó nó nó nó nó nó.Cuộc đời nó nó nó
+   >> CUT (budget). Summary: Lão Bảy kể cho Minh nghe về lần ông bị mắc cạn ghe khi rước dâu và sự giúp đỡ của người làng. Qua đó, Minh nhận thấy sự khác biệt giữa logic lập trình và sự ứng biến ngẫu nhiên của tự nhiên.
+   >> MEMORY +{'lao_ke': ['Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 'Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 'Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.'], 'minh_ke': ['Muốn triển khai app quản lý nguồn hàng theo real-time.', 'Phải ngồi tối ưu hóa model AI phức tạp.', 'Làm việc với việc bán đồ online ở chợ cá.'], 'lao_biet_ve_minh': ['Minh muốn triển khai app quản lý nguồn hàng theo real-time.', 'Minh phải ngồi tối ưu hóa model AI phức tạp.', 'Minh đang phân vân có nên switch nghề hẳn đi không.'], 'minh_biet_ve_lao': ['Lão từng chèo ghe rước dâu mắc cạn bãi cát vắng.', 'Lão có kinh nghiệm đoán độ sâu luồng nước bằng mắt.', 'Lão có kinh nghiệm mắc lưới sâu dưới rạn.'], 'su_kien': ['Hai người đi câu mực ngoài cửa biển.', 'Minh nhận được cuộc gọi từ sếp ở Sài Gòn.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 3), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 5), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 3), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 1), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 1)]
+
+=== SCENE 9: Buổi sáng cuối cùng, Minh sắp về lại Sài Gòn, ghé bến chào Lão Bảy.
+s09t00b0 lao  p= 1390 dlg= 14491 sim=0.06 OK  raw=[] | Cháu đi rồi cũng nhớ cái vị mặn mòi của gió biển này nha, lão gói cho cháu ít cá khô cái n
+s09t01b0 minh p= 1306 dlg= 14586 sim=0.12 OK  raw=[] | Ông Bảy ơi, con cảm ơn ông nhiều lắm vì hôm nay ạ, không khí ở đây đúng là 'recharge' pin 
+s09t02b0 lao  p= 1578 dlg= 14674 sim=0.11 OK  raw=[] | Thôi cháu về đi, đừng nghĩ đến mấy cái chuyện xa vời đó nữa. Lão cũng thương cái sự ham họ
+s09t03b0 minh p= 1506 dlg= 14765 sim=0.13 OK  raw=[] | Dạ vâng, để con nghỉ ngơi chút rồi tính tiếp vụ chuyển việc luôn ông ơi. Công nhận cái cảm
+s09t04b0 lao  p= 1760 dlg= 14861 sim=0.17 OK  raw=[] | Thôi cháu đừng lo cho lão, cái ghe này nó quen với nắng gió nó còn hơn mấy cái thứ đồ công
+s09t05b1 minh p= 1768 dlg= 14971 sim=0.07 OK  raw=[] | Ông Bảy ơi, con hứa Tết này nhất định con sẽ về thăm ông, để con được ngồi coi ông làm việ
+s09t06b1 lao  p= 1978 dlg= 15063 sim=0.12 OK  raw=[] | Thôi cháu đừng nghĩ đến mấy cái app gì cho lão nữa, cái lưới này nó cần cái tay lão chà xá
+s09t07b1 minh p= 1917 dlg= 15179 sim=0.17 OK  raw=[] | Dạ vâng, con hiểu rồi ông ơi, con sẽ cố gắng giữ cái tinh thần này, để không bị cuốn theo 
+s09t08b1 lao  p= 2189 dlg= 15264 sim=0.13 OK  raw=[] | Thôi cháu đi đi, cái chuyện bán buôn mua bán nó phức tạp lắm, lão không rành mấy cái thứ h
+s09t09b1 minh p= 2108 dlg= 15368 sim=0.22 OK  raw=[] | Ông Bảy ơi, con hiểu ý ông lắm, cái nhịp điệu tự nhiên này nó khác hẳn mấy cái luồng dữ li
+s09t10b2 lao  p= 2382 dlg= 15442 sim=0.09 OK  raw=[] | Thôi cháu về đi, để lão cứ ở đây với mấy cái lưới này cho yên tâm. Nhớ nha, ra biển này nó
+s09t11b2 minh p= 2299 dlg= 15546 sim=0.12 OK  raw=[] | Dạ, để con ở lại với ông thêm tí nha, chén miếng chè này coi. Ông ơi, nói thiệt, cái sự ki
+s09t12b2 lao  p= 2547 dlg= 15642 sim=0.10 OK  raw=[] | Cái cái việc vá lưới này nó cần cái tay quen, cái tâm phải tĩnh mới làm được, chứ không ph
+s09t13b2 minh p= 2523 dlg= 15760 sim=0.13 OK  raw=[] | Ông Bảy ơi, con thấy cái cách ông dùng miếng ván này để lót vết nứt nó y chang như việc co
+s09t14b2 lao  p= 2769 dlg= 15856 sim=0.15 OK  raw=[] | Mấy cái thứ cháu nói đó, lão nghe qua thấy nó xa vời quá xá, lão chỉ quen cái cảm giác tay
+s09t15b2 minh p= 2749 dlg= 15973 sim=0.12 OK  raw=[] | Ông Bảy ơi, cái cái sự tĩnh lặng này nó làm con thấy cái đầu nó nó 'unplug' hẳn luôn, khôn
+s09t16b2 lao  p= 2990 dlg= 16073 sim=0.15 OK  raw=[] | Thôi cháu ngồi đây với lão đi, để lão kể cho cháu nghe chuyện hồi xưa ghe lão mắc lưới ở r
+s09t17b2 minh p= 2969 dlg= 16173 sim=0.10 OK  raw=[] | Ông Bảy ơi, con để ý cái cách ông nhịp nhàng này, nó làm con thấy cái sự tập trung của nó 
+   >> CUT (budget). Summary: Minh chuẩn bị rời đi sau khi chia sẻ với Lão Bảy về công việc lập trình của mình. Minh bày tỏ ý định nghiên cứu làm ứng dụng quản lý đơn hàng cho sản vật địa phương, và Lão Bảy nhắc nhở Minh cần giữ gìn sức khỏe và kinh nghiệm sống cần sự chân chất của biển cả.
+   >> MEMORY +{'lao_ke': ['Cả xóm cùng nhau kéo cái ghe này lên bờ.', 'Lão mới lần đầu đi tàu, nước xanh rì ra trước mắt.'], 'minh_ke': ["Công việc code logic nó hơi 'boring' quá.", 'Phải ngồi tối ưu hóa cái model AI cả ngày.', 'Phải ngồi với màn hình quá.', 'Phải tối ưu hóa mấy cái hàm logic kinh khủng cỡ nào.', "Phải làm sao cho cái model nó chạy 'perfect'."], 'lao_biet_ve_minh': ['Minh đang tính vụ làm app quản lý đơn hàng cho mấy chỗ này.', 'Minh đang tính đi tìm công việc cần sự tỉ mỉ.'], 'minh_biet_ve_lao': ['Lão quen với cái mùi vị mặn mòi của biển hơn đồ công nghệ.', 'Lão quen với cái nhịp điệu của con sóng.', 'Lão chỉ biết nhìn màu nước và hướng gió.'], 'su_kien': ['Minh và Lão Bảy trò chuyện tại bến biển, Lão Bảy vá lưới và kể chuyện ngày xưa.', 'Minh ở lại xem Lão Bảy vá lưới và hai người thảo luận về việc ứng dụng công nghệ vào nghề cá.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 3), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 5), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 1), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 1), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 1)]
+
+=== SCENE 10: (Lần về quê thứ 2 của Minh, vài tháng sau) Buổi chiều ở bến cá Cửa Đại. Lão Bảy đang ngồi vá lưới thì Minh từ Sài Gòn về chơi, ghé lại chào.
+s10t00b0 minh p= 1291 dlg= 16228 sim=0.07 OK  raw=[] | Ông Bảy ơi, cái kiểu ông vá lưới này nhìn chuyên nghiệp ghê, không khác gì đang làm đồ thủ
+s10t01b0 lao  p= 1429 dlg= 16331 sim=0.18 OK  raw=[] | Cháu ngồi đó nhìn lưới là quen mắt rồi, cái nút thắt này nó cũng cái tính của nó thôi chứ 
+s10t02b0 minh p= 1428 dlg= 16409 sim=0.05 OK  raw=[] | Thiệt tình, con thấy mấy cái mạch điện hay cái thuật toán nó cứ logic quá, không biết sao 
+s10t03b0 lao  p= 1623 dlg= 16487 sim=0.21 OK  raw=[] | Mấy cái thứ điện tử của cháu nó chỉ tính được con số thôi, chứ cái biển nó phức tạp hơn nh
+s10t04b0 minh p= 1590 dlg= 16550 sim=0.04 OK  raw=[] | Dạ, con hiểu là nó không có cái 'manual' nào hết, phải không ông? Vậy nếu con muốn tìm hiể
+s10t05b1 lao  p= 1801 dlg= 16609 sim=0.05 OK  raw=[] | Cháu cứ hỏi lão đi, cái nghề này nó nằm trong cái sống của người mình đó, đâu có viết thàn
+s10t06b1 minh p= 1717 dlg= 16686 sim=0.08 OK  raw=[] | Ông Bảy ơi, con nghe ông nói về cái nghề này mà thấy nó cuốn hút ghê, nó khác hẳn cái cảm 
+s10t07b1 lao  p= 1913 dlg= 16769 sim=0.15 OK  raw=[] | Cái đồ đạc ngoài biển á thì toàn cái tự nhiên nó quyết định hết thôi cháu ạ. Lão chỉ biết 
+s10t08b1 minh p= 1858 dlg= 16835 sim=0.04 OK  raw=[] | Ông Bảy ơi, con đang nghĩ tới cái vụ làm cái app quản lý đơn hàng cho mấy sản vật địa phươ
+s10t09b1 lao  p= 2074 dlg= 16914 sim=0.15 OK  raw=[] | Mấy cái thứ nó điện tử của cháu, lão nó không rành lắm đâu. Cái nghề biển này nó dựa vào c
+s10t10b2 minh p= 2048 dlg= 16988 sim=0.07 OK  raw=[] | Ông Bảy ơi, không biết là ngày mai ông có tính ra khơi không ạ? Để con đi theo ông một bữa
+s10t11b2 lao  p= 2235 dlg= 17077 sim=0.08 OK  raw=[] | Ngày mai lão có đi ra khơi, nhưng không chắc đâu, mưa gió nó tính sao lão biết được. Cháu 
+s10t12b2 minh p= 2175 dlg= 17151 sim=0.11 OK  raw=[] | Thôi được rồi ông, con biết là cái này nó không có cái 'timeline' nào cả, cứ để con ngồi x
+s10t13b2 lao  p= 2405 dlg= 17245 sim=0.13 OK  raw=[] | Cái này là dây gai rừng buộc lại với nhau, nó thấm nước mới bền, chứ cái nylon cháu hay dù
+s10t14b2 minh p= 2353 dlg= 17319 sim=0.15 OK  raw=[] | Dạ, con hiểu rồi ông, cái sự bền nó không chỉ đến từ vật liệu đâu mà còn từ cái cách mình 
+s10t15b2 lao  p= 2579 dlg= 17412 sim=0.18 OK  raw=[] | Nút thắt nào là đỉnh nhất thì cũng tùy cái mục đích cháu muốn nó làm gì. Lão nó không có c
+s10t16b2 minh p= 2529 dlg= 17485 sim=0.13 OK  raw=[] | Vậy ra cái sự 'perfect' nó không nằm ở cái code nào cả, mà nó nằm ở cái sự ăn khớp với cái
+s10t17b2 lao  p= 2811 dlg= 17569 sim=0.15 fix raw=['mình'] | Cháu cứ chụp đi, mấy cái nút thắt này nó phải xem người ta làm mới hiểu được cái ý nó. Lão
+   >> CUT (budget). Summary: Minh, người từ Sài Gòn về thăm quê, đã tìm hiểu về nghề cá từ lão Bảy, người đã kinh nghiệm vá lưới và sống bằng nghề biển. Lão Bảy chỉ cho Minh những kiến thức về nghề truyền thống và vật liệu tự nhiên, đồng thời lưu ý với Minh rằng cậu không nên chỉ dựa vào công nghệ hiện đại.
+   >> MEMORY +{'lao_ke': ['Hồi đi tàu, không biết đọc màu nước với hướng gió, coi như chết luôn.'], 'minh_ke': ["Thấy mạch điện hay thuật toán logic, thiếu sự 'random' tự nhiên của biển cả.", 'Cảm giác ngồi màn hình cả ngày, khác hẳn cái nghề cá.', 'Đang nghĩ tới vụ làm app quản lý đơn hàng cho sản vật địa phương.'], 'lao_biet_ve_minh': ['Minh đến từ Sài Gòn.', 'Minh quen với đồ máy móc, điện tử, và các thuật toán.', 'Minh có ý định làm app quản lý đơn hàng cho sản vật địa phương.'], 'minh_biet_ve_lao': ['Lão Bảy từng đi tàu và gặp nguy hiểm vì không biết đọc màu nước/hướng gió.', 'Lão Bảy biết cách bó lưới bằng dây gai rừng và có kỹ thuật buộc dây chịu được dòng chảy xiết.', "Lão Bảy có kinh nghiệm nghề nghiệp sâu sắc, không có 'manual' nào."], 'su_kien': ['Minh đến bến cá Cửa Đại chào Lão Bảy và hỏi về kỹ thuật vá lưới.', 'Hai người trò chuyện về sự khác biệt giữa công nghệ thành phố và nghề biển truyền thống.', 'Minh xin Lão Bảy xem các kiểu buộc dây và chụp ảnh làm tài liệu tham khảo.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 4), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 5), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 1), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 1), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 1)]
+
+=== SCENE 11: (Lần về quê thứ 2 của Minh, vài tháng sau) Sáng hôm sau, trời còn tối, Minh theo Lão Bảy ra khơi trên chiếc ghe nhỏ.
+   >> SWAP lao: 'Lão nhớ lại lần đầu mình ra biển năm 14 tuổi.' (đã kể: Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.) -> lần lão câu được con cá mú to nhất làng, cả xóm kéo tới coi
+s11t00b0 lao  p= 1412 dlg= 17698 sim=0.09 OK  raw=[] | Trời mới hửng sáng mà nước đã nhấp nhô rồi, cháu cứ ngả người ra đó coi chừng bị cái sóng 
+s11t01b0 minh p= 1330 dlg= 17784 sim=0.10 OK  raw=[] | Trời sáng sớm mà sóng nó còn dữ vậy ông Bảy, con thấy hơi bị chóng mặt luôn á. Công nhận c
+s11t02b0 lao  p= 1612 dlg= 17898 sim=0.07 OK  raw=[] | Cái đó không bằng cái tay mình nó cảm nhận được cái nước lúc nó thay màu đâu cháu à. Cái a
+s11t03b0 minh p= 1558 dlg= 17981 sim=0.08 OK  raw=[] | Thiệt tình ông Bảy, con buồn ghê, muốn quay cái cảnh này lại cho mấy đứa coi xem nó "real"
+s11t04b0 lao  p= 1811 dlg= 18075 sim=0.20 OK  raw=[] | Mấy cái nút bấm trên điện thoại nó không bằng cái cảm giác tự tay mình thắt cái nút dây nà
+s11t05b1 minh p= 1781 dlg= 18150 sim=0.07 OK  raw=[] | Ông Bảy ơi, nghe ông kể chuyện này con thấy nó cuốn ghê, đúng là cái "vibes" khác hẳn cái 
+s11t06b1 lao  p= 1991 dlg= 18239 sim=0.12 OK  raw=[] | Cái cá mú đó á, nó không theo mùa, nó theo cái cái nết của con nước mới chịu cho ta bắt đư
+s11t07b1 minh p= 1899 dlg= 18296 sim=0.15 OK  raw=[] | Ông Bảy ơi, vậy là cái "logic" của cái dòng nước nó còn phức tạp hơn cả mấy cái thuật toán
+s11t08b1 lao  p= 2146 dlg= 18417 sim=0.28 OK  raw=[] | Trời đất ơi, cháu cứ nghĩ cái nghề này nó chỉ có cái nút bấm thôi hả, cái này là cái cái n
+s11t09b1 minh p= 2095 dlg= 18505 sim=0.11 OK  raw=[] | Ông Bảy ơi, con biết là nó khó nói bằng lời lắm, nhưng mà cái sự ứng biến tự nhiên của biể
+s11t10b2 lao  p= 2409 dlg= 18587 sim=0.08 OK  raw=[] | Nè cháu coi, cái lưới nó vướng gì đó kìa, hai đứa xuống coi coi. Ôi chao, này không phải c
+s11t11b2 minh p= 2280 dlg= 18672 sim=0.03 OK  raw=[] | Trời ơi, nó màu mè thiệt luôn á ông Bảy, con thề là con chưa thấy cái loại nào như này. Cá
+s11t12b2 lao  p= 2546 dlg= 18773 sim=0.10 OK  raw=[] | Mấy cái thứ này mà chụp hình thì nó mất đi cái hơi thở của biển cả đó cháu. Cái này là do 
+s11t13b2 minh p= 2472 dlg= 18847 sim=0.10 OK  raw=[] | Thôi được rồi ông Bảy, con hiểu rồi, cái tính "natural" của biển nó là cái thứ không thể n
+s11t14b2 lao  p= 2713 dlg= 18958 sim=0.16 OK  raw=[] | Cái vụ cá mú to nhất làng này á, phải cái lúc nước nó lên tầm thấp một chút, nó mới gom hế
+s11t15b2 minh p= 2667 dlg= 19023 sim=0.20 OK  raw=[] | Ông Bảy ơi, cái kiểu "random" tự nhiên của biển nó đúng là cái thứ mà con ngồi code bao lâ
+s11t16b2 lao  p= 2931 dlg= 19140 sim=0.14 OK  raw=[] | Cái ngày lão mắc cạn ghe rước dâu ấy, mặt trời nó còn chưa lên hẳn mà nước nó đã rút cái b
+s11t17b2 minh p= 2840 dlg= 19226 sim=0.12 OK  raw=[] | Ông Bảy ơi, nghe ông kể cái vụ bị mắc cạn ghe mà con thấy nó có cái tính "fail-safe" tự nh
+   >> CUT (budget). Summary: Minh và Lão Bảy ra khơi lúc trời còn tối, và Lão Bảy đã kể cho Minh nghe về lần ông câu được con cá mú to nhất làng, thứ mà theo ông là do nước chảy vòng ở khúc rạn san hô sâu dưới cửa sông. Qua cuộc trò chuyện, Minh biết Lão Bảy là người có kinh nghiệm biển cả lâu năm và đã từng giúp đỡ mọi người trong việc mắc cạn ghe rước dâu.
+   >> MEMORY +{'lao_ke': ['Câu được con cá mú to nhất làng, cỡ cái nia.', 'Câu được con cá mú to nhất làng, cả xóm kéo tới coi.', 'Lão mắc cạn ghe rước dâu, cả xóm vây quanh coi.', 'Mấy ông khỏe hơn giúp buộc dây neo vô rễ sâu.'], 'minh_ke': ['Cảm giác ngồi trước màn hình code cả ngày.', 'Tính làm cái app quản lý đơn hàng cho mấy chỗ.', 'Phải tối ưu hóa cái model AI.', 'Phải debug code mà nó cứ báo lỗi hoài.'], 'lao_biet_ve_minh': ['Minh đang tính làm cái app quản lý đơn hàng cho mấy chỗ này.', 'Minh thấy kỹ thuật buộc dây của Lão logic và chi tiết hơn tối ưu hóa model AI.'], 'minh_biet_ve_lao': ['Lão từng câu được con cá mú to nhất làng, cỡ cái nia.', 'Lão từng mắc cạn ghe rước dâu, cả xóm đã giúp đỡ.'], 'su_kien': ['Minh theo Lão Bảy ra khơi trên chiếc ghe nhỏ vào sáng sớm.', 'Hai người cùng xem lưới và phát hiện một con cá màu mè lạ.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 4), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 5), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 2), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 2), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 2), ('Câu được con cá mú to nhất làng, cỡ cái nia.', 1)]
+
+=== SCENE 12: (Lần về quê thứ 2 của Minh, vài tháng sau) Giữa trưa ở chợ cá, Lão Bảy mang mẻ cá ra bán, Minh phụ một tay.
+s12t00b0 minh p= 1262 dlg= 19291 sim=0.02 OK  raw=[] | Trời nắng chang chang, con phụ ông Bảy xếp cá, mấy bà cô khách bắt đầu kéo tới. Con thấy m
+s12t01b0 lao  p= 1443 dlg= 19400 sim=0.08 OK  raw=[] | Nhà cô Ba đầu ngõ nó cũng bán cá ngon lắm mà, cứ đụng tới tới là người ta kéo tới xem đồ c
+s12t02b0 minh p= 1400 dlg= 19485 sim=0.11 OK  raw=[] | Dạ, con hiểu ý ông Bảy rồi, công nghệ chỉ là công cụ thôi, không thể thay thế cái "vibe" t
+s12t03b0 lao  p= 1649 dlg= 19559 sim=0.20 OK  raw=[] | Cái app của cháu nó chỉ là cái khung thôi, cái cốt lõi là cái mắt lão nhìn nước, cái mũi l
+s12t04b0 minh p= 1602 dlg= 19635 sim=0.13 OK  raw=[] | Dạ, con thấy đúng là cái logic của code nó cứ thẳng tuột, còn cái việc bán cá này nó cần c
+s12t05b1 lao  p= 1842 dlg= 19737 sim=0.11 OK  raw=[] | Mấy cái lưới này nó là cái bí quyết của bao đời người chài, không phải cái cái cái hộp máy
+s12t06b1 minh p= 1791 dlg= 19834 sim=0.16 OK  raw=[] | Ông Bảy ơi, cái việc mà con phải ngồi debug code cả ngày, cái cảm giác cứ bị cái logic nó 
+s12t07b1 lao  p= 2053 dlg= 19926 sim=0.14 OK  raw=[] | Cháu cứ nhìn cái chỗ này đi, nhà cô Ba bán cá rô phi nó tươi nhất, phải canh lúc nó vừa lê
+s12t08b1 minh p= 1992 dlg= 20003 sim=0.12 OK  raw=[] | Ông Bảy ơi, cái vụ cá rô phi tươi nhất mà cô Ba bán á, con nghĩ cái app của con nó có thể 
+s12t09b1 lao  p= 2230 dlg= 20098 sim=0.27 OK  raw=[] | Cháu lo cái cái cái điểm số nó hơn cái cái cái cái mùi cá rô phi mới bắt lên khỏi nước này
+s12t10b2 minh p= 2204 dlg= 20173 sim=0.16 OK  raw=[] | Dạ, con hiểu rồi ông Bảy, chứ cái cái logic trên màn hình nó không thể nào bắt kịp cái sự 
+s12t11b2 lao  p= 2371 dlg= 20258 sim=0.12 OK  raw=[] | Bà cô đó nó quen biết mấy người chài lâu năm rồi, nó chỉ nhắc cháu nhớ cái vụ ngày xưa lão
+s12t12b2 minh p= 2336 dlg= 20336 sim=0.09 OK  raw=[] | Ông Bảy ơi, con thấy mấy cái nút buộc lưới này nó cũng có cái tính quy luật của nó, không 
+!! HTTP 500 (attempt 0): {"error":"prediction aborted, token repeat limit reached"}
+s12t13b2 lao  p= 2549 dlg= 20433 sim=0.16 OK  raw=[] | Cháu ngồi xuống đây đi, để lão chỉ cho xem cái góc này, bà cô bán mắm kia nó có mấy mẻ cá 
+s12t14b2 minh p= 2522 dlg= 20529 sim=0.09 OK  raw=[] | Ông Bảy ơi, con thấy cái cách ông chọn từng con cá, nó nó đòi hỏi một cái sự 'gut feeling'
+s12t15b2 lao  p= 2742 dlg= 20623 sim=0.17 OK  raw=[] | Cháu cứ lo cái sự bày biện bán hàng của nó đi, cái chỗ này nó bán theo cái mối quen, ai qu
+s12t16b2 minh p= 2715 dlg= 20711 sim=0.12 OK  raw=[] | Ông Bảy ơi, con thấy cái việc mà mấy bà cô bán hàng quen nhau nó tạo ra một cái hệ sinh th
+s12t17b2 lao  p= 2961 dlg= 20797 sim=0.10 OK  raw=[] | Mấy người ở chợ này nó ăn ở nhau từ bao đời rồi, ai cũng biết cái cái cái cái cái hàng của
+   >> CUT (budget). Summary: Minh đề xuất xây dựng ứng dụng quản lý đơn hàng cho ngư dân, và Lão Bảy đã nhấn mạnh trải nghiệm thực tế và mối quan hệ cá nhân là yếu tố quan trọng hơn công nghệ. Lão Bảy đã chỉ cho Minh xem các mối vá lưới, dạy Minh cách nhận biết chất liệu tự nhiên bền bỉ, và cũng nói rằng cô Ba bán cá rô phi là người bán cá ngon nhất khu vực.
+   >> MEMORY +{'lao_ke': ['Ông Hai chài bên kia người ta quen mua từ hồi xưa rồi.'], 'minh_ke': ['Định làm cái app quản lý đơn hàng cho mấy ngư dân.', 'Cái việc mà con phải ngồi debug code cả ngày, cái cảm giác cứ bị cái logic nó bó buộc á, nó khác xa cái sự tự do của ông lúc này quá.', 'Con đang nghĩ tới làm cái app quản lý đơn hàng cho mấy cha anh bán sản vật.'], 'lao_biet_ve_minh': ['Minh định làm cái app quản lý đơn hàng cho mấy ngư dân.', 'Minh muốn áp dụng concept database structure vào mấy mớ lưới.', 'Minh nghĩ app có thể tích hợp hệ thống đánh giá độ tươi theo thời gian real-time.'], 'minh_biet_ve_lao': ['Lão Bảy quen biết nhiều người ở chợ.', 'Lão Bảy có kinh nghiệm đoán bão từ hướng gió.', 'Lão Bảy biết cô Ba bán cá rô phi tươi nhất.'], 'su_kien': ['Minh phụ Lão Bảy xếp cá ở chợ cá.', 'Hai người đi xem các khu vực bán hàng và vật liệu lưới.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 4), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 6), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 2), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 2), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 2), ('Câu được con cá mú to nhất làng, cỡ cái nia.', 1)]
+
+=== SCENE 13: (Lần về quê thứ 2 của Minh, vài tháng sau) Chiều tối trời chuyển giông, Minh chạy ra bến giúp Lão Bảy kéo ghe lên bờ tránh bão.
+s13t00b0 lao  p= 1414 dlg= 20890 sim=0.06 OK  raw=[] | Trời mưa giông thế này, cái ghe nó nhúc nhích dữ lắm, coi chừng neo nó tuột ra là cả lũ mắ
+s13t01b0 minh p= 1329 dlg= 20971 sim=0.06 OK  raw=[] | Trời mưa dữ vậy, con sợ cái nước nó lên cao quá, không biết ghe mình có bị cuốn đi không ô
+s13t02b0 lao  p= 1532 dlg= 21055 sim=0.10 OK  raw=[] | Mấy cái bug trên màn hình nó chỉ là cái ảo thôi, chứ nước biển nó thật, nó có cái lực cuốn
+s13t03b0 minh p= 1507 dlg= 21157 sim=0.24 OK  raw=[] | Trời mưa bão thế này, con thấy hồi hộp ghê, không biết cái neo mình có trụ nổi không ông B
+s13t04b0 lao  p= 1730 dlg= 21243 sim=0.17 OK  raw=[] | Mấy cái nút thắt này nó cần cái tay người, cái cảm giác vật chất nó mới chịu nổi, chứ cái 
+s13t05b1 minh p= 1745 dlg= 21349 sim=0.11 OK  raw=[] | Trời bão thế này, con thấy nó dữ dội hơn mấy cái *stress test* con làm ở công ty nhiều lần
+s13t06b1 lao  p= 1933 dlg= 21439 sim=0.15 OK  raw=[] | Cái bão năm chín chín chín chín nó không phải cái thứ cháu ngồi bấm nút là biết đâu, nó cá
+s13t07b1 minh p= 1882 dlg= 21531 sim=0.15 OK  raw=[] | Ông Bảy ơi, con thấy cái màn mưa này nó làm mọi thứ nó cứ mờ mờ ảo ảo, y chang cái lúc con
+s13t08b1 lao  p= 2128 dlg= 21618 sim=0.18 OK  raw=[] | Mấy cái thứ cháu nói nó xa vời quá, biển nó là thứ quy luật khác hẳn mấy cái màn hình đó. 
+s13t09b1 minh p= 2098 dlg= 21718 sim=0.15 OK  raw=[] | Dù nó kinh khủng cỡ nào thì, con cũng phải học cái tinh thần ứng biến của ông mới được. Để
+s13t10b2 lao  p= 2391 dlg= 21798 sim=0.07 OK  raw=[] | Thôi, bão cũng giu cơn rồi, mau kéo ghe vào cái hiên nhà lão trú mưa cho ấm cái người đi c
+s13t11b2 minh p= 2279 dlg= 21897 sim=0.12 OK  raw=[] | Trời mưa bão qua là con thấy nhẹ hẳn, cảm ơn ông Bảy nhiều nha. Nhìn ông tỉ mỉ vá mấy cái 
+s13t12b2 lao  p= 2538 dlg= 21975 sim=0.16 OK  raw=[] | Mấy cái lưới ở rạn san hô sâu đó, phải để ý cái màu nước nó đổi, nó báo hiệu cái dòng chảy
+s13t13b2 minh p= 2472 dlg= 22067 sim=0.09 OK  raw=[] | Trời nó yên hẳn rồi, nhìn sóng nó lăn tăn kiểu này là con thấy tâm hồn nó nó thư thái ghê.
+s13t14b2 lao  p= 2716 dlg= 22143 sim=0.11 OK  raw=[] | Cái cái nhìn nó là cái máu nó chảy trong người người chài, cháu ngồi nhà sách sách nó khôn
+s13t15b2 minh p= 2609 dlg= 22235 sim=0.16 OK  raw=[] | Thiệt tình, nghe ông nói vậy con mới thấy cái sự *vibe* của nó nó khác quá, không phải cái
+s13t16b2 lao  p= 2887 dlg= 22324 sim=0.13 OK  raw=[] | Thôi, cái cái kỹ năng nó là cái cái cái thấm vào cái da thịt người ta qua bao nhiêu năm nắ
+s13t17b2 minh p= 2832 dlg= 22433 sim=0.07 OK  raw=[] | Ông Bảy ơi, cái vụ mà con muốn làm cái app quản lý đơn hàng cho mấy chỗ này, con tính nó p
+   >> CUT (budget). Summary: Minh giúp Lão Bảy kéo ghe lên bờ tránh bão và nhận ra sự khác biệt giữa lực tự nhiên với các bug màn hình. Lão Bảy nhắc đến một cơn bão năm chín chín chín chín và người bạn đi cùng đã bị sóng đánh dữ.
+   >> MEMORY +{'error': '{\n  "lao_ke": [\n    "Năm chín chín chín chín, bão dữ nhưng người ta vẫn sót sống qua được.",\n    "Năm chín chín chín chín, thằng Ba vẫn còn ở đó khi gặp bão to.",\n    "Bão năm chín chín chín chín, người bạn đi cùng lão cũng bị sóng đánh dữ lắm.",\n    "Bão năm chín chín chín chín, người bạn lão đi cù'}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 4), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 6), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 2), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 2), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 2), ('Câu được con cá mú to nhất làng, cỡ cái nia.', 1)]
+
+=== SCENE 14: (Lần về quê thứ 2 của Minh, vài tháng sau) Đêm mưa bão, Minh trú lại nhà Lão Bảy, hai người ngồi bên bếp lửa.
+s14t00b0 minh p= 1157 dlg= 22488 sim=0.10 OK  raw=[] | Trời mưa bão dữ dằn vậy, con thấy cái không khí nó khác hẳn lúc con phải ngồi vật lộn với 
+s14t01b0 lao  p= 1360 dlg= 22568 sim=0.16 OK  raw=[] | Mưa bão thế này thì coi chừng cái nhà nữa, cái cái gió nó không giống cái máy móc đâu cháu
+s14t02b0 minh p= 1318 dlg= 22620 sim=0.90 OK  raw=[] | Trời mưa bão thế này, con thấy cái không khí nó khác hẳn lúc con phải ngồi vật lộn với mấy
+s14t03b0 lao  p= 1540 dlg= 22708 sim=0.13 OK  raw=[] | Hồi lão còn trẻ, mới được đi tàu lớn lần đầu, cái lúc đó biển nó lạ lắm cháu ạ. Nhớ cái lầ
+s14t04b0 minh p= 1484 dlg= 22770 sim=0.08 OK  raw=[] | Ông nói đúng, cái sức người nó khác cái logic con viết code lắm, nó kiểu 'feel' hơn á ông.
+s14t05b1 lao  p= 1702 dlg= 22852 sim=0.09 OK  raw=[] | Cháu cứ ngồi đó ngắm mưa đi, cái cái dòng nước nó chảy theo cái hướng mà con mắt người que
+s14t06b1 minh p= 1617 dlg= 22924 sim=0.07 OK  raw=[] | Nói tới chuyện ngày xưa, con tự dưng thấy cái cảm giác phải ngồi trước màn hình, tối ưu hó
+s14t07b1 lao  p= 1841 dlg= 22996 sim=0.33 OK  raw=[] | Cháu cứ ngồi yên đó coi cái lửa cháy đi, cái cái cảm giác nó khác nhau lắm cháu ạ. Lão nhớ
+   >> EVENT (sim 0.33): Thằng Tí, cháu nội Lão Bảy, chạy ra đòi ông kể chuyện cá voi.
+s14t08b1 minh p= 1799 dlg= 23073 sim=0.07 OK  raw=[] | Thằng Tí đi rồi, ông Bảy ơi, con nghe ông kể chuyện là thấy mê luôn á. Hay là ông chỉ cho 
+s14t09b1 lao  p= 2026 dlg= 23158 sim=0.14 OK  raw=[] | Cái nút này á, nó không phải cái kiểu móc khóa gì đâu cháu ơi. Hồi xưa lão đi tàu lớn, có 
+s14t10b2 minh p= 1981 dlg= 23228 sim=0.22 OK  raw=[] | Nhìn ông buộc cái dây này mà con thấy cái sự tỉ mỉ nó khác hẳn cái việc con phải ngồi tối 
+s14t11b2 lao  p= 2163 dlg= 23320 sim=0.25 OK  raw=[] | Cháu cứ nhìn cái dây này đi, nó cần cái độ căng này, cái góc độ kia mới giữ được. Hồi lão 
+s14t12b2 minh p= 2146 dlg= 23426 sim=0.15 OK  raw=[] | Ông Bảy ơi, con cảm ơn ông nhiều lắm, cái buổi chiều hôm nay nó giúp con thấy cái gì đó nó
+s14t13b2 lao  p= 2376 dlg= 23500 sim=0.20 OK  raw=[] | Cháu cứ viết đi, nhưng mà nhớ nha, cái biển nó không có cái nút bấm nào để mình bấm vô là 
+s14t14b2 minh p= 2342 dlg= 23589 sim=0.20 OK  raw=[] | Thôi ông ơi, con không biết nói sao nữa, cái không khí nó cứ cuốn con về cái kiểu cần phải
+s14t15b2 lao  p= 2557 dlg= 23665 sim=0.14 OK  raw=[] | Cháu cứ ngồi đó ngắm ngọn lửa này đi, nó cháy theo cái quy luật của nó, không phải cái màn
+s14t16b2 minh p= 2505 dlg= 23725 sim=0.07 OK  raw=[] | Ông Bảy ơi, nói vậy con lại càng thấy cái sự 'struggle' của việc lập trình nó vô nghĩa thi
+s14t17b2 lao  p= 2681 dlg= 23798 sim=0.14 OK  raw=[] | Cháu cứ ngồi đó xem con sóng nó vỗ vào bờ đi, nó cũng có cái quy luật của nó thôi. Hồi đó 
+   >> CUT (budget). Summary: Minh nhận thấy không khí tự nhiên khác hẳn với việc lập trình code phức tạp, và lão Bảy kể về những trải nghiệm đi tàu lớn và các sự kiện cộng đồng. Minh biết được lão Bảy từng đi tàu lớn và những lần gặp bão, trong khi lão Bảy nhận ra Minh là người làm việc với code và AI.
+   >> MEMORY +{'lao_ke': ['Lão đi tàu lớn, gặp cơn bão dữ dội, sóng cuộn rất lớn.', 'Lần đi tàu lớn đầu tiên, biển rất lạ.', 'Cả xóm cùng nhau kéo ghe lên bờ bằng sức người.', 'Lão đi tàu lớn, nhìn màu nước biết độ sâu rạn san hô.', 'Lần ghe mắc cạn lúc rước dâu, dùng mẹo buộc dây kéo lên bờ.', 'Lão còn bé xíu, chỉ cần nhìn màu nước chuyển xanh đậm biết rạn san hô sâu.'], 'minh_ke': ['Phải vật lộn với các đoạn code phức tạp.', 'Tối ưu hóa model AI rất mệt.', 'Nhớ về chuyện hồi xưa với mẹ ở Sài Gòn.'], 'lao_biet_ve_minh': ['Minh muốn vẽ flow chart cho quy trình bán hàng online.', 'Minh muốn áp dụng nguyên lý buộc dây vào giao diện người dùng cho app ngư dân.'], 'minh_biet_ve_lao': ['Lão Bảy từng đi tàu lớn gặp bão dữ.', 'Lão Bảy từng cùng xóm kéo ghe lên bờ bằng sức người.', 'Lão Bảy có kinh nghiệm nhìn màu nước và hướng gió để xác định độ sâu/dòng chảy.', 'Lão Bảy có kỹ năng buộc dây neo bằng sợi gai rừng khô.'], 'su_kien': ['Hai người ngồi bên bếp lửa trò chuyện trong đêm mưa bão.', 'Minh đề nghị Lão Bảy nướng khô mực cho ăn.', 'Minh và Lão Bảy cùng nhau xem xét các kỹ thuật buộc dây và quy luật tự nhiên.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 5), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 6), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 3), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 2), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 3), ('Câu được con cá mú to nhất làng, cỡ cái nia.', 1)]
+
+=== SCENE 15: (Lần về quê thứ 2 của Minh, vài tháng sau) Sáng sau bão, chiếc ghe của Lão Bảy bị thủng, Minh ngồi xem lão trét lại thân ghe.
+   >> SWAP lao: 'Chiếc ghe này là của vợ lão mua cho.' (đã kể: Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.) -> hồi nhỏ lão trốn học đi tắm biển, bị cha đánh một trận nhớ đời
+s15t00b0 lao  p= 1373 dlg= 23928 sim=0.10 OK  raw=[] | Cháu ngồi đó nhìn mấy cái vá lưới của lão, thấy nó còn hơi ướt, để lão chỉ cho cháu cách p
+s15t01b0 minh p= 1319 dlg= 24029 sim=0.10 OK  raw=[] | Trời ơi, nhìn cái vết thủng này mà con thấy cái cảm giác debug code nó nhạt nhẽo quá trời 
+   >> CUT (end). Summary: Lão Bảy dạy Minh cách dùng dầu rái pha với nhựa cây để vá thân ghe thủng, kể cho Minh nghe chuyện cha đã đánh lão vì tội trốn học đi tắm biển. Minh so sánh việc vá ghe với việc tối ưu hóa hàm phức tạp trong lập trình AI và hỏi về độ bền của loại nhựa cây đó so với polymer điện tử.
+   >> MEMORY +{'lao_ke': ['Hồi nhỏ trốn học tắm biển với bạn, bị cha đánh nhớ đời.'], 'minh_ke': ['Cảm thấy debug code nhạt nhẽo hơn việc vá ghe.'], 'lao_biet_ve_minh': ['Minh làm công việc liên quan đến code, tối ưu hóa AI, và dùng polymer trong điện tử.'], 'minh_biet_ve_lao': ['Lão Bảy từng bị cha đánh khi trốn học tắm biển.', 'Lão Bảy biết cách pha dầu rái với nhựa cây để trám gỗ.'], 'su_kien': ['Minh ngồi xem Lão Bảy vá và trét dầu rái vào thân ghe bị thủng sau bão.']}
+      Lão đã kể: [('Lão từng phải vá lưới ngoài biển, nắng mưa thấm vào tay mới quen.', 2), ('Lão đi tàu lớn ngày xưa, mắt quen màu nước, độ sâu thay đổi là biết ngay.', 5), ('Hồi xưa ghe của lão mắc lưới ở rạn san hô sâu dưới lòng cửa sông.', 6), ('Hồi lão mười bốn tuổi ra đây, lần đầu thấy nước lên xuống.', 4), ('Bà Tư bán mắm, bà Ba bán rau, ai cũng quen nhau từ ngày lão còn trai tráng.', 2), ('Lão còn nhớ cái bà Ba chài đầu ngõ, năm nào cũng bán cá rô phi tươi nhất.', 2), ('Lão quen mấy ông từ lúc mới ra khơi đánh cá.', 1), ('Trường hợp định vị bằng sao trời trên biển rất khác.', 1), ('Ngày xưa đi tàu, coi mây và hướng gió là biết nhiều thứ.', 1), ('Lão mới cưới vợ, chèo ghe rước dâu mắc cạn bãi cát vắng.', 3), ('Lão phải cho mấy đứa nhỏ xuống mò bùn đất.', 1), ('Mấy người làng qua giúp nhổ rễ sâu, không là trôi sông mất dép.', 2), ('Cả xóm cùng nhau kéo cái ghe này lên bờ.', 3), ('Câu được con cá mú to nhất làng, cỡ cái nia.', 1), ('Hồi nhỏ trốn học tắm biển với bạn, bị cha đánh nhớ đời.', 1)]
+
+done: 16 scenes, 24029 dialogue tokens, 708s, stats={'swaps': 3, 'beats': 46, 'theme_bans': 97, 'cut_budget': 15, 'regens': 5, 'extract_fail': 3, 'events': 6, 'topic_notes': 5, 'farewell_blocked': 1, 'cut_end': 1}

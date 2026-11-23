@@ -1,0 +1,253 @@
+
+=== SCENE 0: Afternoon on Polmarren harbour. Old Jack is mending nets when Sam, down from London, stops to say hello.
+s00t00b0 minh p=  270 dlg=    67 sim=0.00 OK  raw=[] | Hey Jack, love to see you out here on the harbour—I'm just taking a breather before headin
+s00t01b0 lao  p=  471 dlg=   157 sim=0.00 OK  raw=[] | You're a funny lad to talk about machines while mending nets like an old sailor. I use the
+s00t02b0 minh p=  404 dlg=   237 sim=0.04 OK  raw=[] | Ah, I'll drop the jargon then, Jack—city life's a bit of a blur right now, actually. My bo
+s00t03b0 lao  p=  649 dlg=   358 sim=0.08 OK  raw=[] | That boss of yours sounds like a hard man to work for, lad, pushing you harder than the ti
+s00t04b0 minh p=  613 dlg=   446 sim=0.10 OK  raw=[] | Right then, Jack, I'll take the crate but let's call it a 'break' rather than a crash—my b
+s00t05b1 lao  p=  894 dlg=   564 sim=0.08 OK  raw=[] | You city folks like to wrap everything in fancy words when a simple boat ride would do jus
+s00t06b1 minh p=  827 dlg=   671 sim=0.08 OK  raw=[] | Ah, the silence before the storm is a good one to learn from, Jack—my boss calls it "downt
+s00t07b1 lao  p= 1099 dlg=   809 sim=0.14 OK  raw=[] | It's a quiet sort of watch, lad, just me and the tide rolling in against the hull while I 
+s00t08b1 minh p= 1080 dlg=   890 sim=0.10 OK  raw=[] | Yeah, the city's always buzzing like a server farm running full load, so I'm glad to be of
+s00t09b1 lao  p= 1326 dlg=  1048 sim=0.17 OK  raw=[] | You've a curious mind for the sea if you ask it questions like that, lad, but the water sp
+s00t10b2 minh p= 1353 dlg=  1145 sim=0.12 OK  raw=[] | Thanks for the invite, Jack, but I'll pass on the drink tonight—I'm just soaking up the qu
+s00t11b2 lao  p= 1589 dlg=  1287 sim=0.11 OK  raw=[] | You're a thoughtful lad to want to see the water without your usual city noise, though the
+s00t12b2 minh p= 1574 dlg=  1366 sim=0.12 OK  raw=[] | Sounds like a plan, Jack—I'll bring my light jacket and maybe skip the screens for a chang
+s00t13b2 lao  p= 1818 dlg=  1496 sim=0.13 OK  raw=[] | You're a good lad to say you'll leave the screens behind, though I'd have guessed fish lik
+s00t14b2 minh p= 1791 dlg=  1591 sim=0.10 OK  raw=[] | That sounds like a proper catch, Jack—I'll make sure to tell my boss I'm strictly off duty
+s00t15b2 lao  p= 2051 dlg=  1688 sim=0.11 OK  raw=[] | You're a strange lad to think about all that business when the sea is right there waiting 
+s00t16b2 minh p= 2017 dlg=  1770 sim=0.07 OK  raw=[] | That's a fair point, Jack—I'll try to leave the supply chain worries behind and just watch
+s00t17b2 lao  p= 2264 dlg=  1892 sim=0.07 OK  raw=[] | You city boy thinks too much about engines and quiet machines when a good skipper knows it
+   >> CUT (budget). Summary: Sam visits Jack at Polmarren harbour to escape his demanding city job, revealing he works under a boss who treats leave as a temporary buffer before the next sprint. They agree that Sam will inform his boss he is strictly off duty tomorrow, wear a light jacket, and join Jack on a boat ride if the weather holds.
+
+=== SCENE 1: Next morning, still dark, Sam goes out with Old Jack in his small boat.
+s01t00b0 lao  p=  500 dlg=  2017 sim=0.09 OK  raw=[] | The water is black as ink tonight, lad, but you're pale as a sheet and look like you've se
+s01t01b0 minh p=  424 dlg=  2109 sim=0.03 OK  raw=[] | Mate, I wish I could just pull out my phone and capture this moment with a quick timelapse
+s01t02b0 lao  p=  695 dlg=  2229 sim=0.10 OK  raw=[] | That fancy toy of yours is long gone, lad, just like the battery in my old radio was when 
+s01t03b0 minh p=  644 dlg=  2313 sim=0.06 OK  raw=[] | It's pretty surreal watching the world dissolve into silence without that digital crutch; 
+s01t04b0 lao  p=  907 dlg=  2459 sim=0.13 OK  raw=[] | Aye lad, you're steady enough now, just like I was at fourteen when my hands were still sm
+s01t05b1 minh p=  912 dlg=  2567 sim=0.09 OK  raw=[] | It's wild how the sea dictates its own schedule regardless of our digital clocks or API de
+s01t06b1 lao  p= 1169 dlg=  2727 sim=0.12 OK  raw=[] | You speak of data streams like a boy fresh from the city, lad, but this water has told me 
+s01t07b1 minh p= 1159 dlg=  2839 sim=0.12 OK  raw=[] | It's wild that the sea has had its own version of a neural network long before we ever tau
+s01t08b1 lao  p= 1450 dlg=  2976 sim=0.14 OK  raw=[] | You speak of machines with fancy words, lad, but I remember my first time on a boat at fou
+s01t09b1 minh p= 1416 dlg=  3063 sim=0.10 OK  raw=[] | It's a shame my phone died before I could capture this golden light, because the way the h
+s01t10b2 lao  p= 1711 dlg=  3208 sim=0.10 OK  raw=[] | Look at that strange thing on the gaff, lad, it's got too many fins for a mackerel and sca
+s01t11b2 minh p= 1656 dlg=  3311 sim=0.10 OK  raw=[] | I wish I could pull out my camera to capture that strange silver-and-stone creature, but t
+s01t12b2 lao  p= 1938 dlg=  3469 sim=0.12 OK  raw=[] | That phone of yours is nothing but a toy to us in the trade, lad, and I remember when my o
+s01t13b2 minh p= 1925 dlg=  3580 sim=0.18 OK  raw=[] | It's a bit of a bummer that my digital camera bagged the shot before I could upload the pr
+s01t14b2 lao  p= 2215 dlg=  3737 sim=0.14 OK  raw=[] | We've got the strange silver thing hauled aboard now, lad, but tell me the truth and I'll 
+s01t15b2 minh p= 2201 dlg=  3852 sim=0.07 OK  raw=[] | I'd kill to capture the sunrise on my camera before the sun burns off that grey mist, even
+s01t16b2 lao  p= 2495 dlg=  4005 sim=0.14 OK  raw=[] | You run from trouble back in the city that is no different to the storms I faced when I wa
+s01t17b2 minh p= 2477 dlg=  4103 sim=0.13 OK  raw=[] | Honestly, I'm glad my phone finally gave up the ghost because watching this world without 
+   >> CUT (budget). Summary: Sam and Old Jack rowed through the dark waters of Polmarren in a small boat without any fish being caught until dawn broke. Jack learned that Sam is currently running from personal trouble in London caused by his breakup, while Sam learned that Jack was fourteen when he first worked on a trawler bound for Iceland without safety rails or modern technology.
+
+=== SCENE 2: Midday on the quay, Old Jack sells his catch and Sam lends a hand.
+s02t00b0 minh p=  397 dlg=  4228 sim=0.03 OK  raw=[] | "Morning, Jack, reckon we've earned a kip now that the sun's properly high enough to make 
+s02t01b0 lao  p=  668 dlg=  4360 sim=0.06 OK  raw=[] | Right then, lad, you can rest easy knowing that the man eyeing those cods is Silas from do
+s02t02b0 minh p=  636 dlg=  4464 sim=0.07 OK  raw=[] | "Right, I'll help with the baskets then, though I still can't help thinking that listing t
+s02t03b0 lao  p=  912 dlg=  4602 sim=0.10 OK  raw=[] | You're right enough about the baskets, lad, but Silas is more trouble than he's worth sinc
+s02t04b0 minh p=  886 dlg=  4695 sim=0.11 OK  raw=[] | "Alright, Jack, I'll hold the phone steady and keep those eels happy with a quick wave if 
+s02t05b1 lao  p= 1178 dlg=  4814 sim=0.11 OK  raw=[] | Right then, lad, you've given Mrs. Gable her change back to Silas wrong by a few pence whi
+s02t06b1 minh p= 1106 dlg=  4902 sim=0.10 OK  raw=[] | "Sorry about that pence mix-up, Jack; honestly, I was thinking how much easier it would be
+s02t07b1 lao  p= 1366 dlg=  5048 sim=0.23 OK  raw=[] | You've got a tongue of oil, lad, but don't you worry about those fancy scripts since I rem
+s02t08b1 minh p= 1348 dlg=  5128 sim=0.17 OK  raw=[] | "Right, I'll help carry these baskets then, though I'm dying to just drop a link for an on
+s02t09b1 lao  p= 1600 dlg=  5266 sim=0.19 OK  raw=[] | You're a good lad to worry about my back, but Silas is only the worst of it since old Mrs.
+s02t10b2 minh p= 1608 dlg=  5371 sim=0.11 OK  raw=[] | "Right then, I'll grab those handles and keep my battery saved for later, though it's a sh
+s02t11b2 lao  p= 1851 dlg=  5508 sim=0.16 OK  raw=[] | That woman at the next stall is Martha, who lost her own husband to the sea years back and
+s02t12b2 minh p= 1824 dlg=  5623 sim=0.16 OK  raw=[] | "Alright Jack, I'll mind my step around Martha's stall and keep the phone tucked away so I
+s02t13b2 lao  p= 2111 dlg=  5748 sim=0.15 OK  raw=[] | That startup story sounds like nonsense to any of us here who have sold our catch for half
+s02t14b2 minh p= 2072 dlg=  5850 sim=0.14 OK  raw=[] | "Right, I'll hold tight to your coat and keep the gulls off our leftovers while we head ba
+s02t15b2 lao  p= 2346 dlg=  5982 sim=0.19 OK  raw=[] | You're a good lad to hold my coat while those gulls peck at the air, and honestly, I know 
+s02t16b2 minh p= 2314 dlg=  6098 sim=0.24 OK  raw=[] | "Right, I'll hold tight and keep those gulls distracted while Mrs. Higgins feeds the dogs,
+s02t17b2 lao  p= 2602 dlg=  6223 sim=0.32 OK  raw=[] | You're a good lad to hold tight, and Mrs. Higgins is the woman who baked you that scone ea
+   >> CUT (budget). Summary: Sam learns that Silas has not paid his boat licence in three years and owes money to Mrs. Gable, who is married to a man who runs the slip. Sam also discovers that the woman near the stall is Martha, whose husband was lost to the sea years ago, and she will not allow Silas near her market again.
+
+=== SCENE 3: Evening, a storm is coming in; Sam runs down to help Jack haul the boat up the slipway.
+s03t00b0 lao  p=  644 dlg=  6343 sim=0.10 OK  raw=[] | Hurry now, lad, that rope slipped just as the wind picked up, and I know that feel all too
+s03t01b0 minh p=  569 dlg=  6403 sim=0.09 OK  raw=[] | Right then, Jack, I've got the winch! It feels weird being this out of my element compared
+s03t02b0 lao  p=  806 dlg=  6533 sim=0.21 OK  raw=[] | Hold fast, lad, for that winch is heavy when the wind pulls against it just like the day I
+s03t03b0 minh p=  767 dlg=  6626 sim=0.09 OK  raw=[] | My legs are shaking like a bad connection on a live stream, Jack, but I'm gripping that wi
+s03t04b0 lao  p= 1037 dlg=  6766 sim=0.17 OK  raw=[] | I feel the tremor in your hands, lad, and it reminds me of young Frank who froze stiff on 
+s03t05b1 minh p= 1037 dlg=  6849 sim=0.09 OK  raw=[] | I'm gripping tighter than I'd ever deploy a hotfix, Jack, feeling more alive on this rocki
+s03t06b1 lao  p= 1268 dlg=  6977 sim=0.20 OK  raw=[] | Hold fast now, lad, for that grip is the same strength I needed when I lost poor young Fra
+s03t07b1 minh p= 1227 dlg=  7080 sim=0.08 OK  raw=[] | I'm shaking so hard I could barely type a commit message, but holding this rope feels like
+s03t08b1 lao  p= 1507 dlg=  7219 sim=0.29 OK  raw=[] | I feel that shiver in your hands, lad, and it reminds me of poor Frank who froze on the sa
+s03t09b1 minh p= 1477 dlg=  7310 sim=0.15 OK  raw=[] | I'm shaking harder than I ever have during a deployment blackout, Jack, but there's a weir
+s03t10b2 lao  p= 1777 dlg=  7446 sim=0.23 OK  raw=[] | Come on now lad, we have hauled her high and dry before the rain makes these stones slick 
+s03t11b2 minh p= 1739 dlg=  7550 sim=0.09 OK  raw=[] | I'm holding onto your coat like it's my life raft, Jack, because that howling wind feels w
+s03t12b2 lao  p= 1993 dlg=  7681 sim=0.18 OK  raw=[] | Come inside before the rain soaks through your boots, lad, for I recall how the wind nearl
+s03t13b2 minh p= 1982 dlg=  7794 sim=0.10 OK  raw=[] | The fire crackles so loud it drowns out the storm, which is weird because I never realised
+s03t14b2 lao  p= 2245 dlg=  7948 sim=0.14 OK  raw=[] | Sit by the fire now, lad, and drink that tea while I tell you about poor Thomas, my own bo
+s03t15b2 minh p= 2230 dlg=  8042 sim=0.11 OK  raw=[] | My knees feel like they're crashing against a server rack that's about to go down, Jack, b
+s03t16b2 lao  p= 2501 dlg=  8178 sim=0.18 OK  raw=[] | You feel the fear in your knees, lad, just like I felt when young Silas vanished into that
+s03t17b2 minh p= 2468 dlg=  8270 sim=0.07 OK  raw=[] | This silence is way heavier than a null pointer exception, Jack, because unlike code that 
+   >> CUT (budget). Summary: Sam and Jack successfully hauled the boat high and dry from the slipway to avoid being swept away by the rising tide. They learned that Jack lost several family members, including Silas, Tom, Frank, and his son Thomas, during the Great Storm of '87, while Sam revealed his background as a server debugger from London who had never faced such life-threatening conditions before.
+
+=== SCENE 4: Stormy night, Sam stays at Jack's cottage; they sit by the fire.
+s04t00b0 minh p=  538 dlg=  8338 sim=0.08 OK  raw=[] | It's weird, sitting here by the fire after all that chaos, but your kippers look proper cr
+s04t01b0 lao  p=  759 dlg=  8479 sim=0.13 OK  raw=[] | Lad, you talk about sprinting, but back in my day when the wind blew hard like it does ton
+s04t02b0 minh p=  731 dlg=  8551 sim=0.12 OK  raw=[] | I didn't think I'd ever admit it, but losing a few years to a server crash feels like noth
+s04t03b0 lao  p=  980 dlg=  8711 sim=0.22 OK  raw=[] | There was a time when I had to mend my own nets in the dark after Frank went overboard nea
+s04t04b0 minh p=  972 dlg=  8806 sim=0.13 OK  raw=[] | I finally let it out that I'm running from my own broken heart and a boss who treats holid
+s04t05b1 lao  p= 1272 dlg=  8966 sim=0.18 OK  raw=[] | It is a strange thing lad to feel tied down by invisible strings when we fishermen knew fo
+s04t06b1 minh p= 1236 dlg=  9044 sim=0.13 OK  raw=[] | I've been trying to hide how much it hurt since my split, but sitting here watching the fi
+s04t07b1 lao  p= 1491 dlg=  9204 sim=0.19 OK  raw=[] | Aye lad, you see how the net stays tight only when every eye and hand knows its place, but
+s04t08b1 minh p= 1483 dlg=  9287 sim=0.17 OK  raw=[] | I've been running from the silence since my breakup, thinking a new deployment or a PR stu
+s04t09b1 lao  p= 1743 dlg=  9447 sim=0.21 OK  raw=[] | Lad, back when I was your age fishing for cod off Iceland with no radar and just a compass
+s04t10b2 minh p= 1758 dlg=  9519 sim=0.13 OK  raw=[] | I finally put down my phone and admit that I'm not ready to deploy another fix for this br
+s04t11b2 lao  p= 1984 dlg=  9679 sim=0.22 OK  raw=[] | Your wife would have been the first one on deck to check your lines before we sailed off I
+s04t12b2 minh p= 1976 dlg=  9777 sim=0.19 OK  raw=[] | I finally stop trying to patch my feelings like a buggy server and just let the smoke rise
+s04t13b2 lao  p= 2251 dlg=  9937 sim=0.20 OK  raw=[] | You think my wife sat by the fire to teach you a lesson about fixing things, lad, but she 
+s04t14b2 minh p= 2243 dlg= 10049 sim=0.27 OK  raw=[] | I'm sorry I've been acting like a glitchy server since my breakup, Jack; hearing about you
+s04t15b2 lao  p= 2532 dlg= 10209 sim=0.20 OK  raw=[] | Lad, my wife never told me to stop the storm or fix my heart with words when the rain fell
+s04t16b2 minh p= 2524 dlg= 10302 sim=0.25 OK  raw=[] | I'm finally ready to stop trying to deploy a fix for my heart and just let the tide settle
+s04t17b2 lao  p= 2794 dlg= 10462 sim=0.28 OK  raw=[] | Aye lad, my wife never gave me lectures on how to mend a broken heart because she just sat
+   >> CUT (budget). Summary: Sam stays at Jack's cottage during a stormy night where they share kippers by the fire and discuss their respective struggles with work pressure and personal loss. Jack reveals that his son Thomas died in the Great Storm of 1887 and that Frank also perished, while Sam admits to his broken heart and decides to stop running from his problems instead of trying to fix them like a server crash.
+
+=== SCENE 5: Morning after the storm, Jack's boat is holed; Sam watches him patch the hull.
+s05t00b0 lao  p=  800 dlg= 10594 sim=0.07 OK  raw=[] | This hull was paid for with the money my own Mary saved before she passed, so I reckon we 
+s05t01b0 minh p=  735 dlg= 10673 sim=0.08 OK  raw=[] | It's weird how getting my hands dirty is more satisfying than debugging a race condition; 
+s05t02b0 lao  p=  991 dlg= 10778 sim=0.15 OK  raw=[] | That is a good lad for it, though you mustn't call that mix 't'ar by them London names of 
+s05t03b0 minh p=  927 dlg= 10850 sim=0.07 OK  raw=[] | Honestly, there's something about mixing pitch and sand that feels more honest than writin
+s05t04b0 lao  p= 1176 dlg= 10924 sim=0.26 OK  raw=[] | You've got a good heart, lad, paying tribute to Mary who put her own savings into this ves
+s05t05b1 minh p= 1110 dlg= 11009 sim=0.11 OK  raw=[] | That patch is almost sealed, Jack, but right now Tommy's running down with that enthusiasm
+s05t06b1 lao  p= 1343 dlg= 11107 sim=0.16 OK  raw=[] | Tommy is a lively little devil, lad, and I've seen him throw stones into the water right h
+s05t07b1 minh p= 1272 dlg= 11181 sim=0.26 OK  raw=[] | Honestly, there's a strange peace in making hot pitch and sand stick where code only ever 
+s05t08b1 lao  p= 1523 dlg= 11290 sim=0.17 OK  raw=[] | It does good for a heart to fix something with your own hands, lad, just as my Mary used t
+s05t09b1 minh p= 1463 dlg= 11358 sim=0.22 OK  raw=[] | There's a strange kind of calm in fixing things with my own hands that I never found debug
+s05t10b2 lao  p= 1735 dlg= 11504 sim=0.21 OK  raw=[] | You go on inside and warm those feet now while I scrape the sticky mess off this old girl 
+s05t11b2 minh p= 1685 dlg= 11585 sim=0.19 OK  raw=[] | It's strange how the rhythmic scrape of the hull feels more like a real heartbeat than the
+s05t12b2 lao  p= 1943 dlg= 11707 sim=0.26 OK  raw=[] | You go on inside and warm those feet now while I finish scraping this mess off the hull, l
+s05t13b2 minh p= 1896 dlg= 11794 sim=0.21 OK  raw=[] | It feels strangely right to work with my hands instead of just typing commands that never 
+s05t14b2 lao  p= 2160 dlg= 11909 sim=0.47 OK  raw=[] | You go inside and warm those feet while I scrape this mess off the hull, lad, for my Mary 
+   >> EVENT (sim 0.47): A boat comes alongside and someone shouts: "Jack! Give us a hand with these nets!"
+s05t15b2 minh p= 2130 dlg= 11998 sim=0.19 OK  raw=[] | There's something grounding about the rhythmic scrape of that pitch that finally feels les
+s05t16b2 lao  p= 2422 dlg= 12095 sim=0.18 OK  raw=[] | That shout from the other boat is urgent, lad, so I'm fetching my heavy tongs to lift thos
+s05t17b2 minh p= 2354 dlg= 12186 sim=0.12 OK  raw=[] | The rhythmic scrape of your tongs on the hull sounds like a much better compilation proces
+   >> CUT (budget). Summary: Jack explains that his wife Mary saved her own money from Plymouth to purchase the boat and paid for its hull before she passed away after the Great Storm of '87 took their sons Tom and Frank. Sam learns that Jack has mended many holes like this one since losing his family, while Jack observes that Sam finds satisfaction in the physical labor of patching the boat with pitch and sand rather than debugging code back in London.
+
+=== SCENE 6: The village holds a wake at the pub; Jack takes Sam along and they meet his old mates.
+s06t00b0 minh p=  747 dlg= 12287 sim=0.05 OK  raw=[] | Jack, I think that cider is working its magic, turning me into a bit of a chatty loon sinc
+s06t01b0 lao  p=  996 dlg= 12400 sim=0.11 OK  raw=[] | You're right about that cider loosening the tongue, lad, but you'll find me embarrassed no
+s06t02b0 minh p=  945 dlg= 12480 sim=0.10 OK  raw=[] | Ah, Jack, I see Martha's still keeping that stall frontage pristine, even if Silas is just
+s06t03b0 lao  p= 1197 dlg= 12616 sim=0.24 OK  raw=[] | Look here, lad, and see that patch of green algae on the hull; Mary put her own money in t
+s06t04b0 minh p= 1169 dlg= 12719 sim=0.08 OK  raw=[] | I reckon that patch of green algae is trying to tell us the hull needs a fresh coat of pit
+s06t05b1 lao  p= 1476 dlg= 12871 sim=0.12 OK  raw=[] | You're right about the algae needing pitch, lad, but look there's young Dave from the next
+s06t06b1 minh p= 1432 dlg= 12992 sim=0.13 OK  raw=[] | I think I'm blurring the lines a bit with my mumbling, Jack, so maybe we should just grab 
+s06t07b1 lao  p= 1725 dlg= 13106 sim=0.11 OK  raw=[] | Shut that gob lad and let me tell you about the time young Thomas tried to bail water with
+s06t08b1 minh p= 1675 dlg= 13212 sim=0.15 OK  raw=[] | Sorry, Jack, I'm getting a bit loose-lipped tonight since the cider's turning my head like
+s06t09b1 lao  p= 1950 dlg= 13347 sim=0.10 OK  raw=[] | You're a funny lad, pulling that heavy crate down while Dave yells about the Iceland macke
+s06t10b2 minh p= 1923 dlg= 13466 sim=0.13 OK  raw=[] | Ah, Martha's stern look is enough to make any server freeze up without needing a single li
+s06t11b2 lao  p= 2212 dlg= 13595 sim=0.09 OK  raw=[] | You're full of nonsense lad, saying your wife would hate your jacket when she was always o
+s06t12b2 minh p= 2150 dlg= 13700 sim=0.10 OK  raw=[] | Jack, I'm sorry about the jacket story, but Silas really needs to sort out that licence be
+s06t13b2 lao  p= 2451 dlg= 13829 sim=1.00 OK  raw=[] | You're full of nonsense lad, saying your wife would hate your jacket when she was always o
+s06t14b2 minh p= 2412 dlg= 13904 sim=0.13 OK  raw=[] | I'll take that bucket, Jack, but let's skip the hull cracks and talk about how my London f
+s06t15b2 lao  p= 2666 dlg= 14023 sim=0.20 OK  raw=[] | You're right lad, that Silas coughing is loud enough to drown out the tide, so let's put t
+s06t16b2 minh p= 2594 dlg= 14144 sim=0.18 OK  raw=[] | Right, Jack, that bucket can wait while I spill the beans on how my flat back in London fe
+s06t17b2 lao  p= 2914 dlg= 14258 sim=0.14 OK  raw=[] | Lad, stop that nonsense about glowing letters and commit bugs; Mary's savings bought this 
+   >> CUT (budget). Summary: At the village pub wake, Jack reveals that his late wife Mary bought the boat with her own savings before the Great Storm of '87 took their sons Tom and Frank, while Sam admits he is currently single and running a startup in London to avoid embarrassment about not having children or a deceased spouse. The two men also confirm that Martha runs a stall where she strictly refuses to sell anything to Silas until he pays Mrs Gable for the slip, noting that Silas has been without his boat license for three years.
+
+=== SCENE 7: Sam gets out his phone to teach Jack to video-call his son in Plymouth.
+s07t00b0 lao  p=  950 dlg= 14382 sim=0.07 OK  raw=[] | You're fumbling with that glass box again, lad, and I've seen better luck catching a cod i
+s07t01b0 minh p=  851 dlg= 14470 sim=0.06 OK  raw=[] | I suppose the rain's just a reminder that even the best code eventually needs a patch, Jac
+s07t02b0 lao  p= 1118 dlg= 14625 sim=0.11 OK  raw=[] | The kettle does whistle loud enough to drown out any nonsense from London, lad, and that i
+s07t03b0 minh p= 1102 dlg= 14710 sim=0.12 OK  raw=[] | That tea does sound like a much better patch than any I've ever deployed, Jack, and the th
+s07t04b0 lao  p= 1366 dlg= 14860 sim=0.15 OK  raw=[] | You put that phone in the corner where it won't distract us from the tea and the story, la
+s07t05b1 minh p= 1371 dlg= 14982 sim=0.10 OK  raw=[] | Right then, I'll grab the mug and leave that phone be for now; hearing about Silas and Mrs
+s07t06b1 lao  p= 1646 dlg= 15142 sim=0.17 OK  raw=[] | You go on and get that mug, lad, while I tell you how Silas let his licence lapse for thre
+s07t07b1 minh p= 1635 dlg= 15270 sim=0.12 OK  raw=[] | I'll get the mug and the kippers for us before we dive into Silas's trouble, Jack, because
+s07t08b1 lao  p= 1970 dlg= 15377 sim=0.15 OK  raw=[] | You go on and get that mug while I tell you about Martha and how she shut the stall down w
+s07t09b1 minh p= 1878 dlg= 15480 sim=0.19 OK  raw=[] | I'll grab the mug and let you show me that hole while I try to stop my mind from glitching
+s07t10b2 lao  p= 2217 dlg= 15598 sim=0.17 OK  raw=[] | You go and get the kippers lad, for I must tell you that Silas is a tale best forgotten wh
+s07t11b2 minh p= 2107 dlg= 15710 sim=0.38 OK  raw=[] | I'll fetch the kippers while you show me that hole, Jack, because patching this leak feels
+   >> EVENT (sim 0.38): A black dog runs up, grabs a fish out of the basket and bolts.
+s07t12b2 lao  p= 2447 dlg= 15858 sim=0.12 OK  raw=[] | That black dog is Silas's cousin, a beast with a hunger like the sea in winter, and he jus
+s07t13b2 minh p= 2396 dlg= 15973 sim=0.21 OK  raw=[] | That black dog is more like a rogue process consuming all my memory than any cousin I've e
+s07t14b2 lao  p= 2718 dlg= 16116 sim=0.32 OK  raw=[] | That black dog is a proper nuisance, lad, he snatched the cod before I could throw the lin
+s07t15b2 minh p= 2682 dlg= 16237 sim=0.20 OK  raw=[] | I'll help scrape those scales off while we wait for the rain to stop, Jack, but honestly, 
+s07t16b2 lao  p= 2990 dlg= 16388 sim=0.16 OK  raw=[] | You scrape away lad, for there is plenty of slime to remove before I tell you how that dog
+s07t17b2 minh p= 2942 dlg= 16511 sim=0.23 OK  raw=[] | I'll pass the knife and help scrape those scales off while I try to stop my mind from glit
+   >> CUT (budget). Summary: Sam agreed to put his phone in the corner while Jack told him that his brother Silas lost his boat years ago because he failed to pay a licence fee to Mrs Gable, who now demands full payment before selling supplies. They decided to share kippers and listen to the story of Silas's neighbor Martha, who shut down her stall after Silas let his debts lapse for three years following similar issues with water-related losses that also claimed Jack's sons Thomas, Frank, and Tom.
+
+=== SCENE 8: A moonlit night, Jack takes Sam squid jigging off the harbour mouth.
+s08t00b0 minh p=  779 dlg= 16582 sim=0.05 OK  raw=[] | "Alright Jack, I'll let go of the reel and trust your rhythm on this jig, but honestly, ba
+s08t01b0 lao  p= 1026 dlg= 16701 sim=0.12 OK  raw=[] | Let go now lad, you feel the weight of that squid on the line just like a cod fought from 
+s08t02b0 minh p=  952 dlg= 16796 sim=0.13 OK  raw=[] | "Right, pulling it up steady now, Jack; the weight feels less like a heavy data payload an
+s08t03b0 lao  p= 1248 dlg= 16920 sim=0.11 OK  raw=[] | That squid is heavy lad, feels like the cod from my last trip to Iceland when I crewed the
+s08t04b0 minh p= 1179 dlg= 17028 sim=0.12 OK  raw=[] | "Pulling feels weirdly liberating compared to refactoring legacy code when I'm just trying
+s08t05b1 lao  p= 1487 dlg= 17158 sim=0.16 OK  raw=[] | That is your first squid lad, look at it wriggling in the net like a proper catch from tho
+s08t06b1 minh p= 1425 dlg= 17274 sim=0.14 OK  raw=[] | "Look at that wriggle, Jack; it's wilder than any algorithm I've ever seen, and honestly, 
+s08t07b1 lao  p= 1714 dlg= 17424 sim=0.22 OK  raw=[] | That wriggle reminds me of the haddock we pulled from the dark waters off Iceland when I w
+s08t08b1 minh p= 1699 dlg= 17525 sim=0.21 OK  raw=[] | "Thinking about leaving London feels less like a bug fix and more like finally acknowledgi
+s08t09b1 lao  p= 1973 dlg= 17670 sim=0.28 OK  raw=[] | You rest your head lad while I tell you about the ice and wind we faced when I crewed thos
+s08t10b2 minh p= 1985 dlg= 17789 sim=0.11 OK  raw=[] | "Listening to you talk about those ice-choked waters off Iceland feels like diving into a 
+s08t11b2 lao  p= 2245 dlg= 17920 sim=0.26 OK  raw=[] | The ice off Iceland was hard enough to cut a man's finger, lad, and we crewed those big tr
+s08t12b2 minh p= 2238 dlg= 18015 sim=0.14 OK  raw=[] | "Jack, I'm staring at that glow on the water and wondering if my hands need pitch or just 
+s08t13b2 lao  p= 2479 dlg= 18140 sim=0.27 OK  raw=[] | We do not have running hot water lad, we boil our kettle over the fire and eat boiled pota
+s08t14b2 minh p= 2466 dlg= 18249 sim=0.09 OK  raw=[] | "Right then, let's talk about the kettle; if I'm staying for supper, I need to know if tha
+s08t15b2 lao  p= 2749 dlg= 18390 sim=0.15 OK  raw=[] | That kettle here lad has boiled fresh water for Mary and our men since before the Great St
+s08t16b2 minh p= 2697 dlg= 18495 sim=0.08 OK  raw=[] | "Alright Jack, I'll put the kettle on while you show me how that old hull breathes; it's f
+s08t17b2 lao  p= 3006 dlg= 18630 sim=0.24 OK  raw=[] | The kettle is warm lad and I will show you how the pitch weeps slowly through the cracks w
+   >> CUT (budget). Summary: Sam learns that Jack's brother Silas owes debts to Mrs. Gable which prevent Martha from selling him new nets, while Mary paid for the boat with her own money from Plymouth before losing her husband and two sons in the Great Storm of 1887. Jack reveals his past crewing on big trawlers up to Iceland and losing Tom and Frank during that same storm, explaining that they do not have running hot water and rely on boiled potatoes and kippers for supper.
+
+=== SCENE 9: The last morning, Sam is heading back to London and stops at the harbour to say goodbye to Jack.
+s09t00b0 lao  p= 1012 dlg= 18758 sim=0.11 OK  raw=[] | Here lad, take this packet of smoked mackerel I've been curing in the cellar for a few day
+s09t01b0 minh p=  915 dlg= 18840 sim=0.03 OK  raw=[] | Thanks, Jack, but I reckon the city life's got nothing on me now that I've decided to quit
+s09t02b0 lao  p= 1203 dlg= 18975 sim=0.18 OK  raw=[] | Lay off that fancy code talk with the 'Ctrl+Z', lad, for out here we mend what's broken by
+s09t03b0 minh p= 1140 dlg= 19064 sim=0.09 OK  raw=[] | Right then, no more fancy code talk—I'm actually quitting my job up north and coming back 
+s09t04b0 lao  p= 1435 dlg= 19201 sim=0.13 OK  raw=[] | Aye, lad, you'll find the salt spray hits harder than anything in London when it gets onto
+s09t05b1 minh p= 1398 dlg= 19302 sim=0.13 OK  raw=[] | Right then, thanks for keeping an eye on her while I pack—once I've settled my new gig bac
+s09t06b1 lao  p= 1701 dlg= 19462 sim=0.16 OK  raw=[] | You'd best not mind Silas and his debts right now, lad, for look at that old crab pot I fo
+s09t07b1 minh p= 1644 dlg= 19594 sim=0.11 OK  raw=[] | That frayed rope on the crab pot is a classic single point of failure, but I'm glad we fix
+s09t08b1 lao  p= 2002 dlg= 19725 sim=0.16 OK  raw=[] | Aye lad, I know the tide will turn soon enough and that rope holds tight as long as it's t
+s09t09b1 minh p= 1915 dlg= 19836 sim=0.18 OK  raw=[] | Right then, I've packed my laptop and deleted that startup; the only bug I need to fix now
+s09t10b2 lao  p= 2233 dlg= 19963 sim=0.21 OK  raw=[] | Right then, lad, take that train before the fog rolls in off the Bristol Channel and bring
+s09t11b2 minh p= 2161 dlg= 20063 sim=0.23 OK  raw=[] | Right then, Jack, I'm heading back now with the laptop packed away since my startup is off
+s09t12b2 lao  p= 2509 dlg= 20190 sim=0.27 fix raw=['BREAK'] | Aye lad, take that train while the mist is still light and watch for the grey gull diving 
+s09t13b2 minh p= 2424 dlg= 20285 sim=0.13 OK  raw=[] | Right then, I'm heading up the hill before the tide swells to fill my boots, and I've left
+s09t14b2 lao  p= 2697 dlg= 20418 sim=0.18 OK  raw=[] | Aye, lad, you take that laptop and leave it where it lies while I mind the boat and the ne
+s09t15b2 minh p= 2660 dlg= 20499 sim=0.12 OK  raw=[] | Right then, I'm off up that hill with the laptop tucked away since my startup is finally d
+s09t16b2 lao  p= 2961 dlg= 20620 sim=0.16 fix raw=['BREAK'] | You'd best get moving now before the tide rolls in and washes the last of the sand off tha
+s09t17b2 minh p= 2870 dlg= 20706 sim=0.16 OK  raw=[] | Right then, I'm off up the hill before that tide washes away my footprints, and honestly, 
+   >> CUT (budget). Summary: Sam quits his London startup job and decides to become a fisherman in Cornwall while staying away from Silas until he pays Mrs Gable her debts. Jack cures smoked mackerel for Sam, mentions Mary's past presence at the cottage, warns about Silas owing money, and references Tom's legacy and old fishing nets from 1987.
+
+=== SCENE 10: (Sam's visit number 2, a few months later) Afternoon on Polmarren harbour. Old Jack is mending nets when Sam, down from London, stops to say hello.
+s10t00b0 minh p=  868 dlg= 20762 sim=0.02 OK  raw=[] | Hey Jack, saw you wrestling with that net out here—does the knot hold tight enough to stop
+s10t01b0 lao  p= 1058 dlg= 20889 sim=0.04 OK  raw=[] | You'll have to forgive me lad, I haven't heard a word about London or your strange words, 
+s10t02b0 minh p= 1028 dlg= 20984 sim=0.03 OK  raw=[] | Ah, the wind's got a real bite today, but it smells like salt and diesel rather than that 
+s10t03b0 lao  p= 1288 dlg= 21094 sim=0.05 OK  raw=[] | The wind is biting just as it did back in the Great Storm of '87 when we lost Tom and Fran
+s10t04b0 minh p= 1241 dlg= 21165 sim=0.05 OK  raw=[] | Right then, I'll give you a hand with the cod while we keep those thoughts to ourselves fo
+s10t05b1 lao  p= 1505 dlg= 21273 sim=0.10 OK  raw=[] | You're right lad, this lot came from the deep water near those jagged rocks where the curr
+s10t06b1 minh p= 1428 dlg= 21342 sim=0.09 OK  raw=[] | You're right, it feels like a proper reset to just be out here without any of my startup f
+s10t07b1 lao  p= 1634 dlg= 21462 sim=0.08 OK  raw=[] | The bite is slow today lad, for the haddock have gone deeper than usual since we lost Tom 
+s10t08b1 minh p= 1625 dlg= 21534 sim=0.05 OK  raw=[] | Right then, I'll sit by the fire and let the heat soak off my coat while we wait for a pro
+s10t09b1 lao  p= 1862 dlg= 21652 sim=0.12 OK  raw=[] | That kettle near the cabin has not rung in years since we lost hot water after Mary bought
+s10t10b2 minh p= 1821 dlg= 21713 sim=0.08 OK  raw=[] | That sounds like a proper plan for me; if we head out to the boat tomorrow, I can show you
+s10t11b2 lao  p= 2049 dlg= 21818 sim=0.10 OK  raw=[] | You have been telling me enough about London to know I do not need to hear more of that st
+s10t12b2 minh p= 1969 dlg= 21894 sim=0.10 OK  raw=[] | Right then, I'll give you a hand sorting the mackerel before they get too cold; honestly, 
+s10t13b2 lao  p= 2210 dlg= 21991 sim=0.15 OK  raw=[] | You have a good heart lad, trying to help with the mackerel while your mind is still on th
+s10t14b2 minh p= 2150 dlg= 22064 sim=0.18 OK  raw=[] | Alright Jack, I'll get on with these mackerel and keep my focus here while you check the b
+s10t15b2 lao  p= 2388 dlg= 22150 sim=0.15 OK  raw=[] | Right lad, I'll be back once I've tied up these last knots and checked the hull where the 
+s10t16b2 minh p= 2317 dlg= 22216 sim=0.18 OK  raw=[] | Sounds good to me, Jack, I'll finish these mackerel while you check the hull; honestly, th
+s10t17b2 lao  p= 2548 dlg= 22309 sim=0.38 OK  raw=[] | You have a good heart lad, seeing you so happy with the fire and simple food while your mi
+   >> CUT (budget). Summary: Sam visited Jack Penrose at Polmarren harbour for his second trip down from London, where he discussed the frayed hemp on Jack's gill plate that Mary had repaired with her own money since buying the boat in Plymouth. Jack revealed that Silas has been waiting near the slip for three years because Martha refused to sell him nets after Silas failed to pay Mrs Gable for his debts, while also confirming that Tom and Frank were lost during the Great Storm of '87 in the waters near Iceland.
+
+=== SCENE 11: (Sam's visit number 2, a few months later) Next morning, still dark, Sam goes out with Old Jack in his small boat.
+s11t00b0 lao  p= 1018 dlg= 22414 sim=0.04 OK  raw=[] | The sea is tossin' worse today than that day I first jumped on a trawler at fourteen with 
+s11t01b0 minh p=  922 dlg= 22513 sim=0.08 OK  raw=[] | Honestly, the sea's got a more chaotic API than any backend I've ever built, and I can't f
+s11t02b0 lao  p= 1200 dlg= 22641 sim=0.10 OK  raw=[] | You've got a mind full of strange words, lad, but I can see you mean well when you hold th
+s11t03b0 minh p= 1157 dlg= 22736 sim=0.07 OK  raw=[] | I really wish I could stream this moment back to London so the team could see why I'm ditc
+s11t04b0 lao  p= 1431 dlg= 22869 sim=0.15 OK  raw=[] | You'd have loved the view from that boat in my youth when I first took the wheel at fourte
+s11t05b1 minh p= 1423 dlg= 22982 sim=0.09 OK  raw=[] | I wish I could stream this perfect angle to my investors back in Shoreditch, but since my 
+s11t06b1 lao  p= 1685 dlg= 23102 sim=0.15 OK  raw=[] | I remember my own first time out at fourteen when the sea was as grey as a wet slate and I
+s11t07b1 minh p= 1634 dlg= 23195 sim=0.14 OK  raw=[] | I'd love to capture this on a live stream for my investors, but my phone finally died, so 
+s11t08b1 lao  p= 1906 dlg= 23334 sim=0.28 OK  raw=[] | My own hands were as steady then as they are now when I first took the wheel at fourteen i
+s11t09b1 minh p= 1874 dlg= 23441 sim=0.14 OK  raw=[] | That hump feels like a solid data point compared to the jittery graphs I used to obsess ov
+s11t10b2 lao  p= 2189 dlg= 23590 sim=0.15 OK  raw=[] | Look at that strange silver thing we just dragged up, lad, it looks more like a lump of tw
+s11t11b2 minh p= 2138 dlg= 23700 sim=0.09 OK  raw=[] | I'd kill to capture the close-up of that twisted wire thing for my feed, but since my phon
+s11t12b2 lao  p= 2427 dlg= 23838 sim=0.17 OK  raw=[] | Hold it steady lad, but be careful not to let that cold metal freeze your hands like it di
+s11t13b2 minh p= 2420 dlg= 23947 sim=0.12 OK  raw=[] | Right then, Jack, I'll let go of that twisted wire and drop it back where it belongs witho
+s11t14b2 lao  p= 2682 dlg= 24090 sim=0.12 OK  raw=[] | That hump near the shore is just another rock that swallowed my first boat at fourteen whe
+   >> CUT (end). Summary: Sam abandoned his startup plans after his phone died, allowing Jack to teach him how to navigate by feeling the water instead of using algorithms. They discovered a twisted metal creature from the deep that Jack refused to cook, instructing Sam to drop it back into the sea before returning to shore where Martha would sell fresh nets and Mary's potatoes were waiting.
+
+done: 12 scenes, 24090 dialogue tokens, 1013s, stats={'beats': 36, 'theme_bans': 54, 'cut_budget': 11, 'events': 2, 'topic_notes': 2, 'farewell_blocked': 2, 'regens': 2, 'cut_end': 1}

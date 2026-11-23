@@ -1,0 +1,281 @@
+
+=== SCENE 0: Buổi chiều ở bến cá Cửa Đại. Lão Bảy đang ngồi vá lưới thì Minh từ Sài Gòn về chơi, ghé lại chào.
+s00t00b0 minh p=  356 dlg=    44 sim=0.00 OK  raw=[] | Con chào ông Bảy, nhìn ông vá lưới nghệ thuật thiệt luôn á. Mà cái nút thắt này nhìn có vẻ
+s00t01b0 lao  p=  495 dlg=   132 sim=0.00 OK  raw=[] | Cái này là nút thắt mắt cáo, lão làm quen tay từ hồi còn đi tàu ra Hoàng Sa nên cứ đưa tay
+s00t02b0 minh p=  457 dlg=   184 sim=0.00 OK  raw=[] | Dạ, con mới về nghỉ phép một thời gian cho *relax* thôi chứ không có gì đâu ông Bảy. Mà hồ
+s00t03b0 lao  p=  643 dlg=   315 sim=0.10 OK  raw=[] | Hồi đó lão đi tàu gỗ chạy bằng máy nổ đời cũ, sóng ngoài Hoàng Sa nó đánh vô mạn tàu nghe 
+s00t04b0 minh p=  669 dlg=   374 sim=0.04 OK  raw=[] | Nghe ông kể mà con thấy *scary* thiệt sự luôn, con mà ở trên đó chắc xỉu ngang quá. Mà ông
+s00t05b1 lao  p=  876 dlg=   480 sim=0.11 OK  raw=[] | Hồi đó làm chi có máy móc hiện đại như bây giờ, lão cứ nhìn sao trời với hướng gió mà đoán
+s00t06b1 minh p=  821 dlg=   550 sim=0.06 OK  raw=[] | Dạ tại con muốn tìm chút *peaceful* để tĩnh tâm lại thôi ông Bảy ơi. Con đi một mình cho n
+s00t07b1 lao  p= 1025 dlg=   672 sim=0.17 OK  raw=[] | Cái chữ gì mà nghe lạ tai quá, lão nghe không hiểu cháu nói chi hết, lão chỉ biết nhìn hướ
+s00t08b1 minh p= 1021 dlg=   765 sim=0.05 OK  raw=[] | Dạ không sao đâu ông Bảy, con lớn rồi nên tự lo được mà, không có gì *worry* đâu ông. Con 
+s00t09b1 lao  p= 1248 dlg=   897 sim=0.12 OK  raw=[] | Biển cả có nhiều cái lạ lắm cháu ơi, hồi xưa thấy mây màu đỏ quạch hay cá nhảy lộn xộn là 
+s00t10b2 minh p= 1291 dlg=   978 sim=0.06 OK  raw=[] | Dạ thôi ông Bảy đừng gọi thằng Tí, con đi bộ chút xíu là tới nhà rồi, không có gì *dangero
+s00t11b2 lao  p= 1469 dlg=  1103 sim=0.10 OK  raw=[] | Sáng mai lão tính ra khơi xem con cá ngừ đại dương, nhưng đi tàu đánh cá cực lắm chứ không
+s00t12b2 minh p= 1468 dlg=  1179 sim=0.05 OK  raw=[] | Dạ, con cảm ơn ông Bảy nhiều nha, mai con sẽ ra đúng giờ để không làm lỡ việc của ông. Con
+s00t13b2 lao  p= 1678 dlg=  1290 sim=0.11 OK  raw=[] | Cá ngừ bắt lên là phải ướp đá thật lạnh ngay lập tức để giữ được cái màu đỏ tươi, chứ để l
+s00t14b2 minh p= 1663 dlg=  1371 sim=0.07 OK  raw=[] | Dạ tại con đi làm ở Sài Gòn lâu rồi nên cái giọng nó bị *mixed* lên vậy đó ông Bảy. Ở dưới
+s00t15b2 lao  p= 1878 dlg=  1495 sim=0.17 OK  raw=[] | Thương lái họ chỉ cần nhìn cái mắt cá trong veo hay cái thịt cá còn chắc là họ biết ngay, 
+s00t16b2 minh p= 1876 dlg=  1558 sim=0.11 OK  raw=[] | Dạ con biết rồi, con về đây chứ trời tối quá đi bộ cũng hơi *scary*. Con cảm ơn ông Bảy đã
+s00t17b2 lao  p= 2115 dlg=  1670 sim=0.08 OK  raw=[] | Ừ, cháu về đi cho an toàn, đi đường lắt léo kẻo vấp đá là ngã đau đó cháu. Lão cũng phải t
+   >> CUT (budget). Summary: Tại bến cá Cửa Đại, Minh ghé thăm và trò chuyện cùng lão Bảy trong lúc lão đang vá lưới. Qua cuộc đối thoại, lão Bảy chia sẻ về quá khứ từng đi tàu gỗ ra Hoàng Sa định hướng bằng sao trời, còn Minh cho biết mình đang đi làm ở Sài Gòn và quyết định sẽ ra bến cá vào tờ mờ sáng mai để theo lão Bảy đi biển.
+
+=== SCENE 1: Sáng hôm sau, trời còn tối, Minh theo Lão Bảy ra khơi trên chiếc ghe nhỏ.
+s01t00b0 lao  p=  577 dlg=  1771 sim=0.07 OK  raw=[] | Nhìn cháu xanh mét mặt mày thế kia lão lại nhớ hồi mười bốn tuổi lần đầu ra khơi, cũng nôn
+s01t01b0 minh p=  501 dlg=  1848 sim=0.05 OK  raw=[] | Dạ con nghe ông Bảy, con đang cố hít thở sâu nè. Mà xui quá, con định quay lại cái cảnh nà
+s01t02b0 lao  p=  728 dlg=  1960 sim=0.15 OK  raw=[] | Mấy cái máy móc định vị đó lão không biết, chứ hồi đó lão chỉ biết nhìn lên mấy ngôi sao t
+s01t03b0 minh p=  698 dlg=  2043 sim=0.10 OK  raw=[] | Nghe ông kể giống như trong mấy cái phim *adventure* mà con hay coi luôn á, đỉnh thiệt sự!
+s01t04b0 lao  p=  962 dlg=  2153 sim=0.15 OK  raw=[] | Mấy cái thuật toán với phim ảnh gì đó lão nghe chẳng hiểu gì hết, nghe như tiếng chim kêu 
+s01t05b1 minh p=  936 dlg=  2230 sim=0.16 OK  raw=[] | Trời ơi, nghe ông kể mà con thấy *respect* ông thực sự, đúng là kinh nghiệm sống không máy
+s01t06b1 lao  p= 1126 dlg=  2367 sim=0.17 OK  raw=[] | Cháu tinh mắt đó, nước hôm nay xanh ngắt và có mùi mặn nồng là dấu hiệu con nước đang lên,
+s01t07b1 minh p= 1121 dlg=  2447 sim=0.07 OK  raw=[] | Dạ con sẽ tập trung nhìn thiệt kỹ để học lỏm bí kíp của ông Bảy. Mà ông ơi, lúc mình kéo l
+s01t08b1 lao  p= 1351 dlg=  2605 sim=0.18 OK  raw=[] | Cháu đừng có dùng mấy cái từ lạ tai đó, cứ lo mà nhìn kỹ xem cá có bị đứt vảy hay bị rách 
+s01t09b1 minh p= 1367 dlg=  2685 sim=0.16 OK  raw=[] | Dạ con biết rồi, con sẽ chuẩn bị sẵn rổ để làm cho thật *neat* luôn. Mà ông Bảy ơi, hồi đó
+s01t10b2 lao  p= 1699 dlg=  2804 sim=0.19 fix raw=['mình'] | Hồi đó mẻ cá thu lớn lão đem bán lấy tiền mua cho mẹ cái áo mới, còn mấy con nhỏ thì lão g
+s01t11b2 minh p= 1574 dlg=  2878 sim=0.04 OK  raw=[] | Trời ơi, cái lưới căng dữ vậy ông Bảy, chắc chắn là hàng khủng rồi! Con muốn lấy điện thoạ
+s01t12b2 lao  p= 1798 dlg=  2987 sim=0.22 OK  raw=[] | Thôi đừng có tiếc cái máy đó nữa, lo mà nắm lấy mép lưới phụ lão kéo lên cho chắc tay nè. 
+s01t13b2 minh p= 1765 dlg=  3056 sim=0.07 OK  raw=[] | Dạ con đang dồn hết sức nè, cái lưới này nặng quá xá luôn ông Bảy ơi! Để con nắm chặt mép 
+s01t14b2 lao  p= 2025 dlg=  3168 sim=0.29 OK  raw=[] | Cố lên cháu, ráng nắm chặt cái dây thừng này đừng có buông tay là được. Nhìn cái lưới đang
+s01t15b2 minh p= 1954 dlg=  3228 sim=0.22 OK  raw=[] | Dạ con đang ráng hết sức đây, chân con bám chắc lắm rồi ông Bảy ơi! Cái cảm giác này đúng 
+s01t16b2 lao  p= 2209 dlg=  3339 sim=0.31 OK  raw=[] | Một, hai, ba, kéo mạnh lên nào cháu ơi, sắp lên tới nơi rồi đó! Nhìn cái lưới đang phập ph
+   >> EVENT (sim 0.31): Một chiếc ghe cập bến, có người gọi lớn: "Bảy ơi, ra phụ kéo lưới coi!"
+s01t17b2 minh p= 2162 dlg=  3407 sim=0.23 OK  raw=[] | Trời ơi, cá lên rồi, lấp lánh thiệt sự luôn ông Bảy ơi! Con tiếc cái điện thoại ghê, nếu n
+   >> CUT (budget). Summary: Minh cùng Lão Bảy ra khơi trên một chiếc ghe nhỏ để chuẩn bị kéo lưới. Lão Bảy chia sẻ về kinh nghiệm định hướng bằng sao trời, hướng sóng và kỷ niệm mẻ cá thu lớn năm mười bốn tuổi dùng tiền bán cá mua áo mới cho mẹ.
+
+=== SCENE 2: Giữa trưa ở chợ cá, Lão Bảy mang mẻ cá ra bán, Minh phụ một tay.
+s02t00b0 minh p=  497 dlg=  3477 sim=0.05 OK  raw=[] | Mẻ cá thu hôm nay nhìn tươi rói luôn ông Bảy ơi, nhìn là biết chất lượng rồi. Con đang tín
+s02t01b0 lao  p=  720 dlg=  3590 sim=0.11 OK  raw=[] | Cái chuyện bán trên mạng đó lão không rành đâu, cháu cứ để đó cho mấy đứa trẻ trong làng l
+s02t02b0 minh p=  655 dlg=  3684 sim=0.13 OK  raw=[] | Dạ, tại con thấy bán online cũng *fast* lắm mà ông Bảy, thôi để con phụ ông phân cá ra rổ 
+s02t03b0 lao  p=  998 dlg=  3809 sim=0.17 fix raw=['mình'] | Chứ còn gì nữa, ở cái chợ cá này ai mà lão không biết mặt, từ ông Tư bán nước chè đến chị 
+s02t04b0 minh p=  882 dlg=  3907 sim=0.18 OK  raw=[] | Nghe ông kể chuyện bà Sáu làm con thấy cảm động quá, đúng là tình làng nghĩa xóm ở đây *sp
+s02t05b1 lao  p= 1201 dlg=  4013 sim=0.14 OK  raw=[] | Mấy cái web với quảng cáo đó lão nghe mà thấy như tiếng chim kêu, chẳng hiểu mô tê chi hết
+s02t06b1 minh p= 1094 dlg=  4103 sim=0.11 OK  raw=[] | Dạ con biết rồi, để con dùng cái máy tính bỏ túi tính toán cho *accurate* luôn, ông yên tâ
+s02t07b1 lao  p= 1370 dlg=  4230 sim=0.13 OK  raw=[] | Có cháu tính toán kỹ càng thế này thì lão yên tâm rồi, chứ cái đầu lão chỉ nhớ hướng gió v
+s02t08b1 minh p= 1319 dlg=  4315 sim=0.10 OK  raw=[] | Dạ con nhớ rồi, để con dọn dẹp mấy cái rổ này cho thật gọn gàng luôn nè. Mà ông Bảy ơi, nã
+s02t09b1 lao  p= 1643 dlg=  4440 sim=0.16 fix raw=['mình'] | Thôi đừng nói chuyện trên mạng đó nữa nghe cháu, lão nghe mà nhức cả đầu. Cháu cứ dọn dẹp 
+s02t10b2 minh p= 1575 dlg=  4541 sim=0.09 OK  raw=[] | Dạ con biết rồi, con dọn lẹ đây chứ nghe ông nhắc là cái bụng con nó *hungry* dữ lắm rồi n
+s02t11b2 lao  p= 1814 dlg=  4645 sim=0.20 OK  raw=[] | Cái cô bán cá đó là con gái ông Chín, bả hay nói đùa dai như vậy đó chứ đừng có để bụng. C
+s02t12b2 minh p= 1750 dlg=  4749 sim=0.19 OK  raw=[] | Dạ, con hiểu rồi, chắc tại con nhìn hiền quá nên cô ấy mới trêu thôi chớ con đâu có dám mơ
+s02t13b2 lao  p= 2030 dlg=  4893 sim=0.23 OK  raw=[] | Tôm khô nhà bà Tư thì chỉ có loại tôm đất phơi nắng tự nhiên mới là ngon nhất thôi, loại đ
+s02t14b2 minh p= 2006 dlg=  4990 sim=0.12 OK  raw=[] | Dạ, tôm đất phơi nắng tự nhiên là nhất rồi, lát con sẽ lựa kỹ mấy con nhỏ nhỏ màu hồng cho
+s02t15b2 lao  p= 2275 dlg=  5123 sim=0.15 OK  raw=[] | Thôi được rồi, dọn nốt cái rổ cuối này rồi lão dắt đi ăn liền. Chứ nãy giờ nói chuyện cá t
+s02t16b2 minh p= 2244 dlg=  5209 sim=0.11 OK  raw=[] | Dạ, nghe ông kể chuyện luồng cá cơm đó làm con thấy *excited* quá, nhất định lát ăn xong ô
+s02t17b2 lao  p= 2565 dlg=  5311 sim=0.14 fix raw=['mình'] | Được rồi, lát ăn xong lão kể cho nghe hết, không thiếu một chữ đâu. Cháu đi đứng cẩn thận 
+   >> CUT (budget). Summary: Lão Bảy và Minh cùng nhau phân chia mẻ cá thu tại chợ và quyết định sẽ đi ăn bún cá đặc sản sau khi xong việc. Lão Bảy chia sẻ với Minh về các mối quan hệ tại chợ như bà Sáu khách quen, ông Tư bán cá lóc sẽ qua đòi nợ, và con gái ông Chín hay trêu Minh là cháu rể lão.
+
+=== SCENE 3: Chiều tối trời chuyển giông, Minh chạy ra bến giúp Lão Bảy kéo ghe lên bờ tránh bão.
+s03t00b0 lao  p=  730 dlg=  5405 sim=0.07 OK  raw=[] | Trời chuyển giông nhanh quá, gió rít qua mấy rặng phi lao nghe lạnh cả sống lưng, làm lão 
+s03t01b0 minh p=  648 dlg=  5480 sim=0.06 OK  raw=[] | Trời ơi, con chưa thấy bão nào nhìn *scary* dữ thần vậy luôn đó ông Bảy ơi! Để con nắm lấy
+s03t02b0 lao  p=  871 dlg=  5598 sim=0.16 OK  raw=[] | Cái chữ gì mà nghe lạ tai quá, lão không rành mấy tiếng thành phố của cháu đâu. Cháu cứ lo
+s03t03b0 minh p=  849 dlg=  5673 sim=0.09 OK  raw=[] | Trời ơi, sóng cao như cái nhà thiệt hả ông Bảy, nghe mà con thấy *overwhelming* quá luôn á
+s03t04b0 lao  p= 1072 dlg=  5794 sim=0.19 OK  raw=[] | Cháu nói tiếng gì mà nghe cứ lơ lớ như người nước ngoài vậy, lão nghe chẳng hiểu gì hết. H
+s03t05b1 minh p= 1091 dlg=  5880 sim=0.11 OK  raw=[] | Con xin lỗi, tại con quen nói chuyện kiểu đó với mấy đứa bạn ở Sài Gòn quá nên bị *habit* 
+s03t06b1 lao  p= 1287 dlg=  6014 sim=0.16 OK  raw=[] | Lại cái chữ gì nữa rồi, lão nói thiệt là lão không hiểu mấy tiếng lạ lẫm đó của cháu đâu. 
+s03t07b1 minh p= 1281 dlg=  6097 sim=0.09 OK  raw=[] | Dạ, con hiểu rồi, để con dồn sức kéo cái ghe này lên cao hơn chút nữa cho ông yên tâm. Ngh
+s03t08b1 lao  p= 1512 dlg=  6215 sim=0.13 OK  raw=[] | Lại cái từ gì nghe như tiếng chửi thề vậy, lão chẳng hiểu cháu đang nói cái gì hết. Lúc đó
+s03t09b1 minh p= 1490 dlg=  6292 sim=0.21 OK  raw=[] | Con xin lỗi, con không có chửi thề đâu, tại cái từ đó nghe hơi giống vậy thôi ông Bảy ơi! 
+s03t10b2 lao  p= 1753 dlg=  6414 sim=0.22 OK  raw=[] | Cái từ gì nghe như tiếng chim kêu vậy, lão nói thiệt là lão không hiểu nổi mấy chữ của chá
+s03t11b2 minh p= 1697 dlg=  6519 sim=0.12 OK  raw=[] | Dạ, con đi sát theo ông Bảy nè, chứ nhìn mây đen kịt vầy con thấy *scary* quá chừng luôn! 
+s03t12b2 lao  p= 1950 dlg=  6625 sim=0.20 OK  raw=[] | Cháu cứ nói mấy cái tiếng lạ hoắc làm lão nhức hết cả đầu, chẳng hiểu cháu đang phấn khích
+s03t13b2 minh p= 1916 dlg=  6692 sim=0.15 OK  raw=[] | Dạ con đang bám sát áo ông đây, mưa đổ xuống lạnh buốt luôn ông Bảy ơi! Con vừa chạy vừa t
+s03t14b2 lao  p= 2131 dlg=  6811 sim=0.27 OK  raw=[] | Lại cái tiếng gì nghe như tiếng gió rít vậy, lão nói thiệt là lão chẳng hiểu cái chữ đó củ
+s03t15b2 minh p= 2110 dlg=  6870 sim=0.19 OK  raw=[] | Con đang nắm chặt áo ông rồi, con không buông đâu ông Bảy ơi! Mưa trắng xóa hết cả đường đ
+s03t16b2 lao  p= 2352 dlg=  6992 sim=0.16 OK  raw=[] | Cháu nói cái tiếng gì nghe như tiếng lầm bầm trong họng vậy, lão chẳng hiểu gì hết. Chạy q
+s03t17b2 minh p= 2299 dlg=  7065 sim=0.10 OK  raw=[] | Dạ con đang chạy theo ông đây, nghe ông kể về nồi nước gừng của bác gái mà con thấy ấm lòn
+   >> CUT (budget). Summary: Minh giúp lão Bảy kéo ghe lên bờ để tránh cơn giông dữ dội đang kéo đến. Qua cuộc trò chuyện, lão Bảy chia sẻ về việc mất người bạn thân trong trận bão năm 99 và kỷ niệm về người vợ thường nấu nước gừng cho lão, trong khi Minh cho biết mình vốn quen sống ở Sài Gòn và thường xuyên sử dụng các từ ngữ tiếng Anh.
+
+=== SCENE 4: Đêm mưa bão, Minh trú lại nhà Lão Bảy, hai người ngồi bên bếp lửa.
+s04t00b0 minh p=  660 dlg=  7130 sim=0.14 OK  raw=[] | Mưa gió vầy nhìn bếp lửa ấm áp thiệt đó ông Bảy ơi. Con ở Sài Gòn toàn ngồi máy lạnh, ít k
+s04t01b0 lao  p=  873 dlg=  7242 sim=0.16 OK  raw=[] | Cháu nói cái từ chi nghe lạ tai quá, lão nghe chẳng hiểu gì hết trơn. Để lão lấy ít cá khô
+s04t02b0 minh p=  812 dlg=  7321 sim=0.07 OK  raw=[] | Dạ, con cảm ơn ông Bảy nhiều nha, nghe ông kể về bà mà con thấy thương quá. Mấy món dân dã
+s04t03b0 lao  p= 1072 dlg=  7464 sim=0.17 OK  raw=[] | Cái từ "best" đó lại là cái chi nữa, cháu cứ nói mấy tiếng lạ lẫm làm lão nhức hết cả đầu.
+s04t04b0 minh p= 1042 dlg=  7542 sim=0.06 OK  raw=[] | Dạ, nghe ông nói xong con thấy lòng nhẹ nhàng hơn hẳn luôn đó ông Bảy. Có lẽ con cũng cần 
+s04t05b1 lao  p= 1336 dlg=  7671 sim=0.10 OK  raw=[] | Bà ấy giận chứ, có lần lão đi biển bị kẹt lại mấy ngày do gió chướng, lúc về thấy bà ấy ng
+s04t06b1 minh p= 1290 dlg=  7762 sim=0.14 OK  raw=[] | Dạ, thực ra là con mới chia tay người yêu xong nên tâm trạng hơi bị down một chút ông Bảy 
+s04t07b1 lao  p= 1529 dlg=  7922 sim=0.12 OK  raw=[] | Lão nghe cháu nói về mấy cái thuật toán với màn hình đó là lão chịu chết, chẳng hiểu gì hế
+s04t08b1 minh p= 1517 dlg=  8019 sim=0.12 OK  raw=[] | Dạ, nghe ông nói con mới thấy mình hổng khéo sắp xếp cuộc sống chút nào, cứ mải mê với mấy
+s04t09b1 lao  p= 1760 dlg=  8174 sim=0.14 OK  raw=[] | Cái máy nổ đó cũng rắc rối lắm, cứ hễ nó khục khặc là ông ấy lại lúi húi cả buổi trời mới 
+s04t10b2 minh p= 1810 dlg=  8268 sim=0.05 OK  raw=[] | Dạ, con hiểu rồi, chắc tại con cứ hay quá tập trung vào mấy cái lỗi code nhỏ xíu mà quên m
+s04t11b2 lao  p= 2017 dlg=  8428 sim=0.13 OK  raw=[] | Bà ấy chu đáo lắm, hồi nào lão đi biển xa, bà ấy hay ngồi tỉ mẩn vá lại từng đường kim mũi
+s04t12b2 minh p= 2040 dlg=  8523 sim=0.11 OK  raw=[] | Nghe ông kể mà con thấy rưng rưng luôn đó ông Bảy, cảm động quá chừng. Có lẽ con đã quá qu
+s04t13b2 lao  p= 2281 dlg=  8678 sim=0.15 OK  raw=[] | Cháu cứ hỏi chuyện chi xa xôi quá, bí quyết gì đâu mà bí quyết, cứ sống sao cho thật lòng 
+   >> CUT (farewell). Summary: Minh và lão Bảy ngồi bên bếp lửa trú mưa, cùng ăn khoai nướng và cá khô. Minh chia sẻ mình là lập trình viên tại Sài Gòn vừa chia tay người yêu, trong khi lão Bảy kể về người vợ quá cố chu đáo và một người bạn cũ luôn mải mê sửa máy nổ.
+
+=== SCENE 5: Sáng sau bão, chiếc ghe của Lão Bảy bị thủng, Minh ngồi xem lão trét lại thân ghe.
+s05t00b0 lao  p=  881 dlg=  8766 sim=0.09 OK  raw=[] | Cái ghe này là kỷ vật của nhà lão để lại, bão vừa rồi làm nó lủng một lỗ lớn ngay thân. Ch
+s05t01b0 minh p=  794 dlg=  8838 sim=0.07 OK  raw=[] | Dạ, để con lại giúp ông một tay cho nhanh nè. Công việc này nhìn có vẻ *manual* hơn con tư
+s05t02b0 lao  p= 1012 dlg=  8951 sim=0.16 OK  raw=[] | Cháu nói cái chi mà nghe lạ tai quá, lão nghe không hiểu hết đâu. Cứ lấy mùn cưa mịn rồi đ
+s05t03b0 minh p=  987 dlg=  9025 sim=0.06 OK  raw=[] | Dạ con hiểu rồi, để con khuấy thiệt kỹ cho nó dẻo như kẹo luôn. Làm cái này cảm giác thật 
+s05t04b0 lao  p= 1207 dlg=  9142 sim=0.23 OK  raw=[] | Bà nhà lão ngày xưa không biết sửa ghe đâu, nhưng bà ấy khéo tay lắm, chuyên lo việc chắt 
+s05t05b1 minh p= 1224 dlg=  9214 sim=0.07 OK  raw=[] | Dạ con biết rồi, con sẽ tập trung làm cho thật *perfect* luôn. Mà công nhận làm mấy việc n
+s05t06b1 lao  p= 1404 dlg=  9320 sim=0.18 OK  raw=[] | Thằng Tí nó đang chạy đi lấy cái chổi để quét sạch mấy vụn mùn cưa trên sàn ghe đó cháu. N
+s05t07b1 minh p= 1372 dlg=  9407 sim=0.15 OK  raw=[] | Dạ con biết rồi, con sẽ làm thật cẩn thận để không phụ lòng bà nhà mình. Mà ông Bảy ơi, co
+s05t08b1 lao  p= 1605 dlg=  9540 sim=0.11 OK  raw=[] | Thằng Tí nó vừa chạy đi lấy cái chổi tre ngoài sau hè rồi, nó hay chạy lăng xăng phụ lão m
+s05t09b1 minh p= 1600 dlg=  9631 sim=0.13 OK  raw=[] | Dạ, con sẽ làm thiệt kỹ, không để nước lọt vô đâu ông Bảy yên tâm. Nghe ông kể con thấy th
+s05t10b2 lao  p= 1870 dlg=  9725 sim=0.12 OK  raw=[] | Cháu nói mấy cái chữ lạ hoắc đó lão nghe không hiểu, chứ làm ra được cái gì cầm nắm được n
+s05t11b2 minh p= 1793 dlg=  9797 sim=0.05 OK  raw=[] | Dạ, chắc tại vì cái ghe này chứa quá nhiều kỷ niệm của bà nhà nên ông mới thương nó vậy đó
+s05t12b2 lao  p= 2011 dlg=  9901 sim=0.21 OK  raw=[] | Cái từ maintenance gì đó cháu nói lão chịu chết không hiểu, cứ nói tiếng người cho lão nhờ
+s05t13b2 minh p= 1977 dlg=  9986 sim=0.31 OK  raw=[] | Dạ, con biết rồi, con sẽ tập trung làm cho thật kỹ để không phụ lòng bà nhà đâu ông Bảy. M
+s05t14b2 lao  p= 2234 dlg= 10111 sim=0.16 OK  raw=[] | Hồi đó đêm nào cũng yên tĩnh lắm, chỉ có tiếng sóng vỗ lách tách vô mạn ghe với tiếng gió 
+s05t15b2 minh p= 2226 dlg= 10180 sim=0.09 OK  raw=[] | Dạ con đang cố gắng thật cẩn thận để không bị lem đây ông Bảy. Nghe ông kể con thấy khung 
+s05t16b2 lao  p= 2410 dlg= 10295 sim=0.14 OK  raw=[] | Lại cái chữ cinematic gì đó nghe nhức cả đầu, cháu cứ nói tiếng rành mạch cho lão nghe với
+s05t17b2 minh p= 2418 dlg= 10366 sim=0.10 OK  raw=[] | Dạ con biết rồi, con đang tập trung cao độ đây ông Bảy ơi. Mà con thắc mắc là chỉ cước đó 
+   >> CUT (budget). Summary: Minh cùng lão Bảy pha dầu rái với mùn cưa để trét kín lỗ thủng trên chiếc ghe là kỷ vật của người vợ quá cố. Lão Bảy kể cho Minh nghe về việc bà nhà lão từng chắt chiu tiền mua ghe và thường xuyên ngồi khâu lưới dưới trăng, đồng thời giới thiệu về đứa cháu tên Tí hay chạy lăng xăng phụ giúp việc vặt.
+
+=== SCENE 6: Làng có đám giỗ, Lão Bảy dẫn Minh đi ăn giỗ, gặp mấy ông bạn già của lão.
+s06t00b0 minh p=  858 dlg= 10447 sim=0.11 OK  raw=[] | Ông Bảy ơi, mấy chú bạn của ông nhìn "vibe" vui vẻ quá trời luôn hà! Con nghe mọi người nó
+s06t01b0 lao  p= 1014 dlg= 10573 sim=0.08 OK  raw=[] | Chết tiệt, cái từ gì mà "a-mê-zing" nghe lạ tai quá, lão chẳng hiểu cháu nói chi hết. Mấy 
+s06t02b0 minh p= 1039 dlg= 10679 sim=0.10 OK  raw=[] | Trời ơi, ông Bảy đừng có nói vậy, con có đâu có muốn làm rể con gái ông Chín đâu, *no way*
+s06t03b0 lao  p= 1254 dlg= 10808 sim=0.11 OK  raw=[] | Cháu nói cái gì mà "no-way" với "ếch-sai-tịt" nghe nhức hết cả đầu, lão nghe chẳng hiểu mô
+s06t04b0 minh p= 1282 dlg= 10910 sim=0.09 OK  raw=[] | Dạ, con xin lỗi ông Bảy, tại con đang hơi bị *high* chút xíu nên nói hơi luyên thuyên. Mà 
+s06t05b1 lao  p= 1530 dlg= 11045 sim=0.12 OK  raw=[] | Cháu đừng có dùng mấy cái từ "hai" với "pro" đó nữa, lão nghe mà thấy mệt cái lỗ tai quá. 
+s06t06b1 minh p= 1527 dlg= 11125 sim=0.15 OK  raw=[] | Trời ơi, vụ đó mà chú Tư kể là thiệt hả ông Bảy, nghe *cool* dữ thần luôn vậy! Hồi đó ông 
+s06t07b1 lao  p= 1716 dlg= 11242 sim=0.13 OK  raw=[] | Thôi cái thằng này, đừng có dùng mấy cái từ "cu" nghe như tiếng chim kêu vậy, lão nghe ngạ
+s06t08b1 minh p= 1732 dlg= 11325 sim=0.09 OK  raw=[] | Dạ, con xin lỗi ông Bảy, tại con đang hơi bị *drunk* nên nói năng lộn xộn quá. Mà ông ơi, 
+s06t09b1 lao  p= 1924 dlg= 11465 sim=0.13 OK  raw=[] | Cháu đừng có nói mấy cái từ "đrăng" với "scary" nghe như tiếng người lạ xứ nào, lão nghe m
+s06t10b2 minh p= 1969 dlg= 11552 sim=0.10 OK  raw=[] | Dạ, con biết rồi, con sẽ im lặng để ông nhậu với mấy chú cho thoải mái. Mà ông Bảy ơi, sao
+s06t11b2 lao  p= 2159 dlg= 11678 sim=0.10 OK  raw=[] | Mấy lão già này cứ hễ ngồi vào bàn nhậu là cứ thích lôi chuyện riêng tư của người khác ra 
+s06t12b2 minh p= 2153 dlg= 11765 sim=0.08 OK  raw=[] | Dạ, ông nói vậy con cũng thấy đỡ *stress* hơn chút xíu, chứ nãy giờ con thấy ngại muốn chế
+s06t13b2 lao  p= 2380 dlg= 11898 sim=0.15 OK  raw=[] | Cháu cứ nói "ét-rét" nghe mệt quá, mấy lão này chỉ là đang mượn rượu để nói chuyện đời thô
+s06t14b2 minh p= 2381 dlg= 11975 sim=0.12 OK  raw=[] | Dạ, con biết rồi, để con uống thêm chén nữa cho ấm cái bụng. Mà ông Bảy ơi, con thấy mấy c
+s06t15b2 lao  p= 2598 dlg= 12119 sim=0.20 OK  raw=[] | Cái từ "hi-linh" gì đó cháu nói lão nghe chẳng hiểu gì hết, nghe cứ như tiếng gió rít ngoà
+s06t16b2 minh p= 2610 dlg= 12211 sim=0.09 OK  raw=[] | Dạ, mai ông nhớ dắt con đi sớm nha, con muốn tận mắt thấy cảnh bến cá tấp nập cho đỡ *bore
+s06t17b2 lao  p= 2842 dlg= 12371 sim=0.20 OK  raw=[] | Lại còn "bo-dờ" với "ếch-pi-ri-ơn-xơ" gì nữa, cháu nói tiếng gì nghe cứ như tiếng máy nổ b
+   >> CUT (budget). Summary: Lão Bảy dẫn Minh đi ăn giỗ và gặp gỡ những người bạn già trong làng. Tại đây, lão Bảy kể cho Minh nghe về quá khứ từng một mình vượt sóng dữ để đánh bắt cá thu, đồng thời tiết lộ việc những người bạn đang trêu chọc ý định dắt Minh về làm rể con gái ông Chín.
+
+=== SCENE 7: Minh lấy điện thoại ra, định dạy Lão Bảy gọi video cho thằng con trai ở Đà Nẵng.
+s07t00b0 lao  p=  952 dlg= 12468 sim=0.04 OK  raw=[] | Cái máy này sao khó dùng quá vậy cháu, lão cứ bấm vô cái hình này mà nó cứ tối thui hà. Th
+s07t01b0 minh p=  877 dlg= 12541 sim=0.04 OK  raw=[] | Dạ không có hư đâu ông Bảy ơi, chắc tại ông bấm nhầm cái icon đó thôi hà. Để con *setup* l
+s07t02b0 lao  p= 1095 dlg= 12642 sim=0.10 OK  raw=[] | Cháu nói cái gì mà setup với error nghe lạ tai quá, lão nghe chẳng hiểu mô hết trơn. Thôi 
+s07t03b0 minh p= 1059 dlg= 12721 sim=0.15 OK  raw=[] | Thôi để con làm lẹ cho, chứ để ông tự mò mẫm là dễ bị *crash* cái máy lắm đó. Con biết mà,
+s07t04b0 lao  p= 1283 dlg= 12842 sim=0.14 OK  raw=[] | Cháu cứ nói mấy từ lạ hoắc làm lão chóng hết cả mặt, cái máy này sao cứ kêu tít tít hoài v
+s07t05b1 minh p= 1302 dlg= 12905 sim=0.10 OK  raw=[] | Dạ xong rồi nè, con vừa *update* xong là nó chạy mượt luôn, ông đừng lo bị hỏng nha. Để co
+s07t06b1 lao  p= 1475 dlg= 12998 sim=0.17 OK  raw=[] | Trời ơi, cái mặt thằng con lão hiện lên rồi kìa, nhìn nó gầy quá cháu ơi. Cháu nhấn nút gì
+s07t07b1 minh p= 1431 dlg= 13069 sim=0.16 OK  raw=[] | Nhìn chú ấy gầy thiệt đó ông Bảy, chắc tại làm việc ở công ty lớn nên áp lực quá nè. Thấy 
+s07t08b1 lao  p= 1647 dlg= 13177 sim=0.13 OK  raw=[] | Thôi cháu đừng có giữ máy lâu quá, sợ nó đang dở việc rồi lại bị sếp mắng thì khổ thân nó 
+s07t09b1 minh p= 1618 dlg= 13249 sim=0.13 OK  raw=[] | Dạ không có gì đâu ông Bảy, thấy chú ấy cười là con cũng thấy *happy* lây luôn đó. Ông đừn
+s07t10b2 lao  p= 1874 dlg= 13365 sim=0.13 OK  raw=[] | Cháu cứ nói mấy chữ lạ lẫm làm lão nghe mà chẳng hiểu gì hết trơn. Thôi, để lão ngồi đây l
+s07t11b2 minh p= 1814 dlg= 13449 sim=0.17 OK  raw=[] | Nghe ông kể mà con thấy thương hai cha con quá, giống hệt ba con hồi nhỏ cứ bám lấy mẹ suố
+s07t12b2 lao  p= 2106 dlg= 13568 sim=0.10 fix raw=['mình'] | Cháu nói cái chữ code gì đó lão nghe không hiểu, chắc cũng mệt mỏi giống như thằng con lão
+s07t13b2 minh p= 2058 dlg= 13645 sim=0.11 OK  raw=[] | Dạ, con hiểu cảm giác đó mà, lúc nào thấy cô đơn là con chỉ muốn chạy về nhà ngay lập tức 
+s07t14b2 lao  p= 2247 dlg= 13754 sim=0.08 OK  raw=[] | Nhớ chứ cháu, nhớ tới mức có khi nằm mơ còn thấy dáng bà ngồi khâu lưới dưới ánh trăng nữa
+s07t15b2 minh p= 2252 dlg= 13835 sim=0.14 OK  raw=[] | Dạ, con ngồi đây với ông nè, ông cứ nhìn ra biển cho khuây khỏa đi. Nghe ông kể chuyện bà 
+s07t16b2 lao  p= 2445 dlg= 13954 sim=0.13 OK  raw=[] | Sóng dữ thì cũng chỉ là chuyện thường ngày ở biển thôi cháu, quan trọng là vợ chồng lão lu
+s07t17b2 minh p= 2460 dlg= 14056 sim=0.15 OK  raw=[] | Nghe ông kể mà con thấy nể sự kiên cường của hai người quá, đúng là tình cảm gắn bó như hì
+   >> CUT (budget). Summary: Minh giúp Lão Bảy thiết lập điện thoại để gọi video cho con trai ông đang làm việc tại một công ty ở Đà Nẵng. Qua cuộc trò chuyện, Lão Bảy chia sẻ về người vợ quá cố thường chăm sóc ông và kỷ niệm về những trận bão biển, trong khi Minh bày tỏ sự đồng cảm về nỗi nhớ ba mẹ ở Sài Gòn.
+
+=== SCENE 8: Một đêm trăng, Lão Bảy dẫn Minh đi câu mực ngoài cửa biển.
+s08t00b0 minh p=  857 dlg= 14122 sim=0.04 OK  raw=[] | Trời đêm nay yên tĩnh thiệt đó ông Bảy, nhìn lên mấy ngôi sao là thấy *relax* hẳn luôn. Mà
+s08t01b0 lao  p=  995 dlg= 14241 sim=0.10 OK  raw=[] | Cháu nói cái chi mà nghe lạ tai quá, lão chả hiểu cái từ đó là cái chi đâu. Muốn câu mực t
+s08t02b0 minh p= 1016 dlg= 14310 sim=0.08 OK  raw=[] | Dạ, con hiểu rồi, để con làm thử coi có "được mùa" không nha ông Bảy. Mà hồi đó ông đi tàu
+s08t03b0 lao  p= 1191 dlg= 14450 sim=0.18 OK  raw=[] | Cái từ kia cháu nói lão nghe cứ như tiếng chim kêu, lão chả hiểu gì hết. Hồi đó lão đi tàu
+s08t04b0 minh p= 1200 dlg= 14514 sim=0.10 OK  raw=[] | Dạ con tập trung nè ông Bảy, tại con hơi bị *distracted* một chút thôi. Nghe ông kể hồi đó
+s08t05b1 lao  p= 1439 dlg= 14641 sim=0.12 OK  raw=[] | Cháu cứ nói mấy cái từ lạ hoắc làm lão nhức cả đầu, lão chả biết cái "đít-trắc" đó là cái 
+s08t06b1 minh p= 1399 dlg= 14719 sim=0.04 OK  raw=[] | Trời ơi, phao giật mạnh thiệt kìa ông Bảy, để con kéo lên liền! Con đang cố *focus* nè, để
+s08t07b1 lao  p= 1616 dlg= 14853 sim=0.19 OK  raw=[] | Cháu cứ "phô-cớt" cái chi mà nghe mệt quá, lão nghe không hiểu đâu. Cứ thả hồn theo con só
+s08t08b1 minh p= 1619 dlg= 14950 sim=0.20 OK  raw=[] | Dạ con kéo rồi, con mực này nhìn *amazing* thiệt sự luôn ông Bảy ơi! Nghe ông nói đúng quá
+s08t09b1 lao  p= 1855 dlg= 15091 sim=0.15 OK  raw=[] | Lại cái từ "a-mê-zing" gì đó nghe lạ lẫm quá, lão chả hiểu cháu đang khen cái chi. Chuyện 
+s08t10b2 minh p= 1906 dlg= 15185 sim=0.13 OK  raw=[] | Dạ con cất vô thùng liền đây, nhìn con mực tươi rói này con cũng thấy sướng lây luôn á ông
+s08t11b2 lao  p= 2098 dlg= 15321 sim=0.19 OK  raw=[] | Trăng đêm nay sáng thiệt, nhìn ra ngoài khơi xa thấy mênh mông như cái biển đời vậy đó chá
+s08t12b2 minh p= 2103 dlg= 15398 sim=0.05 OK  raw=[] | Nghe ông kể mà con thấy rùng mình luôn, hồi đó chắc mọi người phải đoàn kết lắm mới vượt q
+s08t13b2 lao  p= 2319 dlg= 15537 sim=0.17 OK  raw=[] | Lại cái từ "ếch-trim" gì nữa, lão nghe mà cứ như tiếng sấm bên tai, chả hiểu cháu nói chi 
+s08t14b2 minh p= 2327 dlg= 15638 sim=0.16 OK  raw=[] | Dạ, nghe ông kể con thấy cảm động quá, đúng là tình anh em trên biển quý giá thiệt sự. Ngh
+s08t15b2 lao  p= 2567 dlg= 15788 sim=0.23 OK  raw=[] | Cái máy tính với cái "cốt" gì đó của cháu lão nghe qua là thấy rắc rối rồi, lão chả biết l
+s08t16b2 minh p= 2586 dlg= 15862 sim=0.04 OK  raw=[] | Dạ con nghe ông rồi, để con phụ ông một tay liền đây. Nghe ông nói về cái "máu nghề nghiệp
+s08t17b2 lao  p= 2833 dlg= 16021 sim=0.14 OK  raw=[] | Lại cái từ "in-spai" gì nữa, lão nghe mà cứ như tiếng gió rít qua kẽ lá, chả hiểu gì hết. 
+   >> CUT (budget). Summary: Lão Bảy dẫn Minh đi câu mực trên biển vào một đêm trăng sáng. Qua những lời kể của lão Bảy, Minh biết được trong quá khứ lão từng đi tàu lớn ra Hoàng Sa suốt nhiều tháng và phải đối mặt với nhiều sóng dữ cùng hiểm nguy để bảo vệ gia đình.
+
+=== SCENE 9: Buổi sáng cuối cùng, Minh sắp về lại Sài Gòn, ghé bến chào Lão Bảy.
+s09t00b0 lao  p=  985 dlg= 16133 sim=0.08 OK  raw=[] | Sáng chừ nắng lên đẹp quá mà sao lão thấy trong lòng cứ thấy trống trải sao đó cháu ơi. Th
+s09t01b0 minh p=  888 dlg= 16199 sim=0.06 OK  raw=[] | Con cảm ơn ông Bảy nhiều nha, quà của ông là *the best* luôn đó! Con cũng quyết định rồi, 
+s09t02b0 lao  p= 1137 dlg= 16306 sim=0.07 OK  raw=[] | Cháu nói cái chi mà "the best" nghe lạ tai quá, lão chẳng hiểu nghĩa là răng đâu. Thôi chá
+s09t03b0 minh p= 1069 dlg= 16369 sim=0.02 OK  raw=[] | Dạ, nghe ông nói vậy con thấy ấm lòng quá, *thank you* ông Bảy nhiều nha! Con sẽ nhớ vị ca
+s09t04b0 lao  p= 1315 dlg= 16491 sim=0.15 OK  raw=[] | Lại "thank you" nữa đó, cái tiếng chi mà nghe cứ như tiếng chim kêu ngoài rặng dừa sau nhà
+s09t05b1 minh p= 1293 dlg= 16559 sim=0.18 OK  raw=[] | Dạ con đi đây, ông đừng có buồn nha, con hứa là tới Tết con sẽ về thăm ông và thằng Tí mà!
+s09t06b1 lao  p= 1513 dlg= 16671 sim=0.15 OK  raw=[] | Tết tới thì nhớ cầm theo cho lão ít bánh pía hay cái chi ngọt ngọt cho thằng Tí nó khoái n
+s09t07b1 minh p= 1450 dlg= 16734 sim=0.08 OK  raw=[] | Dạ con nhớ rồi, nhất định con sẽ mua bánh pía thật ngon cho thằng Tí nha! Nghe ông nói vụ 
+s09t08b1 lao  p= 1658 dlg= 16860 sim=0.28 OK  raw=[] | Cái chữ "excited" chi mà nghe như tiếng sóng vỗ vào mạn thuyền rầm rập rứa không biết, lão
+s09t09b1 minh p= 1647 dlg= 16921 sim=0.23 OK  raw=[] | Dạ, ông đừng có nói vậy nghe buồn quá, con đi rồi sẽ sớm nhắn tin cho ông qua cái điện tho
+s09t10b2 lao  p= 1921 dlg= 17010 sim=0.11 OK  raw=[] | Ừ, có chi thì nhắn cho lão qua cái máy đó nghe, lão ngồi đây hóng tin cháu. Thôi cháu đi l
+s09t11b2 minh p= 1805 dlg= 17057 sim=0.26 OK  raw=[] | Dạ con đi liền đây, ông đừng có ngồi đó mà buồn nha! Con hứa là sẽ nhắn tin cho ông liên t
+s09t12b2 lao  p= 2028 dlg= 17162 sim=0.18 OK  raw=[] | Thôi cháu đi đi, lão ra bờ kè ngồi nhìn mấy con con sóng vỗ cho khuây khỏa đây. Lão đang t
+s09t13b2 minh p= 1965 dlg= 17197 sim=0.20 OK  raw=[] | Dạ con cầm chắc rồi, ông Bảy đừng lo nha! Con đi đây, ông nhớ ăn cơm ngon với thằng Tí đó.
+s09t14b2 lao  p= 2176 dlg= 17283 sim=0.20 OK  raw=[] | Ừ, đi lẹ đi kẻo trễ chuyến xe khách về Sài Gòn đó cháu. Lão ra bến ngồi hút điếu thuốc rồi
+s09t15b2 minh p= 2094 dlg= 17321 sim=0.29 OK  raw=[] | Dạ con chào ông Bảy, con đi đây ạ! Ông nhớ mua cá mú thật tươi cho thằng Tí ăn nha. Con đi
+s09t16b2 lao  p= 2371 dlg= 17399 sim=0.39 fix raw=['mình'] | Ừ, cháu đi lẹ đi kẻo nắng gắt làm mệt người đó. Lão ra bến ngồi nhìn mấy con tàu lướt qua 
+   >> EVENT (sim 0.39): Một con chó mực chạy tới, ngoạm mất con cá trong rổ rồi chạy biến.
+s09t17b2 minh p= 2274 dlg= 17457 sim=0.04 OK  raw=[] | Trời đất ơi, con chó kia sao nó quái chiêu vậy ông Bảy, làm con hú hồn luôn! Ông coi kìa, 
+   >> CUT (budget). Summary: Minh chào tạm biệt Lão Bảy tại bến tàu trước khi lên xe về lại Sài Gòn và nhận túi quà gồm khô cá nục cùng mực một nắng. Minh cho biết quyết định sẽ xin chuyển việc để tìm hướng đi mới, đồng thời hứa sẽ về thăm Lão Bảy và thằng Tí vào dịp Tết.
+
+=== SCENE 10: (Lần về quê thứ 2 của Minh, vài tháng sau) Buổi chiều ở bến cá Cửa Đại. Lão Bảy đang ngồi vá lưới thì Minh từ Sài Gòn về chơi, ghé lại chào.
+s10t00b0 minh p=  863 dlg= 17515 sim=0.00 OK  raw=[] | Ông Bảy ơi, con mới về nè, nhìn ông vá lưới vẫn chuyên nghiệp quá nha! Mà cái nút thắt này
+s10t01b0 lao  p= 1016 dlg= 17639 sim=0.09 OK  raw=[] | Chà, cháu về rồi đó hả, nhìn cái mặt trông rắn rỏi hơn hồi trước nhiều quá nghe. Cái nút t
+s10t02b0 minh p= 1014 dlg= 17730 sim=0.03 OK  raw=[] | Dạ con về nghỉ phép xíu cho *relax* thôi chứ chưa có tính chuyện làm mướn gì đâu ông Bảy ơ
+s10t03b0 lao  p= 1302 dlg= 17877 sim=0.10 fix raw=['eng/emoji'] | Cháu nói cái gì mà rơ-lắc rơ-lắc, lão nghe chẳng hiểu mô hết, cứ nói là nghỉ ngơi cho khỏe
+s10t04b0 minh p= 1260 dlg= 17974 sim=0.08 OK  raw=[] | Dạ con ngồi liền, bánh tráng nướng ở đây vẫn là *best* luôn, ăn vô là thấy quê mình dễ thư
+s10t05b1 lao  p= 1526 dlg= 18126 sim=0.12 OK  raw=[] | Thằng Tí dạo này nó lớn phổng phao lắm, sáng nào cũng dậy sớm chạy ra bến cá phụ mấy chú b
+s10t06b1 minh p= 1517 dlg= 18222 sim=0.09 OK  raw=[] | Dạ đâu có đâu ông, con về để *refresh* lại tinh thần chút thôi chứ không có chuyện gì buồn
+s10t07b1 lao  p= 1747 dlg= 18382 sim=0.11 OK  raw=[] | Cháu cứ nói cái từ rơ-phré-sờ gì nghe lạ lẫm quá, lão nghe cứ như tiếng máy nổ bị hỏng vậy
+s10t08b1 minh p= 1781 dlg= 18479 sim=0.09 OK  raw=[] | Dạ không có gì đâu ông Bảy, tại dạo này con hay thức khuya chạy *deadline* nên nhìn hơi xu
+s10t09b1 lao  p= 2012 dlg= 18639 sim=0.12 OK  raw=[] | Cái "đét-lai" với "pro-phét-sờ-nờ" gì đó lão nghe mà cứ như tiếng sóng vỗ vào mạn thuyền, 
+s10t10b2 minh p= 2084 dlg= 18730 sim=0.10 OK  raw=[] | Dạ, máy nổ mới chắc là chạy êm và *smooth* hơn hồi trước nhiều lắm ông nhỉ, ông dắt con đi
+s10t11b2 lao  p= 2272 dlg= 18890 sim=0.15 OK  raw=[] | Cháu cứ nói cái từ "sờ-mút" với "chiu" gì nghe nhức cả đầu, lão nghe chẳng hiểu mô hết, cứ
+s10t12b2 minh p= 2276 dlg= 18957 sim=0.12 OK  raw=[] | Dạ con nhớ rồi, con sẽ chuẩn bị đầy đủ để đi với ông Bảy! Mà ông ơi, cái máy nổ mới của th
+s10t13b2 lao  p= 2508 dlg= 19097 sim=0.13 OK  raw=[] | Lại thêm cái từ "át-van" gì đó, lão nghe mà cứ như tiếng gió rít qua khe cửa, chẳng hiểu c
+s10t14b2 minh p= 2491 dlg= 19201 sim=0.05 OK  raw=[] | Dạ đâu có gì đâu ông Bảy ơi, con chỉ đang nghĩ xem sau đợt này về lại Sài Gòn thì nên làm 
+s10t15b2 lao  p= 2729 dlg= 19341 sim=0.18 OK  raw=[] | Cháu cứ nói mấy cái từ "in-tơ-rét" với "ếch-sai-tịt" nghe như tiếng vẹt nói, lão nghe mà c
+s10t16b2 minh p= 2743 dlg= 19409 sim=0.17 OK  raw=[] | Dạ con biết rồi, ăn món của ông Bảy là con thấy *perfect* nhất luôn! Mà ông ơi, máy của th
+s10t17b2 lao  p= 2945 dlg= 19553 sim=0.14 OK  raw=[] | Lại "pơ-phếch" với chả "linh kiện", cháu nói cứ như người trên trời rơi xuống vậy, lão ngh
+   >> CUT (budget). Summary: Minh ghé thăm lão Bảy tại bến cá Cửa Đại và chia sẻ rằng mình đang về quê để nghỉ ngơi sau thời gian làm việc tại Sài Gòn. Lão Bảy cho Minh biết tình hình của Tí hiện đang làm bốc xếp ở bến cá và quyết định dẫn Minh đi xem chiếc ghe mới thay động cơ của Tư.
+
+=== SCENE 11: (Lần về quê thứ 2 của Minh, vài tháng sau) Sáng hôm sau, trời còn tối, Minh theo Lão Bảy ra khơi trên chiếc ghe nhỏ.
+s11t00b0 lao  p=  992 dlg= 19697 sim=0.06 OK  raw=[] | Nhìn sóng đánh ghềnh ghềnh vầy chắc cháu lại thấy bụng dạ nôn nao rồi phải không, hồi lão 
+s11t01b0 minh p=  928 dlg= 19783 sim=0.05 OK  raw=[] | Con cảm ơn ông Bảy, để con ngậm miếng gừng xem có đỡ hơn không. Mà chết cha rồi, con tính 
+s11t02b0 lao  p= 1195 dlg= 19937 sim=0.21 OK  raw=[] | Cái máy đó hết pin thì thôi chứ đừng có than vãn với lão, lão chẳng biết cái "so bad" đó l
+s11t03b0 minh p= 1176 dlg= 20033 sim=0.07 OK  raw=[] | Nghe ông kể mà con thấy *scary* thiệt sự, hồi đó ông mới mười bốn tuổi thôi mà đã can đảm 
+s11t04b0 lao  p= 1453 dlg= 20193 sim=0.17 OK  raw=[] | Cái từ "scary" đó cháu nói là sợ phải không, chứ hồi đó lão vừa sợ vừa run cầm cập chứ có 
+s11t05b1 minh p= 1478 dlg= 20264 sim=0.04 OK  raw=[] | Nghe ông kể mà con nổi hết da gà, đúng là *survival mode* thật sự luôn đó ông Bảy ơi. Mà n
+s11t06b1 lao  p= 1693 dlg= 20386 sim=0.07 OK  raw=[] | Cháu nói cái gì mà "survival mode" nghe lạ tai quá, lão chả hiểu cháu đang nói chi hết. Nư
+s11t07b1 minh p= 1642 dlg= 20475 sim=0.06 OK  raw=[] | Dạ, để con cầm lấy cái đầu lưới liền, con sẽ cố gắng *focus* để không làm lỡ nhịp của ông.
+s11t08b1 lao  p= 1912 dlg= 20635 sim=0.14 OK  raw=[] | Cái chữ "focus" cháu nói là tập trung phải không, thôi cứ nhìn cho kỹ cái mép nước kia rồi
+s11t09b1 minh p= 1900 dlg= 20727 sim=0.09 OK  raw=[] | Trời ơi, mất mớ lưới đó chắc ông tiếc hùi hụi luôn hả ông Bảy, nghe mà con thấy *sad* giùm
+s11t10b2 lao  p= 2212 dlg= 20857 sim=0.19 OK  raw=[] | Cái chữ "sad" đó chắc là buồn, hồi đó mất mẻ lưới lão tiếc muốn đứt ruột luôn chớ chẳng ch
+s11t11b2 minh p= 2130 dlg= 20933 sim=0.10 OK  raw=[] | Trời ơi, con thấy rồi, con thấy rồi, con đang kéo hết sức đây ông Bảy ơi! Con muốn lấy điệ
+s11t12b2 lao  p= 2387 dlg= 21087 sim=0.13 OK  raw=[] | Cái "amazing" đó chắc là kỳ diệu lắm, chứ lão chỉ thấy cái lưng cháu đỏ ửng lên vì gắng sứ
+s11t13b2 minh p= 2368 dlg= 21165 sim=0.27 OK  raw=[] | Dạ con đang kéo hết sức đây ông Bảy ơi, cái này mà bắt được chắc là *big win* của tụi mình
+s11t14b2 lao  p= 2627 dlg= 21313 sim=0.16 OK  raw=[] | Cái "big win" với "unlucky" đó lão nghe chả hiểu gì hết, thôi cháu cứ lo mà kéo cho dứt kh
+s11t15b2 minh p= 2602 dlg= 21392 sim=0.22 OK  raw=[] | Dạ con đang dồn hết sức đây, con cá này mà lên được là *super lucky* luôn đó ông Bảy ơi! T
+s11t16b2 lao  p= 2894 dlg= 21512 sim=0.22 BAD raw=['mình'] | Cái "super lucky" đó chắc là may mắn lắm, nhưng thôi cháu cứ lo mà dồn sức kéo cho dứt kho
+s11t17b2 minh p= 2809 dlg= 21593 sim=0.41 OK  raw=[] | Con đang dồn hết sức đây ông Bảy ơi, cái này mà lên được là *super lucky* thiệt luôn á! Co
+   >> CUT (budget). Summary: Minh cùng Lão Bảy ra khơi trên chiếc ghe nhỏ và cùng nhau kéo lên một con cá thu ngừ lớn từ lưới. Qua cuộc trò chuyện, Lão Bảy chia sẻ về những trải nghiệm đi biển từ năm mười bốn tuổi và Minh biết được thói quen bán cá của ông để trang trải cuộc sống.
+
+=== SCENE 12: (Lần về quê thứ 2 của Minh, vài tháng sau) Giữa trưa ở chợ cá, Lão Bảy mang mẻ cá ra bán, Minh phụ một tay.
+s12t00b0 minh p=  832 dlg= 21666 sim=0.10 OK  raw=[] | Dạ, mẻ cá hôm nay nhìn tươi rói luôn ông Bảy ơi, nhìn là biết vừa mới kéo lên xong nè. Con
+s12t01b0 lao  p= 1027 dlg= 21787 sim=0.13 OK  raw=[] | Cá tươi ráo mồ hôi nên nhìn mới bóng vậy đó cháu, mẻ này lão vừa hạ xuống từ ghe lão Tư hồ
+s12t02b0 minh p= 1001 dlg= 21872 sim=0.23 OK  raw=[] | Dạ, để con xếp lại cho gọn gàng cho mấy bà nội trợ dễ nhìn nha ông Bảy. Mà con tính hỏi th
+s12t03b0 lao  p= 1241 dlg= 22007 sim=0.17 OK  raw=[] | Mấy cái chuyện quay phim đăng mạng đó lão chịu chết, chẳng hiểu mấy cái máy móc đó làm sao
+s12t04b0 minh p= 1229 dlg= 22089 sim=0.11 OK  raw=[] | Dạ, con biết rồi, để con xếp cho đẹp để bà Tư thấy là "chốt đơn" liền luôn. Mà ông Bảy nè,
+s12t05b1 lao  p= 1501 dlg= 22247 sim=0.16 OK  raw=[] | Hồi đó mười mấy tuổi đầu đầu óc lão chỉ có việc làm sao kéo được mẻ cá đầy khoang rồi về đ
+s12t06b1 minh p= 1477 dlg= 22335 sim=0.14 OK  raw=[] | Dạ con biết rồi, để con tính toán cho kỹ chứ không bà Tư bắt bẻ là mệt lắm luôn. Mà ông Bả
+s12t07b1 lao  p= 1720 dlg= 22470 sim=0.26 OK  raw=[] | Cái nút nhấn với ship gì đó lão nghe không hiểu, nghe mệt cái đầu quá cháu ơi. Lão chỉ que
+s12t08b1 minh p= 1677 dlg= 22555 sim=0.08 OK  raw=[] | Dạ, để con cân cho bà Sáu, ông cứ ngồi nghỉ chút đi cho khỏe nha ông Bảy. Con định nói thê
+s12t09b1 lao  p= 1938 dlg= 22683 sim=0.11 OK  raw=[] | Bà Sáu mua cá thu này nhiều lắm, bà ấy hay lấy về làm món cá kho tộ cho mấy đứa cháu ở nhà
+s12t10b2 minh p= 1936 dlg= 22753 sim=0.12 OK  raw=[] | Dạ con biết rồi, để con lấy thêm cá nục cho bà Sáu luôn nè. Mà công nhận bà Sáu kỹ tính th
+s12t11b2 lao  p= 2144 dlg= 22874 sim=0.17 OK  raw=[] | Cô Ba bán tôm bên cạnh chắc đang nhìn thấy cháu phụ lão nên thấy lạ đó, chứ ở đây thanh ni
+s12t12b2 minh p= 2097 dlg= 22948 sim=0.20 OK  raw=[] | Dạ, chắc cô Ba thấy con lạ lẫm quá nên mới cười vậy đó ông Bảy. Con cũng muốn rủ ông làm c
+s12t13b2 lao  p= 2406 dlg= 23047 sim=0.11 fix raw=['mình'] | Đi thôi cháu, qua quán bà Tám làm ly trà đá cho nó mát cái cổ họng. Lão cũng muốn nghe chá
+s12t14b2 minh p= 2278 dlg= 23133 sim=0.17 OK  raw=[] | Dạ, để con cất giùm ông mấy cái rổ này cho nhanh nha ông Bảy. Con sẽ hỏi thăm thằng Tí luô
+s12t15b2 lao  p= 2599 dlg= 23240 sim=0.20 fix raw=['mình'] | Thôi được rồi, cháu cứ cất cho gọn gàng đi rồi lão với cháu ra đó ngồi. Cháu cứ giải thích
+s12t16b2 minh p= 2479 dlg= 23301 sim=0.03 OK  raw=[] | Dạ, để con dọn lẹ cho rồi mình đi ông Bảy ơi. Con sẽ cố gắng nói chuyện sao cho thật *easy
+s12t17b2 lao  p= 2712 dlg= 23435 sim=0.17 OK  raw=[] | Bà Tư bán trái cây thì hay kể chuyện mấy đứa con bà ấy đi làm xa, rồi lại kể chuyện mấy vụ
+   >> CUT (budget). Summary: Minh giúp lão Bảy xếp cá và cân hàng cho bà Sáu bán cá khô tại chợ. Lão Bảy chia sẻ về thói quen bán hàng truyền thống, các mối quan hệ trong chợ và quá khứ đi biển của mình, trong khi Minh đề xuất ý tưởng bán hàng qua mạng.
+
+=== SCENE 13: (Lần về quê thứ 2 của Minh, vài tháng sau) Chiều tối trời chuyển giông, Minh chạy ra bến giúp Lão Bảy kéo ghe lên bờ tránh bão.
+s13t00b0 lao  p=  968 dlg= 23553 sim=0.09 OK  raw=[] | Trời chuyển giông nhanh quá, cháu mau tay mau chân phụ lão kéo cái ghe vô chỗ cao kia lẹ l
+s13t01b0 minh p=  879 dlg= 23642 sim=0.04 OK  raw=[] | Trời ơi, con đang giữ đây ông Bảy ơi, gió thổi mạnh quá làm con đứng không vững luôn! Nhìn
+s13t02b0 lao  p= 1116 dlg= 23769 sim=0.19 OK  raw=[] | Scary cái gì mà scary, cái từ đó lão nghe chẳng hiểu mô hết, cứ bám chặt lấy mạn ghe giúp 
+s13t03b0 minh p= 1103 dlg= 23861 sim=0.12 OK  raw=[] | Con xin lỗi, tại con chưa quen dùng từ đó với ông thôi, chứ nhìn mấy con sóng kìa, nó to k
+s13t04b0 lao  p= 1343 dlg= 24002 sim=0.30 OK  raw=[] | Lại cái từ gì nữa, excited cái gì mà excited, giữa lúc sóng đánh dữ dội vầy mà cháu còn th
+   >> CUT (end). Summary: Minh cùng Lão Bảy nỗ lực đẩy ghe lên bãi cát cao để tránh cơn giông bão đang ập đến. Lão Bảy kể về việc mất đi người bạn thân trong trận bão năm 1999 và Minh chia sẻ về trải nghiệm lần đầu chứng kiến bão biển dữ dội khác với mưa ở Sài Gòn.
+
+done: 14 scenes, 24002 dialogue tokens, 560s, stats={'beats': 40, 'farewell_blocked': 1, 'theme_bans': 76, 'cut_budget': 12, 'regens': 13, 'events': 2, 'cut_farewell': 1, 'topic_notes': 1, 'regen_failed': 1, 'cut_end': 1}

@@ -1,0 +1,33 @@
+{
+ "model": "qwen3.5:9b",
+ "results": [
+  {
+   "num_ctx": 4096,
+   "size_gib": 5.22,
+   "gpu_pct": 100,
+   "tok_s": 41.8,
+   "load_s": 6
+  },
+  {
+   "num_ctx": 8192,
+   "size_gib": 5.95,
+   "gpu_pct": 88,
+   "tok_s": 33.2,
+   "load_s": 8
+  },
+  {
+   "num_ctx": 16384,
+   "size_gib": 6.23,
+   "gpu_pct": 84,
+   "tok_s": 24.0,
+   "load_s": 9
+  },
+  {
+   "num_ctx": 32768,
+   "size_gib": 6.83,
+   "gpu_pct": 78,
+   "tok_s": 16.0,
+   "load_s": 10
+  }
+ ]
+}

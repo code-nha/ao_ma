@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xem log nhập vai</title>
+<style>
+:root {
+  --bg: #f6f6f3; --panel: #ffffff; --line: #e2e1dc; --text: #1f2328; --muted: #6b6f76;
+  --lao: #eef3ea; --lao-b: #c9d9bf; --minh: #e8f0fb; --minh-b: #bcd0ee;
+  --bad: #c62828; --bad-bg: #fde8e8; --fix: #2e7d32; --fix-bg: #e5f4e6; --soft: #9a6a00; --soft-bg: #fdf2d6;
+  --accent: #2f6fdb; --mark: #ffe58a; --scene: #f0eee8; --bar: #e06666; --bar2: #f0b3b3; --bar3: #7aa6e8;
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --panel: #1d2024; --line: #30343a; --text: #e6e6e3; --muted: #9298a0;
+  --lao: #1f2a1d; --lao-b: #34482f; --minh: #1b2535; --minh-b: #2e4466;
+  --bad: #ff7b72; --bad-bg: #3a1d1d; --fix: #7ee287; --fix-bg: #1a3320; --soft: #e3b341; --soft-bg: #3a2f12;
+  --accent: #6ea8fe; --mark: #6b5a12; --scene: #23262b; --bar: #e06c6c; --bar2: #6e3838; --bar3: #5b8bd6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --panel: #1d2024; --line: #30343a; --text: #e6e6e3; --muted: #9298a0;
+    --lao: #1f2a1d; --lao-b: #34482f; --minh: #1b2535; --minh-b: #2e4466;
+    --bad: #ff7b72; --bad-bg: #3a1d1d; --fix: #7ee287; --fix-bg: #1a3320; --soft: #e3b341; --soft-bg: #3a2f12;
+    --accent: #6ea8fe; --mark: #6b5a12; --scene: #23262b; --bar: #e06c6c; --bar2: #6e3838; --bar3: #5b8bd6;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; }
+header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
+header h1 { font-size: 16px; margin: 0 8px 0 0; }
+header .sp { flex: 1; }
+label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; white-space: nowrap; }
+button, select, input[type=search] { font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; }
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+main { flex: 1; display: flex; min-height: 0; }
+.pane { flex: 1; min-width: 0; display: flex; flex-direction: column; border-right: 1px solid var(--line); position: relative; }
+.pane:last-child { border-right: 0; }
+.pane.drag::after { content: "Thả file .jsonl vào đây"; position: absolute; inset: 0; background: color-mix(in srgb, var(--accent) 18%, transparent); border: 2px dashed var(--accent); display: grid; place-items: center; font-size: 18px; z-index: 5; }
+.bar { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--line); background: var(--panel); }
+.bar .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+.live { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
+.live.on { background: #2ea043; box-shadow: 0 0 0 0 #2ea04380; animation: pulse 1.6s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 6px #2ea04300; } 100% { box-shadow: 0 0 0 0 #2ea04300; } }
+.tabs button { border-radius: 0; margin-left: -1px; }
+.tabs button:first-child { border-radius: 6px 0 0 6px; }
+.tabs button:last-child { border-radius: 0 6px 6px 0; }
+.scroll { flex: 1; overflow-y: auto; padding: 10px 14px 40px; contain: strict; }
+.empty { margin: 60px auto; max-width: 420px; text-align: center; color: var(--muted); }
+.empty b { color: var(--text); }
+
+/* chat */
+.msg { display: flex; flex-direction: column; max-width: 78%; margin: 6px 0; }
+.msg.lao { align-items: flex-start; margin-right: auto; }
+.msg.minh { align-items: flex-end; margin-left: auto; }
+.msg .who { font-size: 11px; color: var(--muted); margin: 0 6px 2px; }
+.bubble { padding: 7px 11px; border-radius: 12px; border: 1px solid; white-space: pre-wrap; overflow-wrap: anywhere; }
+.lao .bubble { background: var(--lao); border-color: var(--lao-b); border-top-left-radius: 3px; }
+.minh .bubble { background: var(--minh); border-color: var(--minh-b); border-top-right-radius: 3px; }
+.msg.isbad .bubble { border-color: var(--bad); box-shadow: inset 3px 0 0 var(--bad); }
+.meta { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 3px 6px 0; font-size: 11px; color: var(--muted); }
+.tag { font-size: 11px; padding: 0 6px; border-radius: 9px; line-height: 17px; white-space: nowrap; }
+.tag.bad { background: var(--bad-bg); color: var(--bad); font-weight: 600; }
+.tag.fix { background: var(--fix-bg); color: var(--fix); font-weight: 600; }
+.tag.soft { background: var(--soft-bg); color: var(--soft); }
+.tag.raw { text-decoration: line-through; background: var(--scene); color: var(--muted); }
+.tag.fw { background: var(--scene); color: var(--muted); }
+.kv { background: var(--scene); border-radius: 4px; padding: 0 5px; }
+.event { text-align: center; color: var(--muted); font-style: italic; margin: 10px auto; max-width: 80%; font-size: 13px; }
+.scene-h { position: sticky; top: -10px; z-index: 2; margin: 18px -14px 8px; padding: 4px 14px; background: var(--scene); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-weight: 600; font-size: 13px; }
+.anchor { height: 0; }
+.tag.warn { background: var(--soft-bg); color: var(--soft); font-weight: 600; }
+.tag.beat { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+.dnote { margin: 2px 6px 0; font-size: 12px; color: var(--muted); max-width: 100%; }
+.dnote summary { cursor: pointer; }
+.dnote div { padding: 2px 0 2px 10px; border-left: 2px solid var(--line); margin: 2px 0; }
+.start { margin: 4px 4% 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); font-size: 13px; }
+.start .goal { margin-top: 4px; }
+.agenda { margin-top: 6px; font-size: 12px; color: var(--muted); }
+.swap { margin-top: 8px; padding: 6px 10px; border-left: 3px solid var(--soft); background: var(--soft-bg); border-radius: 4px; }
+.mem { margin: 8px 4%; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); font-size: 13px; }
+.mem summary { cursor: pointer; }
+.mem ul { margin: 2px 0 6px; padding-left: 20px; }
+.mem li.rep { color: var(--soft); }
+.memupd { margin: 6px 0; padding: 4px 8px; background: var(--scene); border-radius: 4px; }
+.memgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.mem h4 { margin: 6px 0 2px; font-size: 13px; }
+tr.rep td { color: var(--soft); }
+.start ol { margin: 4px 0 0; padding-left: 22px; color: var(--muted); }
+.scroll { position: relative; }
+.cut { margin: 10px 4%; padding: 8px 12px; border: 1px dashed var(--line); border-radius: 8px; font-size: 13px; color: var(--muted); }
+.cut b { color: var(--text); }
+.other { font: 12px ui-monospace, Consolas, monospace; color: var(--muted); margin: 6px 0; overflow-wrap: anywhere; }
+mark { background: var(--mark); color: inherit; border-radius: 2px; }
+.probe { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 7px 10px; margin: 6px 0; }
+.probe.isbad { border-color: var(--bad); }
+.probe .meta { margin: 0 0 4px; }
+
+/* overview */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.card .v { font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.card .l { font-size: 12px; color: var(--muted); }
+h3 { font-size: 14px; margin: 16px 0 6px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 13px; background: var(--panel); }
+th, td { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: right; white-space: nowrap; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; }
+td.l, th.l { text-align: left; white-space: normal; }
+td.barc { width: 32%; min-width: 90px; }
+.hbar { position: relative; height: 14px; background: var(--scene); border-radius: 3px; overflow: hidden; }
+.hbar i { position: absolute; left: 0; top: 0; bottom: 0; }
+.hbar span { position: absolute; right: 4px; top: -2px; font-size: 11px; }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: var(--scene); }
+svg text { fill: var(--muted); font-size: 10px; }
+.legend { display: flex; gap: 12px; font-size: 12px; color: var(--muted); margin: 4px 0; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+.note { font-size: 12px; color: var(--muted); margin: 6px 0; }
+@media (max-width: 800px) { main { flex-direction: column; } .pane { border-right: 0; border-bottom: 1px solid var(--line); min-height: 70vh; } .msg { max-width: 92%; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>🎣 Xem log nhập vai</h1>
+  <button id="cmpBtn" title="Mở thêm khung thứ hai để so sánh hai log">So sánh 2 log</button>
+  <label id="liveWrap" title="Tải lại phần mới của log mỗi 3 giây (cần chạy serve.py)"><input type="checkbox" id="live" checked> Tự cập nhật</label>
+  <span class="sp"></span>
+  <span class="muted small" id="srvInfo"></span>
+  <button id="themeBtn" title="Đổi giao diện sáng/tối">◐ Giao diện</button>
+</header>
+<main id="panes"></main>
+
+<template id="paneTpl">
+  <section class="pane">
+    <div class="bar">
+      <span class="live" title="Đang theo dõi trực tiếp"></span>
+      <select class="pick" title="Chọn log trong experiments/logs"><option value="">— chọn log —</option></select>
+      <button class="open" title="Mở file .jsonl từ máy (hoặc kéo-thả vào khung)">📂 Mở file</button>
+      <input type="file" class="file" accept=".jsonl,.json,.txt" hidden>
+      <span class="name"></span>
+      <span class="sp" style="flex:1"></span>
+      <span class="tabs"><button data-v="chat" class="on">Hội thoại</button><button data-v="ov">Tổng quan</button></span>
+    </div>
+    <div class="bar filters">
+      <label><input type="checkbox" class="flagged"> Chỉ lượt bị gắn cờ</label>
+      <select class="speaker" title="Lọc theo người nói"><option value="">Mọi người nói</option><option value="lao">Lão Bảy</option><option value="minh">Minh</option></select>
+      <select class="scene" title="Nhảy tới cảnh"><option value="">Nhảy tới cảnh…</option></select>
+      <input type="search" class="q" placeholder="Tìm chữ…" size="14">
+      <span class="count muted small"></span>
+    </div>
+    <div class="scroll"><div class="empty">Chọn một log ở trên, bấm <b>📂 Mở file</b>, hoặc <b>kéo-thả</b> file <code>.jsonl</code> vào đây.</div></div>
+  </section>
+</template>
+
+<script>
+"use strict";
+// ---------- detection rules (port of experiments/rescore.py / dialogue_director.py) ----------
+const W = "[\\p{L}\\p{N}_]";
+const RX = {
+  SELF_ONG: new RegExp(`((^|[.!?…]\\s+)Ông (?!bà|trời|nội|ngoại)|ông già này|(?<!${W})ông (cũng|vẫn|sẽ|đây|ở đây|chờ|thương|nhớ|biết|nghĩ|thấy)(?!${W}))`, "u"),
+  DA: new RegExp(`(^|[.!?…]\\s+)Dạ(?!${W})`, "u"),
+  ENG: new RegExp(`(?<!${W})(bye|ok|okay|chill|vibe|wow|cool|nice|sorry|thanks|good night|relax|happy)(?!${W})`, "iu"),
+  EMOJI: /[\u{1F300}-\u{1FAFF}☀-➿]/u,
+  MINH_SELF: new RegExp(`(?<!${W})mình (cùng|dậy|đi|ngồi|nói|sẽ)(?!${W})`, "u"),
+  AI_ADMIT: /(lão là (một )?(AI|trợ lý|chatbot|mô hình|máy))/iu,
+  CODE: /(```|\bdef |\breturn\b|\bimport\b)/,
+  FAREWELL: /(tạm biệt|bye|ngủ ngon|hẹn gặp|đi đi|về nghỉ|về ngủ|đi ngủ)/iu,
+};
+function laoBleed(t) {
+  const tags = [];
+  if (RX.AI_ADMIT.test(t) || RX.CODE.test(t)) tags.push("BREAK");
+  if (RX.SELF_ONG.test(t)) tags.push("self-ông");
+  if (RX.DA.test(t)) tags.push("Dạ");
+  if (RX.ENG.test(t) || RX.EMOJI.test(t)) tags.push("eng/emoji");
+  if (RX.MINH_SELF.test(t)) tags.push("mình");
+  return tags;
+}
+const WHO = { lao: "Lão Bảy", minh: "Minh", narrator: "Người dẫn" };
+const CUT_VI = { budget: "hết số lượt của cảnh", farewell: "nhân vật chào tạm biệt", end: "hết ngân sách token", stagnation: "hội thoại giậm chân" };
+const KNOWN = new Set(["scene","turn","round","speaker","prompt_tokens","dialogue_tokens","ctx_tokens","raw_bleed","final_bleed","regens","text","hard","soft","secs","event","cut","summary","target","num_ctx","probe","sample","issues",
+  "scene_start","goal","beats","beat","similarity","newlines","director_note","trigger_similarity",
+  "agenda","swaps","memory_note","memory_update","memory",
+  "retell_raw","retell_final","regens_retell","agenda_done"]);
+const MEM_KEYS_VI = { lao_ke: "Lão kể", minh_ke: "Minh kể", lao_biet_ve_minh: "Lão biết thêm về Minh", minh_biet_ve_lao: "Minh biết thêm về Lão", su_kien: "Sự kiện" };
+const SIM_WARN = 0.30;                       // similarity at/above this = repeating itself
+const THEME_BAN = /lặp lại mấy ý/u;           // director_note marker for a theme-ban note
+const isThemeBan = r => arr(r.director_note).some(s => THEME_BAN.test(String(s)));
+
+// ---------- helpers ----------
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const arr = v => Array.isArray(v) ? v : (v == null || v === "" ? [] : [v]);
+const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
+const fmtN = n => n == null ? "–" : Number(n).toLocaleString("vi-VN");
+function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+function kvChips(r) {
+  return Object.keys(r).filter(k => !KNOWN.has(k)).map(k => {
+    let v = r[k]; if (typeof v === "object") v = JSON.stringify(v);
+    if (typeof v === "number" && !Number.isInteger(v)) v = v.toFixed(3);
+    return `<span class="kv">${esc(k)}: ${esc(v)}</span>`;
+  }).join("");
+}
+
+// ---------- record normalisation ----------
+function detectFormat(recs) {
+  for (const r of recs) {
+    if ("dialogue_tokens" in r || "raw_bleed" in r || "cut" in r || "scene_start" in r) return "director";
+    if ("ctx_tokens" in r || "round" in r) return "dialogue";
+    if ("probe" in r) return "drift";
+  }
+  return "generic";
+}
+function norm(r, i) {
+  const n = { i, r, scene: r.scene };
+  if (r.cut !== undefined) { n.kind = "cut"; return n; }
+  if (r.scene_start !== undefined) { n.kind = "start"; return n; }
+  if (r.memory !== undefined || r.memory_update !== undefined) { n.kind = "memory"; return n; }
+  if (r.agenda_done !== undefined && r.speaker === undefined) { n.kind = "agenda"; return n; }
+  if (r.event !== undefined) { n.kind = "event"; return n; }
+  if (r.probe !== undefined && r.speaker === undefined) {
+    n.kind = "probe"; n.text = String(r.text ?? "").normalize("NFC");
+    n.bad = arr(r.issues).map(String); n.tok = r.prompt_tokens; return n;
+  }
+  if (r.speaker !== undefined && r.text !== undefined) {
+    n.kind = "turn"; n.speaker = String(r.speaker); n.text = String(r.text).normalize("NFC");
+    n.tok = r.dialogue_tokens ?? r.ctx_tokens ?? r.prompt_tokens;
+    n.soft = arr(r.soft).map(String);
+    if ("final_bleed" in r || "raw_bleed" in r) {           // director log: trust its own tags
+      n.bad = arr(r.final_bleed).map(String);
+      n.raw = arr(r.raw_bleed).map(String);
+      n.fixed = n.raw.length > 0 && n.bad.length === 0;
+      n.hasRaw = true;
+    } else {                                                  // no director: rescore Lão turns with the same rules
+      n.bad = [...arr(r.hard).map(String), ...(n.speaker === "lao" ? laoBleed(n.text) : [])];
+      n.raw = []; n.fixed = false;
+    }
+    n.farewell = RX.FAREWELL.test(n.text);
+    n.retellRaw = r.retell_raw || null; n.retellFinal = r.retell_final || null;  // v3.1
+    n.flag = n.bad.length > 0 || n.fixed || !!n.retellRaw || !!n.retellFinal;
+    return n;
+  }
+  n.kind = "other"; return n;
+}
+
+// ---------- server ----------
+let server = null; // {files: [...]}
+async function refreshList() {
+  try {
+    const res = await fetch("api/logs", { cache: "no-store" });
+    if (!res.ok) throw 0;
+    server = await res.json();
+    document.getElementById("srvInfo").textContent = server.dir;
+    panes.forEach(p => p.fillPick());
+  } catch (e) { server = null; document.getElementById("liveWrap").style.display = "none"; }
+}
+
+// ---------- pane ----------
+const panes = [];
+class Pane {
+  constructor(idx) {
+    this.idx = idx;
+    this.el = document.getElementById("paneTpl").content.firstElementChild.cloneNode(true);
+    document.getElementById("panes").appendChild(this.el);
+    this.$ = s => this.el.querySelector(s);
+    this.recs = []; this.items = []; this.name = ""; this.src = null; this.offset = 0; this.view = "chat";
+    this.bucket = +(store("bucket") || 2000);
+    const $ = this.$;
+    $(".open").onclick = () => $(".file").click();
+    $(".file").onchange = e => e.target.files[0] && this.loadFile(e.target.files[0]);
+    $(".pick").onchange = e => e.target.value && this.loadServer(e.target.value);
+    this.el.querySelectorAll(".tabs button").forEach(b => b.onclick = () => this.setView(b.dataset.v));
+    for (const s of [".flagged", ".speaker"]) $(s).onchange = () => this.render();
+    let t; $(".q").oninput = () => { clearTimeout(t); t = setTimeout(() => this.render(), 150); };
+    $(".scene").onchange = e => { const v = e.target.value; if (v !== "") { this.setView("chat"); this.jumpScene(v); } e.target.value = ""; };
+    this.el.addEventListener("dragover", e => { e.preventDefault(); this.el.classList.add("drag"); });
+    this.el.addEventListener("dragleave", e => { if (!this.el.contains(e.relatedTarget)) this.el.classList.remove("drag"); });
+    this.el.addEventListener("drop", e => { e.preventDefault(); this.el.classList.remove("drag"); const f = e.dataTransfer.files[0]; if (f) this.loadFile(f); });
+    this.fillPick();
+  }
+  fillPick() {
+    const sel = this.$(".pick");
+    sel.style.display = server ? "" : "none";
+    if (!server) return;
+    const cur = this.src === "server" ? this.name : "";
+    sel.innerHTML = `<option value="">— chọn log —</option>` + server.files.map(f =>
+      `<option value="${esc(f.name)}"${f.name === cur ? " selected" : ""}>${esc(f.name)} (${Math.round(f.size / 1024)} KB)</option>`).join("");
+  }
+  setView(v) {
+    this.view = v;
+    this.el.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+    this.$(".filters").style.display = v === "chat" ? "" : "none";
+    this.render(true);
+  }
+  reset(name, src) {
+    this.name = name; this.src = src; this.recs = []; this.items = []; this.offset = 0; this.bad = 0; this.starts = new Map();
+    this.$(".name").textContent = src === "file" ? name : "";
+    this.$(".name").title = name;
+    this.$(".live").classList.toggle("on", src === "server" && liveOn());
+    this.$(".pick").value = src === "server" ? name : "";
+    store("pane" + this.idx, src === "server" ? name : "");
+  }
+  parse(text) {
+    const out = [];
+    for (const line of text.split("\n")) {
+      const s = line.trim(); if (!s) continue;
+      try { out.push(JSON.parse(s)); } catch (e) { this.bad++; }
+    }
+    return out;
+  }
+  append(recs) {
+    for (const r of recs) {
+      this.recs.push(r); const n = norm(r, this.items.length); this.items.push(n);
+      if (n.kind === "start") this.starts.set(r.scene, r);
+    }
+    this.fmt = detectFormat(this.recs);
+  }
+  async loadFile(f) {
+    this.reset(f.name, "file");
+    this.append(this.parse(await f.text()));
+    this.afterLoad(true);
+  }
+  async loadServer(name, poll = false) {
+    if (!poll) this.reset(name, "server");
+    const res = await fetch(`api/log?name=${encodeURIComponent(name)}&from=${this.offset}`, { cache: "no-store" });
+    if (!res.ok) return;
+    const start = +res.headers.get("X-Start");
+    if (start === 0 && this.offset > 0) { this.reset(name, "server"); } // file overwritten by a new run
+    this.offset = +res.headers.get("X-Next-Offset");
+    const text = await res.text();
+    if (!text && poll) return;
+    this.append(this.parse(text));
+    this.afterLoad(!poll);
+  }
+  afterLoad(first) {
+    const scenes = [...new Set(this.items.filter(n => n.scene !== undefined && n.kind === "turn").map(n => n.scene))];
+    const sel = this.$(".scene");
+    sel.style.display = scenes.length ? "" : "none";
+    sel.innerHTML = `<option value="">Nhảy tới cảnh…</option>` + scenes.map(s => `<option value="${esc(s)}">Cảnh ${esc(s)}</option>`).join("");
+    this.$(".speaker").style.display = this.fmt === "drift" ? "none" : "";
+    this.render(first);
+  }
+  async poll() {
+    if (this.src !== "server" || !this.name) return;
+    const f = server && server.files.find(x => x.name === this.name);
+    if (f && f.size === this.offset) return;
+    await this.loadServer(this.name, true);
+  }
+  jumpScene(s) {
+    const sel = `[data-scene-h="${CSS.escape(String(s))}"]`;
+    let el = this.$(sel);
+    if (!el) {  // scene hidden by the filters -> clear them
+      this.$(".flagged").checked = false; this.$(".speaker").value = ""; this.$(".q").value = "";
+      this.render(); el = this.$(sel);
+    }
+    if (el) this.$(".scroll").scrollTop = el.offsetTop - 8;
+  }
+  render(resetScroll) {
+    const sc = this.$(".scroll");
+    if (!this.items.length && !this.name) return;
+    const atBottom = sc.scrollHeight - sc.scrollTop - sc.clientHeight < 60;
+    const top = sc.scrollTop;
+    sc.innerHTML = this.view === "chat" ? this.chatHTML() : this.overviewHTML();
+    if (this.view === "ov") this.bindOverview();
+    if (resetScroll) sc.scrollTop = 0;
+    else if (atBottom && this.view === "chat" && this.src === "server") sc.scrollTop = sc.scrollHeight;
+    else sc.scrollTop = top;
+  }
+
+  // ----- chat view -----
+  chatHTML() {
+    const flagged = this.$(".flagged").checked, spk = this.$(".speaker").value;
+    const q = this.$(".q").value.trim().normalize("NFC").toLowerCase();
+    const hi = q ? new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "giu") : null;
+    const mk = t => hi ? esc(t).replace(hi, m => `<mark>${m}</mark>`) : esc(t);
+    // (escaping first is safe: the query is matched against escaped text; only &<>" differ)
+    const filtering = flagged || spk || q;
+    const out = []; let shown = 0, total = 0, lastScene, pendingHdr = null;
+    for (const n of this.items) {
+      if (n.scene !== undefined && n.scene !== lastScene && n.kind !== "cut") {
+        lastScene = n.scene;
+        pendingHdr = `<div class="anchor" data-scene-h="${esc(n.scene)}"></div><div class="scene-h">Cảnh ${esc(n.scene)}</div>`
+          + (this.starts.has(n.scene) ? this.startHTML(this.starts.get(n.scene), mk) : "");
+        if (!filtering) { out.push(pendingHdr); pendingHdr = null; }  // when filtering: only for scenes with a match
+      }
+      if (n.kind === "turn" || n.kind === "probe") {
+        total++;
+        if (flagged && !(n.flag || (n.kind === "probe" && n.bad.length))) continue;
+        if (spk && n.speaker !== spk) continue;
+        if (q && !n.text.toLowerCase().includes(q)) continue;
+        shown++;
+        if (pendingHdr) { out.push(pendingHdr); pendingHdr = null; }
+        out.push(n.kind === "turn" ? this.turnHTML(n, mk) : this.probeHTML(n, mk));
+      } else if (n.kind === "event") {
+        const ts = n.r.trigger_similarity;
+        if (!filtering) out.push(`<div class="event">✦ ${esc(n.r.event)}${ts != null ? ` <span class="tag${ts >= SIM_WARN ? " warn" : " fw"}" title="Độ lặp đã kích hoạt sự kiện">độ lặp ${Number(ts).toFixed(2)}</span>` : ""}${kvChips(n.r) ? `<div class="meta" style="justify-content:center">${kvChips(n.r)}</div>` : ""}</div>`);
+      } else if (n.kind === "agenda" && !filtering) {
+        out.push(`<div class="event agenda-done" title="Đạo diễn thay ý đồ của Lão thành “đã kể xong”">✅ Lão đã kể xong chuyện được giao${n.r.turn != null ? ` (lượt ${esc(n.r.turn)})` : ""}: <span>${esc(n.r.agenda_done)}</span></div>`);
+      } else if (n.kind === "memory" && !filtering) {
+        out.push(this.memoryHTML(n.r));
+      } else if (n.kind === "cut" && !filtering) {
+        out.push(`<div class="cut">✂ <b>Hết cảnh ${esc(n.scene)}</b> — lý do: <b>${esc(CUT_VI[n.r.cut] || n.r.cut)}</b>${n.r.summary ? `<br>Tóm tắt: ${mk(n.r.summary)}` : ""}${kvChips(n.r) ? `<div class="meta">${kvChips(n.r)}</div>` : ""}</div>`);
+      } else if (n.kind === "other" && !filtering) {
+        out.push(`<div class="other">${esc(JSON.stringify(n.r))}</div>`);
+      }
+    }
+    this.$(".count").textContent = `${shown}/${total} ${this.fmt === "drift" ? "mẫu" : "lượt"}` + (this.bad ? ` · ${this.bad} dòng lỗi JSON` : "");
+    if (!out.length) return `<div class="empty">Không có lượt nào khớp bộ lọc.</div>`;
+    return out.join("");
+  }
+  turnHTML(n, mk) {
+    const r = n.r, side = n.speaker === "minh" ? "minh" : "lao";
+    const id = r.turn !== undefined ? `lượt ${r.turn}` : r.round !== undefined ? `vòng ${r.round}` : `#${n.i}`;
+    let tags = n.bad.map(t => `<span class="tag bad">${esc(t)}</span>`).join("");
+    if (n.fixed) tags += `<span class="tag fix" title="Lần sinh đầu bị lệch vai, đạo diễn đã sinh lại">đã sửa</span>` + n.raw.map(t => `<span class="tag raw" title="Lỗi ở lần sinh đầu">${esc(t)}</span>`).join("");
+    else if (n.raw.length && n.bad.length) tags += `<span class="tag soft" title="Sinh lại vẫn còn lỗi">sửa thất bại</span>`;
+    tags += n.soft.map(t => `<span class="tag soft" title="Cờ nhẹ">${esc(t)}</span>`).join("");
+    if (n.farewell) tags += `<span class="tag fw">👋 chào tạm biệt</span>`;
+    if (n.retellFinal) tags += `<span class="tag bad" title="Sinh lại vẫn còn kể lại chuyện cũ">♻️ vẫn kể lại: ${esc(n.retellFinal)}</span>`;
+    else if (n.retellRaw) tags += `<span class="tag fix" title="Lần sinh đầu kể lại chuyện cũ, đạo diễn đã chặn và sinh lại">♻️ đã chặn kể lại: ${esc(n.retellRaw)}</span>`;
+    if (r.beat !== undefined) {
+      const nb = arr(this.starts.get(r.scene)?.beats).length || 3;
+      tags += `<span class="tag beat" title="Nhịp hiện tại của cảnh${r.beat >= 0 ? ": " + esc(arr(this.starts.get(r.scene)?.beats)[r.beat] ?? "") : ""}">${r.beat < 0 ? "chưa vào nhịp" : `nhịp ${r.beat + 1}/${nb}`}</span>`;
+    }
+    if (r.similarity != null) {
+      const s = Number(r.similarity);
+      tags += s >= SIM_WARN ? `<span class="tag warn" title="Độ lặp so với các lượt trước ≥ ${SIM_WARN}">⚠ lặp ${s.toFixed(2)}</span>` : "";
+    }
+    const meta = [id];
+    if (r.similarity != null && Number(r.similarity) < SIM_WARN) meta.push(`lặp ${Number(r.similarity).toFixed(2)}`);
+    if (r.newlines) meta.push(`${r.newlines} xuống dòng`);
+    if (n.tok != null) meta.push(`${fmtN(n.tok)} tok`);
+    if (r.prompt_tokens != null && r.dialogue_tokens != null) meta.push(`prompt ${fmtN(r.prompt_tokens)}`);
+    if (r.regens) meta.push(`sinh lại ×${r.regens}` + (r.regens_retell ? ` (${r.regens_retell} vì kể lại)` : ""));
+    if (r.secs != null) meta.push(`${r.secs}s`);
+    return `<div class="msg ${side}${n.bad.length || n.retellFinal ? " isbad" : ""}"><div class="who">${esc(WHO[n.speaker] || n.speaker)}</div>`
+      + `<div class="bubble">${mk(n.text)}</div><div class="meta">${tags}<span>${meta.join(" · ")}</span>${kvChips(r)}</div>${this.noteHTML(r)}${this.memNoteHTML(r)}</div>`;
+  }
+  memNoteHTML(r) {
+    const notes = arr(r.memory_note).map(String).filter(s => s.trim());
+    if (!notes.length) return "";
+    return `<details class="dnote"><summary>🧠 sổ nhớ${notes.length > 1 ? ` (${notes.length})` : ""}</summary>` + notes.map(s => `<div>${esc(s)}</div>`).join("") + `</details>`;
+  }
+  storiesHTML(list) {
+    const L = arr(list);
+    if (!L.length) return `<span class="muted">(chưa có)</span>`;
+    return `<ul>` + L.map(st => {
+      const k = Number(st.so_lan) || 1, canh = arr(st.canh).join(", ");
+      return `<li${k >= 2 ? ' class="rep"' : ""}>${esc(st.tom_tat)} <span class="tag ${k >= 2 ? "warn" : "fw"}">${k} lần</span> <span class="small muted">cảnh ${esc(canh)}</span></li>`;
+    }).join("") + `</ul>`;
+  }
+  memoryHTML(r) {
+    const u = r.memory_update, m = r.memory || {};
+    const ul = a => arr(a).length ? `<ul>${arr(a).map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : `<span class="muted">(chưa có)</span>`;
+    let upd = "";
+    if (u && u.error !== undefined) upd = `<div class="tag bad">trích sổ nhớ thất bại</div><div class="small muted">${esc(u.error)}</div>`;
+    else if (u) upd = Object.entries(u).filter(([, v]) => arr(v).length).map(([k, v]) => `<div><b>${esc(MEM_KEYS_VI[k] || k)}:</b> ${arr(v).map(esc).join("; ")}</div>`).join("") || `<span class="muted">(không có gì mới)</span>`;
+    const rep = ["lao", "minh"].reduce((a, p) => a + arr(m[p]?.da_ke).filter(st => st.so_lan >= 2).length, 0);
+    const who = p => m[p] ? `<div class="memcol"><h4>${WHO[p]}</h4><div><b>Đã kể</b>${this.storiesHTML(m[p].da_ke)}</div><div><b>Biết về ${p === "lao" ? "Minh" : "Lão"}</b>${ul(m[p].biet)}</div><div><b>Sự kiện chung</b>${ul(m[p].su_kien)}</div></div>` : "";
+    const extra = Object.keys(m).filter(k => k !== "lao" && k !== "minh");
+    return `<details class="mem"><summary>🧠 <b>Sổ nhớ sau cảnh ${esc(r.scene)}</b>${u && u.error !== undefined ? ` <span class="tag bad">lỗi trích</span>` : ""}${rep ? ` <span class="tag warn">${rep} chuyện kể ≥ 2 lần</span>` : ""}</summary>`
+      + (upd ? `<div class="memupd"><b>Mới thêm ở cảnh này</b>${upd}</div>` : "")
+      + `<div class="memgrid">${who("lao")}${who("minh")}</div>`
+      + (extra.length ? `<div class="other">${esc(JSON.stringify(Object.fromEntries(extra.map(k => [k, m[k]]))))}</div>` : "")
+      + (kvChips(r) ? `<div class="meta">${kvChips(r)}</div>` : "") + `</details>`;
+  }
+  noteHTML(r) {
+    const notes = arr(r.director_note).map(String).filter(s => s.trim());
+    if (!notes.length) return "";
+    const ban = isThemeBan(r);
+    return `<details class="dnote"><summary>📋 chỉ đạo${notes.length > 1 ? ` (${notes.length})` : ""}${ban ? ` <span class="tag warn">cấm lặp ý</span>` : ""}</summary>`
+      + notes.map(s => `<div>${esc(s)}</div>`).join("") + `</details>`;
+  }
+  startHTML(r, mk) {
+    const beats = arr(r.beats);
+    return `<div class="start"><div>${mk(String(r.scene_start))}</div>`
+      + (r.goal ? `<div class="goal"><b>Mục tiêu:</b> ${mk(String(r.goal))}</div>` : "")
+      + (beats.length ? `<ol>${beats.map(b => `<li>${mk(String(b))}</li>`).join("")}</ol>` : "")
+      + (r.agenda && typeof r.agenda === "object" ? `<div class="agenda">${Object.entries(r.agenda).map(([k, v]) => `<div>🤫 <b>${esc(WHO[k] || k)}</b> (chỉ người này biết): ${mk(String(v))}</div>`).join("")}</div>` : "")
+      + arr(r.swaps).map(s => `<div class="swap">🔁 <b>Đạo diễn đổi chuyện</b> <span class="tag warn">${esc(s.field === "lao" ? "ý đồ của Lão" : /^beat(\d+)$/.test(s.field) ? `nhịp ${+s.field.slice(4) + 1}` : s.field)}</span>`
+        + `<div><span class="muted">Kịch bản cũ:</span> <s>${esc(s.old)}</s></div>`
+        + `<div><span class="muted">Vì lão đã kể:</span> ${esc(s.told)}</div>`
+        + `<div><span class="muted">Đổi sang:</span> <b>${esc(s.new_story)}</b></div></div>`).join("")
+      + (kvChips(r) ? `<div class="meta">${kvChips(r)}</div>` : "") + `</div>`;
+  }
+  probeHTML(n, mk) {
+    const r = n.r;
+    const tags = n.bad.map(t => `<span class="tag bad">${esc(t)}</span>`).join("");
+    const meta = [`mục tiêu ${fmtN(r.target)} tok`, `probe: ${esc(r.probe)}`, `mẫu ${r.sample}`, `prompt ${fmtN(r.prompt_tokens)}`];
+    if (r.num_ctx) meta.push(`num_ctx ${r.num_ctx}`);
+    if (r.secs != null) meta.push(`${r.secs}s`);
+    return `<div class="probe${n.bad.length ? " isbad" : ""}"><div class="meta">${tags}<span>${meta.join(" · ")}</span>${kvChips(r)}</div>${mk(n.text)}</div>`;
+  }
+
+  // ----- overview -----
+  overviewHTML() {
+    if (this.fmt === "drift") return this.driftOverview();
+    const turns = this.items.filter(n => n.kind === "turn");
+    const lao = turns.filter(n => n.speaker === "lao");
+    const isDir = this.fmt === "director";
+    const cuts = this.items.filter(n => n.kind === "cut");
+    const cutBy = {}; cuts.forEach(c => cutBy[c.r.cut] = (cutBy[c.r.cut] || 0) + 1);
+    const tagCount = {}; lao.forEach(n => n.bad.forEach(t => tagCount[t] = (tagCount[t] || 0) + 1));
+    const rawTagCount = {}; lao.forEach(n => n.raw.forEach(t => rawTagCount[t] = (rawTagCount[t] || 0) + 1));
+    const maxTok = Math.max(0, ...turns.map(n => n.tok || 0));
+    const badN = lao.filter(n => n.bad.length).length, rawN = lao.filter(n => n.raw.length).length;
+    const fwN = turns.filter(n => n.farewell).length;
+    const simT = turns.filter(n => n.r.similarity != null), hasSim = simT.length > 0;
+    const simAvg = hasSim ? simT.reduce((a, n) => a + Number(n.r.similarity), 0) / simT.length : 0;
+    const simHi = simT.filter(n => Number(n.r.similarity) >= SIM_WARN).length;
+    const banN = turns.filter(n => isThemeBan(n.r)).length;
+    const startsArr = [...this.starts.values()];
+    const hasSwaps = startsArr.some(r => "swaps" in r), swapN = startsArr.reduce((a, r) => a + arr(r.swaps).length, 0);
+    const mems = this.items.filter(n => n.kind === "memory");
+    const memFail = mems.filter(n => n.r.memory_update && n.r.memory_update.error !== undefined).length;
+    const lastMem = mems.length ? mems[mems.length - 1].r : null;
+    const hasRetell = turns.some(n => "retell_raw" in n.r);
+    const retellBlocked = turns.filter(n => n.retellRaw && !n.retellFinal).length;
+    const retellFailed = turns.filter(n => n.retellFinal).length;
+    const retellRegens = turns.reduce((a, n) => a + (Number(n.r.regens_retell) || 0), 0);
+    const agendaDone = this.items.filter(n => n.kind === "agenda").length;
+    const card = (v, l, t = "") => `<div class="card" title="${esc(t)}"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+    let h = `<div class="cards">`
+      + card(fmtN(turns.length), "tổng số lượt")
+      + card(fmtN(lao.length), "lượt của Lão Bảy")
+      + card(`${pct(badN, lao.length)}%`, `Lão lệch vai (${badN})`, isDir ? "Sau khi đạo diễn sinh lại (final_bleed)" : "Chấm lại bằng luật của rescore.py")
+      + (isDir ? card(`${pct(rawN, lao.length)}%`, `lệch ở lần sinh đầu (${rawN})`, "raw_bleed — trước khi sinh lại") : "")
+      + (isDir ? card(fmtN(turns.reduce((a, n) => a + (n.r.regens || 0), 0)), "lần sinh lại") : "")
+      + card(`${pct(fwN, turns.length)}%`, `lượt chào tạm biệt (${fwN})`)
+      + (isDir ? card(fmtN(cuts.length), "lần cắt cảnh") : "")
+      + (isDir ? card(fmtN(this.items.filter(n => n.kind === "event").length), "sự kiện chen vào") : "")
+      + (hasSim ? card(simAvg.toFixed(2), "độ lặp trung bình", "Trung bình similarity của mọi lượt") : "")
+      + (hasSim ? card(fmtN(simHi), `lượt lặp ≥ ${SIM_WARN.toFixed(2)}`) : "")
+      + (hasSim ? card(fmtN(banN), "lượt bị cấm lặp ý", "director_note có “lặp lại mấy ý”") : "")
+      + (hasRetell ? card(fmtN(retellBlocked), "lượt bị chặn kể lại", "Lần sinh đầu kể lại chuyện cũ, sinh lại đã sạch") : "")
+      + (hasRetell ? card(fmtN(retellFailed), "lần chặn kể lại thất bại", "Câu cuối vẫn kể lại (retell_final)") : "")
+      + (hasRetell ? card(fmtN(retellRegens), "lần sinh lại vì kể lại", "Tổng regens_retell") : "")
+      + (hasRetell || agendaDone ? card(fmtN(agendaDone), "lần agenda xong", "Lão kể xong chuyện agenda giao, đạo diễn đổi agenda") : "")
+      + (hasSwaps ? card(fmtN(swapN), "lần đổi chuyện (swap)", "Đạo diễn thay chuyện lão đã kể bằng chuyện mới") : "")
+      + (mems.length ? card(`${mems.length - memFail}/${mems.length}`, "lần cập nhật sổ nhớ ổn", memFail ? `${memFail} lần trích thất bại` : "") : "")
+      + card(fmtN(maxTok), isDir ? "dialogue_tokens cuối" : "ctx_tokens lớn nhất")
+      + `</div>`;
+    if (Object.keys(cutBy).length) h += `<div class="note">Cắt cảnh: ${Object.entries(cutBy).map(([k, v]) => `${esc(CUT_VI[k] || k)} × ${v}`).join(" · ")}</div>`;
+    const tagLine = (o) => Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<span class="tag bad">${esc(k)}</span> ${v}`).join(" &nbsp;");
+    if (Object.keys(tagCount).length) h += `<div class="note">Loại lỗi của Lão: ${tagLine(tagCount)}</div>`;
+    if (isDir && Object.keys(rawTagCount).length) h += `<div class="note">Lỗi ở lần sinh đầu: ${tagLine(rawTagCount)}</div>`;
+    if (lastMem && lastMem.memory) {
+      h += `<h3>Chuyện đã kể <span class="muted small">(sổ nhớ sau cảnh ${esc(lastMem.scene)})</span></h3><table><thead><tr><th class="l">Người kể</th><th class="l">Tóm tắt</th><th>Số lần</th><th class="l">Các cảnh</th></tr></thead><tbody>`;
+      for (const p of ["lao", "minh"]) {
+        const L = [...arr(lastMem.memory[p]?.da_ke)].sort((a, b) => (b.so_lan || 0) - (a.so_lan || 0));
+        if (!L.length) h += `<tr><td class="l">${WHO[p]}</td><td class="l muted" colspan="3">(chưa có)</td></tr>`;
+        for (const st of L) h += `<tr${st.so_lan >= 2 ? ' class="rep"' : ""}><td class="l">${WHO[p]}</td><td class="l">${esc(st.tom_tat)}</td><td>${st.so_lan >= 2 ? "⚠ " : ""}${esc(st.so_lan)}</td><td class="l">${arr(st.canh).map(esc).join(", ")}</td></tr>`;
+      }
+      h += `</tbody></table>`;
+    }
+    if (swapN) {
+      h += `<h3>Các lần đổi chuyện</h3><table><thead><tr><th>Cảnh</th><th class="l">Chỗ đổi</th><th class="l">Chuyện đã kể</th><th class="l">Đổi sang</th></tr></thead><tbody>`;
+      for (const r of startsArr) for (const s of arr(r.swaps)) h += `<tr><td>${esc(r.scene)}</td><td class="l">${esc(s.field)}</td><td class="l">${esc(s.told)}</td><td class="l">${esc(s.new_story)}</td></tr>`;
+      h += `</tbody></table>`;
+    }
+
+    // buckets
+    const B = this.bucket, rows = new Map();
+    for (const n of turns) {
+      const b = Math.floor((n.tok || 0) / B) * B;
+      if (!rows.has(b)) rows.set(b, { b, turns: 0, lao: 0, bad: 0, raw: 0, fw: 0, tags: {}, first: n.i, simSum: 0, simN: 0, simHi: 0, ban: 0 });
+      const s = rows.get(b); s.turns++; if (n.farewell) s.fw++;
+      if (n.r.similarity != null) { const v = Number(n.r.similarity); s.simSum += v; s.simN++; if (v >= SIM_WARN) s.simHi++; }
+      if (isThemeBan(n.r)) s.ban++;
+      if (n.speaker === "lao") { s.lao++; if (n.bad.length) s.bad++; if (n.raw.length) s.raw++; n.bad.forEach(t => s.tags[t] = (s.tags[t] || 0) + 1); }
+    }
+    const list = [...rows.values()].sort((a, b) => a.b - b.b);
+    const field = isDir ? "dialogue_tokens" : "ctx_tokens";
+    h += `<h3>Theo khoảng token <select class="bsize">${[500, 1000, 2000, 4000, 8000].map(v => `<option${v === B ? " selected" : ""} value="${v}">mỗi ${fmtN(v)}</option>`).join("")}</select> <span class="muted small">(theo <code>${field}</code>)</span></h3>`;
+    h += this.chartSVG(list, isDir);
+    h += `<table><thead><tr><th class="l">Khoảng token</th><th>Lượt</th><th>Lão</th><th class="l">Lão lệch vai</th>${isDir ? `<th class="l">Lệch lần đầu</th>` : ""}<th class="l">Chào tạm biệt</th>`
+      + (hasSim ? `<th title="Độ lặp trung bình (similarity) của các lượt trong khoảng">Độ lặp TB</th><th title="Số lượt có similarity ≥ ${SIM_WARN}">≥${SIM_WARN.toFixed(2)}</th><th title="Số lượt nhận chỉ đạo cấm lặp ý (“lặp lại mấy ý”)">Cấm lặp ý</th>` : "")
+      + `<th class="l">Loại lỗi</th></tr></thead><tbody>`;
+    const bar = (v, color) => `<div class="hbar"><i style="width:${v}%;background:${color}"></i><span>${v}%</span></div>`;
+    for (const s of list) {
+      h += `<tr class="click" data-first="${s.first}" title="Bấm để xem hội thoại ở khoảng này"><td class="l">${fmtN(s.b)}–${fmtN(s.b + B)}</td><td>${s.turns}</td><td>${s.lao}</td>`
+        + `<td class="barc">${bar(pct(s.bad, s.lao), "var(--bar)")}</td>`
+        + (isDir ? `<td class="barc">${bar(pct(s.raw, s.lao), "var(--bar2)")}</td>` : "")
+        + `<td class="barc">${bar(pct(s.fw, s.turns), "var(--bar3)")}</td>`
+        + (hasSim ? `<td${s.simN && s.simSum / s.simN >= SIM_WARN ? ' style="color:var(--soft);font-weight:600"' : ""}>${s.simN ? (s.simSum / s.simN).toFixed(2) : "–"}</td><td>${s.simHi || ""}</td><td>${s.ban || ""}</td>` : "")
+        + `<td class="l small">${Object.entries(s.tags).map(([k, v]) => `${esc(k)}×${v}`).join(", ")}</td></tr>`;
+    }
+    h += `</tbody></table>`;
+    if (!isDir) h += `<p class="note">Log không có đạo diễn: lỗi của Lão được chấm lại trong trình duyệt bằng đúng luật của <code>rescore.py</code> (self-ông, Dạ, eng/emoji, mình, BREAK). Cờ <span class="tag soft">no-lão</span> từ log gốc chỉ là cờ nhẹ, không tính vào tỉ lệ.</p>`;
+    else h += `<p class="note"><code>dialogue_tokens</code> là tổng token hội thoại đã sinh (prompt thật bị cắt gọn nhờ tóm tắt cảnh); <code>ctx_tokens</code> ở log không đạo diễn là toàn bộ ngữ cảnh. Hai trục gần tương đương về “độ dài cuộc nói chuyện”.</p>`;
+    return h;
+  }
+  chartSVG(list, isDir) {
+    if (!list.length) return "";
+    const w = 560, hgt = 130, pl = 28, pb = 18, n = list.length, bw = (w - pl) / n;
+    let s = `<div class="legend"><span><i style="background:var(--bar)"></i>Lão lệch vai %</span>${isDir ? `<span><i style="background:var(--bar2)"></i>lệch lần đầu %</span>` : ""}<span><i style="background:var(--bar3)"></i>chào tạm biệt %</span></div>`;
+    s += `<svg viewBox="0 0 ${w} ${hgt}" width="100%" style="max-width:${w}px;display:block" role="img" aria-label="Biểu đồ tỉ lệ lỗi theo token">`;
+    for (const y of [0, 50, 100]) { const yy = hgt - pb - (hgt - pb - 6) * y / 100; s += `<line x1="${pl}" x2="${w}" y1="${yy}" y2="${yy}" stroke="var(--line)"/><text x="${pl - 4}" y="${yy + 3}" text-anchor="end">${y}%</text>`; }
+    const H = v => (hgt - pb - 6) * v / 100;
+    const series = isDir ? [["raw", "var(--bar2)"], ["bad", "var(--bar)"], ["fw", "var(--bar3)"]] : [["bad", "var(--bar)"], ["fw", "var(--bar3)"]];
+    const sub = Math.max(2, (bw - 4) / series.length);
+    list.forEach((r, i) => {
+      series.forEach(([k, c], j) => {
+        const v = k === "fw" ? pct(r.fw, r.turns) : pct(r[k], r.lao);
+        const x = pl + i * bw + 2 + j * sub;
+        s += `<rect x="${x.toFixed(1)}" y="${(hgt - pb - H(v)).toFixed(1)}" width="${(sub - 1).toFixed(1)}" height="${H(v).toFixed(1)}" fill="${c}"><title>${fmtN(r.b)}: ${v}%</title></rect>`;
+      });
+      if (n <= 16 || i % Math.ceil(n / 16) === 0) s += `<text x="${(pl + i * bw + bw / 2).toFixed(1)}" y="${hgt - 5}" text-anchor="middle">${r.b >= 1000 ? (r.b / 1000) + "k" : r.b}</text>`;
+    });
+    return s + `</svg>`;
+  }
+  driftOverview() {
+    const ps = this.items.filter(n => n.kind === "probe");
+    const by = new Map();
+    for (const n of ps) {
+      const k = n.r.target; if (!by.has(k)) by.set(k, { k, n: 0, bad: 0, probes: {}, tags: {} });
+      const s = by.get(k); s.n++; if (n.bad.length) s.bad++;
+      const p = s.probes[n.r.probe] ||= { n: 0, bad: 0 }; p.n++; if (n.bad.length) p.bad++;
+      n.bad.forEach(t => s.tags[t] = (s.tags[t] || 0) + 1);
+    }
+    const probes = [...new Set(ps.map(n => n.r.probe))];
+    const badN = ps.filter(n => n.bad.length).length;
+    let h = `<div class="cards"><div class="card"><div class="v">${ps.length}</div><div class="l">mẫu thử</div></div><div class="card"><div class="v">${pct(badN, ps.length)}%</div><div class="l">mẫu có lỗi (${badN})</div></div></div>`;
+    h += `<h3>Theo độ dài ngữ cảnh mục tiêu</h3><table><thead><tr><th class="l">Mục tiêu (tok)</th><th>Mẫu</th><th class="l">Có lỗi</th>${probes.map(p => `<th>${esc(p)}</th>`).join("")}<th class="l">Loại lỗi</th></tr></thead><tbody>`;
+    for (const s of [...by.values()].sort((a, b) => a.k - b.k)) {
+      const v = pct(s.bad, s.n);
+      h += `<tr><td class="l">${fmtN(s.k)}</td><td>${s.n}</td><td class="barc"><div class="hbar"><i style="width:${v}%;background:var(--bar)"></i><span>${v}%</span></div></td>`
+        + probes.map(p => { const x = s.probes[p]; return `<td>${x ? `${x.bad}/${x.n}` : "–"}</td>`; }).join("")
+        + `<td class="l small">${Object.entries(s.tags).map(([k, c]) => `${esc(k)}×${c}`).join(", ")}</td></tr>`;
+    }
+    return h + `</tbody></table>`;
+  }
+  bindOverview() {
+    const sel = this.$(".bsize");
+    if (sel) sel.onchange = e => { this.bucket = +e.target.value; store("bucket", e.target.value); this.render(); };
+    this.el.querySelectorAll("tr.click").forEach(tr => tr.onclick = () => {
+      const first = +tr.dataset.first;
+      this.$(".flagged").checked = false; this.$(".speaker").value = ""; this.$(".q").value = "";
+      this.setView("chat");
+      // find the bubble of that item: the n-th rendered turn equals item index order
+      const sc = this.$(".scroll"), idx = this.items.filter(n => n.kind === "turn" && n.i < first).length;
+      const el = sc.querySelectorAll(".msg")[idx];
+      if (el) { sc.scrollTop = el.offsetTop - 40; el.querySelector(".bubble").animate([{ outline: "2px solid var(--accent)" }, { outline: "2px solid transparent" }], 1500); }
+    });
+  }
+}
+
+// ---------- app ----------
+const liveOn = () => server && document.getElementById("live").checked;
+function setCompare(on) {
+  if (on && panes.length < 2) {
+    const p = new Pane(1); panes.push(p);
+    const saved = store("pane1"); if (saved && server && server.files.some(f => f.name === saved)) p.loadServer(saved);
+  } else if (!on && panes.length > 1) { panes.pop().el.remove(); }
+  document.getElementById("cmpBtn").classList.toggle("on", panes.length > 1);
+  store("compare", on ? "1" : "0");
+}
+document.getElementById("cmpBtn").onclick = () => setCompare(panes.length < 2);
+document.getElementById("live").onchange = () => panes.forEach(p => p.$(".live").classList.toggle("on", p.src === "server" && liveOn()));
+function applyTheme(t) { if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; }
+document.getElementById("themeBtn").onclick = () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark"; applyTheme(next); store("theme", next);
+};
+applyTheme(store("theme"));
+
+(async () => {
+  panes.push(new Pane(0));
+  await refreshList();
+  // URL params: ?a=director_log_s1.jsonl&b=dialogue_log_s1.jsonl
+  const qs = new URLSearchParams(location.search);
+  const a = qs.get("a") || store("pane0"), b = qs.get("b");
+  const has = n => n && server && server.files.some(f => f.name === n);
+  if (has(a)) panes[0].loadServer(a);
+  if (has(b)) { panes.push(new Pane(1)); panes[1].loadServer(b); document.getElementById("cmpBtn").classList.add("on"); }
+  else if (store("compare") === "1") setCompare(true);
+  if (server) setInterval(async () => {
+    if (!liveOn()) return;
+    await refreshList();
+    for (const p of panes) await p.poll();
+  }, 3000);
+})();
+</script>
+</body>
+</html>
