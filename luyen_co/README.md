@@ -294,6 +294,15 @@ python luyen_co\download_ui.py --out luyen_co\downloads      # mở http://127.0
 - dán nhiều link một lúc (mỗi dòng một link); video cần đăng nhập thì dùng
   cookie trình duyệt **hoặc** dán đường dẫn `cookies.txt` (Netscape) export từ
   extension — cách sau vẫn dùng được khi trình duyệt đang mở
+- **ô chọn chất lượng**: Cao nhất / 1080p / 720p / 480p, tính theo **cạnh ngắn**.
+  Video dọc (Instagram Reel, TikTok) là 720×1280 — nếu lọc theo chiều cao như
+  trước thì 1280 > 1080 nên **mọi bản 720p bị loại**, chỉ còn 540×960 (đo thực
+  tế: reel 720p tải về thành file 107 KB nhoè). Giờ cap theo cạnh ngắn nên reel
+  dọc lấy đúng 720p; job hiện cả **độ phân giải thật** (vd. `720×1280`) để kiểm
+  tra ngay, không phải đoán qua dung lượng
+- **cảnh báo không có tiếng**: có nguồn (nhất là Instagram reel) chỉ trả stream
+  video-only, file tải về câm — job sẽ báo vàng "file không có tiếng"; cần tiếng
+  thì dùng cookies đăng nhập để nguồn trả bản đầy đủ
 - **Facebook Stories (`facebook.com/stories/...`) không tải được**: yt-dlp chỉ có
   extractor cho `/video/`, `/reel/`, `/watch`, `story.php`, và story thì bắt
   đăng nhập. Cách chắc ăn: mở story trên Chrome → F12 → tab Network → lọc

@@ -42,7 +42,7 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 
 OUT_DIR = Path("downloads")
 MAX_HEIGHT = 1080
-APP_VERSION = "2026-11-24b"      # để biết server đang chạy code cũ hay mới
+APP_VERSION = "2026-11-24c"      # để biết server đang chạy code cũ hay mới
 
 
 @dataclass
@@ -57,14 +57,17 @@ class Job:
     file: str = ""
     size: int = 0
     codec: str = ""
+    res: str = ""
     error: str = ""
+    warn: str = ""
+    max_height: int = 0             # 0 = lấy bản cao nhất
     created: float = field(default_factory=time.time)
 
 
 JOBS: dict[str, Job] = {}
 ORDER: list[str] = []
 LOCK = threading.Lock()
-QUEUE: "Queue[tuple[str, str, bool, str]]" = Queue()
+QUEUE: "Queue[tuple[str, str, bool, str, int]]" = Queue()
 
 
 # --------------------------------------------------------------------- tải file
@@ -237,8 +240,29 @@ def _find_deno() -> str | None:
 DENO_PATH = _find_deno()
 
 
+def _format_expr(max_h: int) -> str:
+    """Chuỗi chọn format: ưu tiên bản tốt nhất, giới hạn theo **cạnh ngắn**.
+
+    Vì sao không dùng `[height<=1080]`: video dọc (Instagram Reel, TikTok) là
+    720×1280 — chiều cao 1280 > 1080 nên filter đó loại sạch bản 720p và chỉ
+    còn 540×960. Đó đúng là lỗi tải reel về file 107 KB nhoè. Cạnh ngắn mới là
+    "720p/1080p" theo nghĩa người dùng hiểu, nên phải thử cả `width` (dọc) và
+    `height` (ngang).
+
+    Thứ tự: có tiếng trước, rồi mới tới video-only (một số nguồn như Instagram
+    không trả audio riêng), cuối cùng là bất kỳ bản nào để không fail cả job.
+    """
+    if max_h <= 0:
+        return "bv*+ba/b"
+    return "/".join([
+        f"bv*[width<={max_h}]+ba", f"bv*[height<={max_h}]+ba",
+        f"bv*[width<={max_h}]", f"bv*[height<={max_h}]",
+        "bv*+ba", "b",
+    ])
+
+
 def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False,
-                  cookiefile: str = "") -> Path:
+                  cookiefile: str = "", max_h: int = 0) -> Path:
     def hook(d: dict) -> None:
         if d.get("status") == "downloading":
             total = d.get("total_bytes") or d.get("total_bytes_estimate") or 0
@@ -256,10 +280,11 @@ def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False,
         "outtmpl": {"default": str(OUT_DIR / "%(title).110s [%(id)s].%(ext)s")},
         # Ưu tiên H.264 + AAC: combo AV1/VP9 + Opus trong MP4 làm VLC nháy/khựng
         # vài giây đầu (cảnh báo của ffmpeg: non-standard codec trong mp4).
-        "format": (f"bv*[vcodec^=avc1][height<={MAX_HEIGHT}]+ba[acodec^=mp4a]/"
-                   f"bv*[vcodec^=avc1][height<={MAX_HEIGHT}]+ba/"
-                   f"bv*[height<={MAX_HEIGHT}]+ba/b[height<={MAX_HEIGHT}]/b"),
-        "format_sort": ["vcodec:h264", "acodec:aac", "res", "fps"],
+        "format": _format_expr(max_h),
+        # res:N = ưu tiên độ phân giải gần N nhất (cao hơn thì tốt hơn), hiểu
+        # theo cạnh ngắn nên video dọc 720×1280 vẫn được coi là 720p
+        "format_sort": (["vcodec:h264", f"res:{max_h}", "fps"] if max_h > 0
+                        else ["vcodec:h264", "res", "fps"]),
         "merge_output_format": "mp4",
         # moov lên đầu file: mở/seek mượt hơn trên VLC, TV, điện thoại
         "postprocessor_args": {"merger": ["-movflags", "+faststart"]},
@@ -321,6 +346,21 @@ def _probe_codec(path: Path) -> str:
         return ""
 
 
+def _probe_size(path: Path) -> str:
+    """Kích thước thật của file đã tải (vd. '720×1280') — để thấy ngay có bị hạ
+    độ phân giải không, thay vì đoán qua dung lượng."""
+    try:
+        r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0",
+                            "-show_entries", "stream=width,height", "-of", "csv=p=0",
+                            str(path)], capture_output=True, text=True, timeout=20)
+        w, _, h = r.stdout.strip().partition(",")
+        if w.strip().isdigit() and h.strip().isdigit():
+            return f"{w.strip()}×{h.strip()}"
+    except Exception:
+        pass
+    return ""
+
+
 def _newest_video(since: float) -> Path | None:
     """File video mới nhất trong OUT_DIR được tạo sau mốc `since`."""
     if not OUT_DIR.exists():
@@ -345,7 +385,8 @@ def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") 
             path = _direct_download(job.url, job)
         elif yt_dlp is not None:
             try:
-                path = _ydl_download(job.url, job, cookies, overwrite, cookiefile)
+                path = _ydl_download(job.url, job, cookies, overwrite, cookiefile,
+                                     job.max_height)
             except Exception as exc:
                 job.error = str(exc)[:300]
                 path = None
@@ -360,11 +401,16 @@ def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") 
         job.file = Path(path).name
         job.size = Path(path).stat().st_size if Path(path).exists() else 0
         job.codec = _probe_codec(Path(path)) if Path(path).exists() else ""
+        job.res = _probe_size(Path(path)) if Path(path).exists() else ""
         if job.codec and "/" in job.codec:
-            vcodec = job.codec.split("/")[0]
+            vcodec, acodec = (job.codec.split("/") + ["", ""])[:2]
             if vcodec not in ("h264", "hevc"):
                 print(f"cảnh báo: {job.file} là {job.codec} — một số player (VLC) có thể "
                       f"nháy vài giây đầu; nên tải lại hoặc remux sang h264.")
+            if not acodec:
+                # Instagram hay chỉ trả video-only cho reel có nhạc → file câm
+                job.warn = "file không có tiếng: nguồn không trả audio riêng"
+                print(f"cảnh báo: {job.file} không có stream audio.")
         job.progress = 1.0
         job.status = "done"
     except Exception as exc:
@@ -374,7 +420,7 @@ def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") 
 
 def _worker() -> None:
     while True:
-        job_id, cookies, overwrite, cookiefile = QUEUE.get()
+        job_id, cookies, overwrite, cookiefile, _max_h = QUEUE.get()
         with LOCK:
             job = JOBS.get(job_id)
         if job is None:
@@ -445,6 +491,11 @@ class Handler(BaseHTTPRequestHandler):
             cookies = str(payload.get("cookies", "none"))
             overwrite = bool(payload.get("overwrite", False))
             cookiefile = str(payload.get("cookiefile", "")).strip()
+            try:
+                max_h = int(payload.get("max_height") or 0)
+            except (TypeError, ValueError):
+                max_h = 0
+            max_h = 0 if max_h <= 0 else min(max_h, 4320)   # 0 = bản cao nhất
             if not urls:
                 return self._json({"error": "chưa nhập URL"}, 400)
             if len(urls) > 10:
@@ -453,11 +504,11 @@ class Handler(BaseHTTPRequestHandler):
             for url in urls:
                 if urlparse(url).scheme not in ("http", "https"):
                     return self._json({"error": f"URL không hợp lệ: {url}"}, 400)
-                job = Job(id=uuid.uuid4().hex[:8], url=url)
+                job = Job(id=uuid.uuid4().hex[:8], url=url, max_height=max_h)
                 with LOCK:
                     JOBS[job.id] = job
                     ORDER.append(job.id)
-                QUEUE.put((job.id, cookies, overwrite, cookiefile))
+                QUEUE.put((job.id, cookies, overwrite, cookiefile, max_h))
                 created.append(job.id)
             return self._json({"ids": created})
 
@@ -531,6 +582,12 @@ PAGE = r"""<!doctype html>
 https://www.tiktok.com/@user/video/...
 https://example.com/trang-co-video"></textarea>
     <div class="row">
+      <select id="quality" title="Chất lượng tải về (tính theo cạnh ngắn, nên video dọc vẫn đúng)">
+        <option value="0">Chất lượng cao nhất</option>
+        <option value="1080">Tối đa 1080p</option>
+        <option value="720">Tối đa 720p</option>
+        <option value="480">Tối đa 480p</option>
+      </select>
       <select id="cookies" title="Dùng cookie trình duyệt cho video cần đăng nhập">
         <option value="none">Không dùng cookie</option>
         <option value="chrome">Cookie Chrome</option>
@@ -575,7 +632,8 @@ async function submit() {
   try {
     const r = await fetch('/api/download', {method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({urls, cookies: $('cookies').value, overwrite: $('overwrite').checked,
-                            cookiefile: $('cookiefile').value})});
+                            cookiefile: $('cookiefile').value,
+                            max_height: parseInt($('quality').value, 10) || 0})});
     const j = await r.json();
     if (j.error) alert(j.error);
     else $('urls').value = '';
@@ -594,14 +652,14 @@ async function tick() {
     const pct = Math.round((j.progress || 0) * 100);
     const label = j.status === 'done' ? 'xong' : j.status === 'error' ? 'lỗi'
       : j.status === 'merging' ? 'đang ghép' : j.status === 'queued' ? 'chờ' : pct + '%';
-    const meta = [label, fmtSpeed(j.speed), j.eta ? 'còn ' + fmtEta(j.eta) : '',
-                  j.codec].filter(Boolean).join(' · ');
+    const meta = [label, fmtSpeed(j.speed), j.eta ? 'còn ' + fmtEta(j.eta) : '', j.res, j.codec].filter(Boolean).join(' · ');
     return `<div class="job">
       <div class="t"><span class="name">${esc(j.title || j.url)}</span>
       <span class="meta">${esc(meta)}</span></div>
       <div class="bar"><i style="width:${j.status === 'error' ? 100 : pct}%;
         background:${j.status === 'error' ? '#ff7b72' : '#2f6feb'}"></i></div>
       ${j.error ? `<div class="err">${esc(j.error)}</div>` : ''}
+      ${j.warn ? `<div class="err" style="color:#e3b341">${esc(j.warn)}</div>` : ''}
     </div>`;
   }).join('');
   $('jobs').innerHTML = jobs || '<div class="hint">chưa có gì</div>';
@@ -634,7 +692,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8765)
     p.add_argument("--out", type=Path, default=Path("downloads"), help="thư mục lưu video")
-    p.add_argument("--max-height", type=int, default=1080, help="giới hạn độ phân giải tải về")
+    p.add_argument("--max-height", type=int, default=1080,
+                   help="trần độ phân giải mặc định cho job mới, tính theo **cạnh ngắn** "
+                        "nên video dọc 720×1280 vẫn là 720p; 0 = lấy bản cao nhất "
+                        "(chọn được ngay trên web)")
     p.add_argument("--no-browser", action="store_true", help="không tự mở trình duyệt")
     args = p.parse_args(argv)
 
