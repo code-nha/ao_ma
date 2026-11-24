@@ -12,7 +12,7 @@ import numpy as np
 from core.select import dedupe, head_pose, pick_diverse, pose_vector
 from core.tracker import IoUTracker
 from core.types import Candidate
-from core.utils import expand_box, letterbox, nms
+from core.utils import expand_box, letterbox, nms, others_area_fraction
 
 
 def make_cand(t=0.0, track=1, clip=None, source="a.mp4", yaw=0.0, blur=100.0, h=200):
@@ -45,6 +45,16 @@ def test_expand_box_clipped():
     assert box[0] >= 0 and box[1] >= 0
     assert box[2] <= 99 and box[3] <= 99
     assert box[0] < 10 and box[2] > 50
+
+
+def test_others_area_fraction():
+    crop = np.array([0, 0, 100, 100], np.float32)
+    assert others_area_fraction(crop, []) == 0.0
+    assert abs(others_area_fraction(crop, [np.array([0, 0, 50, 100], np.float32)]) - 0.5) < 1e-6
+    assert others_area_fraction(crop, [np.array([200, 200, 300, 300], np.float32)]) == 0.0
+    # nhiều người chồng nhau không vượt quá 1
+    two = [np.array([0, 0, 100, 100], np.float32)] * 2
+    assert others_area_fraction(crop, two) == 1.0
 
 
 FRONTAL = np.array([[38.29, 51.70], [73.53, 51.50], [56.03, 71.74],

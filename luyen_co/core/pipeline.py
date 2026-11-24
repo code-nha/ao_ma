@@ -35,8 +35,8 @@ from .scrfd import FaceDetector
 from .select import dedupe, head_pose, pick_diverse, pose_vector, yaw_histogram
 from .tracker import IoUTracker
 from .types import Candidate
-from .utils import (crop_xyxy, encode_jpeg, expand_box, laplacian_var, read_image,
-                    write_image)
+from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
+                    others_area_fraction, read_image, write_image)
 from .yolo_pose import PersonDetector
 
 
@@ -49,6 +49,8 @@ class Config:
     body_th: float = 0.72
     min_person: int = 64
     min_person_score: float = 0.5
+    max_overlap: float = 0.35
+    max_other_area: float = 0.10
     min_blur: float = 25.0
     crop_margin: float = 0.12
     dup_sim: float = 0.97
@@ -142,7 +144,8 @@ class Pipeline:
 
     # ------------------------------------------------------------------ frame
     def _match_person(self, frame: np.ndarray, person, t: float, frame_idx: int,
-                      source: str, kind: str, track_id: int) -> Candidate | None:
+                      source: str, kind: str, track_id: int,
+                      others: list | None = None) -> Candidate | None:
         h, w = frame.shape[:2]
         x1, y1, x2, y2 = person.box
         person_h = int(y2 - y1)
@@ -150,8 +153,19 @@ class Pipeline:
             return None
         if person.score < self.cfg.min_person_score:
             return None
+        # yêu cầu "mỗi ảnh 1 người": bỏ frame có người khác chồng lên người mục tiêu
+        if others and self.cfg.max_overlap > 0:
+            for o in others:
+                iou = float(iou_matrix(person.box[None], o.box[None])[0, 0])
+                if iou > self.cfg.max_overlap:
+                    return None
 
         box = expand_box(person.box, self.cfg.crop_margin, w, h)
+        # "mỗi ảnh 1 người": người khác chiếm quá nhiều diện tích crop thì bỏ
+        if others and self.cfg.max_other_area > 0:
+            frac = others_area_fraction(box, [o.box for o in others])
+            if frac > self.cfg.max_other_area:
+                return None
         crop = crop_xyxy(frame, box)
         if crop.size == 0:
             return None
@@ -295,10 +309,12 @@ class Pipeline:
             persons = self.detector.detect(frame)
             if persons:
                 ids = tracker.update(np.stack([p.box for p in persons]))
-                for person, tid in zip(persons, ids):
+                for i, (person, tid) in enumerate(zip(persons, ids)):
                     n_persons += 1
                     self.stats.persons += 1
-                    cand = self._match_person(frame, person, t, frame_idx, str(path), "video", tid)
+                    others = [p for j, p in enumerate(persons) if j != i]
+                    cand = self._match_person(frame, person, t, frame_idx, str(path),
+                                              "video", tid, others)
                     if cand is not None:
                         self.stats.candidates += 1
                         self._add(tid, buffers[tid], cand)
@@ -315,7 +331,7 @@ class Pipeline:
                 eta = ""
                 if duration and t > 0:
                     eta = f" · còn ~{(duration - t) * rate / 60:.0f} phút"
-                pct = f" ({100 * t / duration:.0f}%)" if duration else ""
+                pct = f" · {100 * t / duration:.0f}%" if duration else ""
                 log(f"  {frame_idx} frame ({t:.0f}s{pct}) · {n_persons} người · "
                     f"{rate:.3f}s/frame{eta}")
 
@@ -335,7 +351,8 @@ class Pipeline:
         if not persons:
             return
         best = max(persons, key=lambda p: (p.box[2] - p.box[0]) * (p.box[3] - p.box[1]))
-        cand = self._match_person(img, best, 0.0, 0, str(path), "image", 0)
+        others = [p for p in persons if p is not best]
+        cand = self._match_person(img, best, 0.0, 0, str(path), "image", 0, others)
         if cand is None:
             return
         self.stats.persons += 1

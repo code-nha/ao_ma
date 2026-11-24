@@ -113,6 +113,26 @@ def box_iou_center_dist(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
     return iou, float(np.linalg.norm(ca - cb) / scale)
 
 
+def box_area(b: np.ndarray) -> float:
+    return float(max(0.0, b[2] - b[0]) * max(0.0, b[3] - b[1]))
+
+
+def others_area_fraction(crop_box: np.ndarray, others: list[np.ndarray]) -> float:
+    """Phần diện tích crop bị người khác chiếm (0–1), để loại frame nhiều người."""
+    area = box_area(crop_box)
+    if area <= 0:
+        return 1.0
+    covered = 0.0
+    for o in others:
+        ix1 = max(crop_box[0], o[0])
+        iy1 = max(crop_box[1], o[1])
+        ix2 = min(crop_box[2], o[2])
+        iy2 = min(crop_box[3], o[3])
+        if ix2 > ix1 and iy2 > iy1:
+            covered += (ix2 - ix1) * (iy2 - iy1)
+    return min(1.0, covered / area)
+
+
 def laplacian_var(img: np.ndarray) -> float:
     """Độ nét tương đối (variance of Laplacian) trên ảnh xám."""
     if img.size == 0:

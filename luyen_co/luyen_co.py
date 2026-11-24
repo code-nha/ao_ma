@@ -65,6 +65,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--min-person", type=int, default=64, help="chiều cao tối thiểu của người (px)")
     g.add_argument("--min-person-score", type=float, default=0.5,
                    help="ngưỡng tin cậy tối thiểu của detection người")
+    g.add_argument("--max-overlap", type=float, default=0.35,
+                   help="bỏ frame có người khác chồng lên người mục tiêu quá mức này (IoU), "
+                        "0 = tắt kiểm tra")
+    g.add_argument("--max-other-area", type=float, default=0.10,
+                   help="bỏ frame mà người khác chiếm quá tỉ lệ này diện tích crop, "
+                        "để mỗi ảnh chỉ có 1 người (0 = tắt)")
     g.add_argument("--min-blur", type=float, default=25.0, help="phương sai Laplacian tối thiểu (chống ảnh mờ)")
     g.add_argument("--crop-margin", type=float, default=0.12, help="nới bbox khi crop (tỉ lệ cạnh)")
 
@@ -102,7 +108,8 @@ def main(argv: list[str] | None = None) -> int:
         ref=args.ref, out=args.out, fps=args.fps,
         face_th=args.face_th, body_th=args.body_th,
         min_person=args.min_person, min_blur=args.min_blur,
-        min_person_score=args.min_person_score,
+        min_person_score=args.min_person_score, max_overlap=args.max_overlap,
+        max_other_area=args.max_other_area,
         crop_margin=args.crop_margin, dup_sim=args.dup_sim,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,

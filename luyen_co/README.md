@@ -80,6 +80,8 @@ Tham số đáng chú ý:
 | `--min-person` | 64 | chiều cao người tối thiểu (px) — bỏ người quá nhỏ, không dùng được |
 | `--min-blur` | 25 | phương sai Laplacian tối thiểu — bỏ frame nhoè |
 | `--min-person-score` | 0.5 | ngưỡng tin cậy detection người — tăng để bớt vật thể giống người |
+| `--max-overlap` | 0.35 | bỏ frame có người khác chồng lên người mục tiêu quá IoU này |
+| `--max-other-area` | 0.10 | bỏ frame mà người khác chiếm quá 10% diện tích crop (giữ đúng "1 ảnh 1 người") |
 | `--dup-sim` | 0.97 | cosine coi là trùng hẳn |
 | `--min-gap` | 0.35 | giây tối thiểu giữa 2 ảnh cùng track |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
@@ -117,6 +119,7 @@ góc đầu trải từ trái sang phải thì cấu hình đã ổn.
 | 720p, nén vừa | `--face-th 0.40 --min-person 50` |
 | ≤ 360p hoặc nén mạnh | `--face-th 0.35 --min-person 40 --min-blur 15` |
 | Chỉ thấy lưng, không bao giờ thấy mặt | thêm `--allow-body-only --body-th 0.78` |
+| Đám đông, cần nhiều ảnh hơn | nâng `--max-other-area` lên 0.2–0.3 (đổi lại crop có thể dính người bên cạnh) |
 
 Luôn soát `sheet.jpg` sau khi hạ ngưỡng: hạ quá tay sẽ bắt đầu lẫn người khác.
 
