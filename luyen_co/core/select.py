@@ -144,8 +144,8 @@ YAW_BUCKETS = [
 
 
 def yaw_bucket(c: Candidate) -> str:
-    """Nhóm góc: không thấy mặt = 'sau lưng/quay đi'; còn lại theo yaw."""
-    if not c.has_face:
+    """Nhóm góc: mặt không đủ tin cậy = 'sau lưng/nghiêng'; còn lại theo yaw."""
+    if not c.has_face or c.face_sim < 0.35:
         return "sau lưng"
     for label, lo, hi in YAW_BUCKETS:
         if lo <= c.yaw < hi:
@@ -153,12 +153,16 @@ def yaw_bucket(c: Candidate) -> str:
     return "thẳng"
 
 
-def coverage_pick(cands: list[Candidate], per_bucket: int = 2) -> list[Candidate]:
-    """Chọn ảnh theo độ phủ góc: mỗi nhóm góc giữ tối đa `per_bucket` ảnh tốt nhất.
+def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
+                  bucket_dup: float = 0.93) -> list[Candidate]:
+    """Chọn ảnh theo độ phủ góc: mỗi nhóm giữ tối đa `per_bucket` ảnh tốt nhất.
 
     Khác với `diverse_gate` (bỏ dần theo ngưỡng), cách này đảm bảo **có đủ** mặt
     trái/phải/thẳng và cả ảnh sau lưng (frame không thấy mặt nhưng khớp ngoại
     hình qua neo của video) — đúng nhu cầu đối chiếu danh tính.
+
+    Trong cùng một nhóm còn loại tiếp ảnh gần như trùng nhau (`bucket_dup`) để
+    không ra 5 tấm cùng một tư thế.
     """
     buckets: dict[tuple[str, int, str], list[Candidate]] = {}
     for c in cands:
@@ -168,7 +172,16 @@ def coverage_pick(cands: list[Candidate], per_bucket: int = 2) -> list[Candidate
     for items in buckets.values():
         items.sort(key=lambda c: (c.face_sim if c.has_face else c.body_sim,
                                   c.person_h, c.blur), reverse=True)
-        picked.extend(items[:per_bucket])
+        chosen: list[Candidate] = []
+        for c in items:
+            if len(chosen) >= per_bucket:
+                break
+            if any(c.clip_vec is not None and k.clip_vec is not None
+                   and float(np.dot(c.clip_vec, k.clip_vec)) >= bucket_dup
+                   for k in chosen):
+                continue
+            chosen.append(c)
+        picked.extend(chosen)
     picked.sort(key=lambda c: (c.source, c.t))
     return picked
 

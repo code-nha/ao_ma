@@ -61,7 +61,7 @@ class Config:
     confirm_window: float = 0.0     # giây: 0 = không giới hạn (neo theo video)
     anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
     select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
-    per_bucket: int = 2             # số ảnh tối đa mỗi nhóm góc (coverage)
+    per_bucket: int = 1             # số ảnh tối đa mỗi nhóm góc (coverage)
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -267,21 +267,27 @@ class Pipeline:
         face_max = max((c.face_sim for c in buf if c.has_face), default=-1.0)
         body_med = float(statistics.median([c.body_sim for c in buf])) if buf else -1.0
         confirmed = self.ref_face is not None and face_max >= cfg.face_th
+        anchor = self.anchors.get(buf[0].source)
+
+        def anchor_ok(c: Candidate) -> bool:
+            """Giống ngoại hình đã xác nhận trong chính video này."""
+            if anchor is None or c.clip_vec is None:
+                return False
+            return float(np.dot(anchor["clip"], c.clip_vec)) >= cfg.anchor_th
 
         if self.ref_face is None:
             # tham chiếu không có mặt → buộc phải dựa vào toàn thân
             kept = ([c for c in buf if self._body_ok(c)]
                     if body_med >= cfg.body_th and len(buf) >= cfg.min_track else [])
         elif confirmed:
+            # track đã có frame khớp mặt; các frame còn lại (quay lưng, hoặc mặt
+            # bị nhận nhầm sang hướng khác) được xét bằng neo ngoại hình của video
             kept = [c for c in buf
                     if c.face_sim >= cfg.face_th
+                    or (c.face_sim < cfg.face_th and anchor_ok(c))
                     or (not c.has_face and self._body_ok(c))]
-        elif self._near_confirmed(buf[0].source, buf) and (anchor := self.anchors.get(buf[0].source)):
-            # video này đã khớp mặt ở đâu đó → so với chính ngoại hình đó (neo),
-            # không so với ảnh tham chiếu nữa (trang phục có thể đã khác)
-            kept = [c for c in buf
-                    if c.clip_vec is not None
-                    and float(np.dot(anchor["clip"], c.clip_vec)) >= cfg.anchor_th]
+        elif anchor_ok(buf[0]) or any(anchor_ok(c) for c in buf):
+            kept = [c for c in buf if c.face_sim < cfg.face_th and anchor_ok(c)]
         elif cfg.allow_body_only and body_med >= cfg.body_th and len(buf) >= cfg.min_track:
             # track không có frame nào khớp mặt: chỉ nhận khi người dùng cho phép,
             # dễ nhầm người mặc giống → mặc định tắt
