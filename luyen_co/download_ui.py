@@ -63,7 +63,7 @@ class Job:
 JOBS: dict[str, Job] = {}
 ORDER: list[str] = []
 LOCK = threading.Lock()
-QUEUE: "Queue[tuple[str, str, bool]]" = Queue()
+QUEUE: "Queue[tuple[str, str, bool, str]]" = Queue()
 
 
 # --------------------------------------------------------------------- tải file
@@ -202,7 +202,8 @@ def _find_deno() -> str | None:
 DENO_PATH = _find_deno()
 
 
-def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False) -> Path:
+def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False,
+                  cookiefile: str = "") -> Path:
     def hook(d: dict) -> None:
         if d.get("status") == "downloading":
             total = d.get("total_bytes") or d.get("total_bytes_estimate") or 0
@@ -240,6 +241,13 @@ def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False) -> 
     }
     if cookies and cookies != "none":
         opts["cookiesfrombrowser"] = (cookies,)
+    if cookiefile:
+        # file cookies.txt (Netscape) export từ extension — dùng được cả khi
+        # trình duyệt đang mở, khác với cookiesfrombrowser (bị khoá DB)
+        path = Path(cookiefile).expanduser()
+        if not path.is_file():
+            raise RuntimeError(f"không thấy file cookies: {cookiefile}")
+        opts["cookiefile"] = str(path)
     if overwrite:
         opts["overwrites"] = True          # tải đè bản cũ (vd. bản AV1/VP9 bị nháy)
     if DENO_PATH:
@@ -289,14 +297,14 @@ def _newest_video(since: float) -> Path | None:
     return max(cands, key=lambda p: p.stat().st_mtime)
 
 
-def _run(job: Job, cookies: str, overwrite: bool = False) -> None:
+def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     started = time.time()
     try:
         path: Path | None = None
         if yt_dlp is not None:
             try:
-                path = _ydl_download(job.url, job, cookies, overwrite)
+                path = _ydl_download(job.url, job, cookies, overwrite, cookiefile)
             except Exception as exc:
                 job.error = str(exc)[:300]
                 path = None
@@ -325,13 +333,13 @@ def _run(job: Job, cookies: str, overwrite: bool = False) -> None:
 
 def _worker() -> None:
     while True:
-        job_id, cookies, overwrite = QUEUE.get()
+        job_id, cookies, overwrite, cookiefile = QUEUE.get()
         with LOCK:
             job = JOBS.get(job_id)
         if job is None:
             continue
         try:
-            _run(job, cookies, overwrite)
+            _run(job, cookies, overwrite, cookiefile)
         finally:
             QUEUE.task_done()
 
@@ -394,6 +402,7 @@ class Handler(BaseHTTPRequestHandler):
             urls = [u.strip() for u in re.split(r"[\r\n]+", str(payload.get("urls", ""))) if u.strip()]
             cookies = str(payload.get("cookies", "none"))
             overwrite = bool(payload.get("overwrite", False))
+            cookiefile = str(payload.get("cookiefile", "")).strip()
             if not urls:
                 return self._json({"error": "chưa nhập URL"}, 400)
             if len(urls) > 10:
@@ -406,7 +415,7 @@ class Handler(BaseHTTPRequestHandler):
                 with LOCK:
                     JOBS[job.id] = job
                     ORDER.append(job.id)
-                QUEUE.put((job.id, cookies, overwrite))
+                QUEUE.put((job.id, cookies, overwrite, cookiefile))
                 created.append(job.id)
             return self._json({"ids": created})
 
@@ -492,6 +501,11 @@ https://example.com/trang-co-video"></textarea>
       <button class="ghost" id="clear">Xoá danh sách đã xong</button>
       <span id="out" class="hint"></span>
     </div>
+    <div class="row">
+      <input id="cookiefile" type="text" placeholder="hoặc đường dẫn cookies.txt (Netscape) — cho Facebook/Instagram cần đăng nhập"
+        style="flex:1; min-width:260px; background:#12141a; color:#e6e8ec; border:1px solid #333a47;
+        border-radius:8px; padding:8px 10px; font-size:13px;">
+    </div>
   </div>
 
   <div class="card">
@@ -518,7 +532,8 @@ async function submit() {
   $('go').disabled = true;
   try {
     const r = await fetch('/api/download', {method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({urls, cookies: $('cookies').value, overwrite: $('overwrite').checked})});
+      body: JSON.stringify({urls, cookies: $('cookies').value, overwrite: $('overwrite').checked,
+                            cookiefile: $('cookiefile').value})});
     const j = await r.json();
     if (j.error) alert(j.error);
     else $('urls').value = '';

@@ -215,8 +215,13 @@ uv pip install --python luyen_co\.venv\Scripts\python.exe -r luyen_co\requiremen
 python luyen_co\download_ui.py --out luyen_co\downloads      # mở http://127.0.0.1:8765
 ```
 
-- dán nhiều link một lúc (mỗi dòng một link); chọn cookie trình duyệt khi video
-  cần đăng nhập (Facebook/Instagram thường cần)
+- dán nhiều link một lúc (mỗi dòng một link); video cần đăng nhập thì dùng
+  cookie trình duyệt **hoặc** dán đường dẫn `cookies.txt` (Netscape) export từ
+  extension — cách sau vẫn dùng được khi trình duyệt đang mở
+- **Facebook Stories (`facebook.com/stories/...`) không tải được**: yt-dlp chỉ có
+  extractor cho `/video/`, `/reel/`, `/watch`, `story.php`, và story thì bắt
+  đăng nhập. Cách chắc ăn: mở story trên Chrome → F12 → tab Network → lọc
+  `media`/`mp4` → copy URL CDN → dán vào ô link của UI này (tải trực tiếp)
 - tải bằng yt-dlp, **ưu tiên H.264 + AAC** và `-movflags +faststart` — tránh combo
   AV1/VP9 + Opus trong MP4 làm VLC nháy/khựng vài giây đầu khi mở file
 - **deno**: nếu máy có deno (kể cả cài bằng winget mà chưa vào PATH), tool tự dò
