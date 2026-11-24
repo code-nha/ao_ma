@@ -641,6 +641,30 @@ def test_chinh_dien_cung_ngoai_hinh_thi_gop():
     assert len(distinct_pose_pick([a, twin], min_yaw=25.0, min_pose=0.08)) == 2
 
 
+def test_cung_co_canh_khi_sat_bien_hai_muc():
+    # 70.0 / 70.5 s: người chiếm 91% khung ở CẢ HAI, nhưng face_px 282 vs 330
+    # → số đầu 4.11 vs 3.53 → nhãn trung cảnh vs trung cận. Framing thật như nhau
+    # nên phải gộp (CLIP 0.934), không được tách vì nhãn khác.
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    a = make_cand(t=70.0, yaw=-55.8, clip=same, h=1159, face_px=282, blur=100.0,
+                  face_blur=240.0)
+    b = make_cand(t=70.5, yaw=-68.9, clip=same, h=1166, face_px=330, blur=51.0,
+                  face_blur=196.0)
+    assert shot_scale(a) != shot_scale(b)          # nhãn khác nhau...
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 1
+
+
+def test_toan_than_khac_can_canh_du_cung_ty_le_khung():
+    # Cùng chiếm 91% khung nhưng một ảnh thấy cổ chân (toàn thân), một ảnh không
+    # (trung cảnh) → vẫn là hai cỡ cảnh khác nhau, phải giữ cả hai.
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    full = make_cand(t=1.0, clip=same, h=1160, face_px=60, blur=600.0, face_blur=150.0)
+    full.kpts = make_kpts(feet=0.9)
+    waist = make_cand(t=2.0, clip=same, h=1160, face_px=330, blur=600.0, face_blur=150.0)
+    waist.kpts = make_kpts(feet=0.1)
+    assert len(distinct_pose_pick([full, waist], min_yaw=25.0, min_pose=0.08)) == 2
+
+
 def test_goc_quay_khac_nhau_van_giu_du_cung_dang():
     # Cùng dáng nhưng đầu quay khác hẳn: góc khớp (không dùng mắt/mũi) coi là cùng
     # dáng, còn trục góc quay tách ra → giữ cả hai ảnh.

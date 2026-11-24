@@ -217,6 +217,11 @@ hình ≥ `--near-dup-th`** (mặc định 0.84) ⇒ coi là trùng, giữ ảnh
 - Đo trên obj_1: 4 ảnh MC đang nói có CLIP 0.843–0.893; 3 ảnh 67.0/68.0/68.5 s
   (đều gần chính diện) có CLIP 0.953–0.966; trong khi cặp "khác người/khác cảnh"
   cùng clip chỉ 0.73–0.79 ⇒ 0.84 tách sạch.
+- **Cỡ cảnh được so bằng số đo, không bằng nhãn**: hai khung y hệt (người chiếm
+  91% ở cả hai) mà bbox mặt 282 vs 330 px → 4.11 vs 3.53 "đầu" → rơi vào 2 mức
+  liền kề là `trung cảnh` / `trung cận` và bị coi là khác nhau. Giờ so trực tiếp:
+  số đầu lệch ≤ 30%, hoặc tỉ lệ người/khung lệch ≤ 12% và cùng trạng thái thấy
+  cổ chân (để không gộp ảnh toàn thân với ảnh cận cảnh cùng chiếm 91% khung).
 - Ảnh cùng phía nhưng **khác ngoại hình** (CLIP thấp) vẫn được giữ.
 - Muốn giữ nhiều hơn thì nâng `--near-dup-th` (0.90 = gần như chỉ gộp ảnh trùng
   hẳn); đặt 0 để tắt luật này.

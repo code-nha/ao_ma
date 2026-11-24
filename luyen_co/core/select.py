@@ -147,6 +147,34 @@ def _same_side(a: Candidate, b: Candidate) -> bool:
     return _yaw_family(a) == _yaw_family(b)
 
 
+def _heads(c: Candidate) -> float:
+    """Số 'đầu' trong khung (person_h / face_px); 0 nếu không thấy mặt."""
+    return c.person_h / c.face_px if c.face_px > 0 else 0.0
+
+
+def _same_framing(a: Candidate, b: Candidate, head_tol: float = 0.30,
+                  frac_tol: float = 0.12) -> bool:
+    """Hai ảnh cùng cỡ cảnh — so **số đo**, không so nhãn.
+
+    So nhãn (`shot_scale`) bị lỗi ở sát biên: hai khung gần như y hệt mà người
+    chiếm 91% khung ở cả hai, chỉ vì bbox mặt to nhỏ khác nhau (282 vs 330 px)
+    nên số "đầu" là 4.11 vs 3.53 → rơi vào 2 mức liền kề (trung cảnh / trung cận)
+    và bị coi là khác nhau. Đo trực tiếp thì chúng cách nhau 16% — cùng cỡ cảnh.
+
+    Cùng cỡ cảnh khi: số đầu lệch ≤ 30%, **hoặc** tỉ lệ người/khung lệch ≤ 12%
+    và cùng trạng thái thấy cổ chân (để không gộp ảnh toàn thân với ảnh cận cảnh
+    cùng chiếm 91% khung).
+    """
+    ha, hb = _heads(a), _heads(b)
+    if ha > 0 and hb > 0 and max(ha, hb) <= (1 + head_tol) * min(ha, hb):
+        return True
+    fa = a.person_h / max(1, a.src_h)
+    fb = b.person_h / max(1, b.src_h)
+    if feet_visible(a) != feet_visible(b):
+        return False
+    return abs(fa - fb) <= frac_tol * max(fa, fb)
+
+
 def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
                min_pose_deg: float = 20.0, min_pose_max_deg: float = 45.0,
                near_dup_th: float = 0.84) -> bool:
@@ -171,7 +199,7 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
     nhóm còn lại phải so **khoảng cách góc thật**, không dùng "cùng nhóm" — vì
     "trái nhiều" trải tới 180°, hai frame −30° và −65° cùng nhóm nhưng khác hướng.
     """
-    if shot_scale(a) != shot_scale(b):
+    if not _same_framing(a, b):
         return False
     # Cùng PHÍA quay (chính diện / trái / phải) + cùng cỡ cảnh + ngoại hình gần
     # như y hệt ⇒ trùng nhau về ý nghĩa, dù góc đầu lệch vài chục độ. Đo trên
