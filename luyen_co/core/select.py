@@ -34,6 +34,7 @@ def head_pose(kps: np.ndarray | None) -> tuple[float, float]:
     yaw = math.degrees(math.asin(max(-1.0, min(1.0, ratio_x))))
     ratio_y = (nose[1] - eye_mid[1]) / eye_d
     pitch = (ratio_y - _NOSE_DY / _EYE_DIST) * 60.0
+    pitch = max(-89.0, min(89.0, pitch))    # 5 điểm dễ sai khi đầu nghiêng mạnh
     return float(yaw), float(pitch)
 
 
