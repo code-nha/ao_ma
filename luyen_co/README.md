@@ -219,6 +219,9 @@ python luyen_co\download_ui.py --out luyen_co\downloads      # mở http://127.0
   cần đăng nhập (Facebook/Instagram thường cần)
 - tải bằng yt-dlp, **ưu tiên H.264 + AAC** và `-movflags +faststart` — tránh combo
   AV1/VP9 + Opus trong MP4 làm VLC nháy/khựng vài giây đầu khi mở file
+- **deno**: nếu máy có deno (kể cả cài bằng winget mà chưa vào PATH), tool tự dò
+  và bật `js_runtimes` + `remote_components=ejs:github` để YouTube trả đủ format
+  (đo thực tế: 45 format, H.264 tới 1080p). Thiếu deno thì chỉ thiếu format, vẫn tải được.
 - file cũ tải bằng bản trước (AV1/VP9) thì tick **"tải lại/ghi đè"** để lấy bản
   H.264; mã codec hiện ngay cạnh tiến độ từng job
 - trang lạ thì tự bóc link `.mp4 / .m3u8` trong HTML và fallback sang ffmpeg cho HLS

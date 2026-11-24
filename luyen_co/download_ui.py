@@ -18,6 +18,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import threading
 import time
@@ -169,6 +170,38 @@ def _direct_download(url: str, job: Job) -> Path:
     raise RuntimeError(f"tải link media thất bại: {last_err}")
 
 
+def _find_deno() -> str | None:
+    """Tìm deno (JS runtime cho yt-dlp giải challenge của YouTube).
+
+    winget cài vào Packages nhưng không phải lúc nào cũng có shim trên PATH, nên
+    dò thêm vài chỗ quen thuộc.
+    """
+    found = shutil.which("deno")
+    if found:
+        return found
+    local = Path(os.environ.get("LOCALAPPDATA", ""))
+    home = Path(os.environ.get("USERPROFILE", ""))
+    patterns = [
+        local / "Microsoft" / "WinGet" / "Packages",
+        home / "scoop" / "shims",
+        home / ".deno" / "bin",
+        Path("C:/Program Files/deno"),
+    ]
+    for base in patterns:
+        if not base.exists():
+            continue
+        if base.name == "Packages":
+            hits = list(base.glob("DenoLand.Deno*/deno.exe"))
+        else:
+            hits = list(base.glob("deno.exe")) or list(base.glob("deno"))
+        if hits:
+            return str(hits[0])
+    return None
+
+
+DENO_PATH = _find_deno()
+
+
 def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False) -> Path:
     def hook(d: dict) -> None:
         if d.get("status") == "downloading":
@@ -209,6 +242,10 @@ def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False) -> 
         opts["cookiesfrombrowser"] = (cookies,)
     if overwrite:
         opts["overwrites"] = True          # tải đè bản cũ (vd. bản AV1/VP9 bị nháy)
+    if DENO_PATH:
+        # deno + script giải challenge (EJS) giúp YouTube trả đủ format
+        opts["js_runtimes"] = {"deno": {"path": DENO_PATH}}
+        opts["remote_components"] = ["ejs:github"]
 
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=True)
@@ -315,6 +352,7 @@ def _state() -> dict:
     with LOCK:
         jobs = [asdict(JOBS[i]) for i in ORDER if i in JOBS]
     return {"out": str(OUT_DIR.resolve()), "has_ytdlp": yt_dlp is not None,
+            "has_deno": DENO_PATH is not None, "deno": DENO_PATH or "",
             "jobs": jobs, "files": _video_files()}
 
 
@@ -491,7 +529,9 @@ async function tick() {
   const s = await (await fetch('/api/state')).json();
   $('out').textContent = 'lưu vào: ' + s.out;
   $('hint').innerHTML = 'Quét bằng: <code>python luyen_co.py --input "' + s.out + '" --ref anh.jpg</code>'
-    + (s.has_ytdlp ? '' : '<br>Chưa cài yt-dlp → chỉ tải được link .mp4 trực tiếp.');
+    + (s.has_ytdlp ? '' : '<br>Chưa cài yt-dlp → chỉ tải được link .mp4 trực tiếp.')
+    + (s.has_deno ? '<br>deno: đã thấy (' + esc(s.deno) + ')'
+                  : '<br>Chưa thấy deno → YouTube có thể thiếu format; cài bằng <code>winget install DenoLand.Deno</code>');
 
   const jobs = s.jobs.map((j) => {
     const pct = Math.round((j.progress || 0) * 100);
@@ -549,6 +589,7 @@ def main(argv: list[str] | None = None) -> int:
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
     url = f"http://{args.host}:{args.port}"
     print(f"luyen_co download UI: {url}  ·  lưu vào {OUT_DIR.resolve()}")
+    print("deno: " + (DENO_PATH or "CHƯA THẤY — YouTube sẽ thiếu format (winget install DenoLand.Deno)"))
     if not args.no_browser:
         threading.Timer(0.6, lambda: webbrowser.open(url)).start()
     try:
