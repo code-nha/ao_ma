@@ -28,7 +28,9 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 3. Track không có frame nào khớp mặt bị bỏ, trừ khi bật `--allow-body-only`
    (khi đó cần track ≥ `--min-track` frame và trung vị `body_sim ≥ --body-th`).
    Dùng cờ này khi CCTV không bao giờ thấy mặt người mục tiêu — đổi lại dễ nhầm
-   người mặc giống nhau.
+   người mặc giống nhau: đo thực tế trên clip văn phòng, người mặc áo xanh vẫn
+   bị lẫn với một người mặc áo đen đi qua cùng lối. `--color-th` chỉ lọc được
+   người khác màu áo rõ rệt.
 4. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, khuyến nghị nâng
    `--body-th`.
 
@@ -77,6 +79,7 @@ Tham số đáng chú ý:
 | `--fps` | 2 | số frame lấy mỗi giây; CCTV người đi bộ 1–2 là đủ, cần nhiều dáng hơn thì 3–5 |
 | `--face-th` | 0.45 | cosine ArcFace tối thiểu; máy ảnh mờ/nén mạnh có thể hạ 0.35–0.40 |
 | `--body-th` | 0.72 | cosine CLIP toàn thân; chỉ dùng khi không thấy mặt |
+| `--color-th` | 0.3 | tương quan màu áo/quần tối thiểu khi so toàn thân (0 = tắt) |
 | `--min-person` | 64 | chiều cao người tối thiểu (px) — bỏ người quá nhỏ, không dùng được |
 | `--min-blur` | 25 | phương sai Laplacian tối thiểu — bỏ frame nhoè |
 | `--min-person-score` | 0.5 | ngưỡng tin cậy detection người — tăng để bớt vật thể giống người |
@@ -138,6 +141,7 @@ chính frame phim làm ảnh tham chiếu:
 | Clip đông người (3–7 người/frame) | 16 ảnh, crop đúng nhân vật trong đám đông, không lẫn người khác |
 | Ref phim A quét cả phim A + phim B | 16 ảnh đều của phim A, **0 ảnh** từ phim B |
 | 2 bản upload khác nhau của cùng bài diễn văn (480p), cùng folder có clip đám đông | 112 ảnh đúng người (mặt 0,47–0,55 vì ref chỉ 57 px), **0 ảnh** từ clip đám đông; `--limit 24` ra bộ 24 ảnh trải đều 2 video |
+| Clip CCTV văn phòng 1080p tải từ YouTube, ref là người mặc áo xanh (không thấy mặt) | body-only bám đúng người đi bộ 2,5–37 s; loại được người mặc áo vàng nhờ `--color-th`; **lẫn một người khác mặc đồ tối** ở 51–58 s (giới hạn của so khớp toàn thân) |
 | Folder rỗng / video hỏng / ảnh hỏng | báo lỗi hoặc bỏ qua, không crash |
 | Đường dẫn có dấu tiếng Việt + `--recursive` | chạy đúng |
 | Ref không có mặt (chỉ thân) | cảnh báo, tự chuyển sang so khớp toàn thân |

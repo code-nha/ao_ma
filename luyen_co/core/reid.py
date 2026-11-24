@@ -7,6 +7,7 @@ hình giữa các frame. Người được crop từ bbox YOLO rồi letterbox v
 
 from __future__ import annotations
 
+import cv2
 import numpy as np
 
 from .onnx_models import CLIP_MODEL, create_session, session_info
@@ -32,3 +33,26 @@ class BodyEmbedder:
         blob = x.transpose(2, 0, 1)[None]
         out = self.sess.run(None, {self.input_name: blob})[0]
         return l2norm(out)
+
+
+def torso_hist(person_bgr: np.ndarray) -> np.ndarray | None:
+    """Histogram HSV của nửa trên crop người (áo/quần) để so màu trang phục.
+
+    CLIP so cả khung nên bị nền chi phối (cùng một camera thì nền y hệt nhau);
+    histogram màu của phần thân giúp loại người mặc áo khác màu ra.
+    """
+    if person_bgr.size == 0:
+        return None
+    h = person_bgr.shape[0]
+    torso = person_bgr[: max(1, int(h * 0.6))]
+    hsv = cv2.cvtColor(torso, cv2.COLOR_BGR2HSV)
+    hist = cv2.calcHist([hsv], [0, 1], None, [32, 32], [0, 180, 0, 256])
+    cv2.normalize(hist, hist)
+    return hist
+
+
+def hist_similarity(a: np.ndarray | None, b: np.ndarray | None) -> float:
+    """Tương quan histogram (0–1); -1 nếu thiếu dữ liệu."""
+    if a is None or b is None:
+        return -1.0
+    return float(cv2.compareHist(a, b, cv2.HISTCMP_CORREL))

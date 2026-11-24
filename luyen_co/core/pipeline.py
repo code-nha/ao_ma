@@ -30,7 +30,7 @@ import cv2
 from .arcface import FaceEmbedder, cosine
 from .frames import iter_video, list_inputs, video_duration
 from .onnx_models import POSE_MODEL, ensure_models, log
-from .reid import BodyEmbedder
+from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
 from .select import dedupe, head_pose, pick_diverse, pose_vector, yaw_histogram
 from .tracker import IoUTracker
@@ -47,6 +47,7 @@ class Config:
     fps: float = 2.0
     face_th: float = 0.45
     body_th: float = 0.72
+    color_th: float = 0.3
     min_person: int = 64
     min_person_score: float = 0.5
     max_overlap: float = 0.35
@@ -112,6 +113,7 @@ class Pipeline:
         self.accepted: list[Candidate] = []
         self.ref_face: np.ndarray | None = None
         self.ref_body: np.ndarray | None = None
+        self.ref_torso: np.ndarray | None = None
         self.ref_note = ""
         self.ref_warnings: list[str] = []
         self.ref_info: dict = {}
@@ -133,7 +135,9 @@ class Pipeline:
         else:
             box = np.array([0, 0, w - 1, h - 1], dtype=np.float32)
         crop = crop_xyxy(img, expand_box(box, 0.2, w, h))
-        self.ref_body = self.body_emb.embed(crop) if crop.size else None
+        tight = crop_xyxy(img, box) if crop.size else crop
+        self.ref_body = self.body_emb.embed(tight) if tight.size else None
+        self.ref_torso = torso_hist(tight) if tight.size else None
 
         faces = self.face_det.detect(crop if crop.size else img)
         if not faces:
@@ -206,24 +210,35 @@ class Pipeline:
             face_sim = cosine(self.ref_face, self.face_emb.embed_face(ctx, best_face.kps))
             yaw, pitch = head_pose(best_face.kps)
 
-        clip_vec = self.body_emb.embed(crop)
+        tight = crop_xyxy(frame, person.box)
+        clip_vec = self.body_emb.embed(tight) if tight.size else None
         body_sim = cosine(self.ref_body, clip_vec)
+        color_sim = hist_similarity(self.ref_torso, torso_hist(tight)) if tight.size else -1.0
 
         return Candidate(
             source=source, kind=kind, t=float(t), frame_idx=frame_idx, track_id=track_id,
             box=person.box, person_score=person.score, face_sim=face_sim, body_sim=body_sim,
+            color_sim=color_sim,
             yaw=float(yaw), pitch=float(pitch), blur=float(blur), person_h=person_h,
             jpeg=encode_jpeg(crop, self.cfg.jpeg_quality),
             kpts=person.kpts, clip_vec=clip_vec,
             pose_vec=pose_vector(person.kpts, person.box),
         )
 
+    def _body_ok(self, c: Candidate) -> bool:
+        """Khớp toàn thân: CLIP đủ giống VÀ màu áo/quần không lệch quá."""
+        if c.body_sim < self.cfg.body_th:
+            return False
+        if self.cfg.color_th > 0 and c.color_sim >= 0 and c.color_sim < self.cfg.color_th:
+            return False
+        return True
+
     def _accept(self, buf: list[Candidate]) -> tuple[list[Candidate], float, float]:
         """Quyết định theo track nhưng giữ/bỏ từng frame (không nhận cả track).
 
         - Frame thấy mặt khớp (>= face_th) → nhận.
         - Frame không thấy mặt chỉ được nhận khi track đã được xác nhận bằng
-          ít nhất 1 frame thấy mặt, VÀ ngoại hình đủ giống (body_sim >= body_th).
+          ít nhất 1 frame thấy mặt, VÀ toàn thân + màu áo đủ giống.
         - Ảnh tham chiếu không có mặt (vd. chụp từ phía sau): chỉ dùng body,
           đòi hỏi trung vị body của cả track đủ cao.
         """
@@ -234,16 +249,16 @@ class Pipeline:
 
         if self.ref_face is None:
             # tham chiếu không có mặt → buộc phải dựa vào toàn thân
-            kept = ([c for c in buf if c.body_sim >= cfg.body_th]
+            kept = ([c for c in buf if self._body_ok(c)]
                     if body_med >= cfg.body_th and len(buf) >= cfg.min_track else [])
         elif confirmed:
             kept = [c for c in buf
                     if c.face_sim >= cfg.face_th
-                    or (not c.has_face and c.body_sim >= cfg.body_th)]
+                    or (not c.has_face and self._body_ok(c))]
         elif cfg.allow_body_only and body_med >= cfg.body_th and len(buf) >= cfg.min_track:
             # track không có frame nào khớp mặt: chỉ nhận khi người dùng cho phép,
             # dễ nhầm người mặc giống → mặc định tắt
-            kept = [c for c in buf if c.body_sim >= cfg.body_th]
+            kept = [c for c in buf if self._body_ok(c)]
         else:
             kept = []
         return kept, face_max, body_med
@@ -465,6 +480,7 @@ class Pipeline:
                     "person_score": round(c.person_score, 4),
                     "face_sim": round(c.face_sim, 4) if c.has_face else None,
                     "body_sim": round(c.body_sim, 4),
+                    "color_sim": round(c.color_sim, 4),
                     "yaw": round(c.yaw, 1), "pitch": round(c.pitch, 1),
                     "blur": round(c.blur, 1), "person_h": c.person_h,
                     "crop_margin": self.cfg.crop_margin,

@@ -60,6 +60,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g = p.add_argument_group("ngưỡng khớp danh tính")
     g.add_argument("--face-th", type=float, default=0.45, help="cosine ArcFace tối thiểu coi là đúng người")
     g.add_argument("--body-th", type=float, default=0.72, help="cosine CLIP toàn thân tối thiểu khi không thấy mặt")
+    g.add_argument("--color-th", type=float, default=0.3,
+                   help="tương quan màu áo/quần tối thiểu khi so khớp toàn thân "
+                        "(chống nhầm người mặc áo khác màu cùng nền; 0 = tắt)")
 
     g = p.add_argument_group("lọc chất lượng")
     g.add_argument("--min-person", type=int, default=64, help="chiều cao tối thiểu của người (px)")
@@ -109,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
 
     cfg = Config(
         ref=args.ref, out=args.out, fps=args.fps,
-        face_th=args.face_th, body_th=args.body_th,
+        face_th=args.face_th, body_th=args.body_th, color_th=args.color_th,
         min_person=args.min_person, min_blur=args.min_blur,
         min_person_score=args.min_person_score, max_overlap=args.max_overlap,
         max_other_area=args.max_other_area,

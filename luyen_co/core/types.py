@@ -26,6 +26,7 @@ class Candidate:
     blur: float
     person_h: int                  # chiều cao bbox (px)
     jpeg: bytes                    # crop người đã encode JPEG
+    color_sim: float = -1.0        # tương quan histogram màu áo/quần với tham chiếu
     staged: "Path | None" = None   # file tạm trên đĩa (giải phóng RAM cho video dài)
     kpts: np.ndarray | None = None
     face_box: np.ndarray | None = None
