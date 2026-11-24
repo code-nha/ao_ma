@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import numpy as np
 
@@ -25,6 +26,7 @@ class Candidate:
     blur: float
     person_h: int                  # chiều cao bbox (px)
     jpeg: bytes                    # crop người đã encode JPEG
+    staged: "Path | None" = None   # file tạm trên đĩa (giải phóng RAM cho video dài)
     kpts: np.ndarray | None = None
     face_box: np.ndarray | None = None
     clip_vec: np.ndarray | None = None

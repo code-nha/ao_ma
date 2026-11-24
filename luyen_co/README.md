@@ -106,6 +106,20 @@ Chạy một lượt với mặc định, mở `summary.txt` xem phân bố `fac
 `sheet.jpg` là cách nhanh nhất để kiểm tra bằng mắt: nếu toàn ảnh đúng người và
 góc đầu trải từ trái sang phải thì cấu hình đã ổn.
 
+### Gợi ý ngưỡng theo chất lượng nguồn
+
+Đo trên clip phim bị hạ xuống 360p, H.265 crf 30 (mô phỏng CCTV nén mạnh):
+`face_sim` tụt còn 0,26–0,81 (đa số 0,3–0,45) trong khi bản gốc 720p là 0,6–0,98.
+
+| Nguồn | Gợi ý |
+|---|---|
+| 1080p trở lên, nét | mặc định (`--face-th 0.45 --min-person 64 --min-blur 25`) |
+| 720p, nén vừa | `--face-th 0.40 --min-person 50` |
+| ≤ 360p hoặc nén mạnh | `--face-th 0.35 --min-person 40 --min-blur 15` |
+| Chỉ thấy lưng, không bao giờ thấy mặt | thêm `--allow-body-only --body-th 0.78` |
+
+Luôn soát `sheet.jpg` sau khi hạ ngưỡng: hạ quá tay sẽ bắt đầu lẫn người khác.
+
 ## Kiểm thử
 
 Đã chạy thật trên 2 clip phim 60 s (1 clip một người, 1 clip đông người) dùng
@@ -123,6 +137,13 @@ chính frame phim làm ảnh tham chiếu:
 
 Tốc độ đo trên clip đông người: ~0,05 s/frame khi 1–2 người, ~0,11 s/frame khi
 3–7 người (RTX 2070 Max-Q, DirectML, 1280×720).
+
+Có test cho phần logic thuần (không cần model/GPU):
+
+```powershell
+uv pip install --python luyen_co\.venv\Scripts\python.exe pytest
+luyen_co\.venv\Scripts\python.exe -m pytest luyen_co\tests -q
+```
 
 ## Hiệu năng (RTX 2070 Max-Q, DirectML)
 
@@ -151,6 +172,9 @@ Thực tế ~0,05 s/frame khi có 1–2 người (đã gồm giải mã video) �
 - **Folder có nhiều bản encode của cùng một video** (vd. `.raw` + `.ivtc`): ảnh sẽ
   lặp giữa các file vì lọc trùng chỉ chạy trong từng file nguồn — chỉ đưa một bản
   vào folder quét, hoặc lọc theo tên trước.
+- **Video rất dài**: ảnh nhận được ghi ngay ra `<out>/.staging/` rồi mới chuyển
+  vào `crops/`, nên RAM chỉ giữ metadata (~2 KB/frame); 8 giờ CCTV không bị phình
+  bộ nhớ.
 - Ảnh crop giữ nguyên độ phân giải gốc của nguồn, không upscale.
 
 ## Cấu trúc

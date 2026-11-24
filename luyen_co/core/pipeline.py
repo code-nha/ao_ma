@@ -17,6 +17,7 @@ from __future__ import annotations
 import csv
 import math
 import re
+import shutil
 import statistics
 import time
 from collections import defaultdict
@@ -107,6 +108,8 @@ class Pipeline:
         self.ref_note = ""
         self.ref_warnings: list[str] = []
         self._ref_path = cfg.ref.resolve()
+        self._staging = cfg.out / ".staging"
+        self._stage_idx = 0
         self._load_ref()
 
     # ------------------------------------------------------------------ tham chiếu
@@ -224,6 +227,15 @@ class Pipeline:
             return
         self.stats.accepted_tracks += 1
         self.stats.accepted += len(kept)
+        # ghi ngay ra đĩa, chỉ giữ metadata trong RAM: CCTV vài giờ có thể ra
+        # hàng chục nghìn frame, giữ JPEG trong bộ nhớ sẽ phình lên hàng GB
+        self._staging.mkdir(parents=True, exist_ok=True)
+        for c in kept:
+            self._stage_idx += 1
+            path = self._staging / f"{self._stage_idx:07d}.jpg"
+            path.write_bytes(c.jpeg)
+            c.staged = path
+            c.jpeg = b""
         self.accepted.extend(kept)
         log(f"  track {tid}: nhận {len(kept)}/{len(buf)} frame "
             f"(mặt max {face_max:.2f}, body med {body_med:.2f})")
@@ -334,6 +346,9 @@ class Pipeline:
     # ------------------------------------------------------------------ chạy
     def run(self, input_dir: Path, recursive: bool = False) -> None:
         self._input_dir = input_dir
+        if self._staging.exists():
+            shutil.rmtree(self._staging)
+        self._staging.mkdir(parents=True, exist_ok=True)
         videos, images = list_inputs(input_dir, recursive)
         if self.cfg.skip_ref:
             before = len(videos) + len(images)
@@ -382,8 +397,12 @@ class Pipeline:
                 name = f"{base[:-4]}_{n}.jpg"
             used.add(name)
             dst = cfg.crops_dir / name
-            dst.write_bytes(c.jpeg)
+            if c.staged is not None and c.staged.exists():
+                c.staged.replace(dst)
+            else:
+                dst.write_bytes(c.jpeg)
             rows.append((c, dst))
+        shutil.rmtree(self._staging, ignore_errors=True)
 
         self._write_metadata(rows)
         self._write_report()
