@@ -133,18 +133,36 @@ NO_FACE_BUCKETS = {"sau lưng", "sau lưng 3/4", "không rõ mặt", "nghiêng"}
 SOFT_BUCKETS = NO_FACE_BUCKETS
 
 
-def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float) -> bool:
-    """Cùng một tư thế: góc camera na ná VÀ dáng gần như nhau.
+def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
+               min_pose_deg: float = 20.0, min_pose_max_deg: float = 45.0) -> bool:
+    """Cùng một tấm ảnh về mặt thông tin: giống CẢ 3 TRỤC (cỡ cảnh, góc, dáng).
 
-    Chỉ cần MỘT trong hai khác là ảnh đáng giữ (khác góc thì đổi hướng nhìn,
-    khác dáng thì đổi tư thế).
+    Ba trục được đo độc lập nên ảnh chỉ bị coi là trùng khi giống nhau ở cả ba:
+      - **cỡ cảnh** khác nhau (cận cảnh vs toàn thân) → 2 ảnh khác nhau, giữ cả hai;
+      - **dáng** (góc khớp) khác → giữ;
+      - **góc quay** khác → giữ.
+    Trước đây chỉ xét góc + dáng, nên một ảnh cận cảnh và một ảnh toàn thân cùng
+    dáng bị coi là trùng dù nhìn ra hai thứ hoàn toàn khác nhau.
 
-    Với 3 nhóm mà yaw không đo được (quay lưng / nghiêng / không rõ mặt, yaw bị
-    kẹp ±90 nên hay bằng nhau) thì so theo nhóm là đủ. Các nhóm còn lại phải so
-    **khoảng cách góc thật**, không dùng "cùng nhóm" — vì "trái nhiều" trải tới
-    180°, hai frame −30° và −65° cùng nhóm nhưng khác hướng hẳn.
+    Dáng đo bằng **góc khớp** là chính; `_pose_dist` (toạ độ chuẩn hoá trong
+    bbox) chỉ dùng **dự phòng** khi không đo được góc nào (thiếu keypoint). Lý do:
+    toạ độ chuẩn hoá theo bbox bị chính bbox làm nhiễu — giơ tay ra là bbox rộng
+    ra, mọi toạ độ x bị nén lại, `_pose_dist` nhảy vọt dù người không đổi dáng.
+    Đo trên obj_1: 47 cặp ảnh trùng dáng & góc & cỡ cảnh đã bị `_pose_dist` giữ
+    lại oan. Góc khớp không phụ thuộc bbox nên không mắc lỗi đó.
+
+    Góc quay: với 4 nhóm mà yaw không đo được (sau lưng / 3-4 sau / nghiêng /
+    không rõ mặt, yaw bị kẹp ±90 nên hay bằng nhau) thì so theo nhóm là đủ. Các
+    nhóm còn lại phải so **khoảng cách góc thật**, không dùng "cùng nhóm" — vì
+    "trái nhiều" trải tới 180°, hai frame −30° và −65° cùng nhóm nhưng khác hướng.
     """
-    if _pose_dist(a, b) >= min_pose:
+    if shot_scale(a) != shot_scale(b):
+        return False
+    ang = pose_angle_dist(a, b)
+    if ang is not None:
+        if ang[0] >= min_pose_deg or ang[1] >= min_pose_max_deg:
+            return False
+    elif _pose_dist(a, b) >= min_pose:      # dự phòng: không đo được góc khớp
         return False
     bucket = yaw_bucket(a)
     if bucket == yaw_bucket(b) and bucket in SOFT_BUCKETS:
@@ -153,18 +171,21 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float) -> b
 
 
 def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
-                 min_pose: float = 0.08) -> list[Candidate]:
+                 min_pose: float = 0.08, min_pose_deg: float = 20.0,
+                 min_pose_max_deg: float = 45.0) -> list[Candidate]:
     """Chỉ giữ frame khác biệt đủ rõ so với các frame đã giữ (cùng nguồn).
 
-    Một frame bị bỏ khi VỪA gần góc đầu VÀ gần dáng so với một frame đã giữ —
+    Một frame bị bỏ khi giống ảnh đã giữ ở cả 3 trục (cỡ cảnh + góc + dáng) —
     tức là hai ảnh gần như cùng một tư thế. Thực tế chỉ cần vài ảnh khác nhau
     làm bằng chứng nhận dạng, không cần 20 ảnh cùng một pose.
     """
-    if min_yaw <= 0 and min_pose <= 0:
+    if min_yaw <= 0 and min_pose <= 0 and min_pose_deg <= 0:
         return list(cands)
     kept: list[Candidate] = []
     for c in sorted(cands, key=lambda x: (x.source, x.t)):
-        if any(k.source == c.source and _same_pose(c, k, min_yaw, min_pose) for k in kept):
+        if any(k.source == c.source
+               and _same_pose(c, k, min_yaw, min_pose, min_pose_deg, min_pose_max_deg)
+               for k in kept):
             continue
         kept.append(c)
     return kept
@@ -198,7 +219,8 @@ def drop_tiny_frames(cands: list[Candidate], ratio: float = 0.2,
 
 
 def distinct_pose_pick(cands: list[Candidate], min_yaw: float = 25.0,
-                       min_pose: float = 0.08) -> list[Candidate]:
+                       min_pose: float = 0.08, min_pose_deg: float = 20.0,
+                       min_pose_max_deg: float = 45.0) -> list[Candidate]:
     """Mỗi tư thế (góc camera + dáng) chỉ giữ **một** ảnh tốt nhất.
 
     Duyệt theo **chất lượng giảm dần** (`_rank_key`: điểm mặt, kích thước người,
@@ -212,11 +234,13 @@ def distinct_pose_pick(cands: list[Candidate], min_yaw: float = 25.0,
     nhóm khác nhau dù dáng gần như y hệt (đo trên obj_1: pose cách nhau
     0.019–0.058) — đúng lỗi "pose lặp quá nhiều".
     """
-    if min_yaw <= 0 and min_pose <= 0:
+    if min_yaw <= 0 and min_pose <= 0 and min_pose_deg <= 0:
         return list(cands)
     kept: list[Candidate] = []
     for c in sorted(cands, key=_rank_key, reverse=True):
-        if any(k.source == c.source and _same_pose(c, k, min_yaw, min_pose) for k in kept):
+        if any(k.source == c.source
+               and _same_pose(c, k, min_yaw, min_pose, min_pose_deg, min_pose_max_deg)
+               for k in kept):
             continue
         kept.append(c)
     kept.sort(key=lambda c: (c.source, c.t))
@@ -560,3 +584,131 @@ def shot_coverage_pick(cands: list[Candidate], per_cell: int = 2) -> list[Candid
         kept.append(c)
     kept.sort(key=lambda c: (c.source, c.t))
     return kept
+
+
+# ----------------------------------------------------------------- góc khớp pose
+# Dáng được đo bằng **góc khớp** thay vì toạ độ keypoint: góc không phụ thuộc
+# người to hay nhỏ trong khung (cỡ cảnh) và không phụ thuộc vị trí trong khung,
+# nên 3 trục "cỡ cảnh / góc quay / dáng" không lẫn vào nhau.
+#
+# Đầu (mũi, mắt, tai) **không** được dùng ở đây — hướng đầu là trục "góc quay",
+# đã đo riêng bằng yaw/pitch. Nhờ vậy hai ảnh cùng dáng nhưng đầu quay khác nhau
+# vẫn được coi là cùng dáng (khác góc), đúng như mong muốn.
+JOINT_CONF = 0.35       # keypoint dưới mức này coi như không thấy
+BONE_MIN = 0.10         # xương ngắn hơn 10% chiều cao người = đang hướng vào camera
+POSE_MIN_ANGLES = 4     # cần ít nhất chừng này góc đo được mới dám kết luận
+
+POSE_ANGLE_NAMES = ["khuỷu trái", "khuỷu phải", "gối trái", "gối phải",
+                    "nâng tay trái", "nâng tay phải", "dạng đùi trái", "dạng đùi phải",
+                    "mở hai đùi", "nghiêng thân", "nghiêng vai"]
+# ảnh gương: đổi trái↔phải, góc có dấu (nghiêng thân / nghiêng vai) đổi dấu
+POSE_MIRROR_IDX = np.array([1, 0, 3, 2, 5, 4, 7, 6, 8, 9, 10])
+POSE_MIRROR_SIGN = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1], np.float32)
+
+
+def _vec_angle(u: np.ndarray, v: np.ndarray) -> float:
+    """Góc giữa 2 vector (0–180°), nan nếu một vector bằng 0."""
+    nu, nv = float(np.linalg.norm(u)), float(np.linalg.norm(v))
+    if nu < 1e-6 or nv < 1e-6:
+        return float("nan")
+    c = float(np.dot(u, v) / (nu * nv))
+    return math.degrees(math.acos(max(-1.0, min(1.0, c))))
+
+
+def _signed_angle(v: np.ndarray) -> float:
+    """Góc có dấu của vector so với phương thẳng đứng hướng lên (dương = sang phải)."""
+    return math.degrees(math.atan2(float(v[0]), -float(v[1])))
+
+
+def pose_angles(c: Candidate) -> np.ndarray | None:
+    """Vector 11 góc khớp (độ), nan ở góc không đo được.
+
+    Gồm: khuỷu, gối, nâng tay, dạng đùi (mỗi thứ 2 bên), mở hai đùi, nghiêng
+    thân, nghiêng vai. Góc nào cần keypoint bị khuất (conf < 0.35) hoặc xương quá
+    ngắn (hướng vào camera → hình chiếu 2D bị co) thì để nan, **không** gán 0.5
+    như cách cũ — nhờ vậy keypoint thiếu không tạo ra "giống nhau giả tạo".
+    """
+    kp = c.kpts
+    if kp is None or len(kp) < 17:
+        return None
+    p = np.asarray(kp, np.float32)
+    seen = p[:, 2] >= JOINT_CONF
+    h = float(c.person_h) or float(np.ptp(p[:, 1]))
+    min_len = BONE_MIN * max(1.0, h)
+
+    def pt(i: int) -> np.ndarray:
+        return p[i, :2]
+
+    def bone(i: int, j: int) -> np.ndarray | None:
+        if not (seen[i] and seen[j]):
+            return None
+        v = pt(j) - pt(i)
+        return v if float(np.linalg.norm(v)) >= min_len else None
+
+    out = np.full(len(POSE_ANGLE_NAMES), np.nan, np.float32)
+
+    torso = None
+    if seen[5] and seen[6] and seen[11] and seen[12]:
+        t = (pt(5) + pt(6)) / 2 - (pt(11) + pt(12)) / 2
+        if float(np.linalg.norm(t)) >= min_len:
+            torso = t
+
+    for slot, sh, el, wr in ((0, 5, 7, 9), (1, 6, 8, 10)):
+        arm = bone(sh, el)
+        if arm is None:
+            continue
+        fore = bone(el, wr)
+        if fore is not None:                       # góc khuỷu
+            out[slot] = _vec_angle(-arm, fore)
+        if torso is not None:                      # nâng tay (0 = buông, 90 = ngang)
+            out[4 + slot] = _vec_angle(torso, arm)
+
+    thighs = {}
+    for slot, hip, knee, ank in ((0, 11, 13, 15), (1, 12, 14, 16)):
+        thigh = bone(hip, knee)
+        if thigh is None:
+            continue
+        thighs[slot] = thigh
+        shin = bone(knee, ank)
+        if shin is not None:                       # góc gối
+            out[2 + slot] = _vec_angle(-thigh, shin)
+        if torso is not None:                      # dạng đùi
+            out[6 + slot] = _vec_angle(-torso, thigh)
+    if 0 in thighs and 1 in thighs:                # mở hai đùi
+        out[8] = _vec_angle(thighs[0], thighs[1])
+
+    if torso is not None:                          # nghiêng thân
+        out[9] = _signed_angle(torso)
+    if seen[5] and seen[6]:                        # nghiêng vai
+        sline = pt(6) - pt(5)
+        if float(np.linalg.norm(sline)) >= min_len:
+            out[10] = math.degrees(math.atan2(float(sline[1]), float(sline[0])))
+
+    if int(np.sum(~np.isnan(out))) < POSE_MIN_ANGLES:
+        return None
+    return out
+
+
+def pose_angle_dist(a: Candidate, b: Candidate) -> tuple[float, float] | None:
+    """(lệch góc trung bình, lệch góc lớn nhất) theo độ, có xét ảnh gương.
+
+    Ảnh gương (dáng nhìn sang trái vs sang phải) được coi là **cùng dáng**: lấy
+    min của hai cách so (giữ nguyên và lật trái-phải). Không có bước này thì mỗi
+    lần đổi bên là thêm một ảnh trùng ý nghĩa.
+
+    `max` là phần quan trọng nhất: trung bình 11 góc sẽ pha loãng "chỉ một tay giơ
+    lên" (90°/11 ≈ 8°), trong khi `max` bắt được đúng 90°.
+    """
+    va, vb = pose_angles(a), pose_angles(b)
+    if va is None or vb is None:
+        return None
+    best: tuple[float, float] | None = None
+    for cand in (vb, vb[POSE_MIRROR_IDX] * POSE_MIRROR_SIGN):
+        ok = ~(np.isnan(va) | np.isnan(cand))
+        if int(ok.sum()) < POSE_MIN_ANGLES:
+            continue
+        d = np.abs(va[ok] - cand[ok])
+        pair = (float(d.mean()), float(d.max()))
+        if best is None or pair < best:
+            best = pair
+    return best

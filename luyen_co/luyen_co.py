@@ -85,11 +85,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         "crop = chỉ ảnh quanh người; both = cả hai")
     g.add_argument("--min-yaw", type=float, default=25.0,
                    help="hai ảnh lệch góc camera dưới mức này (độ) thì coi là cùng góc; "
-                        "kết hợp với --min-pose để loại ảnh trùng tư thế")
+                        "kết hợp với --min-pose để loại ảnh trùng")
     g.add_argument("--min-pose", type=float, default=0.08,
                    help="hai ảnh lệch pose dưới mức này (keypoint chuẩn hoá, 0–1) thì coi là "
                         "cùng dáng; cùng góc VÀ cùng dáng → chỉ giữ ảnh tốt nhất. "
                         "Đặt 0 để tắt")
+    g.add_argument("--min-pose-deg", type=float, default=20.0,
+                   help="ngưỡng chính: lệch GÓC KHỚP trung bình (độ) — dưới mức này thì "
+                        "coi là cùng dáng. Góc khớp không phụ thuộc người to/nhỏ trong "
+                        "khung nên không lẫn với cỡ cảnh; 0 = tắt tầng này")
+    g.add_argument("--min-pose-max-deg", type=float, default=45.0,
+                   help="một khớp lệch quá mức này (độ) là khác dáng, dù trung bình nhỏ "
+                        "(bắt ca 'chỉ giơ một tay' mà trung bình 11 góc bỏ qua)")
     g.add_argument("--confirm-window", type=float, default=0.0,
                    help="giây: giới hạn khoảng cách tới mốc đã khớp mặt khi nhận frame quay lưng "
                         "(0 = không giới hạn, dựa vào neo ngoại hình của cả video)")
@@ -170,6 +177,7 @@ def main(argv: list[str] | None = None) -> int:
         max_other_area=args.max_other_area,
         crop_margin=args.crop_margin, save=args.save,
         min_yaw=args.min_yaw, min_pose=args.min_pose, dup_sim=args.dup_sim,
+        min_pose_deg=args.min_pose_deg, min_pose_max_deg=args.min_pose_max_deg,
         confirm_window=args.confirm_window, anchor_th=args.anchor_th,
         select=args.select, per_bucket=args.per_bucket,
         shot_per_bucket=args.shot_per_bucket,

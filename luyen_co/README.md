@@ -76,13 +76,28 @@ Sau khi lọc trùng, ảnh được chọn theo `--select`:
   Trong nhóm không có điểm mặt, ảnh được xếp theo **kích thước người + độ nét**.
 - `diversity`: chỉ giữ frame khác quá ngưỡng `--min-yaw` / `--min-pose`.
 
-Sau bước chọn theo nhóm, cả 2 chế độ đều qua **lọc trùng tư thế** — đây là bước
-quyết định "pose không bị lặp":
+Sau bước chọn theo nhóm, cả 2 chế độ đều qua **lọc trùng ảnh** — đây là bước
+quyết định "pose không bị lặp". Nguyên tắc: **3 trục đo độc lập**, hai ảnh chỉ bị
+coi là trùng khi giống nhau ở **cả 3**:
 
-- Hai ảnh được coi là **cùng một tư thế** khi **vừa** gần góc camera
-  (`< --min-yaw` độ, hoặc cùng nhóm góc với 3 nhóm mà yaw không đo được:
-  sau lưng / nghiêng / không rõ mặt) **vừa** gần dáng (`< --min-pose`).
-  Chỉ cần khác một trong hai là ảnh đáng giữ.
+| Trục | Đo bằng | Giống khi |
+|---|---|---|
+| cỡ cảnh | `shot_scale` (số "đầu" trong khung, cổ chân) | cùng mức |
+| góc quay | `yaw`/`pitch` từ 5 landmark | `< --min-yaw`, hoặc cùng nhóm góc mà yaw không đo được (sau lưng / 3-4 sau / nghiêng / không rõ mặt) |
+| dáng | **góc khớp** + toạ độ chuẩn hoá | `mean < --min-pose-deg` **và** `max < --min-pose-max-deg` **và** `< --min-pose` |
+
+- **Dáng đo bằng góc khớp** (`pose_angles`, 11 góc: khuỷu, gối, nâng tay, dạng
+  đùi × 2 bên, mở hai đùi, nghiêng thân, nghiêng vai). Góc **không phụ thuộc
+  người to hay nhỏ trong khung**, nên trục "dáng" không lẫn với trục "cỡ cảnh".
+  Đầu (mũi/mắt/tai) **không** dùng ở đây — hướng đầu là trục "góc quay".
+- Góc nào có keypoint bị khuất (conf < 0.35) hoặc xương quá ngắn (< 10% chiều cao
+  người, tức đang hướng vào camera) thì **bỏ góc đó** (nan) thay vì gán 0.5 như
+  cách cũ — nhờ vậy keypoint thiếu không tạo ra "giống nhau giả tạo".
+- Vì sao cần `--min-pose-max-deg`: trung bình 11 góc pha loãng ca "chỉ giơ một
+  tay" (90°/11 ≈ 8°, lọt ngưỡng 20°) trong khi `max` bắt đúng 90°.
+- **Gương**: dáng tay trái giơ lên và bản gương (tay phải giơ lên) được coi là
+  **cùng dáng** (lấy min của 2 cách so) — không có bước này thì mỗi lần đổi bên
+  là thêm một ảnh trùng ý nghĩa.
 - Duyệt theo **chất lượng giảm dần**, giữ ảnh nếu nó khác mọi ảnh đã giữ —
   **không nối chuỗi**. Nối chuỗi (A≈B, B≈C ⇒ gộp cả A và C) làm sập cả một
   clip quay tay: 81 frame của clip bảo vệ chỉ còn 6 ảnh, trong khi duyệt tham
@@ -97,8 +112,18 @@ Vì sao cần bước này: chọn theo nhóm chỉ giới hạn vài ảnh cho 
 nhóm góc)*, nên 5 frame catwalk liên tiếp với đầu quay ±29° vẫn vào 5 nhóm khác
 nhau dù dáng gần như y hệt — đo trên obj_1, các frame 4.0/5.0/6.0/7.0/7.5 s chỉ
 cách nhau 0.019–0.058 về pose. Với `--per-bucket 3` (mặc định) rồi lọc tư thế:
-13 video của obj_1 ra **113 ảnh** (trước là 54), riêng clip bảo vệ quay tay
-78 s ra **12 ảnh** (trước 5). Đặt `--min-yaw 0 --min-pose 0` để tắt.
+13 video của obj_1 ra **112 ảnh** (trước là 54), riêng clip bảo vệ quay tay
+78 s ra **12 ảnh** (trước 5). Đặt `--min-yaw 0 --min-pose 0 --min-pose-deg 0` để tắt.
+
+Kiểm chứng trên bộ 112 ảnh đó (đếm lại **mọi cặp cùng nguồn** bằng `pose_deg`
+ghi trong `metadata.jsonl`): **0 cặp** còn vi phạm quy tắc 3 trục. Trước khi đổi
+sang góc khớp, cùng phép đếm cho ra **47 cặp** trùng dáng + trùng góc + trùng cỡ
+cảnh mà vẫn còn cả hai — tất cả là do `_pose_dist` (toạ độ chuẩn hoá theo bbox)
+giữ lại oan.
+
+Ảnh trùng giữa **hai video khác nhau** thì cố ý **không** gộp: khác nguồn, khác
+ánh sáng/bối cảnh vẫn có ích cho dataset. Nếu muốn gộp cả liên-nguồn thì bỏ điều
+kiện `k.source == c.source` trong `distinct_pose_pick`.
 
 Sau đó mới lọc trùng (`--dup-sim`, `--min-gap`) và tuỳ chọn `--limit N` (greedy
 farthest-point trên vector [góc đầu, 17 keypoint, CLIP]).
@@ -201,7 +226,9 @@ Tham số đáng chú ý:
 | `--min-gap` | 0.35 | giây tối thiểu giữa 2 ảnh cùng track |
 | `--save` | full | `full` = nguyên frame (có bối cảnh), `crop` = chỉ quanh người, `both` = cả hai |
 | `--min-yaw` | 25 | 2 ảnh lệch góc camera dưới mức này (độ) thì coi là cùng góc; phối với `--min-pose` để loại ảnh trùng tư thế |
-| `--min-pose` | 0.08 | 2 ảnh lệch dáng dưới mức này (keypoint chuẩn hoá 0–1) thì coi là cùng dáng; cùng góc **và** cùng dáng → chỉ giữ ảnh tốt nhất. Tăng 0.12–0.15 nếu vẫn thấy pose lặp; 0 = tắt |
+| `--min-pose` | 0.08 | 2 ảnh lệch dáng dưới mức này (keypoint chuẩn hoá 0–1) thì coi là cùng dáng; 0 = tắt tầng này |
+| `--min-pose-deg` | 20 | lệch **góc khớp** trung bình (độ) — ngưỡng chính của trục "dáng"; 0 = tắt tầng góc khớp |
+| `--min-pose-max-deg` | 45 | một khớp lệch quá mức này (độ) là khác dáng, dù trung bình nhỏ (bắt ca "chỉ giơ một tay") |
 | `--confirm-window` | 0 | giới hạn giây tới mốc đã khớp mặt khi nhận frame quay lưng (0 = không giới hạn) |
 | `--anchor-th` | 0.60 | cosine tối thiểu với neo ngoại hình của video |
 | `--select` | coverage | `coverage` = đủ góc mỗi cảnh; `diversity` = theo ngưỡng yaw/pose |

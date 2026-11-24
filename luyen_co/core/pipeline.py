@@ -34,8 +34,8 @@ from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
 from .select import (SHOT_ABBR, coverage_pick, dedupe, distinct_pose_pick,
                      diverse_gate, drop_similar, drop_tiny_frames, feet_visible, head_pose,
-                     keep_best_body_tracks, pick_diverse, pose_vector, shot_coverage_pick,
-                     shot_histogram, shot_scale, yaw_bucket, yaw_histogram)
+                     keep_best_body_tracks, pick_diverse, pose_angles, pose_vector,
+                     shot_coverage_pick, shot_histogram, shot_scale, yaw_bucket, yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -60,6 +60,8 @@ class Config:
     save: str = "full"              # full | crop | both
     min_yaw: float = 25.0           # chênh góc camera tối thiểu giữa 2 ảnh giữ lại
     min_pose: float = 0.08          # chênh pose keypoint tối thiểu (0–1)
+    min_pose_deg: float = 20.0      # chênh góc khớp trung bình tối thiểu (độ)
+    min_pose_max_deg: float = 45.0  # chênh góc khớp lớn nhất cho phép (độ)
     confirm_window: float = 0.0     # giây: 0 = không giới hạn (neo theo video)
     anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
     select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
@@ -625,7 +627,8 @@ class Pipeline:
             log(f"chọn theo độ phủ góc (tối đa {cfg.per_bucket} ảnh/nhóm): "
                 f"{before} → {after_cov} → {len(cands)} ảnh")
         else:
-            cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose)
+            cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose,
+                                 cfg.min_pose_deg, cfg.min_pose_max_deg)
             if len(cands) != before:
                 log(f"lọc đa dạng (yaw {cfg.min_yaw}°, pose {cfg.min_pose}): "
                     f"{before} → {len(cands)} ảnh")
@@ -636,13 +639,15 @@ class Pipeline:
             if len(cands) != n_before:
                 log(f"chọn theo cỡ cảnh (tối đa {cfg.shot_per_bucket} ảnh mỗi ô "
                     f"góc × cỡ cảnh): {n_before} → {len(cands)} ảnh")
-        if cfg.min_yaw > 0 or cfg.min_pose > 0:
+        if cfg.min_yaw > 0 or cfg.min_pose > 0 or cfg.min_pose_deg > 0:
             n_before = len(cands)
-            cands = distinct_pose_pick(cands, cfg.min_yaw, cfg.min_pose)
+            cands = distinct_pose_pick(cands, cfg.min_yaw, cfg.min_pose,
+                                       cfg.min_pose_deg, cfg.min_pose_max_deg)
             self.pose_gate = (n_before, len(cands))
             if len(cands) != n_before:
-                log(f"lọc trùng tư thế (góc camera < {cfg.min_yaw:.0f}° và pose "
-                    f"< {cfg.min_pose:.2f} coi là một): {n_before} → {len(cands)} ảnh")
+                log(f"lọc trùng ảnh (giống cả 3 trục: cỡ cảnh, góc < {cfg.min_yaw:.0f}°, "
+                    f"góc khớp < {cfg.min_pose_deg:.0f}° / max < {cfg.min_pose_max_deg:.0f}°, "
+                    f"pose < {cfg.min_pose:.2f}): {n_before} → {len(cands)} ảnh")
         if cfg.limit and cfg.limit < len(cands):
             cands = pick_diverse(cands, cfg.limit)
             cands.sort(key=lambda c: (c.source, c.t))
@@ -707,6 +712,10 @@ class Pipeline:
                     "src_width": c.src_w,
                     "src_height": c.src_h,
                 }
+                ang = pose_angles(c)
+                if ang is not None:          # 11 góc khớp, null = không đo được
+                    rec["pose_deg"] = [None if np.isnan(v) else round(float(v), 1)
+                                       for v in ang]
                 if crop_path is not None and crop_path != dst:
                     rec["crop_path"] = str(crop_path.relative_to(self.cfg.out)).replace("\\", "/")
                 fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
@@ -782,8 +791,10 @@ class Pipeline:
         gate = getattr(self, "pose_gate", None)
         if gate and gate[0] != gate[1]:
             lines.append("")
-            lines.append(f"lọc trùng tư thế (góc camera < {cfg.min_yaw:.0f}° và pose "
-                         f"< {cfg.min_pose:.2f} coi là một): {gate[0]} → {gate[1]} ảnh")
+            lines.append(f"lọc trùng ảnh (giống cả 3 trục cỡ cảnh/góc/dáng; góc khớp "
+                         f"< {cfg.min_pose_deg:.0f}° và max < {cfg.min_pose_max_deg:.0f}°, "
+                         f"góc quay < {cfg.min_yaw:.0f}°, pose < {cfg.min_pose:.2f}): "
+                         f"{gate[0]} → {gate[1]} ảnh")
         lines.append("")
         lines.append("độ phủ góc đầu của ảnh đã chọn:")
         lines.extend(f"  {label:12s} {n:5d}" for label, n in yaw_histogram(self.selected_cands))

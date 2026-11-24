@@ -10,7 +10,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import numpy as np
 
 from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_similar, face_vis,
-                         head_pose, keep_best_body_tracks, pick_diverse, pose_vector,
+                         head_pose, keep_best_body_tracks, pick_diverse, pose_angle_dist,
+                         pose_angles, pose_vector,
                          shot_coverage_pick, shot_histogram, shot_scale,
                          yaw_bucket, yaw_histogram)
 from core.tracker import IoUTracker
@@ -51,10 +52,33 @@ def make_kpts(nose=0.99, span=0.5, shoulder_conf=0.99, eye=None, ear=0.9, feet=0
     kp[4] = [cx + 15, 32.0, ear]                  # tai phải
     kp[5] = [cx - half, 60.0, shoulder_conf]      # vai trái
     kp[6] = [cx + half, 60.0, shoulder_conf]      # vai phải
+    kp[7] = [cx - half - 4, 110.0, 0.9]           # khuỷu trái
+    kp[8] = [cx + half + 4, 110.0, 0.9]           # khuỷu phải
+    kp[9] = [cx - half - 6, 150.0, 0.9]           # cổ tay trái
+    kp[10] = [cx + half + 6, 150.0, 0.9]          # cổ tay phải
     kp[11] = [cx - half, 150.0, 0.9]              # hông trái
     kp[12] = [cx + half, 150.0, 0.9]              # hông phải
-    kp[15] = [cx - 8, 200.0, feet]                # cổ chân trái
-    kp[16] = [cx + 8, 200.0, feet]                # cổ chân phải
+    kp[13] = [cx - half * 0.9, 200.0, 0.9]        # gối trái
+    kp[14] = [cx + half * 0.9, 200.0, 0.9]        # gối phải
+    kp[15] = [cx - 8, 240.0, feet]                # cổ chân trái
+    kp[16] = [cx + 8, 240.0, feet]                # cổ chân phải
+    return kp
+
+
+def mirror_kpts(kp, cx=60.0):
+    """Lật gương bộ keypoint: đổi trái↔phải và lật trục x."""
+    out = kp.copy()
+    for i, j in ((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (11, 12), (13, 14), (15, 16)):
+        out[i], out[j] = kp[j], kp[i]
+    out[:, 0] = 2 * cx - out[:, 0]
+    return out
+
+
+def make_kpts_arm_up():
+    """Dáng không đối xứng: tay trái giơ thẳng lên (để test gương / một chi đổi)."""
+    kp = make_kpts()
+    kp[7] = [35.0, 10.0, 0.9]        # khuỷu trái
+    kp[9] = [35.0, -40.0, 0.9]       # cổ tay trái
     return kp
 
 
@@ -444,3 +468,100 @@ def test_shot_coverage_pick_chan_moi_o_goc_x_co():
     assert len(kept) == 2
     # trong ô trung cảnh giữ ảnh nét nhất (blur 102), không phải ảnh đầu danh sách
     assert [c for c in kept if shot_scale(c) == "trung cảnh"] == [ms[2]]
+
+
+# --------------------------------------------------------------- góc khớp pose
+def test_pose_angles_11_goc_va_khop_khuat_bi_nan():
+    c = make_cand(h=400)
+    c.kpts = make_kpts()
+    ang = pose_angles(c)
+    assert ang is not None and len(ang) == 11
+    assert not np.isnan(ang).any()          # đủ keypoint → đo được hết
+    # che cổ tay trái (conf thấp) → chỉ góc khuỷu trái mất, các góc khác vẫn còn
+    kp = make_kpts()
+    kp[9, 2] = 0.1
+    c.kpts = kp
+    ang = pose_angles(c)
+    assert ang is not None
+    assert np.isnan(ang[0]) and not np.isnan(ang[1])
+
+
+def test_pose_angle_khong_phu_thuoc_co_canh():
+    # Cùng một dáng, người to gấp đôi trong khung → góc khớp phải y hệt.
+    small = make_cand(h=400)
+    small.kpts = make_kpts()
+    big = make_cand(h=800)
+    big.kpts = (make_kpts() * np.array([2.0, 2.0, 1.0], np.float32))
+    d = pose_angle_dist(small, big)
+    assert d is not None and d[0] < 1e-3 and d[1] < 1e-3
+
+
+def test_pose_angle_giong_nhau_giua_hai_anh():
+    a = make_cand(t=0.0, h=400)
+    a.kpts = make_kpts()
+    b = make_cand(t=1.0, h=400)
+    b.kpts = make_kpts()
+    d = pose_angle_dist(a, b)
+    assert d is not None and d[0] < 1e-3
+
+
+def test_pose_angle_giong_nhau_khi_lat_guong():
+    # Dáng tay trái giơ lên và bản gương (tay phải giơ lên) = cùng dáng → lệch ~0.
+    a = make_cand(t=0.0, h=400)
+    a.kpts = make_kpts_arm_up()
+    b = make_cand(t=1.0, h=400)
+    b.kpts = mirror_kpts(make_kpts_arm_up())
+    d = pose_angle_dist(a, b)
+    assert d is not None and d[0] < 1.0 and d[1] < 1.0
+    # nếu không xét gương thì hai ảnh này khác nhau rõ rệt (cùng khớp, khác bên)
+    va, vb = pose_angles(a), pose_angles(b)
+    assert np.nanmax(np.abs(va - vb)) > 20
+
+
+def test_pose_angle_bat_mot_tay_gio_len():
+    a = make_cand(t=0.0, h=400, face_px=64)
+    a.kpts = make_kpts()
+    b = make_cand(t=1.0, h=400, face_px=64)
+    b.kpts = make_kpts_arm_up()
+    mean, mx = pose_angle_dist(a, b)
+    assert mean < 20 and mx >= 45
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2
+
+
+def test_bbox_nhieu_khong_pha_vo_ket_luan_cung_dang():
+    # Cùng keypoint (cùng dáng) nhưng pose_vec lệch hẳn — mô phỏng đúng lỗi bbox
+    # đổi khi giơ tay làm toạ độ chuẩn hoá bị nén. Tầng góc khớp là chính nên vẫn
+    # phải gộp, không được giữ cả hai.
+    a = make_cand(t=0.0, h=400)
+    a.kpts = make_kpts()
+    b = make_cand(t=1.0, h=400)
+    b.kpts = make_kpts()
+    b.pose_vec = np.full(34, 0.5, np.float32)
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 1
+
+
+def test_khac_co_canh_thi_khong_bi_coi_la_trung():
+    # Cùng dáng, cùng góc, nhưng một ảnh toàn thân một ảnh viễn cảnh → 2 ảnh khác
+    # nhau về cỡ cảnh nên phải giữ cả hai (3 trục đo độc lập).
+    near = make_cand(t=0.0, h=1200)
+    near.kpts = make_kpts(feet=0.9)
+    far = make_cand(t=6.0, h=300)
+    far.kpts = make_kpts(feet=0.9)
+    assert shot_scale(near) == "toàn thân" and shot_scale(far) == "viễn cảnh"
+    assert len(distinct_pose_pick([near, far], min_yaw=25.0, min_pose=0.08)) == 2
+    # còn cùng cỡ cảnh + cùng dáng + cùng góc thì chỉ giữ 1
+    twin = make_cand(t=6.0, h=1200)
+    twin.kpts = make_kpts(feet=0.9)
+    assert len(distinct_pose_pick([near, twin], min_yaw=25.0, min_pose=0.08)) == 1
+
+
+def test_goc_quay_khac_nhau_van_giu_du_cung_dang():
+    # Cùng dáng nhưng đầu quay khác hẳn: góc khớp (không dùng mắt/mũi) coi là cùng
+    # dáng, còn trục góc quay tách ra → giữ cả hai ảnh.
+    a = make_cand(t=0.0, h=400, yaw=0.0)
+    a.kpts = make_kpts()
+    b = make_cand(t=1.0, h=400, yaw=-60.0)
+    b.kpts = make_kpts()
+    d = pose_angle_dist(a, b)
+    assert d is not None and d[0] < 1.0          # dáng giống nhau
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2
