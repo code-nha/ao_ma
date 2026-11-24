@@ -99,8 +99,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="coverage = đảm bảo đủ góc (thẳng/trái/phải/ngửa/cúi/nghiêng/"
                         "sau lưng/không rõ mặt); "
                         "diversity = chỉ giữ frame khác nhau quá ngưỡng --min-yaw/--min-pose")
-    g.add_argument("--per-bucket", type=int, default=1,
-                   help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage")
+    g.add_argument("--per-bucket", type=int, default=3,
+                   help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage; "
+                        "bước lọc trùng tư thế sau đó sẽ tỉa tiếp, nên để 3 cho clip "
+                        "quay tay/liên tục vẫn đủ ảnh")
 
     g = p.add_argument_group("lọc trùng & đa dạng")
     g.add_argument("--dup-sim", type=float, default=0.97, help="cosine coi là trùng hẳn (bỏ bớt)")

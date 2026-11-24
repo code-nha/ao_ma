@@ -128,16 +128,26 @@ def _pose_dist(a: Candidate, b: Candidate) -> float:
     return float(np.mean(np.abs(a.pose_vec - b.pose_vec)))
 
 
+SOFT_BUCKETS = {"sau lưng", "không rõ mặt", "nghiêng"}
+
+
 def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float) -> bool:
     """Cùng một tư thế: góc camera na ná VÀ dáng gần như nhau.
 
     Chỉ cần MỘT trong hai khác là ảnh đáng giữ (khác góc thì đổi hướng nhìn,
-    khác dáng thì đổi tư thế). Dùng bucket bằng nhau để bắt trường hợp yaw/pitch
-    lệch ít nhưng rơi khác nhóm do landmark nhiễu.
+    khác dáng thì đổi tư thế).
+
+    Với 3 nhóm mà yaw không đo được (quay lưng / nghiêng / không rõ mặt, yaw bị
+    kẹp ±90 nên hay bằng nhau) thì so theo nhóm là đủ. Các nhóm còn lại phải so
+    **khoảng cách góc thật**, không dùng "cùng nhóm" — vì "trái nhiều" trải tới
+    180°, hai frame −30° và −65° cùng nhóm nhưng khác hướng hẳn.
     """
     if _pose_dist(a, b) >= min_pose:
         return False
-    return yaw_bucket(a) == yaw_bucket(b) or _yaw_dist(a, b) < min_yaw
+    bucket = yaw_bucket(a)
+    if bucket == yaw_bucket(b) and bucket in SOFT_BUCKETS:
+        return True
+    return _yaw_dist(a, b) < min_yaw
 
 
 def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
@@ -158,62 +168,55 @@ def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
     return kept
 
 
+def drop_tiny_frames(cands: list[Candidate], ratio: float = 0.2,
+                     ref_min: int = 400) -> list[Candidate]:
+    """Bỏ frame mà người bé tí so với frame to nhất trong **cùng cảnh**.
+
+    Clip quay tay thường có lúc máy ở xa: người chỉ còn ~110 px trong khi cùng
+    cảnh đó có frame 950 px. Keypoint ở 110 px nhiễu tới mức pose không còn so
+    được, nên lọc trùng tư thế coi chúng là "khác dáng" và giữ lại — kết quả là
+    2–3 tấm gần như y hệt nhau, chỉ khác kích thước (đo trên clip bảo vệ:
+    33.5 s h=948 / 34.0 s h=111 / 38.5 s h=109, CLIP 0.88–0.96).
+
+    Chỉ áp khi trong cảnh có frame đủ lớn (≥ `ref_min`), và chỉ cắt phần quá
+    nhỏ (< 20% frame to nhất) — ảnh "toàn thân ở xa" thật (268 px trong cảnh
+    976 px) vẫn được giữ.
+    """
+    ref: dict[tuple[str, int], int] = {}
+    for c in cands:
+        key = (c.source, c.scene)
+        ref[key] = max(ref.get(key, 0), c.person_h)
+    out = []
+    for c in cands:
+        biggest = ref[(c.source, c.scene)]
+        if biggest >= ref_min and c.person_h < ratio * biggest:
+            continue
+        out.append(c)
+    return out
+
+
 def distinct_pose_pick(cands: list[Candidate], min_yaw: float = 25.0,
                        min_pose: float = 0.08) -> list[Candidate]:
     """Mỗi tư thế (góc camera + dáng) chỉ giữ **một** ảnh tốt nhất.
 
-    Khác `diverse_gate` ở 2 điểm, để không còn "pose lặp":
+    Duyệt theo **chất lượng giảm dần** (`_rank_key`: điểm mặt, kích thước người,
+    độ nét); giữ ảnh nếu nó khác mọi ảnh đã giữ. Không gom cụm kiểu union-find
+    vì nối chuỗi làm sập cả một đoạn phim: clip quay bằng điện thoại (camera di
+    động, dáng đổi dần) có A≈B≈C… nên union-find gộp 81 frame còn 6 ảnh, trong
+    khi duyệt tham lam giữ được 17 ảnh — đúng ý "đừng bỏ phí frame".
 
-    1. Gom **cụm** bằng union-find thay vì so tuần tự. Một loạt frame na ná nhau
-       (A≈B, B≈C nhưng A xa C) vẫn vào cùng một cụm; lọc tuần tự sẽ giữ cả A và C.
-    2. Giữ ảnh **chất lượng nhất** trong cụm (theo `_rank_key`: điểm mặt, kích
-       thước người, độ nét), không phải ảnh đến trước.
-
-    Vì sao cần: `coverage_pick` chỉ giới hạn 1 ảnh cho mỗi *(nguồn, cảnh, nhóm
-    góc)*, nên 5 frame catwalk liên tiếp với đầu quay ±20° vẫn vào 5 nhóm khác
-    nhau dù dáng gần như y hệt (đo trên obj_1: pose cách nhau 0.019–0.058, tức
-    là trùng tư thế) — đúng lỗi "pose lặp quá nhiều".
+    Vì sao cần bước này: `coverage_pick` chỉ giới hạn 1 ảnh cho mỗi *(nguồn,
+    cảnh, nhóm góc)*, nên 5 frame catwalk liên tiếp với đầu quay ±20° vẫn vào 5
+    nhóm khác nhau dù dáng gần như y hệt (đo trên obj_1: pose cách nhau
+    0.019–0.058) — đúng lỗi "pose lặp quá nhiều".
     """
     if min_yaw <= 0 and min_pose <= 0:
         return list(cands)
-    no_pose = [c for c in cands if c.pose_vec is None]
-    by_source: dict[str, list[Candidate]] = {}
-    for c in cands:
-        if c.pose_vec is not None:
-            by_source.setdefault(c.source, []).append(c)
-
     kept: list[Candidate] = []
-    for items in by_source.values():
-        mat = np.stack([np.asarray(c.pose_vec, dtype=np.float32) for c in items])
-        parent = list(range(len(items)))
-
-        def find(i: int) -> int:
-            while parent[i] != i:
-                parent[i] = parent[parent[i]]
-                i = parent[i]
-            return i
-
-        for i in range(len(items)):
-            # khoảng cách pose tới mọi frame còn lại, tính 1 lần bằng numpy
-            close = np.nonzero(np.abs(mat - mat[i]).mean(axis=1) < min_pose)[0]
-            for j in close:
-                if j <= i:
-                    continue
-                a, b = items[i], items[int(j)]
-                if not _same_pose(a, b, min_yaw, min_pose):
-                    continue
-                ri, rj = find(i), find(int(j))
-                if ri != rj:
-                    parent[rj] = ri
-
-        best: dict[int, Candidate] = {}
-        for i, c in enumerate(items):
-            r = find(i)
-            if r not in best or _rank_key(c) > _rank_key(best[r]):
-                best[r] = c
-        kept.extend(best.values())
-
-    kept.extend(no_pose)
+    for c in sorted(cands, key=_rank_key, reverse=True):
+        if any(k.source == c.source and _same_pose(c, k, min_yaw, min_pose) for k in kept):
+            continue
+        kept.append(c)
     kept.sort(key=lambda c: (c.source, c.t))
     return kept
 

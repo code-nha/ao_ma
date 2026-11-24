@@ -258,14 +258,16 @@ def _pose(base=0.5, delta=0.0):
     return np.full(34, base + delta, np.float32)
 
 
-def test_distinct_pose_pick_gop_cum_chuoi():
-    # Chuỗi frame na ná nhau: A≈B (15°), B≈C (13°) nhưng A cách C 28° → lọc tuần
-    # tự sẽ giữ A và C; gom cụm thì chỉ còn 1 ảnh.
+def test_distinct_pose_pick_khong_noi_chuoi_frame():
+    # Chuỗi A≈B (15°), B≈C (13°), A cách C 28°. Nối chuỗi (union-find) sẽ gộp cả
+    # 3 → 1 ảnh; duyệt tham lam giữ A và C vì A khác C đủ rõ. Đây là lý do clip
+    # quay bằng điện thoại (dáng đổi dần) trước chỉ ra 6 ảnh, giờ ra 17.
     a = make_cand(t=0.0, yaw=0.0, pose=_pose())
     b = make_cand(t=1.0, yaw=15.0, pose=_pose(delta=0.01))
     c = make_cand(t=2.0, yaw=28.0, pose=_pose(delta=0.02))
     kept = distinct_pose_pick([a, b, c], min_yaw=25.0, min_pose=0.08)
-    assert len(kept) == 1
+    assert len(kept) == 2
+    assert {k.t for k in kept} == {0.0, 2.0}
 
 
 def test_distinct_pose_pick_giu_anh_chat_luong_nhat():

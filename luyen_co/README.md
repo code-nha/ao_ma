@@ -77,20 +77,25 @@ Sau bước chọn theo nhóm, cả 2 chế độ đều qua **lọc trùng tư 
 quyết định "pose không bị lặp":
 
 - Hai ảnh được coi là **cùng một tư thế** khi **vừa** gần góc camera
-  (`< --min-yaw` độ, hoặc cùng nhóm góc) **vừa** gần dáng (`< --min-pose`).
+  (`< --min-yaw` độ, hoặc cùng nhóm góc với 3 nhóm mà yaw không đo được:
+  sau lưng / nghiêng / không rõ mặt) **vừa** gần dáng (`< --min-pose`).
   Chỉ cần khác một trong hai là ảnh đáng giữ.
-- Các ảnh cùng tư thế được **gom thành cụm** (union-find) rồi **giữ ảnh chất
-  lượng nhất** trong cụm (điểm mặt, kích thước người, độ nét) — không phải ảnh
-  đến trước. Gom cụm là để bắt chuỗi na ná nhau: A≈B, B≈C nhưng A xa C, lọc
-  tuần tự sẽ giữ cả A và C.
+- Duyệt theo **chất lượng giảm dần**, giữ ảnh nếu nó khác mọi ảnh đã giữ —
+  **không nối chuỗi**. Nối chuỗi (A≈B, B≈C ⇒ gộp cả A và C) làm sập cả một
+  clip quay tay: 81 frame của clip bảo vệ chỉ còn 6 ảnh, trong khi duyệt tham
+  lam giữ được 12–17 ảnh tuỳ ngưỡng.
+- Trước bước đó còn lọc **frame người quá bé so với cùng cảnh** (< 20% chiều cao
+  frame to nhất trong cảnh, khi cảnh đó có frame ≥ 400 px): ở 110 px keypoint
+  nhiễu đến mức pose không so được, nên 2–3 tấm nhìn y hệt nhau vẫn lọt.
 - `pitch` bị bỏ khỏi phép so góc khi `|yaw| ≥ 70°`, vì ở góc đó 5 landmark
   không đo được nữa (giá trị bị kẹp ±89) nên hiệu pitch chỉ là nhiễu.
 
-Vì sao cần bước này: chọn theo nhóm chỉ giới hạn 1 ảnh cho mỗi *(nguồn, cảnh,
+Vì sao cần bước này: chọn theo nhóm chỉ giới hạn vài ảnh cho mỗi *(nguồn, cảnh,
 nhóm góc)*, nên 5 frame catwalk liên tiếp với đầu quay ±29° vẫn vào 5 nhóm khác
 nhau dù dáng gần như y hệt — đo trên obj_1, các frame 4.0/5.0/6.0/7.0/7.5 s chỉ
-cách nhau 0.019–0.058 về pose. Sau khi gom cụm: 19 → 12 ảnh, không còn 2 tấm
-cùng dáng. Đặt `--min-yaw 0 --min-pose 0` để tắt.
+cách nhau 0.019–0.058 về pose. Với `--per-bucket 3` (mặc định) rồi lọc tư thế:
+13 video của obj_1 ra **113 ảnh** (trước là 54), riêng clip bảo vệ quay tay
+78 s ra **12 ảnh** (trước 5). Đặt `--min-yaw 0 --min-pose 0` để tắt.
 
 Sau đó mới lọc trùng (`--dup-sim`, `--min-gap`) và tuỳ chọn `--limit N` (greedy
 farthest-point trên vector [góc đầu, 17 keypoint, CLIP]).
@@ -149,7 +154,7 @@ Tham số đáng chú ý:
 | `--confirm-window` | 0 | giới hạn giây tới mốc đã khớp mặt khi nhận frame quay lưng (0 = không giới hạn) |
 | `--anchor-th` | 0.60 | cosine tối thiểu với neo ngoại hình của video |
 | `--select` | coverage | `coverage` = đủ góc mỗi cảnh; `diversity` = theo ngưỡng yaw/pose |
-| `--per-bucket` | 1 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`) |
+| `--per-bucket` | 3 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`); bước lọc trùng tư thế sau đó tỉa tiếp |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân (dùng khi CCTV chỉ quay lưng) |
@@ -178,7 +183,7 @@ liệu vừa quét — nên chọn ngưỡng không cần chạy lại video:
   (vd. 0.95), hoặc dùng `--limit`.
 - Vẫn còn **pose lặp** (nhiều tấm cùng dáng, chỉ quay đầu khác nhau) → tăng
   `--min-yaw` (30–35°) hoặc `--min-pose` (0.10–0.12). Ngược lại muốn giữ nhiều
-  biến thể hơn thì hạ 2 ngưỡng này hoặc đặt 0 để tắt bước gom cụm.
+  biến thể hơn thì hạ 2 ngưỡng này (hoặc tăng `--per-bucket`), đặt 0 để tắt hẳn bước lọc tư thế.
 
 `sheet.jpg` là cách nhanh nhất để kiểm tra bằng mắt: nếu toàn ảnh đúng người và
 góc đầu trải từ trái sang phải thì cấu hình đã ổn.
@@ -214,7 +219,7 @@ chính frame phim làm ảnh tham chiếu:
 | Folder rỗng / video hỏng / ảnh hỏng | báo lỗi hoặc bỏ qua, không crash |
 | Đường dẫn có dấu tiếng Việt + `--recursive` | chạy đúng |
 | Clip chỉ quay lưng (v1.mp4 lấy 17,6–27 s, **không frame nào thấy mặt**) | trước: **0 ảnh** kể cả khi bật `--allow-body-only` (body_sim 0.55–0,62 < ngưỡng cứng 0,72); giờ: 3 ảnh (2 `sau lưng`, 1 `nghiêng`), nhóm góc của frame nhận: 33 `sau lưng` / 4 `nghiêng` / 1 `không rõ mặt` |
-| Trùng tư thế trên obj_1 (3 video, ref `main.jpg`) | trước: 19 ảnh, trong đó 5 frame catwalk (4.0/5.0/6.0/7.0/7.5 s) chỉ cách nhau 0.019–0.058 về pose và 4 frame dựa tường ở v2; giờ: **12 ảnh** (gom cụm, `--min-yaw 25 --min-pose 0.08`), mỗi tư thế còn đúng 1 ảnh, vẫn giữ 2 ảnh `sau lưng` + đủ `nghiêng`/`ngửa`/`không rõ mặt` |
+| Trùng tư thế trên obj_1 (13 video, ref `main.jpg`) | trước: 54 ảnh, riêng clip bảo vệ quay tay 78 s chỉ 5 ảnh (nối chuỗi gộp 81 frame còn 6); giờ: **113 ảnh**, clip bảo vệ **12 ảnh**, không còn 2 tấm cùng dáng cùng khung |
 | Ref không có mặt (chỉ thân) | cảnh báo, tự chuyển sang so khớp toàn thân |
 | Ảnh lẻ trong folder | nhận/loại theo cùng ngưỡng với video |
 

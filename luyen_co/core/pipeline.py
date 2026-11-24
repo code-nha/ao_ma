@@ -33,8 +33,9 @@ from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
 from .select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate,
-                     drop_similar, head_pose, keep_best_body_tracks, pick_diverse,
-                     pose_vector, yaw_bucket, yaw_histogram)
+                     drop_similar, drop_tiny_frames, head_pose,
+                     keep_best_body_tracks, pick_diverse, pose_vector, yaw_bucket,
+                     yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -62,7 +63,7 @@ class Config:
     confirm_window: float = 0.0     # giây: 0 = không giới hạn (neo theo video)
     anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
     select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
-    per_bucket: int = 1             # số ảnh tối đa mỗi nhóm góc (coverage)
+    per_bucket: int = 3             # số ảnh tối đa mỗi nhóm góc (coverage); bước lọc tư thế sẽ tỉa
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -603,6 +604,10 @@ class Pipeline:
         self.accepted = accepted                 # để summary/report khớp số thật
         self.stats.accepted = len(accepted)
         cands = dedupe(accepted, cfg.dup_sim, cfg.min_gap)
+        before = len(cands)
+        cands = drop_tiny_frames(cands)
+        if len(cands) != before:
+            log(f"bỏ frame người quá bé so với cùng cảnh: {before} → {len(cands)} frame")
         before = len(cands)
         if cfg.select == "coverage":
             cands = coverage_pick(cands, cfg.per_bucket)
