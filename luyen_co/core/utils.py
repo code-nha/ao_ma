@@ -169,6 +169,22 @@ def laplacian_var(img: np.ndarray) -> float:
     return float(cv2.Laplacian(gray, cv2.CV_64F).var())
 
 
+def spark_fraction(img: np.ndarray) -> float:
+    """Tỉ lệ điểm sáng "lấp lánh": cực đại cục bộ, gần trắng, bán kính vài px.
+
+    Dùng để bắt hiệu ứng hạt sáng khi chuyển cảnh (clip edit hay chèn): người bị
+    phủ kín hạt nên không dùng được. Đo trên obj_1: frame bị hiệu ứng 0.08–0.10,
+    frame sạch cùng clip 0.003–0.014.
+    """
+    if img.size == 0:
+        return 0.0
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    val = hsv[:, :, 2]
+    peak = cv2.dilate(val, np.ones((3, 3), np.uint8))
+    hit = (val >= peak) & (val >= 235) & (hsv[:, :, 1] < 90)
+    return float(np.mean(hit))
+
+
 def crop_xyxy(img: np.ndarray, box: np.ndarray) -> np.ndarray:
     x1, y1, x2, y2 = (int(round(v)) for v in box)
     x1, y1 = max(0, x1), max(0, y1)

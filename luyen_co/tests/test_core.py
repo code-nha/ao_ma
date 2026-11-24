@@ -9,7 +9,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_blurry_faces,
+from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_bad_frames,
+                         drop_blurry_faces,
                          drop_similar, face_vis,
                          head_pose, keep_best_body_tracks, pick_diverse, pose_angle_dist,
                          pose_angles, pose_vector,
@@ -577,6 +578,51 @@ def test_drop_blurry_faces_bo_qua_frame_khong_co_mat():
              make_cand(t=1.0, face_px=90, face_blur=120.0),
              make_cand(t=2.0, face_px=90, face_blur=140.0)]
     assert len(drop_blurry_faces(cands, ratio=0.35)) == 3
+
+
+def test_drop_bad_frames_ba_loai():
+    # Dựng đúng số đo trên obj_1: 1 frame hiệu ứng lấp lánh, 1 frame mờ hẳn,
+    # 1 frame cận cảnh mà mặt không khớp, còn lại là frame tốt.
+    good = [make_cand(t=float(i), h=800, face_px=60, face_blur=150.0) for i in range(3)]
+    for c in good:
+        c.blur, c.spark, c.face_sim = 600.0, 0.005, 0.55
+    spark = make_cand(t=9.0, h=800, face_px=60, face_blur=150.0)
+    spark.blur, spark.spark, spark.face_sim = 600.0, 0.09, 0.55
+    blurry = make_cand(t=10.0, h=800, face_px=60, face_blur=150.0)
+    blurry.blur, blurry.spark, blurry.face_sim = 42.0, 0.005, 0.55
+    closeup = make_cand(t=11.0, h=1200, face_px=500, face_blur=150.0)   # cận cảnh
+    closeup.blur, closeup.spark, closeup.face_sim = 600.0, 0.005, 0.10
+    assert shot_scale(closeup) == "cận cảnh"
+
+    kept, why = drop_bad_frames(good + [spark, blurry, closeup], face_th=0.40)
+    assert kept == good
+    assert why == {"hiệu ứng lấp lánh": 1, "mờ hẳn so với cảnh": 1, "cận cảnh mặt hỏng": 1}
+
+
+def test_drop_bad_frames_khong_bo_frame_tot():
+    cands = [make_cand(t=float(i), h=800, face_px=60, face_blur=150.0) for i in range(4)]
+    for c in cands:
+        c.blur, c.spark, c.face_sim = 500.0 + c.t, 0.02 + c.t / 1000, 0.5
+    kept, why = drop_bad_frames(cands, face_th=0.40)
+    assert len(kept) == 4 and not any(why.values())
+
+
+def test_cung_ben_va_giong_ngoai_hinh_thi_gop():
+    # 4 ảnh MC đang nói (cùng váy, cùng bối cảnh, cùng cỡ cảnh) chỉ khác góc đầu
+    # vài chục độ và dáng tay → CLIP 0.84+ nên phải gộp còn 1 (lỗi user báo).
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    base = dict(h=900, face_px=200, blur=600.0, face_blur=150.0)
+    a = make_cand(t=45.0, yaw=-90.0, clip=same, **base)
+    b = make_cand(t=52.5, yaw=-90.0, clip=same, **base)
+    c = make_cand(t=56.5, yaw=-25.3, clip=same, **base)
+    assert len(distinct_pose_pick([a, b, c], min_yaw=25.0, min_pose=0.08)) == 1
+    # cùng bên nhưng ngoại hình khác hẳn (CLIP thấp) → vẫn giữ cả hai
+    other = [0.0, 1.0, 0.0] + [0.0] * 5
+    d = make_cand(t=70.0, yaw=-40.0, clip=other, **base)
+    assert len(distinct_pose_pick([a, d], min_yaw=25.0, min_pose=0.08)) == 2
+    # khác bên quay (một trái một phải) thì không gộp theo luật này
+    e = make_cand(t=80.0, yaw=+40.0, clip=same, **base)
+    assert len(distinct_pose_pick([a, e], min_yaw=25.0, min_pose=0.08)) == 2
 
 
 def test_goc_quay_khac_nhau_van_giu_du_cung_dang():

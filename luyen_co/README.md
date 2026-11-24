@@ -196,6 +196,31 @@ so **tương đối** với trung vị của chính cảnh đó (`--face-sharp-r
 - Đo trên obj_1: bỏ **5/598** frame, 112 → **110 ảnh** (mất 2 ảnh, không còn ảnh
   bóng ma nào).
 
+### Ba loại ảnh hỏng khác (bỏ theo tương quan với chính cảnh)
+
+| Loại | Đo bằng | Ngưỡng | Số đo obj_1 |
+|---|---|---|---|
+| hiệu ứng **hạt lấp lánh** khi chuyển cảnh | `spark` = tỉ lệ điểm sáng cực đại cục bộ (V ≥ 235, S < 90) | > 4 × trung vị cảnh **và** > 0.03 | frame hỏng 0.080 / 0.071, frame sạch cùng clip 0.003–0.014 |
+| **mờ hẳn** so với cảnh (người bé tí ở xa, nhoè) | `blur` (Laplacian crop người) | < 0.25 × trung vị cảnh | frame hỏng 42, trung vị cảnh 606 |
+| **cận cảnh mà mặt không dùng được** | `shot` ∈ {đặc tả, cận cảnh} và `face_sim < --face-th` | — | một frame cận cảnh nhoè lia máy có `face_sim` 0.098 |
+
+Cả ba so với **trung vị của chính cảnh** nên clip vốn tối/nhoè sẵn không bị bỏ oan.
+
+### Ảnh na ná nhau: cùng bên quay + cùng cỡ cảnh
+
+Bộ lọc 3 trục ở trên vẫn để lọt 4 ảnh MC đang nói (cùng váy, cùng bối cảnh,
+cùng khung hình) chỉ khác **góc đầu vài chục độ**, vì mỗi ảnh rơi vào nhóm góc
+khác nhau (`nghiêng` / `trái nhiều`). Bổ sung luật: **cùng bên quay** (cùng âm
+hoặc cùng dương, |yaw| ≥ 20°) **+ cùng cỡ cảnh + cosine ngoại hình ≥
+`--near-dup-th`** (mặc định 0.84) ⇒ coi là trùng, giữ ảnh tốt nhất.
+
+- Đo trên 4 ảnh đó: CLIP 0.843–0.893, trong khi cặp "khác người/khác cảnh" cùng
+  clip chỉ 0.73–0.79 ⇒ 0.84 tách sạch.
+- Ảnh cùng bên nhưng **khác ngoại hình** (CLIP thấp) vẫn được giữ, nên không
+  mất độ phủ góc: 110 → **80 ảnh** nhưng phân bố góc/cỡ cảnh vẫn đủ.
+- Muốn giữ nhiều hơn thì nâng `--near-dup-th` (0.90 = gần như chỉ gộp ảnh trùng
+  hẳn); đặt 0 để tắt luật này.
+
 ## Cài đặt
 Windows + GPU rời (DirectML, **không cần** cài CUDA/cuDNN):
 
@@ -239,6 +264,7 @@ Tham số đáng chú ý:
 | `--min-person` | 64 | chiều cao người tối thiểu (px) — bỏ người quá nhỏ, không dùng được |
 | `--min-blur` | 25 | phương sai Laplacian tối thiểu — bỏ frame nhoè |
 | `--face-sharp-ratio` | 0.35 | bỏ frame mà vùng **mặt** mờ dưới `ratio × trung vị cùng cảnh` — bắt frame chuyển cảnh chồng mờ (0 = tắt) |
+| `--near-dup-th` | 0.84 | cùng bên quay + cùng cỡ cảnh + cosine ngoại hình ≥ mức này thì coi là trùng; 0 = tắt |
 | `--min-person-score` | 0.5 | ngưỡng tin cậy detection người — tăng để bớt vật thể giống người |
 | `--max-overlap` | 0.35 | bỏ frame có người khác chồng lên người mục tiêu quá IoU này |
 | `--max-other-area` | 0.10 | bỏ frame mà người khác chiếm quá 10% diện tích crop (giữ đúng "1 ảnh 1 người") |

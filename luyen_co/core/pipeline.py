@@ -33,14 +33,14 @@ from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
 from .select import (SHOT_ABBR, coverage_pick, dedupe, distinct_pose_pick,
-                     diverse_gate, drop_blurry_faces, drop_similar, drop_tiny_frames,
-                     feet_visible, head_pose,
+                     diverse_gate, drop_bad_frames, drop_blurry_faces, drop_similar,
+                     drop_tiny_frames, feet_visible, head_pose,
                      keep_best_body_tracks, pick_diverse, pose_angles, pose_vector,
                      shot_coverage_pick, shot_histogram, shot_scale, yaw_bucket, yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
-                    others_area_fraction, read_image, write_image)
+                    others_area_fraction, read_image, spark_fraction, write_image)
 from .yolo_pose import PersonDetector
 
 
@@ -58,6 +58,9 @@ class Config:
     max_other_area: float = 0.10
     min_blur: float = 25.0
     face_sharp_ratio: float = 0.35  # bỏ frame mặt mờ < ratio × trung vị cùng cảnh
+    spark_ratio: float = 4.0        # bỏ frame lấp lánh > ratio × trung vị cùng cảnh
+    blur_ratio: float = 0.25        # bỏ frame mờ < ratio × trung vị cùng cảnh
+    near_dup_th: float = 0.84       # cùng bên + cùng cỡ cảnh + CLIP ≥ mức này = trùng
     crop_margin: float = 0.12
     save: str = "full"              # full | crop | both
     min_yaw: float = 25.0           # chênh góc camera tối thiểu giữa 2 ảnh giữ lại
@@ -282,6 +285,7 @@ class Pipeline:
             src_w=int(w), src_h=int(h), scene=int(scene),
             pose_vec=pose_vector(person.kpts, person.box),
             face_px=face_px, face_box=face_box, face_blur=float(face_blur),
+            spark=spark_fraction(crop),
         )
 
     def _body_ok(self, c: Candidate, th: float | None = None,
@@ -635,6 +639,13 @@ class Pipeline:
             log(f"bỏ frame mặt mờ hẳn so với cùng cảnh (chuyển cảnh chồng mờ / nhoè): "
                 f"{before} → {len(cands)} frame")
         before = len(cands)
+        cands, bad = drop_bad_frames(cands, cfg.face_th, cfg.spark_ratio,
+                                     blur_ratio=cfg.blur_ratio)
+        self.bad_gate = (before, len(cands), bad)
+        if len(cands) != before:
+            why = ", ".join(f"{k} {v}" for k, v in bad.items() if v)
+            log(f"bỏ frame hỏng (so với cùng cảnh): {before} → {len(cands)} frame — {why}")
+        before = len(cands)
         if cfg.select == "coverage":
             cands = coverage_pick(cands, cfg.per_bucket)
             after_cov = len(cands)
@@ -643,7 +654,7 @@ class Pipeline:
                 f"{before} → {after_cov} → {len(cands)} ảnh")
         else:
             cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose,
-                                 cfg.min_pose_deg, cfg.min_pose_max_deg)
+                                 cfg.min_pose_deg, cfg.min_pose_max_deg, cfg.near_dup_th)
             if len(cands) != before:
                 log(f"lọc đa dạng (yaw {cfg.min_yaw}°, pose {cfg.min_pose}): "
                     f"{before} → {len(cands)} ảnh")
@@ -657,12 +668,14 @@ class Pipeline:
         if cfg.min_yaw > 0 or cfg.min_pose > 0 or cfg.min_pose_deg > 0:
             n_before = len(cands)
             cands = distinct_pose_pick(cands, cfg.min_yaw, cfg.min_pose,
-                                       cfg.min_pose_deg, cfg.min_pose_max_deg)
+                                       cfg.min_pose_deg, cfg.min_pose_max_deg,
+                                       cfg.near_dup_th)
             self.pose_gate = (n_before, len(cands))
             if len(cands) != n_before:
                 log(f"lọc trùng ảnh (giống cả 3 trục: cỡ cảnh, góc < {cfg.min_yaw:.0f}°, "
                     f"góc khớp < {cfg.min_pose_deg:.0f}° / max < {cfg.min_pose_max_deg:.0f}°, "
-                    f"pose < {cfg.min_pose:.2f}): {n_before} → {len(cands)} ảnh")
+                    f"pose < {cfg.min_pose:.2f}; hoặc cùng bên + CLIP ≥ {cfg.near_dup_th:.2f}): "
+                    f"{n_before} → {len(cands)} ảnh")
         if cfg.limit and cfg.limit < len(cands):
             cands = pick_diverse(cands, cfg.limit)
             cands.sort(key=lambda c: (c.source, c.t))
@@ -794,6 +807,11 @@ class Pipeline:
         lines.append("")
         lines.extend(self._calibration_lines())
         n_body = sum(1 for c in self.accepted if c.body_only)
+        if getattr(self, "bad_gate", None) and self.bad_gate[0] != self.bad_gate[1]:
+            lines.append("")
+            why = ", ".join(f"{k} {v}" for k, v in self.bad_gate[2].items() if v)
+            lines.append(f"bỏ frame hỏng so với cùng cảnh: {self.bad_gate[0]} → "
+                         f"{self.bad_gate[1]} frame — {why}")
         if getattr(self, "face_gate", None) and self.face_gate[0] != self.face_gate[1]:
             lines.append("")
             lines.append(f"bỏ frame mặt mờ hẳn so với cùng cảnh "

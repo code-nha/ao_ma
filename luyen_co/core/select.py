@@ -133,8 +133,15 @@ NO_FACE_BUCKETS = {"sau lưng", "sau lưng 3/4", "không rõ mặt", "nghiêng"}
 SOFT_BUCKETS = NO_FACE_BUCKETS
 
 
+def _same_side(a: Candidate, b: Candidate, min_yaw: float = 20.0) -> bool:
+    """Hai ảnh cùng bên quay (cùng âm hoặc cùng dương, đủ lớn)."""
+    return ((a.yaw <= -min_yaw and b.yaw <= -min_yaw)
+            or (a.yaw >= min_yaw and b.yaw >= min_yaw))
+
+
 def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
-               min_pose_deg: float = 20.0, min_pose_max_deg: float = 45.0) -> bool:
+               min_pose_deg: float = 20.0, min_pose_max_deg: float = 45.0,
+               near_dup_th: float = 0.84) -> bool:
     """Cùng một tấm ảnh về mặt thông tin: giống CẢ 3 TRỤC (cỡ cảnh, góc, dáng).
 
     Ba trục được đo độc lập nên ảnh chỉ bị coi là trùng khi giống nhau ở cả ba:
@@ -158,6 +165,15 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
     """
     if shot_scale(a) != shot_scale(b):
         return False
+    # Cùng BÊN quay + cùng cỡ cảnh + ngoại hình gần như y hệt ⇒ trùng nhau về ý
+    # nghĩa, dù góc đầu lệch vài chục độ. Đo trên clip 1750183430: 4 ảnh MC đang
+    # nói (45.0 / 52.5 / 56.5 / 60.5 s) cùng váy, cùng bối cảnh, cùng khung hình,
+    # CLIP 0.843–0.893, nhưng lọt qua bộ lọc vì mỗi ảnh rơi vào nhóm góc khác
+    # nhau (nghiêng / trái nhiều) — đúng lỗi "pose lặp quá nhiều" người dùng báo.
+    # Ảnh cùng bên nhưng KHÁC ngoại hình (CLIP thấp) vẫn được giữ.
+    if near_dup_th > 0 and a.clip_vec is not None and b.clip_vec is not None \
+            and _same_side(a, b) and float(np.dot(a.clip_vec, b.clip_vec)) >= near_dup_th:
+        return True
     ang = pose_angle_dist(a, b)
     if ang is not None:
         if ang[0] >= min_pose_deg or ang[1] >= min_pose_max_deg:
@@ -172,7 +188,8 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
 
 def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
                  min_pose: float = 0.08, min_pose_deg: float = 20.0,
-                 min_pose_max_deg: float = 45.0) -> list[Candidate]:
+                 min_pose_max_deg: float = 45.0,
+                 near_dup_th: float = 0.84) -> list[Candidate]:
     """Chỉ giữ frame khác biệt đủ rõ so với các frame đã giữ (cùng nguồn).
 
     Một frame bị bỏ khi giống ảnh đã giữ ở cả 3 trục (cỡ cảnh + góc + dáng) —
@@ -184,7 +201,8 @@ def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
     kept: list[Candidate] = []
     for c in sorted(cands, key=lambda x: (x.source, x.t)):
         if any(k.source == c.source
-               and _same_pose(c, k, min_yaw, min_pose, min_pose_deg, min_pose_max_deg)
+               and _same_pose(c, k, min_yaw, min_pose, min_pose_deg, min_pose_max_deg,
+                              near_dup_th)
                for k in kept):
             continue
         kept.append(c)
@@ -222,6 +240,54 @@ def drop_blurry_faces(cands: list[Candidate], ratio: float = 0.35,
     return out
 
 
+def drop_bad_frames(cands: list[Candidate], face_th: float = 0.40,
+                    spark_ratio: float = 4.0, spark_min: float = 0.03,
+                    blur_ratio: float = 0.25) -> tuple[list[Candidate], dict[str, int]]:
+    """Bỏ frame hỏng kiểu "không phải ảnh chụp thật", so với chính cảnh đó.
+
+    Ba loại, đo trên obj_1:
+
+    1. **Hiệu ứng lấp lánh / chuyển cảnh** (`spark`): clip edit hay chèn hiệu ứng
+       hạt sáng khi chuyển cảnh — người bị phủ kín hạt, không dùng được. Tỉ lệ
+       điểm sáng cực đại cục bộ: frame hỏng **0.097 / 0.082**, frame sạch cùng
+       clip **0.003–0.014** → bỏ khi `spark > 4 × trung vị cảnh` và `> 0.03`.
+    2. **Mờ hẳn so với cảnh** (`blur`, Laplacian crop người): frame người bé tí
+       ở xa, nhoè: blur **42** trong khi trung vị cảnh **606** → bỏ khi
+       `blur < 0.25 × trung vị cảnh`.
+    3. **Cận cảnh mà mặt không dùng được**: ảnh đặc tả/cận cảnh là để học nét
+       mặt, nên nếu `face_sim < face_th` (mặt không khớp) thì ảnh vô nghĩa —
+       đo thật: một frame cận cảnh bị nhoè lia máy có `face_sim` 0.098.
+
+    Trả (frame giữ, số frame bị bỏ theo từng lý do).
+    """
+    reasons = {"hiệu ứng lấp lánh": 0, "mờ hẳn so với cảnh": 0, "cận cảnh mặt hỏng": 0}
+
+    def medians(attr: str) -> dict[tuple[str, int], float]:
+        by: dict[tuple[str, int], list[float]] = {}
+        for c in cands:
+            by.setdefault((c.source, c.scene), []).append(float(getattr(c, attr)))
+        return {k: float(np.median(v)) for k, v in by.items()}
+
+    blur_med = medians("blur") if blur_ratio > 0 else {}
+    spark_med = medians("spark") if spark_ratio > 0 else {}
+
+    out: list[Candidate] = []
+    for c in cands:
+        key = (c.source, c.scene)
+        if spark_ratio > 0 and c.spark > spark_min and \
+                c.spark > spark_ratio * max(spark_med.get(key, 0.0), 1e-4):
+            reasons["hiệu ứng lấp lánh"] += 1
+            continue
+        if blur_ratio > 0 and c.blur < blur_ratio * blur_med.get(key, 0.0):
+            reasons["mờ hẳn so với cảnh"] += 1
+            continue
+        if shot_scale(c) in ("đặc tả", "cận cảnh") and c.face_sim < face_th:
+            reasons["cận cảnh mặt hỏng"] += 1
+            continue
+        out.append(c)
+    return out, reasons
+
+
 def drop_tiny_frames(cands: list[Candidate], ratio: float = 0.2,
                      ref_min: int = 400) -> list[Candidate]:
     """Bỏ frame mà người bé tí so với frame to nhất trong **cùng cảnh**.
@@ -251,7 +317,8 @@ def drop_tiny_frames(cands: list[Candidate], ratio: float = 0.2,
 
 def distinct_pose_pick(cands: list[Candidate], min_yaw: float = 25.0,
                        min_pose: float = 0.08, min_pose_deg: float = 20.0,
-                       min_pose_max_deg: float = 45.0) -> list[Candidate]:
+                       min_pose_max_deg: float = 45.0,
+                       near_dup_th: float = 0.84) -> list[Candidate]:
     """Mỗi tư thế (góc camera + dáng) chỉ giữ **một** ảnh tốt nhất.
 
     Duyệt theo **chất lượng giảm dần** (`_rank_key`: điểm mặt, kích thước người,
@@ -270,7 +337,8 @@ def distinct_pose_pick(cands: list[Candidate], min_yaw: float = 25.0,
     kept: list[Candidate] = []
     for c in sorted(cands, key=_rank_key, reverse=True):
         if any(k.source == c.source
-               and _same_pose(c, k, min_yaw, min_pose, min_pose_deg, min_pose_max_deg)
+               and _same_pose(c, k, min_yaw, min_pose, min_pose_deg, min_pose_max_deg,
+                              near_dup_th)
                for k in kept):
             continue
         kept.append(c)
