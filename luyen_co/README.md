@@ -44,9 +44,11 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 Sau khi lọc trùng, ảnh được chọn theo `--select`:
 
 - `coverage` (mặc định): nhóm theo **(nguồn, cảnh, góc mặt)** — thẳng / trái /
-  phải / trái nhiều / phải nhiều / **sau lưng** (frame không thấy mặt) — mỗi
-  nhóm giữ tối đa `--per-bucket` ảnh tốt nhất (mặc định 2). Đảm bảo mỗi cảnh
-  đều có đủ góc để đối chiếu, kể cả cảnh chỉ có ảnh sau lưng.
+  phải / trái nhiều / phải nhiều / **sau lưng** (frame không thấy mặt hoặc mặt
+  khớp yếu) — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm các ảnh **khác biệt
+  nhất** với ảnh đã giữ (tối đa `--per-bucket`, mặc định 2). Nhờ vậy frame quay
+  lưng ở xa/nhỏ vẫn được lấy nếu nó là tư thế khác, không bị ảnh gần-đẹp hơn
+  "đè" mất.
 - `diversity`: chỉ giữ frame khác quá ngưỡng `--min-yaw` / `--min-pose`.
 
 Trước khi ghi ảnh còn một bước **lọc đa dạng**: một frame bị bỏ nếu **vừa** gần

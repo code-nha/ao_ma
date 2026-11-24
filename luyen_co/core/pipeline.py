@@ -61,7 +61,7 @@ class Config:
     confirm_window: float = 0.0     # giây: 0 = không giới hạn (neo theo video)
     anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
     select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
-    per_bucket: int = 1             # số ảnh tối đa mỗi nhóm góc (coverage)
+    per_bucket: int = 2             # số ảnh tối đa mỗi nhóm góc (coverage)
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0

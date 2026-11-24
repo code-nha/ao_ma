@@ -170,17 +170,27 @@ def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
 
     picked: list[Candidate] = []
     for items in buckets.values():
-        items.sort(key=lambda c: (c.face_sim if c.has_face else c.body_sim,
-                                  c.person_h, c.blur), reverse=True)
+        # 1) giữ ảnh chất lượng nhất, 2) các ảnh sau chọn theo mức KHÁC BIỆT với
+        # ảnh đã giữ (không phải theo chất lượng) → bắt được cả frame quay lưng
+        # xa/nhỏ nếu nó là tư thế khác với ảnh đầu
+        items = sorted(items, key=lambda c: (c.face_sim if c.has_face else c.body_sim,
+                                             c.person_h, c.blur), reverse=True)
         chosen: list[Candidate] = []
-        for c in items:
-            if len(chosen) >= per_bucket:
-                break
-            if any(c.clip_vec is not None and k.clip_vec is not None
-                   and float(np.dot(c.clip_vec, k.clip_vec)) >= bucket_dup
-                   for k in chosen):
+        while items and len(chosen) < per_bucket:
+            if not chosen:
+                chosen.append(items.pop(0))
                 continue
-            chosen.append(c)
+            best_i, best_sim = None, 2.0
+            for i, c in enumerate(items):
+                if c.clip_vec is None:
+                    continue
+                sim = max(float(np.dot(c.clip_vec, k.clip_vec))
+                          for k in chosen if k.clip_vec is not None)
+                if sim < best_sim:
+                    best_sim, best_i = sim, i
+            if best_i is None or best_sim >= bucket_dup:
+                break
+            chosen.append(items.pop(best_i))
         picked.extend(chosen)
     picked.sort(key=lambda c: (c.source, c.t))
     return picked

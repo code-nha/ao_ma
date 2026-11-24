@@ -94,7 +94,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--select", choices=["coverage", "diversity"], default="coverage",
                    help="coverage = đảm bảo đủ góc (mặt trái/phải/thẳng + sau lưng); "
                         "diversity = chỉ giữ frame khác nhau quá ngưỡng --min-yaw/--min-pose")
-    g.add_argument("--per-bucket", type=int, default=1,
+    g.add_argument("--per-bucket", type=int, default=2,
                    help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage")
 
     g = p.add_argument_group("lọc trùng & đa dạng")
