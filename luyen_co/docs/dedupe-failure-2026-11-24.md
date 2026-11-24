@@ -179,6 +179,7 @@ không gộp cặp khác zoom `86↔87`.
 | `select._same_framing` | zoom = `|log(person_h/src_h)| ≤ 0.16`; `feet` chỉ còn cờ hoà giải khi cả hai ≥ 0.85 khung; "số đầu" chỉ còn là dự phòng |
 | `select._yaw_is_placeholder` | `face_px = yaw = pitch = 0` hoặc `face_vis < 0.60` ⇒ yaw là số mặc định, không dùng để tách; chỉ còn phân biệt **hướng thân** (nhóm "sau lưng") |
 | `copygate.copy_veto` | chỉ xét gộp khi `_same_framing(c, k)` — hai ảnh khác zoom thật thì không phải bản sao (chặn ca 12.0 s vs 17.0 s của `v1.mp4`, 47 inlier, scale 1.26) |
+| `copygate._pose_disagrees` | kết luận "khác dáng" bằng **số khớp lệch** (≥ 2 khớp > 30°) hoặc **median** ≥ 12°, không dùng trung bình+max. Cặp 46.5 ↔ 60.5 s (57 inlier) có 1 khớp lệch 114° nhưng median chỉ 9.3 → trước bị chặn oan, nay gộp đúng |
 
 Đo lại trên `output/obj_1_fix4`:
 
@@ -189,7 +190,7 @@ không gộp cặp khác zoom `86↔87`.
 | pHash: số cặp Hamming < 8 | 3 | 2 |
 | giữ đủ cặp khác zoom 12.0 / 17.0 | có | **có** |
 | tách được 6.0 (cận cảnh) vs 17.0 (trung cảnh) | có | **có** (`ZOOM_TOL 0.16` chứ không 0.22) |
-| số ảnh cuối | 99 | 107 |
+| số ảnh cuối | 99 | 106 |
 | test | 68 pass | **73 pass** (thêm 5 test cho đúng các ca này) |
 
 ### Còn lại (chưa sửa, cần quyết định tham số hoặc ground-truth)
@@ -201,7 +202,7 @@ không gộp cặp khác zoom `86↔87`.
 2. **`v1.mp4` 22.5 s vs 25.0 s** — pHash 4 bit, cùng cú máy, người to lên 32%
    (432 px vs 595 px). Theo trục zoom hiện tại là "khác cỡ cảnh" nên giữ cả hai; muốn gộp
    phải có ngưỡng zoom khác đi kèm ràng buộc hình học, tức là mục 3.2.3 (inlier trong box).
-3. **Churn do tham lam**: 19 ảnh bị bỏ, 28 ảnh mới vào so với `obj_1`. Không có ảnh sai rõ
+3. **Churn do tham lam**: 20 ảnh bị bỏ, 28 ảnh mới vào so với `obj_1`. Không có ảnh sai rõ
    ràng, nhưng chứng tỏ kết quả còn phụ thuộc thứ tự ⇒ vẫn cần gom cụm (3.2 mục 5) trước khi
    chốt dataset.
 4. **Ngưỡng `copy_min_inl = 45`** giữ nguyên: cặp 45-inlier (`CrxeWeKBXtQ` 13.5 ↔ 21.0) vẫn

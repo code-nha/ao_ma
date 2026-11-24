@@ -29,7 +29,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from .select import _rank_key, _same_framing, pose_angle_dist
+from .select import _rank_key, _same_framing, pose_angle_deltas
 from .types import Candidate
 
 # cạnh dài của ảnh đưa vào SIFT: đủ chi tiết, đủ nhanh (110 ảnh ≈ 6 s)
@@ -137,11 +137,18 @@ def _pose_disagrees(a: Candidate, b: Candidate, max_mean: float, max_max: float)
     Bất đối xứng có chủ ý: chỉ dùng để **cứu** ảnh (không gộp khi dáng khác), không
     dùng để gộp. Đo được góc → mới xét; không đo được (thiếu keypoint) thì để yên
     cho SIFT quyết, vì bỏ qua sẽ làm mất các cặp trùng thật ở cảnh xa.
+
+    Kết luận dựa trên **số khớp lệch**, không dựa trung bình: một khớp lệch 114° kéo
+    trung bình của 6 khớp lên 26.5° trong khi 5 khớp còn lại chỉ lệch 3–17° (median
+    9.3) — đó là keypoint nhiễu của một cánh tay, không phải dáng khác. Vì vậy
+    "khác dáng" = **≥ 2 khớp lệch > `max_max`** hoặc **median ≥ `max_mean`**.
     """
-    d = pose_angle_dist(a, b)
+    d = pose_angle_deltas(a, b)
     if d is None:
         return False
-    return d[0] >= max_mean or d[1] >= max_max
+    if int((d > max_max).sum()) >= 2:
+        return True
+    return float(np.median(d)) >= max_mean
 
 
 def copy_veto(cands: list[Candidate], min_inl: int = 45, min_ratio: float = 0.06,

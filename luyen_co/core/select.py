@@ -896,6 +896,31 @@ def pose_angles(c: Candidate) -> np.ndarray | None:
     return out
 
 
+def pose_angle_deltas(a: Candidate, b: Candidate) -> np.ndarray | None:
+    """|lệch| của **từng** góc khớp (đã xét ảnh gương), bỏ góc không đo được ở một bên.
+
+    Trả `None` khi không đủ góc để kết luận. Có mảng này thì nơi gọi mới phân biệt được
+    "lệch đều nhiều khớp" (dáng khác thật) với "chỉ một khớp lệch" (thường là keypoint
+    nhiễu) — `pose_angle_dist` chỉ còn trung bình/max nên không phân biệt được.
+    Đo trên obj_1 (cặp 87/88, cùng một khung, cách 14 s): 6 góc đo được, **chỉ 1 khớp
+    lệch 114°** (khuỷu trái), 5 khớp còn lại lệch 3–17° → trung bình 26.5 nhưng median
+    chỉ 9.3. Dùng trung bình sẽ kết luận oan "khác dáng".
+    """
+    va, vb = pose_angles(a), pose_angles(b)
+    if va is None or vb is None:
+        return None
+    best: tuple[tuple[float, float], np.ndarray] | None = None
+    for cand in (vb, vb[POSE_MIRROR_IDX] * POSE_MIRROR_SIGN):
+        ok = ~(np.isnan(va) | np.isnan(cand))
+        if int(ok.sum()) < POSE_MIN_ANGLES:
+            continue
+        d = np.abs(va[ok] - cand[ok])
+        key = (float(d.mean()), float(d.max()))
+        if best is None or key < best[0]:
+            best = (key, d)
+    return None if best is None else best[1]
+
+
 def pose_angle_dist(a: Candidate, b: Candidate) -> tuple[float, float] | None:
     """(lệch góc trung bình, lệch góc lớn nhất) theo độ, có xét ảnh gương.
 
@@ -905,17 +930,10 @@ def pose_angle_dist(a: Candidate, b: Candidate) -> tuple[float, float] | None:
 
     `max` là phần quan trọng nhất: trung bình 11 góc sẽ pha loãng "chỉ một tay giơ
     lên" (90°/11 ≈ 8°), trong khi `max` bắt được đúng 90°.
+
+    Cần chi tiết từng khớp thì dùng `pose_angle_deltas`.
     """
-    va, vb = pose_angles(a), pose_angles(b)
-    if va is None or vb is None:
+    d = pose_angle_deltas(a, b)
+    if d is None:
         return None
-    best: tuple[float, float] | None = None
-    for cand in (vb, vb[POSE_MIRROR_IDX] * POSE_MIRROR_SIGN):
-        ok = ~(np.isnan(va) | np.isnan(cand))
-        if int(ok.sum()) < POSE_MIN_ANGLES:
-            continue
-        d = np.abs(va[ok] - cand[ok])
-        pair = (float(d.mean()), float(d.max()))
-        if best is None or pair < best:
-            best = pair
-    return best
+    return float(d.mean()), float(d.max())

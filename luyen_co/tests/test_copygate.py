@@ -14,6 +14,7 @@ import cv2
 import numpy as np
 
 from core.copygate import _features, copy_score, copy_veto
+from core.select import pose_angle_deltas
 from core.types import Candidate
 
 
@@ -161,3 +162,31 @@ def test_thieu_keypoint_thi_de_sift_quyet():
     img = _scene(4)
     a, b = _cand(img), _cand(img, t=1.0)
     assert not _pose_disagrees(a, b, 12.0, 30.0), "không đo được dáng thì không chặn"
+
+
+def test_mot_khop_lech_khong_du_ket_luan_khac_dang():
+    """Cặp 87/88 (cùng khung, cách 14 s): chỉ **một** khớp (khuỷu trái) lệch 114°,
+    5 khớp còn lại lệch 3–17° (median 9.3). Đó là keypoint nhiễu của một cánh tay,
+    không phải dáng khác — không được chặn việc gộp."""
+    from core.copygate import _pose_disagrees
+
+    img = _scene(6)
+    a, b = _cand(img, t=46.5), _cand(img, t=60.5)
+    a.kpts = _kpts(False)
+    k = _kpts(False).copy()
+    # Xoay CẲNG TAY TRÁI quanh khuỷu: chỉ góc khuỷu trái đổi, hướng cánh tay giữ nguyên
+    k[9, :2] = (148.0, 230.0)
+    b.kpts = k
+    d = pose_angle_deltas(a, b)
+    assert d is not None and d.max() > 60.0 and int((d > 30).sum()) == 1
+    assert not _pose_disagrees(a, b, 12.0, 30.0)
+
+
+def test_hai_khop_lech_tro_len_van_la_khac_dang():
+    """Hai tay đổi (2 khớp lệch > 30°) là dáng khác thật -> vẫn phải chặn."""
+    from core.copygate import _pose_disagrees
+
+    img = _scene(7)
+    a, b = _cand(img), _cand(img, t=1.0)
+    a.kpts, b.kpts = _kpts(False), _kpts(True)
+    assert _pose_disagrees(a, b, 12.0, 30.0)

@@ -11,7 +11,7 @@
 - Trạng thái: **99 ảnh** cho `sample/obj_1` (20–21 video), 68 test pass,
   commit `1a4e534` đã push.
 - **Sau vòng sửa 2026-11-24** (zoom + yaw, xem `docs/dedupe-failure-2026-11-24.md`):
-  73 test pass, lần chạy mới ra **107 ảnh** ở `output/obj_1_fix4` (baseline cũ vẫn để
+  75 test pass, lần chạy mới ra **106 ảnh** ở `output/obj_1_fix4` (baseline cũ vẫn để
   `output/obj_1` để so). Cụm `v1.mp4` 34.0/34.5/35.0/36.5 s đã sập từ **4 → 1** ảnh,
   cặp byte-identical (DQyPc 38.0 s, hai track) đã hết, cặp khác zoom 12.0/17.0 vẫn giữ đủ.
 - Đầu ra: `luyen_co/output/obj_1/` — `crops/`, `metadata.jsonl`, `summary.txt`,
