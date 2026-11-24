@@ -176,8 +176,27 @@ nhưng là cận cảnh nếu người bị cắt ngang ngực. Ngưỡng hiệu
 - Bước này chỉ **bỏ bớt**, không tự sinh ra cỡ cảnh đang thiếu — `summary.txt`
   liệt kê mức đang trống, muốn có phải quay thêm nguồn gần hơn/xa hơn.
 
-## Cài đặt
+### Frame chuyển cảnh chồng mờ (bị "bóng ma")
 
+Clip Facebook/TikTok hay chuyển cảnh bằng cross-dissolve: hai cảnh chồng mờ lên
+nhau ~0.5–1.5 s. Frame ở giữa **không dùng được** (mặt thành 2 bóng, người thứ
+hai hiện lên nửa vời) nhưng `--min-blur` **không bắt được**, vì hai ảnh nét chồng
+lên nhau nên Laplacian của cả frame vẫn cao — đo trên clip `1750183430`, frame
+hỏng ở 72.0 s có blur **2525**, frame sạch cùng cảnh 2677–4620.
+
+Cách bắt: đo **độ nét vùng mặt** (Laplacian trên crop mặt 112×112). Mặt bị chồng
+bóng thì nhoè hẳn: frame hỏng **23**, các frame sạch cùng clip **90–161**. Ngưỡng
+so **tương đối** với trung vị của chính cảnh đó (`--face-sharp-ratio`, mặc định
+0.35) nên không phụ thuộc mặt to/nhỏ.
+
+- Khi bỏ, pipeline **không tự bịa ra ảnh khác**: nếu quanh đó có frame sạch thì
+  frame đó vốn đã nằm trong tập ứng viên và sẽ được chọn bình thường; còn nếu
+  cả cụm đều hỏng/đều bị người khác đứng cạnh thì mất đúng 1 suất — bỏ hẳn vẫn
+  tốt hơn nhét ảnh bóng ma vào dataset.
+- Đo trên obj_1: bỏ **5/598** frame, 112 → **110 ảnh** (mất 2 ảnh, không còn ảnh
+  bóng ma nào).
+
+## Cài đặt
 Windows + GPU rời (DirectML, **không cần** cài CUDA/cuDNN):
 
 ```powershell
@@ -219,6 +238,7 @@ Tham số đáng chú ý:
 | `--color-th` | 0.3 | tương quan màu áo/quần tối thiểu khi so toàn thân (0 = tắt) |
 | `--min-person` | 64 | chiều cao người tối thiểu (px) — bỏ người quá nhỏ, không dùng được |
 | `--min-blur` | 25 | phương sai Laplacian tối thiểu — bỏ frame nhoè |
+| `--face-sharp-ratio` | 0.35 | bỏ frame mà vùng **mặt** mờ dưới `ratio × trung vị cùng cảnh` — bắt frame chuyển cảnh chồng mờ (0 = tắt) |
 | `--min-person-score` | 0.5 | ngưỡng tin cậy detection người — tăng để bớt vật thể giống người |
 | `--max-overlap` | 0.35 | bỏ frame có người khác chồng lên người mục tiêu quá IoU này |
 | `--max-other-area` | 0.10 | bỏ frame mà người khác chiếm quá 10% diện tích crop (giữ đúng "1 ảnh 1 người") |

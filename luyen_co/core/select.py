@@ -191,6 +191,37 @@ def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
     return kept
 
 
+def drop_blurry_faces(cands: list[Candidate], ratio: float = 0.35,
+                      ref_min: float = 60.0) -> list[Candidate]:
+    """Bỏ frame mà **vùng mặt** mờ hẳn so với các frame cùng cảnh.
+
+    `blur` của cả frame không bắt được frame chuyển cảnh chồng mờ (cross-dissolve):
+    hai cảnh chồng lên nhau nên ảnh vẫn "nét" theo Laplacian — đo trên clip
+    1750183430, frame hỏng ở t=72.0 s có blur 2525, frame sạch cùng cảnh 2677–4620.
+    Nhưng **mặt** thì bị hai bóng chồng nhau: Laplacian vùng mặt (112×112) chỉ
+    **23**, trong khi các frame sạch của cùng clip là **90–161**.
+
+    Vì độ nét vùng mặt phụ thuộc kích thước mặt (mặt nhỏ trong ảnh toàn cảnh mờ
+    hơn một cách tự nhiên), ngưỡng được so **tương đối** với trung vị của chính
+    cảnh đó, và chỉ áp khi cảnh có ảnh mặt đủ nét (`ref_min`) — giống cách
+    `drop_tiny_frames` xử lý frame người quá bé. Frame không thấy mặt thì bỏ qua.
+    """
+    if ratio <= 0:
+        return list(cands)
+    by_scene: dict[tuple[str, int], list[float]] = {}
+    for c in cands:
+        if c.face_blur > 0:
+            by_scene.setdefault((c.source, c.scene), []).append(c.face_blur)
+    med = {k: float(np.median(v)) for k, v in by_scene.items()}
+    out: list[Candidate] = []
+    for c in cands:
+        m = med.get((c.source, c.scene), 0.0)
+        if c.face_blur > 0 and m >= ref_min and c.face_blur < ratio * m:
+            continue
+        out.append(c)
+    return out
+
+
 def drop_tiny_frames(cands: list[Candidate], ratio: float = 0.2,
                      ref_min: int = 400) -> list[Candidate]:
     """Bỏ frame mà người bé tí so với frame to nhất trong **cùng cảnh**.

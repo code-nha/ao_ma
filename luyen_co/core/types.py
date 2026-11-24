@@ -35,6 +35,7 @@ class Candidate:
     kpts: np.ndarray | None = None
     face_box: np.ndarray | None = None
     face_px: int = 0               # cạnh dài bbox mặt trong frame gốc (0 = không thấy mặt)
+    face_blur: float = 0.0         # độ nét vùng mặt (112×112), 0 = không có mặt
     clip_vec: np.ndarray | None = None
     pose_vec: np.ndarray | None = field(default=None)
     body_only: bool = False        # nhận chỉ nhờ toàn thân (track không khớp mặt)

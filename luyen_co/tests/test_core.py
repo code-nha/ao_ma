@@ -9,7 +9,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_similar, face_vis,
+from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_blurry_faces,
+                         drop_similar, face_vis,
                          head_pose, keep_best_body_tracks, pick_diverse, pose_angle_dist,
                          pose_angles, pose_vector,
                          shot_coverage_pick, shot_histogram, shot_scale,
@@ -20,14 +21,14 @@ from core.utils import expand_box, letterbox, nms, others_area_fraction
 
 
 def make_cand(t=0.0, track=1, clip=None, source="a.mp4", yaw=0.0, blur=100.0, h=200,
-              body=0.85, pose=None, face=0.9, face_px=0, src_h=1280):
+              body=0.85, pose=None, face=0.9, face_px=0, src_h=1280, face_blur=0.0):
     return Candidate(
         source=source, kind="video", t=t, frame_idx=int(t * 10), track_id=track,
         box=np.array([10, 20, 110, 220], np.float32), person_score=0.9,
         face_sim=face, body_sim=body, yaw=yaw, pitch=0.0, blur=blur, person_h=h,
         jpeg=b"x", clip_vec=(np.array(clip, np.float32) if clip is not None else None),
         pose_vec=(np.zeros(34, np.float32) if pose is None else np.array(pose, np.float32)),
-        face_px=face_px, src_h=src_h,
+        face_px=face_px, src_h=src_h, face_blur=face_blur,
     )
 
 
@@ -553,6 +554,29 @@ def test_khac_co_canh_thi_khong_bi_coi_la_trung():
     twin = make_cand(t=6.0, h=1200)
     twin.kpts = make_kpts(feet=0.9)
     assert len(distinct_pose_pick([near, twin], min_yaw=25.0, min_pose=0.08)) == 1
+
+
+def test_drop_blurry_faces_bo_frame_chong_mo():
+    # Đo thật trên clip 1750183430: frame chuyển cảnh chồng mờ có Laplacian vùng
+    # mặt 23, các frame sạch cùng cảnh 90–161 → phải bị bỏ, frame sạch giữ lại.
+    blur = [100.3, 131.2, 120.4, 23.3, 90.3, 161.4, 157.9]
+    cands = [make_cand(t=float(i), face_px=90, face_blur=v) for i, v in enumerate(blur)]
+    kept = drop_blurry_faces(cands, ratio=0.35)
+    assert len(kept) == len(cands) - 1
+    assert 23.3 not in [c.face_blur for c in kept]
+
+
+def test_drop_blurry_faces_khong_bo_khi_ca_canh_deu_mo():
+    # Cả cảnh đều mờ (clip nhòe sẵn) → không có "ảnh rõ hơn" để đổi, nên giữ nguyên
+    cands = [make_cand(t=float(i), face_px=90, face_blur=20.0 + i) for i in range(4)]
+    assert len(drop_blurry_faces(cands, ratio=0.35)) == 4
+
+
+def test_drop_blurry_faces_bo_qua_frame_khong_co_mat():
+    cands = [make_cand(t=0.0, face_px=0, face_blur=0.0),
+             make_cand(t=1.0, face_px=90, face_blur=120.0),
+             make_cand(t=2.0, face_px=90, face_blur=140.0)]
+    assert len(drop_blurry_faces(cands, ratio=0.35)) == 3
 
 
 def test_goc_quay_khac_nhau_van_giu_du_cung_dang():

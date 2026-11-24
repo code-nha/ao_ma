@@ -77,6 +77,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="bỏ frame mà người khác chiếm quá tỉ lệ này diện tích crop, "
                         "để mỗi ảnh chỉ có 1 người (0 = tắt)")
     g.add_argument("--min-blur", type=float, default=25.0, help="phương sai Laplacian tối thiểu (chống ảnh mờ)")
+    g.add_argument("--face-sharp-ratio", type=float, default=0.35,
+                   help="bỏ frame mà vùng MẶT mờ dưới ratio × trung vị của cùng cảnh "
+                        "(bắt frame chuyển cảnh chồng mờ + mặt bị nhoè; 0 = tắt). "
+                        "Cần cờ này vì frame chồng mờ vẫn 'nét' theo Laplacian cả frame")
     g.add_argument("--crop-margin", type=float, default=0.12, help="nới bbox khi crop (tỉ lệ cạnh)")
 
     g = p.add_argument_group("xuất ảnh")
@@ -173,6 +177,7 @@ def main(argv: list[str] | None = None) -> int:
         refs=refs, out=args.out, fps=args.fps,
         face_th=args.face_th, body_th=args.body_th, color_th=args.color_th,
         min_person=args.min_person, min_blur=args.min_blur,
+        face_sharp_ratio=args.face_sharp_ratio,
         min_person_score=args.min_person_score, max_overlap=args.max_overlap,
         max_other_area=args.max_other_area,
         crop_margin=args.crop_margin, save=args.save,

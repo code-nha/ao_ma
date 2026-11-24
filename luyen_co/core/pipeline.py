@@ -33,7 +33,8 @@ from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
 from .select import (SHOT_ABBR, coverage_pick, dedupe, distinct_pose_pick,
-                     diverse_gate, drop_similar, drop_tiny_frames, feet_visible, head_pose,
+                     diverse_gate, drop_blurry_faces, drop_similar, drop_tiny_frames,
+                     feet_visible, head_pose,
                      keep_best_body_tracks, pick_diverse, pose_angles, pose_vector,
                      shot_coverage_pick, shot_histogram, shot_scale, yaw_bucket, yaw_histogram)
 from .tracker import IoUTracker
@@ -56,6 +57,7 @@ class Config:
     max_overlap: float = 0.35
     max_other_area: float = 0.10
     min_blur: float = 25.0
+    face_sharp_ratio: float = 0.35  # bỏ frame mặt mờ < ratio × trung vị cùng cảnh
     crop_margin: float = 0.12
     save: str = "full"              # full | crop | both
     min_yaw: float = 25.0           # chênh góc camera tối thiểu giữa 2 ảnh giữ lại
@@ -233,7 +235,7 @@ class Pipeline:
         ctx = crop_xyxy(frame, ctx_box)
         faces = self.face_det.detect(ctx) if ctx.size else []
         best_face, face_sim = None, -1.0
-        face_px, face_box = 0, None
+        face_px, face_box, face_blur = 0, None, 0.0
         yaw = pitch = 0.0
         if faces:
             def rank(f):
@@ -250,6 +252,13 @@ class Pipeline:
                               best_face.box[3] - best_face.box[1]))
             ox, oy = int(round(ctx_box[0])), int(round(ctx_box[1]))
             face_box = best_face.box + np.array([ox, oy, ox, oy], dtype=np.float32)
+            # độ nét VÙNG MẶT: frame chuyển cảnh chồng mờ (cross-dissolve) làm mặt
+            # thành 2 bóng chồng nhau → Laplacian của cả frame vẫn cao nhưng mặt
+            # rất mờ. Đo trên clip 1750183430: mặt 23, các frame sạch cùng clip 90–161.
+            fb = crop_xyxy(ctx, best_face.box)
+            if fb.size:
+                face_blur = laplacian_var(cv2.resize(fb, (112, 112),
+                                                     interpolation=cv2.INTER_AREA))
 
         tight = crop_xyxy(frame, person.box)
         clip_vec = self.body_emb.embed(tight) if tight.size else None
@@ -272,7 +281,7 @@ class Pipeline:
             kpts=person.kpts, clip_vec=clip_vec, full_jpeg=full_jpeg,
             src_w=int(w), src_h=int(h), scene=int(scene),
             pose_vec=pose_vector(person.kpts, person.box),
-            face_px=face_px, face_box=face_box,
+            face_px=face_px, face_box=face_box, face_blur=float(face_blur),
         )
 
     def _body_ok(self, c: Candidate, th: float | None = None,
@@ -620,6 +629,12 @@ class Pipeline:
         if len(cands) != before:
             log(f"bỏ frame người quá bé so với cùng cảnh: {before} → {len(cands)} frame")
         before = len(cands)
+        cands = drop_blurry_faces(cands, cfg.face_sharp_ratio)
+        self.face_gate = (before, len(cands))
+        if len(cands) != before:
+            log(f"bỏ frame mặt mờ hẳn so với cùng cảnh (chuyển cảnh chồng mờ / nhoè): "
+                f"{before} → {len(cands)} frame")
+        before = len(cands)
         if cfg.select == "coverage":
             cands = coverage_pick(cands, cfg.per_bucket)
             after_cov = len(cands)
@@ -707,6 +722,7 @@ class Pipeline:
                     "bucket": yaw_bucket(c),
                     "shot": shot_scale(c), "face_px": c.face_px,
                     "feet": feet_visible(c),
+                    "face_blur": round(c.face_blur, 1),
                     "blur": round(c.blur, 1), "person_h": c.person_h,
                     "crop_margin": self.cfg.crop_margin,
                     "src_width": c.src_w,
@@ -778,6 +794,11 @@ class Pipeline:
         lines.append("")
         lines.extend(self._calibration_lines())
         n_body = sum(1 for c in self.accepted if c.body_only)
+        if getattr(self, "face_gate", None) and self.face_gate[0] != self.face_gate[1]:
+            lines.append("")
+            lines.append(f"bỏ frame mặt mờ hẳn so với cùng cảnh "
+                         f"(< {cfg.face_sharp_ratio:g} × trung vị cảnh): "
+                         f"{self.face_gate[0]} → {self.face_gate[1]} frame")
         if n_body:
             th = getattr(self, "body_only_th", 0.0)
             why = (f"ngưỡng tương đối {th:.2f}" if th > 0
