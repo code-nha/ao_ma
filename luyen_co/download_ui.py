@@ -42,6 +42,7 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 
 OUT_DIR = Path("downloads")
 MAX_HEIGHT = 1080
+APP_VERSION = "2026-11-24b"      # để biết server đang chạy code cũ hay mới
 
 
 @dataclass
@@ -84,6 +85,11 @@ def _strip_byte_range(url: str) -> str:
     if len(cleaned) == len(pairs):
         return url
     return urlunparse(parsed._replace(query=urlencode(cleaned)))
+
+
+def _looks_like_media(url: str) -> bool:
+    """URL trỏ thẳng vào file media (không phải trang web)."""
+    return Path(urlparse(url).path).suffix.lower() in VIDEO_EXT
 
 
 def _sanitize(name: str, limit: int = 120) -> str:
@@ -156,6 +162,17 @@ def _download_with_ffmpeg(url: str, dest: Path, job: Job) -> None:
 def _direct_download(url: str, job: Job) -> Path:
     """Trang web thường: tìm link media trong HTML rồi tải trực tiếp."""
     url = _strip_byte_range(url)
+    if _looks_like_media(url):
+        # link CDN trỏ thẳng file: tải luôn, tên lấy từ path (không dính query)
+        name = _sanitize(unquote(Path(urlparse(url).path).name) or "video.mp4")
+        dest = _unique(OUT_DIR / name)
+        _stream_to_file(url, dest, job)
+        size = dest.stat().st_size if dest.exists() else 0
+        if size < 10_000:
+            dest.unlink(missing_ok=True)
+            raise RuntimeError(f"file tải về chỉ {size} byte — có thể vẫn là đoạn byte-range "
+                               f"hoặc link đã hết hạn")
+        return dest
     data, ctype, final_url = _fetch(url)
     if ctype.startswith("video/") or ctype.startswith("application/octet-stream"):
         name = _sanitize(unquote(Path(urlparse(final_url).path).name) or "video.mp4")
@@ -321,7 +338,12 @@ def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") 
     job.url = _strip_byte_range(job.url)
     try:
         path: Path | None = None
-        if yt_dlp is not None:
+        if _looks_like_media(job.url):
+            # link file trực tiếp: tải bằng urllib, tránh yt-dlp đặt tên file
+            # theo title sinh từ URL (dính query, có khi không mở được trên Windows)
+            job.status = "downloading"
+            path = _direct_download(job.url, job)
+        elif yt_dlp is not None:
             try:
                 path = _ydl_download(job.url, job, cookies, overwrite, cookiefile)
             except Exception as exc:
@@ -378,7 +400,8 @@ def _video_files() -> list[dict]:
 def _state() -> dict:
     with LOCK:
         jobs = [asdict(JOBS[i]) for i in ORDER if i in JOBS]
-    return {"out": str(OUT_DIR.resolve()), "has_ytdlp": yt_dlp is not None,
+    return {"out": str(OUT_DIR.resolve()), "version": APP_VERSION,
+            "has_ytdlp": yt_dlp is not None,
             "has_deno": DENO_PATH is not None, "deno": DENO_PATH or "",
             "jobs": jobs, "files": _video_files()}
 
@@ -561,7 +584,7 @@ async function submit() {
 
 async function tick() {
   const s = await (await fetch('/api/state')).json();
-  $('out').textContent = 'lưu vào: ' + s.out;
+  $('out').textContent = 'lưu vào: ' + s.out + '  ·  v' + s.version;
   $('hint').innerHTML = 'Quét bằng: <code>python luyen_co.py --input "' + s.out + '" --ref anh.jpg</code>'
     + (s.has_ytdlp ? '' : '<br>Chưa cài yt-dlp → chỉ tải được link .mp4 trực tiếp.')
     + (s.has_deno ? '<br>deno: đã thấy (' + esc(s.deno) + ')'

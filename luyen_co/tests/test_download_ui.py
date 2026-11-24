@@ -46,6 +46,13 @@ def test_candidate_media_urls_empty():
     assert du._candidate_media_urls("<html>không có gì</html>", "https://x.test/") == []
 
 
+def test_looks_like_media():
+    assert du._looks_like_media("https://cdn.test/v.mp4?x=1") is True
+    assert du._looks_like_media("https://cdn.test/v.MOV") is True
+    assert du._looks_like_media("https://www.facebook.com/stories/123/") is False
+    assert du._looks_like_media("https://youtu.be/abc") is False
+
+
 def test_strip_byte_range():
     raw = "https://cdn.test/o1/v.mp4?_nc_cat=102&bytestart=0&byteend=1067&x=1"
     assert du._strip_byte_range(raw) == "https://cdn.test/o1/v.mp4?_nc_cat=102&x=1"
