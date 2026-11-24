@@ -13,6 +13,15 @@ Cần tìm nguồn khác, ví dụ:
 
 Việc cần làm: chọn nguồn, xin phép tải nếu cần, chưng cất vào kho nét với nguồn ghi rõ, thay dần các giá trị `general`.
 
+## Còn lại sau đợt nghiệm thu tầng chọn nét (2026-11-25)
+- SOUL hiện chỉ được giải thích nét mặt khi nghỉ, dáng đứng, dáng đi. Nếp nhăn do thói quen biểu cảm (cau mày) có nên dẫn SOUL
+  không: chờ người dùng quyết.
+- `teeth.veneers` (bọc sứ) bị chọn cho người từng niềng răng: cần giá trị "răng đều sau niềng" riêng.
+- Nhánh "hết lượt kiểm mà còn mâu thuẫn thì đưa ô về nét nền" đã có code nhưng chưa gặp trong lần chạy thật nào.
+- Luân hồi kiểm mâu thuẫn đôi khi trả lời lan man rồi tự rút lại; code bỏ qua câu dài hơn 300 ký tự nhưng vẫn ghi vào
+  `rule_candidates.jsonl`.
+- Nhân vật thử `t_lan`, `t_lao_bay_twin` và các story `acc*` là dữ liệu nghiệm thu, chưa commit.
+
 ## Khác
 - Kho nét nhóm mặt, tóc, dấu vết chưa dựng.
 - Luật loại trừ giữa các giá trị trong kho (hiện tạm dùng Luân hồi kiểm mâu thuẫn sau khi chọn).

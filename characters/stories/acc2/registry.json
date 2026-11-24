@@ -1,0 +1,76 @@
+{
+ "chars": {
+  "lao_bay": {
+   "id": "lao_bay",
+   "group": "male-elderly",
+   "kb_version": "3.70f610097b",
+   "picks": {
+    "height": "height.short-m",
+    "frame": "frame.normal-m",
+    "fat": "fat.normal-m",
+    "muscle": "muscle.old-strong-m",
+    "fat_where": "fat_where.normal-m",
+    "head": "head.normal",
+    "face_shape": "face_shape.normal-old-m",
+    "forehead": "forehead.normal-m",
+    "brows": "brows.normal-old-m",
+    "eyes": "eyes.normal-old",
+    "under_eye": "under_eye.normal-e",
+    "nose": "nose.bulbous",
+    "cheeks": "cheeks.normal-e",
+    "mouth": "mouth.cracked",
+    "teeth": "teeth.brown",
+    "jaw_chin": "jaw_chin.normal-old",
+    "ears": "ears.normal",
+    "neck": "neck.normal-old",
+    "skin_tone": "skin_tone.farmertan",
+    "skin_texture": "skin_texture.leathery",
+    "wrinkles": "wrinkles.frown",
+    "facial_hair": "facial_hair.normal-old-m",
+    "asymmetry": "asymmetry.normal",
+    "resting_face": "resting_face.normal-old",
+    "hair_color": "hair_color.normal-e",
+    "hair_texture": "hair_texture.normal-old",
+    "hair_density": "hair_density.normal-e",
+    "hairline": "hairline.normal-old-m",
+    "shoulders": "shoulders.normal-old-m",
+    "chest": "chest.normal-old-m",
+    "waist_belly": "waist_belly.normal-old-m",
+    "hips": "hips.normal-old-m",
+    "back": "back.normal-old",
+    "body_skin": "body_skin.farmertan-m",
+    "arms": "arms.normal-old-m",
+    "hands": "hands.bony-m",
+    "nails": "nails.normal",
+    "legs": "legs.normal-old-m",
+    "feet": "feet.normal",
+    "posture": "posture.normal-old",
+    "gait": "gait.normal-old",
+    "marks": [
+     "marks.none"
+    ]
+   },
+   "signature": [
+    "muscle.old-strong-m",
+    "skin_texture.leathery",
+    "wrinkles.frown",
+    "hands.bony-m"
+   ]
+  }
+ },
+ "kb_version": "3.70f610097b",
+ "counts": {
+  "male-elderly": {
+   "height.short-m": 1,
+   "muscle.old-strong-m": 1,
+   "nose.bulbous": 1,
+   "mouth.cracked": 1,
+   "teeth.brown": 1,
+   "skin_tone.farmertan": 1,
+   "skin_texture.leathery": 1,
+   "wrinkles.frown": 1,
+   "body_skin.farmertan-m": 1,
+   "hands.bony-m": 1
+  }
+ }
+}

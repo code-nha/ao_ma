@@ -395,7 +395,8 @@
   "neglect": "little self-care",
   "stress": "tension, stress",
   "low-mood": "sadness, exhaustion",
-  "temperament": "personality shown in stance or walk"
+  "temperament": "personality shown in stance or walk",
+  "burn": "burns and scalds (fire, boiling water or oil, chemicals)"
  },
  "cause_map_v1": {
   "genetics": "genetics",
@@ -808,7 +809,7 @@
   ]
  },
  "cause_keywords": {
-  "injury": "\\b(injur\\w*|wound\\w*|accident|broke|broken|fractur\\w*|fight\\w*|beaten|bitten|bite|burn\\w*|scar\\w*|stab\\w*|shot|shrapnel|bomb\\w*|mine\\b|landmine|fell|crash\\w*|lost (a|his|her) (finger|leg|arm|eye|hand)|limp\\w*)",
+  "injury": "\\b(injur\\w*|wound\\w*|accident|broke|broken|fractur\\w*|fight\\w*|beaten|bitten|bite|stab\\w*|knife|slash\\w*|cut (his|her|my) |gashed?|shot|shrapnel|bomb\\w*|mine\\b|landmine|fell|crash\\w*|lost (a|his|her) (finger|leg|arm|eye|hand)|limp\\w*)",
   "illness": "\\b(ill\\b|illness|sick\\w*|disease|stroke|fever|cancer|polio|leprosy|tubercul\\w*|malaria|hospital\\w*|surgery|operation)",
   "water-work": "\\b(at sea|to sea|out to sea|on the sea|fish(ing|ed|es|erman|ermen)?\\b|nets?\\b|squid|(on|in|aboard) (the |a |his |her |their |big |small |fishing )*boats?\\b|rivers?\\b|paddy|paddies|rice fields?|transplant\\w*|washing|laundry|div(ing|er)\\b)",
   "sun": "\\b(at sea|to sea|out to sea|fish(ing|ed|erman|ermen)?\\b|(on|in|aboard) (the |a |his |her |their |big |small |fishing )*boats?\\b|farm\\w*|fields?\\b|paddy|paddies|sun\\w*|outdoors?|in the open|market stall|street vend\\w*|construction|building site|herd\\w*)",
@@ -820,11 +821,12 @@
   "substances": "\\b(smok\\w*|tobacco|opium|drugs?|heroin|cigarettes?)",
   "low-mood": "\\b(died|death|grief|mourn\\w*|lost his|lost her|alone|lonely)",
   "stress": "\\b(war|wartime|storm|fear\\w*|debt|prison|nearly did not come back|survived)",
-  "sport": "\\b(sport|boxing|football|martial|wrestl\\w*|gym|athlet\\w*)",
+  "sport": "\\b(sports?|boxing|football|soccer|martial|wrestl\\w*|gym|athlet\\w*|running|runs? \\d|ran \\d|\\d+ ?km\\b|marathon|jog\\w*|swim\\w*|cycling|cycles\\b|badminton|volleyball|tennis|yoga|dancer?s?\\b|dancing)",
   "custom": "\\b(betel|lacquer\\w*|tradition\\w*|temple)",
   "sedentary": "\\b(office|desk|computer|sits all day)",
   "weight": "\\b(overweight|fat\\b|obese)",
-  "weight-loss": "\\b(lost weight|weight loss|dieting)"
+  "weight-loss": "\\b(lost weight|weight loss|dieting)",
+  "burn": "\\b(burn(ed|t|s)?\\b|scald\\w*|boiling (water|oil)|kettle|caught fire|on fire|flames?\\b|acid)"
  },
  "other_death": "\\b(wife|husband|son|daughter|father|mother|friend|brother|sister|grandson|granddaughter)\\b[^.]*\\b(died|killed|death|deceased)",
  "eth_default": "kinh",
@@ -863,7 +865,8 @@
    "alcohol",
    "substances",
    "childbearing",
-   "weight-loss"
+   "weight-loss",
+   "burn"
   ],
   "facet_causes": {
    "smoker": [
@@ -913,6 +916,11 @@
    ],
    "office": [
     "sedentary"
+   ]
+  },
+  "implies": {
+   "burn": [
+    "injury"
    ]
   }
  },

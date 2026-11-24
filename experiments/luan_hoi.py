@@ -49,6 +49,7 @@ CID =sys.argv[1] if len(sys.argv) > 1 else "lao_bay"
 
 CAP_SHARE, CAP_MIN = 0.2, 2
 MIN_SIG, MAX_SIG, MAX_SIG_GROUP, MAX_EXTRA = 2, 5, 3, 6
+MAX_SHARED_SIG = 1      # signatures shared with any one other character of the same story
 FIX_ROUNDS = 2          # số lần hỏi lại một lời gọi bước 2 khi code thấy lỗi
 LLM_CHECKS = 2          # số lần Luân hồi kiểm mâu thuẫn (lần 2 sau khi sửa)
 STYLE_KEYS = r"grooming|eating|drinking|gestures|posture|walk|body"
@@ -76,8 +77,8 @@ SYS_STEP2 = f"""You play the character below and pick the exact value for each l
 Pick by number from each slot's list. "notable" values are what people remember; "near-plain" values are small differences.
 At most {MAX_SIG} notable values in total. All values together describe ONE person: they must not contradict each other or your
 other picks, and the same feature must not be described in two slots. At most one rare value, unless a LIFE item explains it.
-"cite": for every value marked rare or notable, the reason in your files: "LIFE <number>" or "IDENTITY <field>" (resting_face,
-posture and gait may cite "SOUL"); the cited item must really show that cause. Otherwise "-".
+"cite": for every value marked rare or notable, the reason in your files: "LIFE <number>", "IDENTITY <field>", or "FACTS" for habits
+code read (drinking, smoking, diet, work); resting_face, posture and gait may cite "SOUL"); the cited item must really show that cause. Otherwise "-".
 For "marks" give 1-3 items, each with a "loc" from the listed places. Be honest, not flattering.
 Answer JSON: {{"<slot>": {{"pick": "<number>", "cite": "<reason or ->", "why": "<few words>"}}, ...,
  "marks": {{"items": [{{"pick": "<number>", "loc": "<place>", "cite": "<reason or ->"}}], "why": "<few words>"}}}}"""
@@ -100,7 +101,7 @@ def call(system, user, schema):
             "options": {"temperature": 0.8, "num_predict": 3000}}
     t = time.time()
     bad = []
-    for attempt in range(2):            # Gemma sometimes stops inside a JSON string: ask once more (still sequential)
+    for attempt in range(3):            # Gemma sometimes stops inside a JSON string or loops on one phrase: ask again (sequential)
         req = urllib.request.Request(API, data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=900) as r:
             out = json.loads(r.read())
@@ -111,7 +112,9 @@ def call(system, user, schema):
             bad.append(out["message"]["content"][-200:])
             print("   (malformed JSON from model, retrying)", flush=True)
     else:
-        raise RuntimeError(f"model returned malformed JSON twice: {bad}")
+        # give up on this call, not on the run: callers treat {} as "no answer" (menu kept whole, slots stay ordinary)
+        print(f"   (malformed JSON {len(bad)} times; call skipped)", flush=True)
+        res = {}
     return res, {"secs": round(time.time() - t, 1), "prompt_tokens": out.get("prompt_eval_count"),
                  "eval_tokens": out.get("eval_count"), "est_tokens": kbq.est_tokens(system + user),
                  **({"malformed_retries": len(bad)} if bad else {})}
@@ -137,8 +140,10 @@ def main():
     counts = kb.counts(reg, gkey, exclude=CID)        # tính lại từ chars, bỏ chính nhân vật này
     n_group = sum(1 for k, c in reg["chars"].items() if c["group"] == gkey and k != CID)
     cap = max(CAP_MIN, round(CAP_SHARE * (n_group + 1)))
+    # signatures of the other characters in this story (any group): this one may share at most MAX_SHARED_SIG with each
+    other_sig = {k: {kbq.split_pick(p)[0] for p in c.get("signature", [])} for k, c in reg["chars"].items() if k != CID}
 
-    menus = {s: kb.menu(s, ctx, counts=counts, cap=cap, seed=seed) for s in kb.slots}
+    menus = {s: kb.menu(s, ctx, counts=counts, cap=cap, seed=seed, facts=facts) for s in kb.slots}
     print(gkey, "kb", kb.version, "cap", cap, "facts:", facts.line(), flush=True)
 
     facts_txt = f"FACTS (read by code from IDENTITY/STYLE): {facts.line()}"
@@ -166,7 +171,7 @@ def main():
         res, stat = call(SYS_LUAN_HOI, user, schema)
         for s in slots:
             keys = rendered[s][1]
-            rm = {keys[k] for k in res["remove"].get(s, []) if k in keys and k != "1"}
+            rm = {keys[k] for k in res.get("remove", {}).get(s, []) if k in keys and k != "1"}
             keep = [v["id"] for v in menus[s] if v["id"] not in rm]
             short[s] = keep if len(keep) >= 5 or len(menus[s]) < 5 else [v["id"] for v in menus[s]]
         log["calls"].append({"role": "luan_hoi", "slots": slots, "out": res, **stat})
@@ -217,7 +222,7 @@ def main():
         else:
             def it(en):
                 return {"type": "object", "properties": {"slot": {"type": "string", "enum": en or ["none"]},
-                                                         "idea": {"type": "string"}}, "required": ["slot", "idea"]}
+                                                         "idea": {"type": "string", "maxLength": 160}}, "required": ["slot", "idea"]}
             schema1 = {"type": "object", "properties": {
                 "signature": {"type": "array", "items": it(sig_ok), "minItems": min(lo, len(sig_ok)), "maxItems": min(hi, len(sig_ok))},
                 "extras": {"type": "array", "items": it(ext_ok), "maxItems": room_ext}},
@@ -264,9 +269,25 @@ def main():
         return [(s, x) for s, x in kb.items(p) if kb.cls(kb.get(x), ctx) == "rare"
                 and not kb.life_explained(s, x, cites.get(x, ""), facts)]
 
+    def shared_overflow(trial, new):
+        """New picks that make this character share more than MAX_SHARED_SIG signatures with another character of the
+        story: [(pick, other char id)]. Picks already locked count first, so the newest pick is the one to change."""
+        sig_base = lambda p: kbq.split_pick(p)[0]
+        notable_ids = [(s, x) for s, x in kb.items(trial) if kb.notable(kb.get(x), ctx, kbq.split_pick(x)[1])]
+        newp = {x for _, x in kb.items(new)}
+        out = []
+        for o, osig in other_sig.items():
+            shared = [x for _, x in notable_ids if sig_base(x) in osig]
+            shared.sort(key=lambda x: x in newp)          # locked first
+            out += [(x, o) for x in shared[MAX_SHARED_SIG:] if x in newp]
+        return out
+
     def problems(trial, new):
         """Code checks on a trial pick set; returns messages for a FIX prompt."""
         newp = {x for _, x in kb.items(new)}
+        errs_sh = [f'"{kb.phrase(x)}" is already a signature feature of another character in this story ({o}); you may share at '
+                   f'most {MAX_SHARED_SIG} with them. Pick a different value so the two of you are told apart.'
+                   for x, o in shared_overflow(trial, new)]
         errs = [c["msg"] for c in kb.check(trial, ctx) if set(c["ids"]) & newp]
         errs += [m for s, x in kb.items(new) for m in [kb.cite_problem(s, x, cites.get(x, ""), facts, ctx, why=why_of(s))] if m]
         rares = unexplained_rares(trial)
@@ -275,7 +296,7 @@ def main():
         nn = [x for _, x in kb.items(trial) if kb.notable(kb.get(x), ctx, kbq.split_pick(x)[1])]
         if len(nn) > MAX_SIG:
             errs.append(f"{len(nn)} notable values; at most {MAX_SIG}. Use near-plain values for the others.")
-        return errs
+        return errs + errs_sh
 
     def step2(slots, extra_msg="", exclude=()):
         locked = {s: picks[s] for s in picks if s not in slots}
@@ -301,11 +322,11 @@ def main():
                 body += f"\n(marks places: {', '.join(locs)})"
                 props[s] = {"type": "object", "properties": {
                     "items": {"type": "array", "minItems": 1, "maxItems": max_marks, "items": {"type": "object", "properties": {
-                        "pick": {"type": "string", "enum": keys}, "loc": {"type": "string", "enum": locs}, "cite": {"type": "string"}},
-                        "required": ["pick", "loc", "cite"]}}, "why": {"type": "string"}}, "required": ["items", "why"]}
+                        "pick": {"type": "string", "enum": keys}, "loc": {"type": "string", "enum": locs}, "cite": {"type": "string", "maxLength": 40}},
+                        "required": ["pick", "loc", "cite"]}}, "why": {"type": "string", "maxLength": 300}}, "required": ["items", "why"]}
             else:
-                props[s] = {"type": "object", "properties": {"pick": {"type": "string", "enum": keys}, "cite": {"type": "string"},
-                                                             "why": {"type": "string"}}, "required": ["pick", "cite", "why"]}
+                props[s] = {"type": "object", "properties": {"pick": {"type": "string", "enum": keys}, "cite": {"type": "string", "maxLength": 40},
+                                                             "why": {"type": "string", "maxLength": 300}}, "required": ["pick", "cite", "why"]}
         schema = {"type": "object", "properties": props, "required": list(texts)}
         user, errs, new, res = body + extra_msg, [], {}, {}
         for rnd in range(FIX_ROUNDS + 1):
@@ -356,6 +377,7 @@ def main():
             extra_rares = [x for s, x in unexplained_rares({**locked, **new}) if s in new]
             n_locked_rare = len(unexplained_rares(locked))
             bad |= set(extra_rares[max(0, 1 - n_locked_rare):])
+            bad |= {x for x, _ in shared_overflow({**locked, **new}, new)}
             for s in list(new):
                 keep = [x for x in as_list(new[s]) if x not in bad]
                 if not keep:
@@ -373,7 +395,7 @@ def main():
     chk_schema = {"type": "object", "properties": {"conflicts": {"type": "array", "items": {"type": "object", "properties": {
         "slots": {"type": "array", "items": {"type": "string", "enum": kb.slots}}, "why": {"type": "string"}},
         "required": ["slots", "why"]}}}, "required": ["conflicts"]}
-    llm_caught = []
+    llm_caught, unresolved = [], []
     for n in range(LLM_CHECKS):
         full, covered = kb.fill(picks, ctx)
         desc = "\n".join(f"{s}: {kb.phrase(p)}" for s, p in kb.items(full)
@@ -399,7 +421,20 @@ def main():
                 fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
                 llm_caught.append(rec)
                 print("   - LLM:", c.get("slots"), c.get("why"), flush=True)
-        if n + 1 == LLM_CHECKS or not conf:
+        if not conf:
+            break
+        if n + 1 == LLM_CHECKS:
+            # no rounds left: a contradiction must not reach LOOK. Per conflict, the slot to let go back to ordinary:
+            # an extra before a signature, then the slot picked last (the latest re-pick is the least settled).
+            order = {s: i for i, s in enumerate(picks)}
+            for c in conf:
+                cand = [s for s in c["slots"] if s in picks]
+                if not cand:
+                    continue
+                s = max(cand, key=lambda x: (role.get(x) != "signature", order.get(x, 0)))
+                picks.pop(s, None)
+                unresolved.append({"slots": c["slots"], "why": c.get("why"), "dropped": s})
+                print("   unresolved after checks; slot back to ordinary:", s, flush=True)
             break
         redo = sorted({s for c in conf for s in c["slots"] if s in picks}, key=kb.slots.index)
         old_ids = {kbq.split_pick(p)[0] for s in redo for p in as_list(picks[s])}
@@ -429,13 +464,13 @@ def main():
     (CHARS / CID / "LOOK.kb.json").write_text(json.dumps(look, ensure_ascii=False, indent=1), encoding="utf-8")
 
     # sổ nét của story: counts luôn tính lại từ chars
-    reg["chars"][CID] = {"id": CID, "group": gkey, "kb_version": kb.version, "picks": full}
+    reg["chars"][CID] = {"id": CID, "group": gkey, "kb_version": kb.version, "picks": full, "signature": sig}
     reg["kb_version"] = kb.version
     reg["counts"] = {g: kb.counts(reg, g) for g in sorted({c["group"] for c in reg["chars"].values()})}
     reg_path.parent.mkdir(parents=True, exist_ok=True)
     reg_path.write_text(json.dumps(reg, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    log.update({"code_caught": code_caught, "llm_caught": llm_caught, "prompt": prompt, "prompt_sections": prompt_parts,
+    log.update({"code_caught": code_caught, "llm_caught": llm_caught, "unresolved": unresolved, "prompt": prompt, "prompt_sections": prompt_parts,
                 "picks": picks, "cites": look["cites"], "covered": covered})
     (ROOT / "experiments" / "logs").mkdir(exist_ok=True)
     with (ROOT / "experiments" / "logs" / "luan_hoi.jsonl").open("a", encoding="utf-8") as fh:

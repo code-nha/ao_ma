@@ -361,11 +361,15 @@ class KB:
                 if want.startswith(k.lower()) or k.lower().startswith(want[:6]):
                     return "IDENTITY", k
             return None, f"IDENTITY has no field '{m.group(1).strip()}' (fields: {', '.join(facts.fields)})"
+        if re.search(r"\b(FACTS|STYLE)\b", cite):
+            if self.facet_causes(facts):
+                return "FACTS", None
+            return None, "FACTS shows nothing for this person (no drinking, smoking, diet or work facts were read)"
         if re.search(r"\bSOUL\b", cite):
             if self.vocab["slots"][slot].get("soul"):
                 return "SOUL", None
             return None, f"SOUL may justify only {', '.join(s for s, m in self.vocab['slots'].items() if m.get('soul'))}"
-        return None, "no reason cited: give a LIFE item number or an IDENTITY field"
+        return None, "no reason cited: give a LIFE item number, an IDENTITY field, or FACTS (habits code read)"
 
     def claimed_causes(self, text):
         """Specific causes a free-text reason asserts ('from an old injury' -> {'injury'}); vocab.cite.claim_causes."""
@@ -397,14 +401,15 @@ class KB:
         causes = set(v["causes"])
         cr = self.vocab.get("cite", {})
         tags = (facts.life_tags.get(ref, set()) if kind == "LIFE" else facts.field_tags.get(ref, set()) if kind == "IDENTITY"
-                else set(cr.get("soul_causes", [])))
-        src = f"LIFE {ref}" if kind == "LIFE" else f"IDENTITY {ref}" if kind == "IDENTITY" else "SOUL"
+                else self.facet_causes(facts) if kind == "FACTS" else set(cr.get("soul_causes", [])))
+        src = f"LIFE {ref}" if kind == "LIFE" else f"IDENTITY {ref}" if kind == "IDENTITY" else kind
         if not causes & tags:
             opts = self.cite_options(slot, v, facts)
             hint = f" Valid: {' / '.join(opts)}." if opts else " Nothing in your files shows it."
             return (f"{what} needs a cause among [{', '.join(sorted(causes))}], but {src} does not show one; pick another value "
                     f"or cite an item that does.{hint}")
-        claimed = self.claimed_causes(why) - tags - self.facet_causes(facts)
+        implied = {i for t in tags for i in cr.get("implies", {}).get(t, [])}      # a burn is an injury too
+        claimed = self.claimed_causes(why) - tags - implied - self.facet_causes(facts)
         if claimed:
             return (f"{what}: your reason claims {', '.join(sorted(claimed))}, but {src} does not show it and nothing else in "
                     f"your files does; drop that claim or pick another value.")
@@ -421,6 +426,8 @@ class KB:
         out += [f"IDENTITY {k}" for k, t in facts.field_tags.items() if causes & t]
         if self.vocab["slots"][slot].get("soul") and causes & set(cr.get("soul_causes", [])):
             out.insert(0, "SOUL")
+        if causes & self.facet_causes(facts):
+            out.append("FACTS")
         return out[:n]
 
     def life_explained(self, slot, pick, cite, facts):
@@ -540,11 +547,15 @@ class KB:
         return full, covered
 
     # ------------------------------------------------------------ menus
-    def menu(self, slot, ctx, counts=None, cap=None, locked=None, k=None, seed=""):
+    def menu(self, slot, ctx, counts=None, cap=None, locked=None, k=None, seed="", facts=None):
         """Values of one slot for this person: sex/age and life facts (needs), reuse cap, no conflict with locked picks,
         capped to k lines (baseline first; unused first; values that fit the person's life first; keep a mix of
-        uncommon/rare; rest rotated by seed)."""
+        uncommon/rare; rest rotated by seed). With `facts`, values whose specific cause a LIFE item shows (a kettle burn ->
+        burn scar, running -> toned body) are always kept: the menu must offer what the character's own life explains."""
         counts = counts or {}
+        generic = set(self.vocab.get("cite", {}).get("generic", []))
+        life_causes = set().union(*facts.life_tags.values()) - generic if facts and facts.life_tags else set()
+        explained = lambda v: bool(set(v["causes"]) & life_causes)
         locked = locked or {}
         k = k or self.vocab["budget"]["menu_k"]
         lv = [self.get(p) for s, p in self.items(locked) if s != slot]
@@ -560,9 +571,10 @@ class KB:
             pool.append(v)
         rnd = random.Random(hashlib.sha256(f"{seed}|{slot}".encode()).hexdigest())
         rnd.shuffle(pool)
-        pool.sort(key=lambda v: (counts.get(v["id"], 0), -min(1, self.fit_score(v, ctx))))
+        pool.sort(key=lambda v: (counts.get(v["id"], 0), not explained(v), -min(1, self.fit_score(v, ctx))))
         if len(pool) > k - 1:
-            keep, rest = [], list(pool)
+            keep = [v for v in pool if explained(v)][:max(1, (k - 1) // 2)]
+            rest = [v for v in pool if v not in keep]
             for want, n in (("rare", 1), ("uncommon", 2)):
                 got = [v for v in rest if self.cls(v, ctx) == want][:n]
                 keep += got
