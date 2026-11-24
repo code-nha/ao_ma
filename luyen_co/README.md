@@ -27,29 +27,50 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 
 1. Frame thấy mặt và `face_sim ≥ --face-th` → nhận.
 2. Frame **không** thấy mặt chỉ được nhận khi track đó đã có ít nhất 1 frame khớp
-   mặt, **và** `body_sim ≥ --body-th`.
+   mặt, **và** ngoại hình khớp "neo" của video (`≥ --anchor-th`) **hoặc**
+   `body_sim ≥ --body-th`.
 3. Track không có frame nào khớp mặt bị bỏ, trừ khi bật `--allow-body-only`
-   (khi đó cần track ≥ `--min-track` frame và trung vị `body_sim ≥ --body-th`).
+   (khi đó cần track ≥ `--min-track` frame và `body_sim ≥ --body-only-low`,
+   mặc định 0.45). Ảnh quay lưng so với ảnh tham chiếu nhìn thẳng chỉ đạt cosine
+   CLIP 0.55–0.65, nên **không** dùng `--body-th` 0.72 cho đường này.
    Dùng cờ này khi CCTV không bao giờ thấy mặt người mục tiêu — đổi lại dễ nhầm
    người mặc giống nhau: đo thực tế trên clip văn phòng, người mặc áo xanh vẫn
    bị lẫn với một người mặc áo đen đi qua cùng lối. `--color-th` chỉ lọc được
    người khác màu áo rõ rệt.
+   - Nếu **không track nào** khớp mặt, bước xuất so **tương đối**: track có trung
+     vị `body_sim` cao nhất là người mục tiêu, giữ các track
+     `≥ --body-only-rel × mức tốt nhất` (mặc định 0.85) và ≥ `--body-only-low`.
+     Nhờ vậy clip chỉ quay từ sau vẫn ra ảnh thay vì 0 ảnh.
 4. **Quay lưng sau khi camera đã xác nhận mặt**: mỗi video có một "neo" ngoại
-   hình lấy từ track đã khớp mặt (trung bình vector CLIP của track đó). Các
-   track sau không thấy mặt vẫn được nhận nếu cosine với neo ≥ `--anchor-th`
-   (0.60). Nhờ vậy lấy được ảnh sau lưng/dáng đi kể cả khi ảnh tham chiếu mặc
-   trang phục khác. `--confirm-window` (mặc định 0 = không giới hạn) đặt giới
-   hạn thời gian nếu muốn chặt hơn.
-5. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, khuyến nghị nâng
-   `--body-th`.
+   hình, cập nhật **ngay theo từng frame** khớp mặt (trung bình dần vector CLIP)
+   thay vì đợi track kết thúc — nhờ vậy frame không mặt ở đầu video hoặc ngay
+   sau cắt cảnh vẫn có neo để so. Các track sau không thấy mặt vẫn được nhận nếu
+   cosine với neo ≥ `--anchor-th` (0.60). Nhờ vậy lấy được ảnh sau lưng/dáng đi
+   kể cả khi ảnh tham chiếu mặc trang phục khác. `--confirm-window` (mặc định
+   0 = không giới hạn) đặt giới hạn thời gian nếu muốn chặt hơn.
+5. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, dùng cùng đường
+   body-only ở mục 3.
 
 Sau khi lọc trùng, ảnh được chọn theo `--select`:
 
 - `coverage` (mặc định): nhóm theo **(nguồn, cảnh, góc)** — thẳng / trái / phải /
-  trái nhiều / phải nhiều / **ngửa** / **cúi** / **sau lưng** (không thấy mặt,
-  hoặc thấy vai mà không thấy mũi) — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm
-  ảnh **khác biệt nhất** nếu `--per-bucket` > 1. Nhờ vậy frame quay lưng ở xa
-  vẫn được lấy nếu nó là tư thế khác, không bị ảnh gần-đẹp hơn "đè" mất.
+  trái nhiều / phải nhiều / **ngửa** / **cúi** / **nghiêng** / **sau lưng** /
+  **không rõ mặt** — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm ảnh **khác biệt
+  nhất** nếu `--per-bucket` > 1.
+  - **sau lưng**: phần mặt bị khuất — `face_vis` (trung bình conf **mũi + 2 mắt**)
+    < 0.60, trong khi vai > 0.45 và tai ≥ 0.25 (tai còn thấy nghĩa là keypoint
+    đầu là thật, không phải model đoán bừa). Đo trên v1.mp4: frame quay lưng có
+    `face_vis` 0.18–0.43, frame nhìn thẳng 0.73–0.97 — khoảng trống rộng nên
+    cùng một đoạn đi bộ quay lưng không bị lật nhãn. (Cách cũ chỉ so conf **mũi**
+    < 0.5: mũi nhảy 0.31 → 0.58 giữa hai frame liền nhau là nhãn lật ngay.)
+  - **nghiêng**: yaw ≥ 70° (khi có mặt) hoặc vai/hông chồng nhau theo phương
+    ngang (khi không có mặt) — bắt được cả ảnh hông/thân nghiêng ở xa.
+  - **không rõ mặt**: không thấy mặt nhưng thân vẫn mở rộng (người ở xa, mặt
+    quá nhỏ để SCRFD bắt). Nhóm này tách riêng khỏi "sau lưng".
+  Nhờ tách 3 nhóm này, ảnh quay lưng **không còn bị ảnh nhìn thẳng ở xa chiếm
+  mất suất** (lỗi trước đây: mọi frame không thấy mặt đều vào "sau lưng", xếp
+  hạng theo `body_sim` nên frame xa, toàn thân giống tham chiếu hơn lại thắng).
+  Trong nhóm không có điểm mặt, ảnh được xếp theo **kích thước người + độ nét**.
 - `diversity`: chỉ giữ frame khác quá ngưỡng `--min-yaw` / `--min-pose`.
 
 Trước khi ghi ảnh còn một bước **lọc đa dạng**: một frame bị bỏ nếu **vừa** gần
@@ -118,7 +139,9 @@ Tham số đáng chú ý:
 | `--per-bucket` | 1 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`) |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
-| `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |
+| `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân (dùng khi CCTV chỉ quay lưng) |
+| `--body-only-low` | 0.45 | sàn `body_sim` cho frame nhận bằng toàn thân; ảnh lưng so với ref nhìn thẳng thường chỉ 0.55–0.65 nên đừng đặt cao hơn mức đó |
+| `--body-only-rel` | 0.85 | khi không track nào khớp mặt: giữ track có `body_sim ≥ rel × track tốt nhất` (0.85 = giữ các track ngang mức tốt nhất) |
 | `--clean` | tắt | xoá ảnh cũ trong `<out>/crops` trước khi ghi kết quả mới |
 | `--include-ref` | tắt | vẫn xử lý ảnh tham chiếu nếu nó nằm trong folder quét |
 | `--device` | auto | `auto` / `gpu` / `cpu` |
@@ -135,7 +158,8 @@ liệu vừa quét — nên chọn ngưỡng không cần chạy lại video:
 - Có ảnh người khác lọt vào → tăng `--face-th` / `--body-th`, hoặc tăng
   `--min-person-score`, `--min-blur`.
 - Ra 0 ảnh nhưng người mục tiêu có trong video (CCTV chỉ quay lưng) → bật
-  `--allow-body-only`, nâng `--body-th` dần (0.75 → 0.8) và soát `sheet.jpg`.
+  `--allow-body-only` và **hạ** `--body-only-low` nếu vẫn 0 ảnh (xem mục 3 ở
+  trên), rồi soát `sheet.jpg`. Đường body-only không dùng `--body-th`.
 - Ảnh ra quá ít → giảm `--min-blur`, `--min-person`, tăng `--fps`.
 - Ảnh ra quá nhiều bản gần giống → tăng `--min-gap`, giảm `--dup-sim`
   (vd. 0.95), hoặc dùng `--limit`.
@@ -154,7 +178,7 @@ góc đầu trải từ trái sang phải thì cấu hình đã ổn.
 | 720p, nén vừa | `--face-th 0.40 --min-person 50` |
 | ≤ 360p hoặc nén mạnh | `--face-th 0.35 --min-person 40 --min-blur 15` |
 | Camera hồng ngoại / đen trắng | hạ thêm ~0.05 so với bảng trên (đo thực tế: `face_sim` 0.59 so với 0.98 bản màu) |
-| Chỉ thấy lưng, không bao giờ thấy mặt | thêm `--allow-body-only --body-th 0.78` |
+| Chỉ thấy lưng, không bao giờ thấy mặt | thêm `--allow-body-only` (mặc định `--body-only-low 0.45 --body-only-rel 0.85` đã đủ cho hầu hết clip) |
 | Đám đông, cần nhiều ảnh hơn | nâng `--max-other-area` lên 0.2–0.3 (đổi lại crop có thể dính người bên cạnh) |
 
 Luôn soát `sheet.jpg` sau khi hạ ngưỡng: hạ quá tay sẽ bắt đầu lẫn người khác.
@@ -173,6 +197,7 @@ chính frame phim làm ảnh tham chiếu:
 | Clip CCTV văn phòng 1080p tải từ YouTube, ref là người mặc áo xanh (không thấy mặt) | body-only bám đúng người đi bộ 2,5–37 s; loại được người mặc áo vàng nhờ `--color-th`; **lẫn một người khác mặc đồ tối** ở 51–58 s (giới hạn của so khớp toàn thân) |
 | Folder rỗng / video hỏng / ảnh hỏng | báo lỗi hoặc bỏ qua, không crash |
 | Đường dẫn có dấu tiếng Việt + `--recursive` | chạy đúng |
+| Clip chỉ quay lưng (v1.mp4 lấy 17,6–27 s, **không frame nào thấy mặt**) | trước: **0 ảnh** kể cả khi bật `--allow-body-only` (body_sim 0.55–0,62 < ngưỡng cứng 0,72); giờ: 3 ảnh (2 `sau lưng`, 1 `nghiêng`), nhóm góc của frame nhận: 33 `sau lưng` / 4 `nghiêng` / 1 `không rõ mặt` |
 | Ref không có mặt (chỉ thân) | cảnh báo, tự chuyển sang so khớp toàn thân |
 | Ảnh lẻ trong folder | nhận/loại theo cùng ngưỡng với video |
 
@@ -224,6 +249,11 @@ Thực tế ~0,05 s/frame khi có 1–2 người (đã gồm giải mã video) �
   `--face-th` và kiểm tra `sheet.jpg`.
 - **Góc đầu** là ước lượng từ 5 landmark (không phải số đo chính xác), đủ để
   phân loại trái/thẳng/phải/cúi/ngửa và để chọn bộ ảnh đa dạng.
+- **Sau lưng / nghiêng** khi không có mặt dựa vào keypoint: `face_vis` (mũi +
+  2 mắt) < 0.60 và vai > 0.45, tai ≥ 0.25 → sau lưng; vai/hông chồng nhau →
+  nghiêng. Người ở rất xa, keypoint nhiễu có thể bị xếp nhầm nhóm — chỉ ảnh
+  hưởng tới việc chọn ảnh, không ảnh hưởng nhận dạng. Soát `sheet.jpg` nếu thấy
+  nhóm sai.
 - **Cảnh cắt** được phát hiện bằng histogram + sai khác điểm ảnh; phim cắt nhanh
   có thể vẫn lọt, nhưng vì quyết định theo từng frame nên ít ảnh hưởng.
 - **Folder có nhiều bản encode của cùng một video** (vd. `.raw` + `.ivtc`): ảnh sẽ

@@ -36,6 +36,7 @@ class Candidate:
     face_box: np.ndarray | None = None
     clip_vec: np.ndarray | None = None
     pose_vec: np.ndarray | None = field(default=None)
+    body_only: bool = False        # nhận chỉ nhờ toàn thân (track không khớp mặt)
 
     @property
     def has_face(self) -> bool:

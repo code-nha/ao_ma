@@ -33,7 +33,8 @@ from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
 from .select import (coverage_pick, dedupe, diverse_gate, drop_similar, head_pose,
-                     pick_diverse, pose_vector, yaw_histogram)
+                     keep_best_body_tracks, pick_diverse, pose_vector, yaw_bucket,
+                     yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -75,6 +76,8 @@ class Config:
     end: float | None = None
     min_track: int = 3
     allow_body_only: bool = False
+    body_only_low: float = 0.45     # sàn body_sim khi chỉ có toàn thân
+    body_only_rel: float = 0.85     # giữ track có body_sim >= rel × track tốt nhất
     skip_ref: bool = True
     max_per_track: int = 300
     sheet: int = 60
@@ -260,28 +263,39 @@ class Pipeline:
             pose_vec=pose_vector(person.kpts, person.box),
         )
 
-    def _body_ok(self, c: Candidate) -> bool:
-        """Khớp toàn thân: CLIP đủ giống VÀ màu áo/quần không lệch quá."""
-        if c.body_sim < self.cfg.body_th:
+    def _body_ok(self, c: Candidate, th: float | None = None,
+                 color: float | None = None) -> bool:
+        """Khớp toàn thân: CLIP đủ giống VÀ màu áo/quần không lệch quá.
+
+        `th` / `color` cho phép ghi đè ngưỡng (dùng ở chế độ chỉ-toàn-thân, nơi
+        ảnh nhìn từ sau khác màu áo phía trước nên không so màu được).
+        """
+        th = self.cfg.body_th if th is None else th
+        color = self.cfg.color_th if color is None else color
+        if c.body_sim < th:
             return False
-        if self.cfg.color_th > 0 and c.color_sim >= 0 and c.color_sim < self.cfg.color_th:
+        if color > 0 and c.color_sim >= 0 and c.color_sim < color:
             return False
         return True
 
-    def _accept(self, buf: list[Candidate]) -> tuple[list[Candidate], float, float]:
+    def _accept(self, buf: list[Candidate]) -> tuple[list[Candidate], float, float, bool]:
         """Quyết định theo track nhưng giữ/bỏ từng frame (không nhận cả track).
 
         - Frame thấy mặt khớp (>= face_th) → nhận.
         - Frame không thấy mặt chỉ được nhận khi track đã được xác nhận bằng
           ít nhất 1 frame thấy mặt, VÀ toàn thân + màu áo đủ giống.
-        - Ảnh tham chiếu không có mặt (vd. chụp từ phía sau): chỉ dùng body,
-          đòi hỏi trung vị body của cả track đủ cao.
+        - Ảnh tham chiếu không có mặt (vd. chụp từ phía sau), hoặc bật
+          --allow-body-only: chỉ dùng body với **sàn thấp** (`body_only_low`);
+          bước chọn cuối mới lọc tương đối giữa các track (xem `_filter_body_only`).
+
+        Trả (frame nhận, face_max, body_med, nhận_theo_toàn_thân?).
         """
         cfg = self.cfg
         face_max = max((c.face_sim for c in buf if c.has_face), default=-1.0)
         body_med = float(statistics.median([c.body_sim for c in buf])) if buf else -1.0
         confirmed = bool(self.ref_faces) and face_max >= cfg.face_th
         anchor = self.anchors.get(buf[0].source)
+        body_only = False
 
         def anchor_ok(c: Candidate) -> bool:
             """Giống ngoại hình đã xác nhận trong chính video này."""
@@ -289,10 +303,18 @@ class Pipeline:
                 return False
             return float(np.dot(anchor["clip"], c.clip_vec)) >= cfg.anchor_th
 
+        def body_only_pick() -> list[Candidate]:
+            # ảnh lưng so với ref nhìn thẳng chỉ ~0.55–0.65, nên không thể đòi
+            # body_th 0.72 ở đây; ngưỡng tương đối áp ở export khi biết mọi track
+            if len(buf) < cfg.min_track:
+                return []
+            return [c for c in buf
+                    if self._body_ok(c, th=cfg.body_only_low, color=0.0)]
+
         if not self.ref_faces:
             # tham chiếu không có mặt → buộc phải dựa vào toàn thân
-            kept = ([c for c in buf if self._body_ok(c)]
-                    if body_med >= cfg.body_th and len(buf) >= cfg.min_track else [])
+            kept = body_only_pick()
+            body_only = bool(kept)
         elif confirmed:
             # track đã có frame khớp mặt; các frame còn lại (quay lưng, hoặc mặt
             # bị nhận nhầm sang hướng khác) được xét bằng neo ngoại hình của video
@@ -302,13 +324,14 @@ class Pipeline:
                     or (not c.has_face and self._body_ok(c))]
         elif anchor_ok(buf[0]) or any(anchor_ok(c) for c in buf):
             kept = [c for c in buf if c.face_sim < cfg.face_th and anchor_ok(c)]
-        elif cfg.allow_body_only and body_med >= cfg.body_th and len(buf) >= cfg.min_track:
+        elif cfg.allow_body_only:
             # track không có frame nào khớp mặt: chỉ nhận khi người dùng cho phép,
             # dễ nhầm người mặc giống → mặc định tắt
-            kept = [c for c in buf if self._body_ok(c)]
+            kept = body_only_pick()
+            body_only = bool(kept)
         else:
             kept = []
-        return kept, face_max, body_med
+        return kept, face_max, body_med, body_only
 
     def _near_confirmed(self, source: str, buf: list[Candidate]) -> bool:
         window = self.cfg.confirm_window
@@ -322,7 +345,7 @@ class Pipeline:
         return False
 
     def _remember(self, source: str, buf: list[Candidate]) -> None:
-        """Ghi khoảng thời gian đã khớp mặt + cập nhật neo ngoại hình của video."""
+        """Ghi khoảng thời gian đã khớp mặt (để `--confirm-window` dùng)."""
         intervals = self.confirmed.setdefault(source, [])
         lo, hi = buf[0].t, buf[-1].t
         for it in intervals:
@@ -332,22 +355,35 @@ class Pipeline:
         else:
             intervals.append([lo, hi])
 
-        vecs = [c.clip_vec for c in buf if c.clip_vec is not None]
-        if not vecs:
+    def _update_anchor(self, source: str, clip_vec: np.ndarray | None) -> None:
+        """Cập nhật "neo" ngoại hình ngay từ một frame đã khớp mặt.
+
+        Cập nhật theo từng frame (không đợi track kết thúc) để frame quay lưng ở
+        đầu video hoặc ngay sau cắt cảnh vẫn có neo mà so. Lỗi cũ: neo chỉ được
+        tạo lúc flush track, nên frame không mặt bị xét *trước* khi neo tồn tại
+        → bị bỏ oan (đo trên v1.mp4: mất các frame 10–11 s).
+        """
+        if clip_vec is None:
             return
-        mean = np.mean(np.stack(vecs), axis=0)
-        mean = mean / max(1e-9, float(np.linalg.norm(mean)))
+        v = np.asarray(clip_vec, dtype=np.float32)
+        n = float(np.linalg.norm(v))
+        if n <= 1e-9:
+            return
+        v = v / n
         anchor = self.anchors.get(source)
         if anchor is None:
-            self.anchors[source] = {"clip": mean.astype(np.float32)}
-        else:  # trung bình dần qua các lần xác nhận
-            merged = anchor["clip"] + mean
-            anchor["clip"] = (merged / max(1e-9, float(np.linalg.norm(merged)))).astype(np.float32)
+            self.anchors[source] = {"clip": v.astype(np.float32), "n": 1}
+            return
+        k = int(anchor.get("n", 1))
+        merged = anchor["clip"] * k + v
+        merged = merged / max(1e-9, float(np.linalg.norm(merged)))
+        anchor["clip"] = merged.astype(np.float32)
+        anchor["n"] = k + 1
 
     def _flush(self, tid: int, buf: list[Candidate]) -> None:
         if not buf:
             return
-        kept, face_max, body_med = self._accept(buf)
+        kept, face_max, body_med, body_only = self._accept(buf)
         self.stats.tracks += 1
         self.stats.track_face.append(face_max)
         self.stats.track_body.append(body_med)
@@ -364,14 +400,16 @@ class Pipeline:
         # hàng chục nghìn frame, giữ JPEG trong bộ nhớ sẽ phình lên hàng GB
         self._staging.mkdir(parents=True, exist_ok=True)
         for c in kept:
+            c.body_only = body_only
             self._stage_idx += 1
             path = self._staging / f"{self._stage_idx:07d}.jpg"
             path.write_bytes(c.jpeg)
             c.staged = path
             c.jpeg = b""
         self.accepted.extend(kept)
+        tag = " · chỉ toàn thân" if body_only else ""
         log(f"  track {tid}: nhận {len(kept)}/{len(buf)} frame "
-            f"(mặt max {face_max:.2f}, body med {body_med:.2f})")
+            f"(mặt max {face_max:.2f}, body med {body_med:.2f}){tag}")
 
     def _add(self, tid: int, buf: list[Candidate], cand: Candidate) -> None:
         if len(buf) < self.cfg.max_per_track:
@@ -443,6 +481,8 @@ class Pipeline:
                                               "video", tid, others, scene)
                     if cand is not None:
                         self.stats.candidates += 1
+                        if cand.face_sim >= cfg.face_th:
+                            self._update_anchor(str(path), cand.clip_vec)
                         self._add(tid, buffers[tid], cand)
             else:
                 tracker.update(np.empty((0, 4), np.float32))
@@ -483,6 +523,8 @@ class Pipeline:
             return
         self.stats.persons += 1
         self.stats.candidates += 1
+        if cand.face_sim >= self.cfg.face_th:
+            self._update_anchor(str(path), cand.clip_vec)
         buf = [cand]
         self._flush(0, buf)
 
@@ -508,6 +550,44 @@ class Pipeline:
             self.process_image(i)
 
     # ------------------------------------------------------------------ xuất
+    def _filter_body_only(self, cands: list[Candidate]) -> list[Candidate]:
+        """Lọc lần cuối cho các frame chỉ nhận nhờ toàn thân (`_accept`).
+
+        `_accept` nhận với sàn thấp (`--body-only-low`) vì ảnh quay lưng so với
+        ảnh tham chiếu nhìn thẳng chỉ đạt cosine CLIP 0.55–0.65. Ngưỡng thật được
+        áp ở đây, khi đã biết toàn bộ track của lần chạy:
+
+        - Có ít nhất 1 track khớp mặt → giữ track toàn thân có trung vị
+          `body_sim >= --body-th` (chặt, như cũ).
+        - Không track nào khớp mặt (clip chỉ quay từ sau) → so **tương đối**:
+          giữ các track có trung vị `>= max(--body-only-low, --body-only-rel ×
+          track tốt nhất)`. Nhờ vậy clip toàn cảnh lưng vẫn ra ảnh thay vì 0 ảnh.
+        """
+        body = [c for c in cands if c.body_only]
+        if not body:
+            return cands
+        faces = [c for c in cands if not c.body_only]
+        th = 0.0
+        if faces:
+            from collections import defaultdict
+
+            by_track: dict[tuple[str, int], list[float]] = defaultdict(list)
+            for c in body:
+                by_track[(c.source, c.track_id)].append(c.body_sim)
+            med = {k: float(np.median(v)) for k, v in by_track.items()}
+            kept = [c for c in body if med[(c.source, c.track_id)] >= self.cfg.body_th]
+            if len(kept) != len(body):
+                log(f"lọc toàn thân theo --body-th {self.cfg.body_th:.2f}: "
+                    f"{len(body)} → {len(kept)} frame")
+        else:
+            kept, th = keep_best_body_tracks(body, self.cfg.body_only_low,
+                                             self.cfg.body_only_rel)
+            log(f"không track nào khớp mặt → giữ track toàn thân tốt nhất "
+                f"(ngưỡng tương đối {th:.2f} = {self.cfg.body_only_rel:.2f} × tốt nhất, "
+                f"sàn {self.cfg.body_only_low:.2f}): {len(body)} → {len(kept)} frame")
+        self.body_only_th = th
+        return faces + kept
+
     def export(self) -> list[tuple[Candidate, Path]]:
         cfg = self.cfg
         cfg.crops_dir.mkdir(parents=True, exist_ok=True)
@@ -518,7 +598,11 @@ class Pipeline:
                 p.unlink()
             if old:
                 log(f"đã xoá {len(old)} ảnh cũ trong {cfg.crops_dir}")
-        cands = dedupe(self.accepted, cfg.dup_sim, cfg.min_gap)
+        self.body_only_th = 0.0
+        accepted = self._filter_body_only(self.accepted)
+        self.accepted = accepted                 # để summary/report khớp số thật
+        self.stats.accepted = len(accepted)
+        cands = dedupe(accepted, cfg.dup_sim, cfg.min_gap)
         before = len(cands)
         if cfg.select == "coverage":
             cands = coverage_pick(cands, cfg.per_bucket)
@@ -587,6 +671,7 @@ class Pipeline:
                     "body_sim": round(c.body_sim, 4),
                     "color_sim": round(c.color_sim, 4),
                     "yaw": round(c.yaw, 1), "pitch": round(c.pitch, 1),
+                    "bucket": yaw_bucket(c),
                     "blur": round(c.blur, 1), "person_h": c.person_h,
                     "crop_margin": self.cfg.crop_margin,
                     "src_width": c.src_w,
@@ -615,17 +700,11 @@ class Pipeline:
             mark = "  ← đang dùng" if abs(th - cfg.face_th) < 1e-6 else ""
             out.append(f"  --face-th {th:.2f} → {frames:6d} frame{mark}")
         if cfg.allow_body_only or not self.ref_faces:
-            out.append("  (chế độ chỉ toàn thân)")
-            for th in (0.70, 0.75, 0.80, 0.85):
-                frames = sum(
-                    1
-                    for _, body_med, _, bs in st.track_scores
-                    if body_med >= th
-                    for b in bs
-                    if b >= th
-                )
-                mark = "  ← đang dùng" if abs(th - cfg.body_th) < 1e-6 else ""
-                out.append(f"  --body-th {th:.2f} → {frames:6d} frame{mark}")
+            out.append("  (chế độ chỉ toàn thân — nhận theo từng frame, sàn --body-only-low)")
+            for th in (0.40, 0.45, 0.50, 0.55, 0.60):
+                frames = sum(1 for _, _, _, bs in st.track_scores for b in bs if b >= th)
+                mark = "  ← đang dùng" if abs(th - cfg.body_only_low) < 1e-6 else ""
+                out.append(f"  --body-only-low {th:.2f} → {frames:6d} frame{mark}")
         return out
 
     def _write_report(self) -> None:
@@ -659,6 +738,17 @@ class Pipeline:
                          for th in (0.85, 0.8, 0.75, 0.7, 0.65, 0.6))
         lines.append("")
         lines.extend(self._calibration_lines())
+        n_body = sum(1 for c in self.accepted if c.body_only)
+        if n_body:
+            th = getattr(self, "body_only_th", 0.0)
+            why = (f"ngưỡng tương đối {th:.2f}" if th > 0
+                   else f"--body-th {cfg.body_th:.2f}")
+            lines.append("")
+            lines.append(f"frame chỉ nhận nhờ toàn thân (không có mặt khớp): {n_body} "
+                         f"frame · lọc bằng {why}")
+        lines.append("")
+        lines.append("nhóm góc của TẤT CẢ frame nhận được (trước lọc trùng & chọn):")
+        lines.extend(f"  {label:12s} {n:5d}" for label, n in yaw_histogram(self.accepted))
         lines.append("")
         lines.append("độ phủ góc đầu của ảnh đã chọn:")
         lines.extend(f"  {label:12s} {n:5d}" for label, n in yaw_histogram(self.selected_cands))
@@ -690,7 +780,7 @@ class Pipeline:
             r, col = divmod(i, cols)
             y0, x0 = r * (cell + pad + 14), col * cell
             sheet[y0:y0 + thumb.shape[0], x0:x0 + thumb.shape[1]] = thumb
-            label = f"{c.t:8.1f}s yaw{c.yaw:+.0f}"
+            label = f"{c.t:5.1f}s {yaw_bucket(c)}"
             cv2.putText(sheet, label, (x0 + 2, y0 + cell + 20), cv2.FONT_HERSHEY_SIMPLEX,
                         0.45, (30, 30, 30), 1, cv2.LINE_AA)
         write_image(self.cfg.out / "sheet.jpg", sheet, 90)

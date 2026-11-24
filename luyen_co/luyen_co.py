@@ -94,7 +94,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--anchor-th", type=float, default=0.60,
                    help="cosine tối thiểu với neo ngoại hình của video khi nhận frame quay lưng")
     g.add_argument("--select", choices=["coverage", "diversity"], default="coverage",
-                   help="coverage = đảm bảo đủ góc (mặt trái/phải/thẳng + sau lưng); "
+                   help="coverage = đảm bảo đủ góc (thẳng/trái/phải/ngửa/cúi/nghiêng/"
+                        "sau lưng/không rõ mặt); "
                         "diversity = chỉ giữ frame khác nhau quá ngưỡng --min-yaw/--min-pose")
     g.add_argument("--per-bucket", type=int, default=1,
                    help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage")
@@ -109,6 +110,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--allow-body-only", action="store_true",
                    help="nhận cả track không có frame nào khớp mặt, chỉ dựa vào toàn thân "
                         "(dễ nhầm người mặc giống; dùng khi CCTV không bao giờ thấy mặt)")
+    g.add_argument("--body-only-low", type=float, default=0.45,
+                   help="sàn cosine toàn thân khi nhận chỉ bằng body; ảnh quay lưng so với "
+                        "ảnh tham chiếu nhìn thẳng thường chỉ 0.55–0.65")
+    g.add_argument("--body-only-rel", type=float, default=0.85,
+                   help="khi KHÔNG track nào khớp mặt: giữ track có body_sim ≥ "
+                        "rel × track tốt nhất (0.85 = giữ các track ngang mức tốt nhất)")
 
     g = p.add_argument_group("hiệu năng")
     g.add_argument("--device", choices=["auto", "gpu", "cpu"], default="auto")
@@ -159,6 +166,7 @@ def main(argv: list[str] | None = None) -> int:
         select=args.select, per_bucket=args.per_bucket,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
+        body_only_low=args.body_only_low, body_only_rel=args.body_only_rel,
         skip_ref=not args.include_ref,
         imgsz=args.imgsz, tiles=args.tiles, conf=args.conf, face_conf=args.face_conf,
         max_frames=args.max_frames, start=args.start,

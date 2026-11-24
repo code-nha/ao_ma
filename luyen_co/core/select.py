@@ -8,6 +8,7 @@ Pose toàn thân dùng 17 keypoint COCO chuẩn hoá theo bbox.
 from __future__ import annotations
 
 import math
+from collections import Counter
 
 import numpy as np
 
@@ -135,6 +136,34 @@ def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
     return kept
 
 
+def keep_best_body_tracks(cands: list[Candidate], low: float = 0.45,
+                          rel: float = 0.85) -> tuple[list[Candidate], float]:
+    """Chế độ chỉ-toàn-thân: giữ những track khớp ngoại hình tốt nhất.
+
+    Dùng khi **không có track nào khớp mặt** (clip chỉ quay từ sau, CCTV xa…).
+    Lúc đó không có mốc tuyệt đối nào để so, nên so tương đối: track có trung vị
+    `body_sim` cao nhất là người mục tiêu, các track gần mức đó được giữ.
+
+    Vì sao cần: ảnh quay lưng so với ảnh tham chiếu nhìn thẳng chỉ đạt cosine
+    CLIP ~0.55–0.65 (đo trên v1.mp4), nên một ngưỡng tuyệt đối 0.72 đá sạch
+    ảnh lưng — đúng lỗi "không ra ảnh sau lưng nào".
+
+    Trả (danh sách giữ lại, ngưỡng thực dùng).
+    """
+    if not cands:
+        return [], 0.0
+    from collections import defaultdict
+
+    by_track: dict[tuple[str, int], list[float]] = defaultdict(list)
+    for c in cands:
+        by_track[(c.source, c.track_id)].append(c.body_sim)
+    med = {k: float(np.median(v)) for k, v in by_track.items()}
+    th = max(float(low), float(rel) * max(med.values()))
+    kept = [c for c in cands if med[(c.source, c.track_id)] >= th]
+    kept.sort(key=lambda c: (c.source, c.t))
+    return kept, th
+
+
 YAW_BUCKETS = [
     ("trái nhiều", -180, -25),
     ("trái", -25, -10),
@@ -144,36 +173,109 @@ YAW_BUCKETS = [
 ]
 
 
+FACE_VIS_BACK = 0.60   # TB conf (mũi + 2 mắt) dưới mức này = phần mặt bị khuất
+EAR_VIS_MIN = 0.25     # tai vẫn thấy → keypoint đầu là thật, không phải đoán bừa
+SHOULDER_VIS = 0.45    # vai phải đủ rõ mới dám kết luận về hướng thân
+SIDE_SPAN = 0.22       # vai/hông hẹp hơn mức này (theo bề rộng bbox) = thân nhìn ngang
+
+
+def face_vis(c: Candidate) -> float:
+    """Độ "nhìn thấy mặt" theo keypoint: TB conf của mũi + 2 mắt (−1 nếu thiếu).
+
+    Dùng cả 3 điểm thay vì riêng mũi: khi người quay lưng YOLO vẫn đoán ra mũi
+    với conf lên tới 0.6 (đo trên v1.mp4: 0.58 ở frame đang xoay), nhưng **mắt**
+    thì sụp theo — nên lấy trung bình 3 điểm ổn định hơn hẳn.
+    """
+    kp = c.kpts
+    if kp is None or len(kp) < 7:
+        return -1.0
+    return float((kp[0, 2] + kp[1, 2] + kp[2, 2]) / 3.0)
+
+
 def _facing_away(c: Candidate) -> bool:
-    """Đoán người đang quay lưng: không thấy mũi nhưng thấy vai."""
+    """Đoán người đang quay lưng: phần mặt khuất nhưng vai + tai vẫn rõ.
+
+    Đo trên v1.mp4 (catwalk), phân bố rất tách:
+      - quay lưng:  mũi 0.19–0.58, mắt 0.08–0.36 → face_vis 0.18–0.43
+      - nhìn thẳng: mũi 0.92–0.99, mắt 0.73–0.95 → face_vis 0.73–0.97
+    Ngưỡng 0.60 nằm giữa khoảng trống đó, nên cùng một đoạn đi bộ quay lưng
+    không còn bị lật nhãn khi conf mũi nhảy (lỗi cũ: chỉ so mũi < 0.5).
+    """
     if c.kpts is None or len(c.kpts) < 7:
         return False
-    nose = float(c.kpts[0, 2])
-    shoulders = max(float(c.kpts[5, 2]), float(c.kpts[6, 2]))
-    return nose < 0.25 and shoulders > 0.45
+    kp = c.kpts
+    shoulders = max(float(kp[5, 2]), float(kp[6, 2]))
+    ears = float((kp[3, 2] + kp[4, 2]) / 2.0)
+    vis = face_vis(c)
+    if vis < 0:
+        return False
+    return vis < FACE_VIS_BACK and shoulders > SHOULDER_VIS and ears >= EAR_VIS_MIN
+
+
+def _side_body(c: Candidate) -> bool:
+    """Thân nhìn ngang: vai và hông chồng nhau theo phương ngang.
+
+    Dùng khi không có mặt (người ở xa): người nhìn thẳng/quay lưng có vai mở
+    rộng, còn nhìn ngang thì vai/hông trái-phải gần như trùng toạ độ x.
+    """
+    if c.kpts is None or len(c.kpts) < 13:
+        return False
+    kp = c.kpts
+    if max(float(kp[5, 2]), float(kp[6, 2])) < 0.45:
+        return False
+    x1, _, x2, _ = (float(v) for v in c.box)
+    w = max(1.0, x2 - x1)
+    span = abs(float(kp[5, 0]) - float(kp[6, 0])) / w
+    hip = abs(float(kp[11, 0]) - float(kp[12, 0])) / w
+    return max(span, hip) < SIDE_SPAN
 
 
 def yaw_bucket(c: Candidate) -> str:
-    """Nhóm góc: quay lưng/không rõ mặt → 'sau lưng'; còn lại theo yaw/pitch."""
-    if _facing_away(c) or not c.has_face or c.face_sim < 0.35:
+    """Nhóm góc: sau lưng / nghiêng / không rõ mặt, còn lại theo yaw/pitch.
+
+    Trước đây mọi frame không thấy mặt (kể cả người ở xa, mặt quá nhỏ) đều bị
+    gom vào "sau lưng", nên ảnh quay lưng thật bị ảnh nhìn thẳng ở xa "đè" mất.
+    Giờ tách 3 nhóm riêng: mũi khuất → sau lưng, thân hẹp → nghiêng, còn lại
+    → không rõ mặt.
+    """
+    if _facing_away(c):
         return "sau lưng"
-    if c.pitch > 15:          # camera/đầu ngửa lên
-        return "ngửa"
-    if c.pitch < -15:         # cúi xuống
-        return "cúi"
-    for label, lo, hi in YAW_BUCKETS:
-        if lo <= c.yaw < hi:
-            return label
-    return "thẳng"
+    if c.has_face:
+        if abs(c.yaw) >= 70:  # nghiêng gần hẳn: 5 điểm không còn đo được yaw
+            return "nghiêng"
+        if c.pitch > 15:      # camera/đầu ngửa lên
+            return "ngửa"
+        if c.pitch < -15:     # cúi xuống
+            return "cúi"
+        for label, lo, hi in YAW_BUCKETS:
+            if lo <= c.yaw < hi:
+                return label
+        return "thẳng"
+    if _side_body(c):
+        return "nghiêng"
+    return "không rõ mặt"
+
+
+def _rank_key(c: Candidate) -> tuple[float, int, float]:
+    """Điểm xếp hạng trong cùng một nhóm góc: (điểm mặt, người cao, độ nét).
+
+    Nhóm "sau lưng" / "nghiêng" / "không rõ mặt" không có điểm mặt để so, nên
+    xếp theo kích thước người rồi độ nét. Nhờ vậy frame quay lưng ở gần (người
+    to, rõ) thắng frame nhìn thẳng ở xa — lỗi cũ khiến ảnh sau lưng bị loại.
+    """
+    if c.has_face and yaw_bucket(c) not in ("sau lưng", "nghiêng", "không rõ mặt"):
+        return (c.face_sim, c.person_h, c.blur)
+    return (-1.0, c.person_h, c.blur)
 
 
 def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
                   bucket_dup: float = 0.93) -> list[Candidate]:
     """Chọn ảnh theo độ phủ góc: mỗi nhóm giữ tối đa `per_bucket` ảnh tốt nhất.
 
-    Khác với `diverse_gate` (bỏ dần theo ngưỡng), cách này đảm bảo **có đủ** mặt
-    trái/phải/thẳng và cả ảnh sau lưng (frame không thấy mặt nhưng khớp ngoại
-    hình qua neo của video) — đúng nhu cầu đối chiếu danh tính.
+    Nhóm góc gồm: thẳng / trái / phải / trái nhiều / phải nhiều / ngửa / cúi /
+    nghiêng / sau lưng / không rõ mặt. Nhờ tách "sau lưng" và "nghiêng" khỏi
+    "không rõ mặt", mỗi nhóm luôn có suất riêng — ảnh quay lưng thật không còn
+    bị ảnh người ở xa (mặt không detect được) chiếm mất.
 
     Trong cùng một nhóm còn loại tiếp ảnh gần như trùng nhau (`bucket_dup`) để
     không ra 5 tấm cùng một tư thế.
@@ -187,8 +289,7 @@ def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
         # 1) giữ ảnh chất lượng nhất, 2) các ảnh sau chọn theo mức KHÁC BIỆT với
         # ảnh đã giữ (không phải theo chất lượng) → bắt được cả frame quay lưng
         # xa/nhỏ nếu nó là tư thế khác với ảnh đầu
-        items = sorted(items, key=lambda c: (c.face_sim if c.has_face else c.body_sim,
-                                             c.person_h, c.blur), reverse=True)
+        items = sorted(items, key=_rank_key, reverse=True)
         chosen: list[Candidate] = []
         while items and len(chosen) < per_bucket:
             if not chosen:
@@ -211,17 +312,24 @@ def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
 
 
 def drop_similar(cands: list[Candidate], th: float = 0.93) -> list[Candidate]:
-    """Loại lần cuối: ảnh quá giống một ảnh đã giữ trong cùng nguồn (cosine ≥ th)."""
-    mat: np.ndarray | None = None
+    """Loại lần cuối: ảnh quá giống một ảnh đã giữ trong CÙNG nguồn & cùng nhóm góc.
+
+    Chỉ so trong cùng nhóm để không xoá mất ảnh quay lưng/nghiêng chỉ vì nó
+    giống ảnh nhìn thẳng (cùng bộ đồ, cùng dáng đứng) — nếu không, bước lọc cuối
+    này sẽ phá đúng cái "đủ góc" mà coverage_pick vừa chọn.
+    """
+    mats: dict[tuple[str, str], np.ndarray] = {}
     kept: list[Candidate] = []
     for c in sorted(cands, key=lambda x: (x.source, x.t)):
         if c.clip_vec is None:
             kept.append(c)
             continue
+        key = (c.source, yaw_bucket(c))
+        mat = mats.get(key)
         if mat is not None and float((mat @ c.clip_vec).max()) >= th:
             continue
         kept.append(c)
-        mat = c.clip_vec[None].copy() if mat is None else np.vstack([mat, c.clip_vec[None]])
+        mats[key] = c.clip_vec[None].copy() if mat is None else np.vstack([mat, c.clip_vec[None]])
     return kept
 
 
@@ -244,11 +352,15 @@ def pick_diverse(cands: list[Candidate], n: int, pose_weight: float = 1.0,
     return [cands[i] for i in chosen]
 
 
+BUCKET_ORDER = ["trái nhiều", "trái", "thẳng", "phải", "phải nhiều",
+                "ngửa", "cúi", "nghiêng", "sau lưng", "không rõ mặt"]
+
+
 def yaw_histogram(cands: list[Candidate]) -> list[tuple[str, int]]:
-    """Đếm số frame theo 6 khoảng góc đầu, để báo cáo độ phủ góc."""
-    bins = [(-91, -60, "trái nhiều"), (-60, -30, "trái"), (-30, -12, "hơi trái"),
-            (-12, 12, "thẳng"), (12, 30, "hơi phải"), (30, 60, "phải"), (60, 91, "phải nhiều")]
-    counts = []
-    for lo, hi, label in bins:
-        counts.append((label, sum(1 for c in cands if lo <= c.yaw < hi)))
-    return counts
+    """Đếm số ảnh theo từng nhóm góc (kể cả sau lưng / nghiêng / không rõ mặt).
+
+    Trước đây chỉ đếm theo yaw nên frame quay lưng (không có mặt, yaw = 0) bị
+    báo nhầm thành "thẳng"; giờ dùng đúng nhóm mà coverage_pick dùng.
+    """
+    counts = Counter(yaw_bucket(c) for c in cands)
+    return [(label, counts.get(label, 0)) for label in BUCKET_ORDER]
