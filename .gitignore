@@ -16,3 +16,4 @@ __pycache__/
 # model ONNX (tự tải) + kết quả chạy
 luyen_co/models/
 luyen_co/out*/
+luyen_co/downloads/

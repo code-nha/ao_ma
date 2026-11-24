@@ -200,14 +200,33 @@ Thực tế ~0,05 s/frame khi có 1–2 người (đã gồm giải mã video) �
   bộ nhớ.
 - Ảnh crop giữ nguyên độ phân giải gốc của nguồn, không upscale.
 
+## Kiếm dữ liệu test từ web
+
+`download_ui.py` là web UI nhỏ để tải clip từ YouTube / TikTok / Facebook /
+Instagram / trang web có `<video>` về máy:
+
+```powershell
+uv pip install --python luyen_co\.venv\Scripts\python.exe -r luyen_co\requirements-ui.txt
+python luyen_co\download_ui.py --out luyen_co\downloads      # mở http://127.0.0.1:8765
+```
+
+- dán nhiều link một lúc (mỗi dòng một link); chọn cookie trình duyệt khi video
+  cần đăng nhập (Facebook/Instagram thường cần)
+- tải bằng yt-dlp (`bv*[height<=1080]+ba`), trang lạ thì tự bóc link
+  `.mp4 / .m3u8` trong HTML và fallback sang ffmpeg cho HLS
+- xem tiến độ / tốc độ / lỗi ngay trên trang, có nút mở thư mục
+- xong thì trỏ pipeline vào chính folder đó:
+  `python luyen_co.py --input luyen_co\downloads --ref anh.jpg`
+
 ## Cấu trúc
 
 ```
 luyen_co/
   luyen_co.py        CLI
+  download_ui.py     web UI tải video test từ URL (yt-dlp)
   core/
     onnx_models.py   tải model + chọn execution provider
-    yolo_pose.py     phát hiện người + keypoint
+    yolo_pose.py     phát hiện người + keypoint (có --tiles)
     scrfd.py         phát hiện mặt
     arcface.py       embedding mặt
     reid.py          embedding toàn thân (CLIP)
@@ -215,5 +234,7 @@ luyen_co/
     frames.py        đọc frame video / ảnh
     select.py        góc đầu, pose, lọc trùng, chọn đa dạng
     pipeline.py      ghép các bước + xuất kết quả
+  tests/             pytest cho phần logic thuần
   models/            model ONNX (tự tải, gitignore)
+  downloads/         video tải từ web UI (gitignore)
 ```

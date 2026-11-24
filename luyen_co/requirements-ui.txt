@@ -1,0 +1,2 @@
+# chỉ cần cho download_ui.py (tải video từ YouTube/TikTok/Facebook/Instagram)
+yt-dlp>=2024.10
