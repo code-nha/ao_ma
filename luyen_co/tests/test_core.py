@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from core.select import (coverage_pick, dedupe, diverse_gate, drop_similar, face_vis,
+from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_similar, face_vis,
                          head_pose, keep_best_body_tracks, pick_diverse, pose_vector,
                          yaw_bucket, yaw_histogram)
 from core.tracker import IoUTracker
@@ -18,13 +18,13 @@ from core.utils import expand_box, letterbox, nms, others_area_fraction
 
 
 def make_cand(t=0.0, track=1, clip=None, source="a.mp4", yaw=0.0, blur=100.0, h=200,
-              body=0.85):
+              body=0.85, pose=None, face=0.9):
     return Candidate(
         source=source, kind="video", t=t, frame_idx=int(t * 10), track_id=track,
         box=np.array([10, 20, 110, 220], np.float32), person_score=0.9,
-        face_sim=0.9, body_sim=body, yaw=yaw, pitch=0.0, blur=blur, person_h=h,
+        face_sim=face, body_sim=body, yaw=yaw, pitch=0.0, blur=blur, person_h=h,
         jpeg=b"x", clip_vec=(np.array(clip, np.float32) if clip is not None else None),
-        pose_vec=np.zeros(34, np.float32),
+        pose_vec=(np.zeros(34, np.float32) if pose is None else np.array(pose, np.float32)),
     )
 
 
@@ -252,6 +252,57 @@ def test_keep_best_body_tracks_ton_trong_san():
     kept, th = keep_best_body_tracks(cands, low=0.48, rel=0.85)
     assert th == 0.48                              # 0.85 × 0.50 = 0.425 < sàn
     assert [c.track_id for c in kept] == [1]
+
+
+def _pose(base=0.5, delta=0.0):
+    return np.full(34, base + delta, np.float32)
+
+
+def test_distinct_pose_pick_gop_cum_chuoi():
+    # Chuỗi frame na ná nhau: A≈B (15°), B≈C (13°) nhưng A cách C 28° → lọc tuần
+    # tự sẽ giữ A và C; gom cụm thì chỉ còn 1 ảnh.
+    a = make_cand(t=0.0, yaw=0.0, pose=_pose())
+    b = make_cand(t=1.0, yaw=15.0, pose=_pose(delta=0.01))
+    c = make_cand(t=2.0, yaw=28.0, pose=_pose(delta=0.02))
+    kept = distinct_pose_pick([a, b, c], min_yaw=25.0, min_pose=0.08)
+    assert len(kept) == 1
+
+
+def test_distinct_pose_pick_giu_anh_chat_luong_nhat():
+    # Cùng cụm: ảnh mặt nét hơn (face_sim cao) phải được giữ, không phải ảnh đầu.
+    low = make_cand(t=0.0, yaw=0.0, pose=_pose(), face=0.42)
+    high = make_cand(t=1.0, yaw=5.0, pose=_pose(delta=0.01), face=0.71)
+    kept = distinct_pose_pick([low, high], min_yaw=25.0, min_pose=0.08)
+    assert kept == [high]
+
+
+def test_distinct_pose_pick_giu_khi_khac_goc_hoac_khac_dang():
+    same_pose_other_angle = make_cand(t=1.0, yaw=60.0, pose=_pose())
+    same_angle_other_pose = make_cand(t=2.0, yaw=0.0, pose=_pose(delta=0.3))
+    base = make_cand(t=0.0, yaw=0.0, pose=_pose())
+    kept = distinct_pose_pick([base, same_pose_other_angle, same_angle_other_pose],
+                              min_yaw=25.0, min_pose=0.08)
+    assert len(kept) == 3
+
+
+def test_distinct_pose_pick_khong_gop_khac_nguon():
+    a = make_cand(t=0.0, source="a.mp4", pose=_pose())
+    b = make_cand(t=0.0, source="b.mp4", pose=_pose())
+    kept = distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)
+    assert len(kept) == 2
+
+
+def test_yaw_dist_bo_pitch_khi_goc_cuc_tri():
+    # |yaw| ≥ 70: pitch là nhiễu (bị kẹp ±89) nên không được làm 2 frame cùng
+    # dáng dựa tường thành "khác góc".
+    a = make_cand(t=0.0, yaw=-90.0, pose=_pose())
+    b = make_cand(t=1.0, yaw=-90.0, pose=_pose(delta=0.01))
+    a.pitch, b.pitch = 89.0, 48.0
+    a.kpts = make_kpts(nose=0.95, span=0.05)
+    b.kpts = make_kpts(nose=0.95, span=0.05)
+    assert yaw_bucket(a) == yaw_bucket(b) == "nghiêng"
+    kept = distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)
+    assert len(kept) == 1
 
 
 def test_coverage_giu_ca_anh_sau_lung_lan_nguoi_o_xa():

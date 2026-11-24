@@ -108,6 +108,38 @@ def dedupe(cands: list[Candidate], dup_sim: float = 0.97, min_gap: float = 0.35)
     return kept
 
 
+def _yaw_dist(a: Candidate, b: Candidate) -> float:
+    """Khoảng cách góc đầu (độ) giữa 2 ảnh.
+
+    Bỏ pitch khi |yaw| ≥ 70°: ở góc đó 5 landmark không đo được nữa (yaw bị kẹp
+    ±90, pitch nhảy loạn tới ±89), nên hiệu pitch chỉ là nhiễu — nếu vẫn tính
+    thì hai frame cùng một dáng dựa tường bị coi là "khác góc" oan.
+    """
+    dy = float(a.yaw - b.yaw)
+    if abs(a.yaw) >= 70 or abs(b.yaw) >= 70:
+        return abs(dy)
+    return float(math.hypot(dy, a.pitch - b.pitch))
+
+
+def _pose_dist(a: Candidate, b: Candidate) -> float:
+    """Khoảng cách dáng: trung bình |chênh| trên 34 chiều keypoint chuẩn hoá."""
+    if a.pose_vec is None or b.pose_vec is None:
+        return 9.9
+    return float(np.mean(np.abs(a.pose_vec - b.pose_vec)))
+
+
+def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float) -> bool:
+    """Cùng một tư thế: góc camera na ná VÀ dáng gần như nhau.
+
+    Chỉ cần MỘT trong hai khác là ảnh đáng giữ (khác góc thì đổi hướng nhìn,
+    khác dáng thì đổi tư thế). Dùng bucket bằng nhau để bắt trường hợp yaw/pitch
+    lệch ít nhưng rơi khác nhóm do landmark nhiễu.
+    """
+    if _pose_dist(a, b) >= min_pose:
+        return False
+    return yaw_bucket(a) == yaw_bucket(b) or _yaw_dist(a, b) < min_yaw
+
+
 def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
                  min_pose: float = 0.08) -> list[Candidate]:
     """Chỉ giữ frame khác biệt đủ rõ so với các frame đã giữ (cùng nguồn).
@@ -120,19 +152,69 @@ def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
         return list(cands)
     kept: list[Candidate] = []
     for c in sorted(cands, key=lambda x: (x.source, x.t)):
-        drop = False
-        for k in kept:
-            if k.source != c.source:
-                continue
-            yaw_d = math.hypot(c.yaw - k.yaw, c.pitch - k.pitch)
-            pose_d = 1.0
-            if c.pose_vec is not None and k.pose_vec is not None:
-                pose_d = float(np.mean(np.abs(c.pose_vec - k.pose_vec)))
-            if yaw_d < min_yaw and pose_d < min_pose:
-                drop = True
-                break
-        if not drop:
-            kept.append(c)
+        if any(k.source == c.source and _same_pose(c, k, min_yaw, min_pose) for k in kept):
+            continue
+        kept.append(c)
+    return kept
+
+
+def distinct_pose_pick(cands: list[Candidate], min_yaw: float = 25.0,
+                       min_pose: float = 0.08) -> list[Candidate]:
+    """Mỗi tư thế (góc camera + dáng) chỉ giữ **một** ảnh tốt nhất.
+
+    Khác `diverse_gate` ở 2 điểm, để không còn "pose lặp":
+
+    1. Gom **cụm** bằng union-find thay vì so tuần tự. Một loạt frame na ná nhau
+       (A≈B, B≈C nhưng A xa C) vẫn vào cùng một cụm; lọc tuần tự sẽ giữ cả A và C.
+    2. Giữ ảnh **chất lượng nhất** trong cụm (theo `_rank_key`: điểm mặt, kích
+       thước người, độ nét), không phải ảnh đến trước.
+
+    Vì sao cần: `coverage_pick` chỉ giới hạn 1 ảnh cho mỗi *(nguồn, cảnh, nhóm
+    góc)*, nên 5 frame catwalk liên tiếp với đầu quay ±20° vẫn vào 5 nhóm khác
+    nhau dù dáng gần như y hệt (đo trên obj_1: pose cách nhau 0.019–0.058, tức
+    là trùng tư thế) — đúng lỗi "pose lặp quá nhiều".
+    """
+    if min_yaw <= 0 and min_pose <= 0:
+        return list(cands)
+    no_pose = [c for c in cands if c.pose_vec is None]
+    by_source: dict[str, list[Candidate]] = {}
+    for c in cands:
+        if c.pose_vec is not None:
+            by_source.setdefault(c.source, []).append(c)
+
+    kept: list[Candidate] = []
+    for items in by_source.values():
+        mat = np.stack([np.asarray(c.pose_vec, dtype=np.float32) for c in items])
+        parent = list(range(len(items)))
+
+        def find(i: int) -> int:
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+
+        for i in range(len(items)):
+            # khoảng cách pose tới mọi frame còn lại, tính 1 lần bằng numpy
+            close = np.nonzero(np.abs(mat - mat[i]).mean(axis=1) < min_pose)[0]
+            for j in close:
+                if j <= i:
+                    continue
+                a, b = items[i], items[int(j)]
+                if not _same_pose(a, b, min_yaw, min_pose):
+                    continue
+                ri, rj = find(i), find(int(j))
+                if ri != rj:
+                    parent[rj] = ri
+
+        best: dict[int, Candidate] = {}
+        for i, c in enumerate(items):
+            r = find(i)
+            if r not in best or _rank_key(c) > _rank_key(best[r]):
+                best[r] = c
+        kept.extend(best.values())
+
+    kept.extend(no_pose)
+    kept.sort(key=lambda c: (c.source, c.t))
     return kept
 
 

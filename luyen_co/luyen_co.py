@@ -83,11 +83,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--save", choices=["full", "crop", "both"], default="full",
                    help="full = giữ nguyên frame (có bối cảnh, dễ truy ra camera nào); "
                         "crop = chỉ ảnh quanh người; both = cả hai")
-    g.add_argument("--min-yaw", type=float, default=20.0,
-                   help="chênh góc đầu tối thiểu (độ) để giữ thêm một ảnh")
-    g.add_argument("--min-pose", type=float, default=0.10,
-                   help="chênh pose (keypoint chuẩn hoá, 0–1) tối thiểu để giữ thêm một ảnh; "
-                        "đặt 0 để tắt lọc đa dạng")
+    g.add_argument("--min-yaw", type=float, default=25.0,
+                   help="hai ảnh lệch góc camera dưới mức này (độ) thì coi là cùng góc; "
+                        "kết hợp với --min-pose để loại ảnh trùng tư thế")
+    g.add_argument("--min-pose", type=float, default=0.08,
+                   help="hai ảnh lệch pose dưới mức này (keypoint chuẩn hoá, 0–1) thì coi là "
+                        "cùng dáng; cùng góc VÀ cùng dáng → chỉ giữ ảnh tốt nhất. "
+                        "Đặt 0 để tắt")
     g.add_argument("--confirm-window", type=float, default=0.0,
                    help="giây: giới hạn khoảng cách tới mốc đã khớp mặt khi nhận frame quay lưng "
                         "(0 = không giới hạn, dựa vào neo ngoại hình của cả video)")
