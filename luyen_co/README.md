@@ -85,6 +85,7 @@ Tham số đáng chú ý:
 | `--dup-sim` | 0.97 | cosine coi là trùng hẳn |
 | `--min-gap` | 0.35 | giây tối thiểu giữa 2 ảnh cùng track |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
+| `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |
 | `--clean` | tắt | xoá ảnh cũ trong `<out>/crops` trước khi ghi kết quả mới |
 | `--include-ref` | tắt | vẫn xử lý ảnh tham chiếu nếu nó nằm trong folder quét |
@@ -143,6 +144,22 @@ chính frame phim làm ảnh tham chiếu:
 
 Tốc độ đo trên clip đông người: ~0,05 s/frame khi 1–2 người, ~0,11 s/frame khi
 3–7 người (RTX 2070 Max-Q, DirectML, 1280×720).
+
+### Người rất nhỏ trong khung lớn (`--tiles`)
+
+Khung 4K thu cả frame về 640 px thì người 1–2 m chỉ còn 30–50 px, YOLO bỏ sót.
+`--tiles N` chia frame thành lưới N×N (chồng lấn 20%) để giữ chi tiết. Đo trên
+khung 3840×2160 với người dán ở nhiều kích thước:
+
+| Người cao | tiles=1 | tiles=2 | tiles=4 |
+|---|---|---|---|
+| 110 px | 0 | 0 | **1** |
+| 160 px | 0 | **1** | **1** |
+| 220 px | 0 | **1** | **1** |
+
+Đổi lại chậm hơn N² lần. Chỉ dùng khi khung ≥ 1080p và người nhỏ; với video
+480p–720p người thường đã đủ to, bật tiles sẽ cắt người qua nhiều ô và làm
+detection tệ đi.
 
 Có test cho phần logic thuần (không cần model/GPU):
 

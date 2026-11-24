@@ -90,6 +90,34 @@ def nms(boxes: np.ndarray, scores: np.ndarray, iou_th: float) -> np.ndarray:
     return np.asarray(keep, dtype=np.int64)
 
 
+def nms_containment(boxes: np.ndarray, scores: np.ndarray, iou_th: float = 0.5,
+                    contain_th: float = 0.8) -> np.ndarray:
+    """NMS + gộp box bị box khác "nuốt" phần lớn.
+
+    Khi chạy theo tile, cùng một người có thể ra nhiều box lệch nhau (đầu/thân),
+    IoU thấp nên NMS thường không gộp; box nhỏ nằm gần trọn trong box lớn thì bỏ.
+    """
+    if len(boxes) == 0:
+        return np.empty((0,), dtype=np.int64)
+    order = np.argsort(-scores)
+    keep: list[int] = []
+    while order.size:
+        i = int(order[0])
+        keep.append(i)
+        if order.size == 1:
+            break
+        rest = order[1:]
+        ious = iou_matrix(boxes[i:i + 1], boxes[rest])[0]
+        # phần diện tích box còn lại nằm trong box đang giữ
+        inter = ious * (np.clip(boxes[rest, 2] - boxes[rest, 0], 0, None)
+                        * np.clip(boxes[rest, 3] - boxes[rest, 1], 0, None))
+        area_rest = np.clip(boxes[rest, 2] - boxes[rest, 0], 0, None) * \
+            np.clip(boxes[rest, 3] - boxes[rest, 1], 0, None)
+        contained = inter / np.maximum(area_rest, 1e-9)
+        order = rest[(ious <= iou_th) & (contained <= contain_th)]
+    return np.asarray(keep, dtype=np.int64)
+
+
 def clip_box(box: np.ndarray, w: int, h: int) -> np.ndarray:
     return np.array([max(0.0, box[0]), max(0.0, box[1]),
                      min(float(w - 1), box[2]), min(float(h - 1), box[3])], dtype=np.float32)

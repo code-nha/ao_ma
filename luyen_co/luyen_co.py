@@ -88,6 +88,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g = p.add_argument_group("hiệu năng")
     g.add_argument("--device", choices=["auto", "gpu", "cpu"], default="auto")
     g.add_argument("--imgsz", type=int, default=640, help="kích thước input YOLO")
+    g.add_argument("--tiles", type=int, default=1,
+                   help="chia frame thành lưới tiles×tiles trước khi detect (1 = tắt); "
+                        "dùng 2 cho CCTV góc rộng/4K có người rất nhỏ, chậm hơn ~4 lần")
     g.add_argument("--conf", type=float, default=0.35, help="ngưỡng tin cậy phát hiện người")
     g.add_argument("--face-conf", type=float, default=0.5, help="ngưỡng tin cậy phát hiện mặt")
     g.add_argument("--sheet", type=int, default=60, help="số ảnh trong sheet.jpg (0 = không xuất)")
@@ -114,7 +117,7 @@ def main(argv: list[str] | None = None) -> int:
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
         skip_ref=not args.include_ref,
-        imgsz=args.imgsz, conf=args.conf, face_conf=args.face_conf,
+        imgsz=args.imgsz, tiles=args.tiles, conf=args.conf, face_conf=args.face_conf,
         max_frames=args.max_frames, start=args.start,
         end=args.end if args.end > 0 else None, sheet=args.sheet,
         clean=args.clean,

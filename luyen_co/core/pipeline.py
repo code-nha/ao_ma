@@ -58,6 +58,7 @@ class Config:
     limit: int = 0
     device: str = "auto"
     imgsz: int = 640
+    tiles: int = 1
     conf: float = 0.35
     face_conf: float = 0.5
     max_frames: int = 0
@@ -102,7 +103,8 @@ class Pipeline:
     def __init__(self, cfg: Config):
         self.cfg = cfg
         ensure_models()
-        self.detector = PersonDetector(POSE_MODEL, cfg.device, conf=cfg.conf, imgsz=cfg.imgsz)
+        self.detector = PersonDetector(POSE_MODEL, cfg.device, conf=cfg.conf,
+                                       imgsz=cfg.imgsz, tiles=cfg.tiles)
         self.face_det = FaceDetector(device=cfg.device, conf=cfg.face_conf)
         self.face_emb = FaceEmbedder(device=cfg.device)
         self.body_emb = BodyEmbedder(device=cfg.device)
@@ -315,6 +317,11 @@ class Pipeline:
             if cfg.max_frames and frame_idx > cfg.max_frames:
                 break
             self.stats.frames += 1
+            if frame_idx == 1 and cfg.tiles > 1:
+                fh, fw = frame.shape[:2]
+                if min(fh, fw) / cfg.tiles < 360:
+                    log(f"  cảnh báo: --tiles {cfg.tiles} quá lớn so với khung {fw}×{fh} — "
+                        f"người có thể bị cắt qua ô, nên dùng tiles nhỏ hơn")
 
             # đổi cảnh → chốt track cũ, tránh gộp 2 người khác nhau vào 1 track
             hist = self._hist(frame)

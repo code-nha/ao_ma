@@ -105,6 +105,27 @@ def test_tracker_keeps_id_and_expires():
     assert tr.update(box) == [2]
 
 
+def test_tile_slices_cover_frame():
+    from core.yolo_pose import PersonDetector
+
+    det = PersonDetector.__new__(PersonDetector)     # không load model
+    det.tiles = 3
+    slices = det._tile_slices(1080, 1920)
+    assert len(slices) == 9
+    for y1, y2, x1, x2 in slices:
+        assert 0 <= y1 < y2 <= 1080
+        assert 0 <= x1 < x2 <= 1920
+    # phủ hết 4 góc
+    corners = {(0, 0), (0, 1920), (1080, 0), (1080, 1920)}
+    covered = set()
+    for y1, y2, x1, x2 in slices:
+        for cy in (y1, y2):
+            for cx in (x1, x2):
+                if (cy, cx) in corners:
+                    covered.add((cy, cx))
+    assert covered == corners
+
+
 def test_pick_diverse_returns_distinct():
     import math
 
