@@ -207,3 +207,39 @@ không gộp cặp khác zoom `86↔87`.
    chốt dataset.
 4. **Ngưỡng `copy_min_inl = 45`** giữ nguyên: cặp 45-inlier (`CrxeWeKBXtQ` 13.5 ↔ 21.0) vẫn
    nằm trong output. Chỉ nên đổi sau khi có bộ nhãn.
+
+## 7. Lượt chạy với 32 video (13 video mới bổ sung, 2026-11-25)
+
+Đầu vào tăng 21 → **32 video** (2650 frame, 259 track). Phát hiện thêm một lỗi cấu trúc:
+
+### Xuất full frame ⇒ hai track trong cùng một frame cho ra hai file giống nhau
+`--save` mặc định `full` nên file ghi ra là **cả khung hình**, không phụ thuộc `box`.
+Nhưng `dedupe` chỉ so `clip_vec` của **crop người** (khác nhau giữa hai track) và
+`min_gap 0.35 s` không bắt (cùng `t`). Kết quả: **2 frame bị xuất 2 lần, hai file
+byte-identical** — `CxzjgbihCyq` frame 437 (t=218.0, track 1 & 2), `Instagram 1750172524`
+frame 36 (t=17.5, track 2 & 3). SHA256 khớp từng byte.
+
+**Sửa**: `select.dedupe(..., frame_dedupe=...)` — chỉ bật khi `save in ("full","both")`;
+giữ **một** bản xếp hạng cao nhất cho mỗi `(source, frame)`. Không dùng ngưỡng nào
+(đây là trùng tuyệt đối). Với `--save crop` thì **không** bật, vì hai box khác nhau là
+hai crop khác nhau, đều dùng được.
+
+### Kết quả lượt này
+
+| Tiêu chí | Lượt 99 ảnh (21 video) | Lượt này (32 video) |
+|---|---|---|
+| số ảnh cuối | 99 → 106 (sau fix) | **168** |
+| frame bị xuất 2 lần (byte-identical) | có 1 cặp | **0** |
+| pHash cặp gần trùng (< 8 bit) | 3 | **1** |
+| cụm `v1.mp4` 34.0–36.5 s | 4 | **1** |
+| `crops/` vs `metadata.jsonl` | 110 vs 99 (11 rác) | **168 vs 168** |
+| cặp bị bỏ (`copy_pairs.txt`) | 11 | 34 (22 xuyên nguồn) |
+
+Cặp 22 xuyên nguồn phần lớn là **cùng một tấm** thật, nhiều cặp 512 inlier (kịch trần
+1024/2) — đúng loại lỗi "re-up cùng sự kiện" mà `copy_veto` sinh ra để bắt. Còn
+**28/32 video** đóng góp ảnh; 4 video không có frame nào nhận (không khớp người/mặt).
+
+### Còn lại
+- `v1.mp4` **22.5 vs 25.0 s**: pHash lệch 4 bit, cùng cú máy nhưng người to lên 32% ⇒
+  trục zoom coi là khác cỡ cảnh. Sửa đúng là `copy_veto` tách inlier **trong box người**
+  (đang so trên crop nên người và nền lẫn nhau), không phải nới ngưỡng zoom.

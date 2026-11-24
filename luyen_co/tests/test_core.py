@@ -733,3 +733,17 @@ def test_mat_huong_khac_ben_van_giu_khi_thieu_yaw():
     assert yaw_bucket(a) not in ("sau lưng", "sau lưng 3/4")
     assert yaw_bucket(b) in ("sau lưng", "sau lưng 3/4")
     assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2
+
+def test_xuat_full_frame_thi_moi_frame_chi_mot_anh():
+    # --save full: file xuất là CẢ khung hình, nên hai track trong cùng một frame cho
+    # ra hai file byte-identical (đo trên bộ 32 video: CxzjgbihCyq frame 437 và
+    # Instagram 1750172524 frame 36). Chỉ giữ bản xếp hạng cao nhất.
+    a = make_cand(t=218.0, track=1, source="c.mp4", face=-1.0, h=700)
+    a.frame_idx = 437
+    b = make_cand(t=218.0, track=2, source="c.mp4", face=0.23, h=700)
+    b.frame_idx = 437
+    c = make_cand(t=219.0, track=1, source="c.mp4")
+    c.frame_idx = 438
+    kept = dedupe([a, b, c], frame_dedupe=True)
+    assert len(kept) == 2, "cùng frame chỉ được 1 ảnh, frame khác vẫn giữ"
+    assert len(dedupe([a, b, c], frame_dedupe=False)) == 3, "chế độ crop thì giữ cả hai"

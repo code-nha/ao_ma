@@ -75,13 +75,31 @@ def diversity_features(cands: list[Candidate], pose_weight: float = 1.0,
     return np.stack(feats) if feats else np.zeros((0, 0), np.float32)
 
 
-def dedupe(cands: list[Candidate], dup_sim: float = 0.97, min_gap: float = 0.35) -> list[Candidate]:
+def dedupe(cands: list[Candidate], dup_sim: float = 0.97, min_gap: float = 0.35,
+           frame_dedupe: bool = False) -> list[Candidate]:
     """Bỏ frame gần như trùng: sát thời gian trong cùng track, hoặc ngoại hình quá giống.
 
     So sánh ngoại hình bằng 1 phép nhân ma trận mỗi frame (BLAS) thay vì vòng
     lặp Python, để video CCTV vài chục nghìn frame vẫn chạy nhanh.
+
+    `frame_dedupe`: dùng khi file xuất ra là **cả khung hình** (`--save full`/`both`).
+    Lúc đó hai track trong cùng một frame cho ra **đúng một tấm ảnh** (cùng
+    `full_jpeg`, không phụ thuộc box), nên chỉ giữ bản xếp hạng cao nhất. Đo trên
+    bộ 32 video: 2 frame bị xuất 2 lần, hai file **byte-identical**
+    (`CxzjgbihCyq` frame 437, `Instagram 1750172524` frame 36). Với `--save crop`
+    thì **không** bật: hai box khác nhau là hai crop khác nhau, đều dùng được.
     """
     from collections import defaultdict
+
+    if frame_dedupe:
+        # giữ bản tốt nhất mỗi (nguồn, frame) — không cần ngưỡng nào, đây là trùng tuyệt đối
+        best: dict[tuple[str, int], Candidate] = {}
+        for c in cands:
+            key = (c.source, c.frame_idx)
+            cur = best.get(key)
+            if cur is None or _rank_key(c) > _rank_key(cur):
+                best[key] = c
+        cands = [c for c in cands if best[(c.source, c.frame_idx)] is c]
 
     by_source: dict[str, list[Candidate]] = defaultdict(list)
     for c in cands:

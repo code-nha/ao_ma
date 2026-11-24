@@ -633,7 +633,8 @@ class Pipeline:
         accepted = self._filter_body_only(self.accepted)
         self.accepted = accepted                 # để summary/report khớp số thật
         self.stats.accepted = len(accepted)
-        cands = dedupe(accepted, cfg.dup_sim, cfg.min_gap)
+        cands = dedupe(accepted, cfg.dup_sim, cfg.min_gap,
+                       frame_dedupe=cfg.save in ("full", "both"))
         before = len(cands)
         cands = drop_tiny_frames(cands)
         if len(cands) != before:
