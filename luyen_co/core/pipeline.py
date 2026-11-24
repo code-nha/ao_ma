@@ -112,6 +112,7 @@ class Pipeline:
         self.ref_body: np.ndarray | None = None
         self.ref_note = ""
         self.ref_warnings: list[str] = []
+        self.ref_info: dict = {}
         self._ref_path = cfg.ref.resolve()
         self._staging = cfg.out / ".staging"
         self._stage_idx = 0
@@ -138,12 +139,24 @@ class Pipeline:
         if faces:
             face = max(faces, key=lambda f: (f.box[2] - f.box[0]) * (f.box[3] - f.box[1]))
             self.ref_face = self.face_emb.embed_face(crop if crop.size else img, face.kps)
+            self.ref_info = {
+                "face_px": int(max(face.box[2] - face.box[0], face.box[3] - face.box[1])),
+                "face_score": round(face.score, 2),
+                "person_h": int(box[3] - box[1]) if persons else 0,
+                "blur": round(laplacian_var(crop if crop.size else img), 1),
+            }
         self.ref_note = (f"tham chiếu: {w}×{h}, người={'có' if persons else 'không'}, "
                          f"mặt={'có' if self.ref_face is not None else 'KHÔNG'}")
         if self.ref_face is None:
             self.ref_warnings.append(
                 "ảnh tham chiếu không phát hiện được mặt → chỉ so khớp toàn thân "
                 "(nên dùng ảnh thấy rõ mặt để chính xác hơn)")
+        elif self.ref_info["face_px"] < 50:
+            self.ref_warnings.append(
+                f"mặt trong ảnh tham chiếu chỉ ~{self.ref_info['face_px']}px — nên dùng ảnh "
+                f"lớn hơn/rõ hơn, điểm khớp sẽ thấp và dễ nhầm")
+        elif self.ref_info["blur"] < 30:
+            self.ref_warnings.append("ảnh tham chiếu khá nhoè — nên chọn frame nét hơn")
 
     # ------------------------------------------------------------------ frame
     def _match_person(self, frame: np.ndarray, person, t: float, frame_idx: int,

@@ -63,7 +63,7 @@ python luyen_co.py --input "D:\cctv\cam_01" --ref "D:\ref\chi_ay.jpg" --out out_
 # chỉ 200 ảnh đa dạng nhất
 python luyen_co.py --input D:\cctv --ref ref.jpg --limit 200
 
-# kiểm tra ảnh tham chiếu (có thấy mặt không) trước khi quét
+# kiểm tra ảnh tham chiếu trước khi quét (kích thước mặt, độ nét, cảnh báo)
 python luyen_co.py --input D:\cctv --ref ref.jpg --check
 
 # quét thử 1 phút đầu, 5 frame/giây

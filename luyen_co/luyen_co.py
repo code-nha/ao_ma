@@ -124,6 +124,11 @@ def main(argv: list[str] | None = None) -> int:
     started = time.time()
     pipe = Pipeline(cfg)
     log(pipe.ref_note)
+    if args.check:
+        if pipe.ref_info:
+            info = pipe.ref_info
+            log(f"  mặt ~{info['face_px']}px (tin cậy {info['face_score']}), "
+                f"người cao ~{info['person_h']}px, độ nét {info['blur']}")
     for warning in pipe.ref_warnings:
         log(f"cảnh báo: {warning}")
     if args.check:
