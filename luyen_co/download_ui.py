@@ -28,7 +28,7 @@ from dataclasses import asdict, dataclass, field
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from queue import Queue
-from urllib.parse import unquote, urljoin, urlparse
+from urllib.parse import parse_qsl, unquote, urlencode, urljoin, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 try:
@@ -67,6 +67,23 @@ QUEUE: "Queue[tuple[str, str, bool, str]]" = Queue()
 
 
 # --------------------------------------------------------------------- tải file
+
+
+def _strip_byte_range(url: str) -> str:
+    """Bỏ bytestart/byteend khỏi link CDN (Facebook hay trả link cắt 1 đoạn byte).
+
+    Link copy từ tab Network của Facebook/Instagram thường có
+    `bytestart=0&byteend=1067` → chỉ tải được ~1 KB header của file DASH.
+    Bỏ 2 tham số này thì server trả nguyên file.
+    """
+    parsed = urlparse(url)
+    if not parsed.query:
+        return url
+    pairs = parse_qsl(parsed.query, keep_blank_values=True)
+    cleaned = [(k, v) for k, v in pairs if k.lower() not in ("bytestart", "byteend")]
+    if len(cleaned) == len(pairs):
+        return url
+    return urlunparse(parsed._replace(query=urlencode(cleaned)))
 
 
 def _sanitize(name: str, limit: int = 120) -> str:
@@ -138,6 +155,7 @@ def _download_with_ffmpeg(url: str, dest: Path, job: Job) -> None:
 
 def _direct_download(url: str, job: Job) -> Path:
     """Trang web thường: tìm link media trong HTML rồi tải trực tiếp."""
+    url = _strip_byte_range(url)
     data, ctype, final_url = _fetch(url)
     if ctype.startswith("video/") or ctype.startswith("application/octet-stream"):
         name = _sanitize(unquote(Path(urlparse(final_url).path).name) or "video.mp4")
@@ -161,8 +179,8 @@ def _direct_download(url: str, job: Job) -> Path:
             if Path(name).suffix.lower() not in VIDEO_EXT:
                 name += ".mp4"
             dest = _unique(OUT_DIR / name)
-            _stream_to_file(media_url, dest, job)
-            if dest.stat().st_size > 1024:
+            _stream_to_file(_strip_byte_range(media_url), dest, job)
+            if dest.stat().st_size > 10_000:
                 return dest
             dest.unlink(missing_ok=True)
         except Exception as exc:  # thử link kế tiếp
@@ -300,6 +318,7 @@ def _newest_video(since: float) -> Path | None:
 def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     started = time.time()
+    job.url = _strip_byte_range(job.url)
     try:
         path: Path | None = None
         if yt_dlp is not None:

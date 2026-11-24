@@ -44,3 +44,11 @@ def test_candidate_media_urls():
 
 def test_candidate_media_urls_empty():
     assert du._candidate_media_urls("<html>không có gì</html>", "https://x.test/") == []
+
+
+def test_strip_byte_range():
+    raw = "https://cdn.test/o1/v.mp4?_nc_cat=102&bytestart=0&byteend=1067&x=1"
+    assert du._strip_byte_range(raw) == "https://cdn.test/o1/v.mp4?_nc_cat=102&x=1"
+    same = "https://cdn.test/o1/v.mp4?_nc_cat=102&x=1"
+    assert du._strip_byte_range(same) == same
+    assert du._strip_byte_range("https://cdn.test/v.mp4") == "https://cdn.test/v.mp4"
