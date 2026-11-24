@@ -10,6 +10,10 @@
   để dựng dataset LoRA.
 - Trạng thái: **99 ảnh** cho `sample/obj_1` (20–21 video), 68 test pass,
   commit `1a4e534` đã push.
+- **Sau vòng sửa 2026-11-24** (zoom + yaw, xem `docs/dedupe-failure-2026-11-24.md`):
+  73 test pass, lần chạy mới ra **107 ảnh** ở `output/obj_1_fix4` (baseline cũ vẫn để
+  `output/obj_1` để so). Cụm `v1.mp4` 34.0/34.5/35.0/36.5 s đã sập từ **4 → 1** ảnh,
+  cặp byte-identical (DQyPc 38.0 s, hai track) đã hết, cặp khác zoom 12.0/17.0 vẫn giữ đủ.
 - Đầu ra: `luyen_co/output/obj_1/` — `crops/`, `metadata.jsonl`, `summary.txt`,
   `report.csv`, `sheet.jpg`, `sheet_shot.jpg`, `copy_pairs.txt`, `dropped_copies/`,
   `sheet_copy.jpg`. Toàn bộ `output/` nằm trong `.gitignore`.
@@ -60,6 +64,7 @@ Ba trục đo độc lập: **cỡ cảnh** (`shot_scale`, số "đầu" = `pers
 | `5837c41` | near-dup áp cả phía chính diện (`_yaw_family`, không đòi \|yaw\|≥20) |
 | `f4b1c4f` | so cỡ cảnh bằng **số đo** thay nhãn (`_same_framing`) |
 | `1a4e534` | **copy_veto**: chặn ảnh trùng thật bằng SIFT + RANSAC, **xuyên mọi nguồn** |
+| mới | **zoom đo bằng `log(person_h/src_h)`** (bỏ "số đầu", `feet` xuống cờ hoà giải), **yaw = số mặc định khi không thấy mặt** thì không dùng để tách, `copy_veto` chỉ gộp khi **cùng cỡ cảnh**. 4 ảnh `v1.mp4` 34.0–36.5 s → 1 |
 
 Chi tiết nguyên nhân từng lỗi: `luyen_co/docs/dedupe-notes.md`.
 
@@ -89,6 +94,12 @@ Ba lỗi đã vá trong lúc làm (đừng lặp lại):
 
 ## 5. Việc tiếp theo (theo thứ tự ưu tiên)
 
+0. **Hai cặp gần trùng còn lại** (đo bằng pHash trên file xuất, xem
+   `docs/dedupe-failure-2026-11-24.md` mục 6): `Facebook 1750183430` 68.0 vs 68.5 s
+   (cách 0.5 s > `min_gap 0.35`, CLIP < 0.97 nên cả hai bước đều không bắt) và
+   `v1.mp4` 22.5 vs 25.0 s (lệch zoom 32% theo phép đo). Cách sửa đúng là **chọn theo
+   plateau thời gian** + `copy_veto` tách inlier trong box người, **không** hạ `dup_sim`.
+   Kiểm bằng `pHash` (độc lập với pose/yaw/SIFT) chứ không dùng lại logic quyết định.
 1. **Đúng người — nặng hơn lỗi trùng ảnh.** 38/110 ảnh không detect được mặt, tất
    cả `body_sim` < 0.72 (min 0.429), chỉ vào được bằng nhánh "neo ngoại hình"
    `anchor_ok` (`pipeline.py` ~dòng 348). Trong đó **1 ảnh là người khác** (đàn ông

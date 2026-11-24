@@ -116,7 +116,7 @@ def _yaw_dist(a: Candidate, b: Candidate) -> float:
     thì hai frame cùng một dáng dựa tường bị coi là "khác góc" oan.
     """
     dy = float(a.yaw - b.yaw)
-    if abs(a.yaw) >= 70 or abs(b.yaw) >= 70:
+    if abs(a.yaw) >= YAW_SATURATED or abs(b.yaw) >= YAW_SATURATED:
         return abs(dy)
     return float(math.hypot(dy, a.pitch - b.pitch))
 
@@ -152,27 +152,83 @@ def _heads(c: Candidate) -> float:
     return c.person_h / c.face_px if c.face_px > 0 else 0.0
 
 
+# Zoom là đại lượng **liên tục**, nên so bằng log tỉ lệ người/khung chứ không so
+# "số đầu" (person_h / face_px) — số đầu chia cho bbox mặt SCRFD, mà bbox mặt lệch
+# 20–30% chỉ vì detector, không phải vì camera đổi cự ly. Đo trên obj_1: hai frame
+# cách nhau 0.5 s của cùng một cú máy cho số đầu 8.99 vs 6.67 (1.35×, tưởng "khác
+# cỡ cảnh") trong khi tỉ lệ người/khung chỉ lệch 13%.
+# Ngưỡng 0.16 ≈ lệch ±17%: đủ rộng cho cụm v1 34.0/34.5/35.0/36.5 s (lệch 1.8–15.5%),
+# nhưng vẫn tách được ca 6.0 s vs 17.0 s (lệch 18%, cận cảnh đứng nói vs trung cảnh
+# đang đi — hai ảnh khác nhau thật).
+ZOOM_TOL = 0.16
+# "Thấy cổ chân" chỉ đáng tin khi người đã gần lấp kín khung; ở cảnh xa, conf
+# keypoint cổ chân lật loạn (đo trên obj_1: lật giữa hai frame cách nhau 0.5 s).
+FEET_KEY_FRAC = 0.85
+
+
 def _same_framing(a: Candidate, b: Candidate, head_tol: float = 0.30,
-                  frac_tol: float = 0.12) -> bool:
-    """Hai ảnh cùng cỡ cảnh — so **số đo**, không so nhãn.
+                  frac_tol: float = ZOOM_TOL) -> bool:
+    """Hai ảnh cùng cỡ cảnh — so **độ phóng** (log tỉ lệ người/khung), không so nhãn.
 
-    So nhãn (`shot_scale`) bị lỗi ở sát biên: hai khung gần như y hệt mà người
-    chiếm 91% khung ở cả hai, chỉ vì bbox mặt to nhỏ khác nhau (282 vs 330 px)
-    nên số "đầu" là 4.11 vs 3.53 → rơi vào 2 mức liền kề (trung cảnh / trung cận)
-    và bị coi là khác nhau. Đo trực tiếp thì chúng cách nhau 16% — cùng cỡ cảnh.
+    Vì sao không dùng "số đầu" (`person_h / face_px`): nó chia cho bbox mặt do
+    SCRFD đo, nên bbox mặt to/nhỏ hơn 20–30% là đủ để hai khung y hệt rơi vào hai
+    mức liền kề (`trung cảnh` vs `trung cận`). Ca thật 70.0/70.5 s: số đầu 4.11 vs
+    3.53 nhưng cùng chiếm 91% khung. Số đầu vẫn được dùng làm **dự phòng** khi
+    thiếu tỉ lệ người/khung.
 
-    Cùng cỡ cảnh khi: số đầu lệch ≤ 30%, **hoặc** tỉ lệ người/khung lệch ≤ 12%
-    và cùng trạng thái thấy cổ chân (để không gộp ảnh toàn thân với ảnh cận cảnh
-    cùng chiếm 91% khung).
+    Cùng cỡ cảnh khi `|log(fa/fb)| ≤ frac_tol` (mặc định 0.16 ≈ ±17%) với
+    `f = person_h / src_h`. Trước đây ngưỡng là 12% *tương đối* cộng điều kiện
+    cổ chân bằng nhau; đo trên cụm `v1.mp4` 34.0/34.5/35.0/36.5 s thì chính hai
+    điều kiện đó tách rời 4 ảnh gần như một (foot flag lật, tỉ lệ lệch 12.3%).
+
+    Cờ cổ chân chỉ còn là **cờ hoà giải**, và chỉ xét khi cả hai ảnh đã chiếm
+    ≥ `FEET_KEY_FRAC` khung — lúc đó "thấy bàn chân hay không" mới thật là khác
+    biệt toàn thân vs cận cảnh (giữ được test `toan_than_khac_can_canh`).
     """
-    ha, hb = _heads(a), _heads(b)
-    if ha > 0 and hb > 0 and max(ha, hb) <= (1 + head_tol) * min(ha, hb):
-        return True
     fa = a.person_h / max(1, a.src_h)
     fb = b.person_h / max(1, b.src_h)
-    if feet_visible(a) != feet_visible(b):
-        return False
-    return abs(fa - fb) <= frac_tol * max(fa, fb)
+    if fa > 0 and fb > 0:
+        if abs(math.log(fa / fb)) > frac_tol:
+            return False
+        if feet_visible(a) != feet_visible(b) and min(fa, fb) >= FEET_KEY_FRAC:
+            return False
+        return True
+    # thiếu tỉ lệ người/khung (hiếm): rơi về số đầu như cũ
+    ha, hb = _heads(a), _heads(b)
+    return ha > 0 and hb > 0 and max(ha, hb) <= (1 + head_tol) * min(ha, hb)
+
+
+# |yaw| ≥ 70: 5 landmark đầu đã bị kẹp trục, pitch chỉ còn là nhiễu (xem `_yaw_dist`)
+YAW_SATURATED = 70.0
+# dưới mức này coi như **không thấy mặt** ⇒ yaw chỉ là số 0 mặc định, không phải "nhìn thẳng"
+FACE_VIS_KNOWN = 0.60
+# nhóm mà người đang quay lưng — dùng được cả khi yaw là số mặc định
+_BACK_BUCKETS = {"sau lưng", "sau lưng 3/4"}
+
+
+def _yaw_is_placeholder(c: Candidate) -> bool:
+    """`yaw` có phải số mặc định vì không thấy mặt không (chứ không phải góc đo được).
+
+    Đo trên obj_1 (cụm `v1.mp4`): frame 34.0 s không detect được mặt ⇒ `yaw = 0.0`;
+    frame 35.0 s thấy mặt nghiêng ⇒ `yaw = −90.0`. Hai ảnh **cùng một góc nhìn** mà
+    hiệu yaw là 90°, đủ để trục góc quay tách chúng ra. Gốc lỗi: số 0 mặc định bị
+    đem so như một phép đo thật.
+
+    Tín hiệu chắc chắn nhất là `face_px == 0`: SCRFD không tìm thấy mặt nên pipeline
+    gán yaw = pitch = 0.0 (pipeline.py, `head_pose` chỉ chạy khi có `faces`). Chỉ khi
+    cả ba điều kiện đó cùng đúng mới coi là mặc định — nhờ vậy dữ liệu tổng hợp
+    (test) đặt yaw khác 0 mà không cần bbox mặt vẫn được tôn trọng.
+
+    Thêm nhánh `face_vis < 0.60` cho ca SCRFD vẫn bắt được mặt nhưng mặt bị khuất
+    (nghiêng hẳn/quay lưng): lúc đó yaw đo được nhưng rất nhiễu.
+
+    `|yaw| ≥ 70` **không** coi là mất thông tin: dấu và độ lớn vẫn phản ánh hướng
+    quay, hai ảnh −90° và −40° là hai hướng khác nhau thật.
+    """
+    if c.face_px <= 0 and c.yaw == 0.0 and c.pitch == 0.0:
+        return True
+    vis = face_vis(c)
+    return vis >= 0 and vis < FACE_VIS_KNOWN
 
 
 def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
@@ -198,6 +254,12 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
     không rõ mặt, yaw bị kẹp ±90 nên hay bằng nhau) thì so theo nhóm là đủ. Các
     nhóm còn lại phải so **khoảng cách góc thật**, không dùng "cùng nhóm" — vì
     "trái nhiều" trải tới 180°, hai frame −30° và −65° cùng nhóm nhưng khác hướng.
+
+    Nếu **một trong hai** ảnh không thấy mặt (`_yaw_is_placeholder`: yaw chỉ là số 0
+    mặc định) thì bỏ phép so yaw, chỉ còn cỡ cảnh + dáng + **hướng thân** (nhóm
+    "sau lưng" vẫn dùng được) quyết. Trước đây yaw mặc định 0.0 của ảnh không mặt bị
+    đem so với yaw thật của ảnh có mặt, nên hai frame cùng một cú máy (0° vs −90°) bị
+    coi là khác hướng và cùng lọt.
     """
     if not _same_framing(a, b):
         return False
@@ -217,6 +279,15 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
             return False
     elif _pose_dist(a, b) >= min_pose:      # dự phòng: không đo được góc khớp
         return False
+    if _yaw_is_placeholder(a) or _yaw_is_placeholder(b):
+        # yaw của ảnh không thấy mặt chỉ là số 0 mặc định: hiệu hai con số không
+        # mang thông tin. Nhưng **hướng thân** thì vẫn còn trong nhóm góc, nên chỉ
+        # bỏ phép so yaw, không bỏ luôn "mặt hướng về phía nào": một ảnh nhìn thẳng
+        # và một ảnh quay lưng (bucket sau lưng) là hai ảnh khác nhau thật
+        # (ca v1.mp4 17.0 s nhìn thẳng vs 17.5 s quay lưng).
+        ba = yaw_bucket(a) in _BACK_BUCKETS
+        bb = yaw_bucket(b) in _BACK_BUCKETS
+        return ba == bb
     bucket = yaw_bucket(a)
     if bucket == yaw_bucket(b) and bucket in SOFT_BUCKETS:
         return True

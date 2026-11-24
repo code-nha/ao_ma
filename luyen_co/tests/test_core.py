@@ -186,9 +186,9 @@ def test_tile_slices_cover_frame():
 
 
 def test_diverse_gate_drops_same_pose_keeps_other_angle():
-    a = make_cand(t=0.0, yaw=0.0)
-    b = make_cand(t=1.0, yaw=5.0)          # cùng dáng, góc lệch < 20° → bỏ
-    c = make_cand(t=2.0, yaw=35.0)         # góc lệch đủ → giữ
+    a = make_cand(t=0.0, yaw=0.0, face_px=200)
+    b = make_cand(t=1.0, yaw=5.0, face_px=200)    # cùng dáng, góc lệch < 20° → bỏ
+    c = make_cand(t=2.0, yaw=35.0, face_px=200)   # góc lệch đủ → giữ
     kept = diverse_gate([a, b, c], min_yaw=20.0, min_pose=0.15)
     assert [k.t for k in kept] == [0.0, 2.0]
 
@@ -293,9 +293,9 @@ def test_distinct_pose_pick_khong_noi_chuoi_frame():
     # Chuỗi A≈B (15°), B≈C (13°), A cách C 28°. Nối chuỗi (union-find) sẽ gộp cả
     # 3 → 1 ảnh; duyệt tham lam giữ A và C vì A khác C đủ rõ. Đây là lý do clip
     # quay bằng điện thoại (dáng đổi dần) trước chỉ ra 6 ảnh, giờ ra 17.
-    a = make_cand(t=0.0, yaw=0.0, pose=_pose())
-    b = make_cand(t=1.0, yaw=15.0, pose=_pose(delta=0.01))
-    c = make_cand(t=2.0, yaw=28.0, pose=_pose(delta=0.02))
+    a = make_cand(t=0.0, yaw=0.0, pose=_pose(), face_px=200)
+    b = make_cand(t=1.0, yaw=15.0, pose=_pose(delta=0.01), face_px=200)
+    c = make_cand(t=2.0, yaw=28.0, pose=_pose(delta=0.02), face_px=200)
     kept = distinct_pose_pick([a, b, c], min_yaw=25.0, min_pose=0.08)
     assert len(kept) == 2
     assert {k.t for k in kept} == {0.0, 2.0}
@@ -310,9 +310,9 @@ def test_distinct_pose_pick_giu_anh_chat_luong_nhat():
 
 
 def test_distinct_pose_pick_giu_khi_khac_goc_hoac_khac_dang():
-    same_pose_other_angle = make_cand(t=1.0, yaw=60.0, pose=_pose())
-    same_angle_other_pose = make_cand(t=2.0, yaw=0.0, pose=_pose(delta=0.3))
-    base = make_cand(t=0.0, yaw=0.0, pose=_pose())
+    same_pose_other_angle = make_cand(t=1.0, yaw=60.0, pose=_pose(), face_px=200)
+    same_angle_other_pose = make_cand(t=2.0, yaw=0.0, pose=_pose(delta=0.3), face_px=200)
+    base = make_cand(t=0.0, yaw=0.0, pose=_pose(), face_px=200)
     kept = distinct_pose_pick([base, same_pose_other_angle, same_angle_other_pose],
                               min_yaw=25.0, min_pose=0.08)
     assert len(kept) == 3
@@ -668,10 +668,68 @@ def test_toan_than_khac_can_canh_du_cung_ty_le_khung():
 def test_goc_quay_khac_nhau_van_giu_du_cung_dang():
     # Cùng dáng nhưng đầu quay khác hẳn: góc khớp (không dùng mắt/mũi) coi là cùng
     # dáng, còn trục góc quay tách ra → giữ cả hai ảnh.
-    a = make_cand(t=0.0, h=400, yaw=0.0)
+    a = make_cand(t=0.0, h=400, yaw=0.0, face_px=200)
     a.kpts = make_kpts()
-    b = make_cand(t=1.0, h=400, yaw=-60.0)
+    b = make_cand(t=1.0, h=400, yaw=-60.0, face_px=200)
     b.kpts = make_kpts()
     d = pose_angle_dist(a, b)
     assert d is not None and d[0] < 1.0          # dáng giống nhau
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2
+
+def test_khop_hai_frame_cung_may_khi_co_co_chan_lat():
+    # v1.mp4 34.0 / 34.5 s (ca 91/92 trong output): cùng cú máy, cùng dáng, cùng
+    # zoom (200/640 vs 229/640 = lệch 13.7%), nhưng cờ "thấy cổ chân" lật False
+    # -> True. Trước đây cờ đó là điều kiện cứng trong `_same_framing` nên hai ảnh
+    # gần như một cùng lọt vào dataset.
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    a = make_cand(t=34.0, h=200, src_h=640, clip=same)
+    a.kpts = make_kpts(nose=0.30, feet=0.1)      # không thấy mặt, không thấy cổ chân
+    b = make_cand(t=34.5, h=229, src_h=640, clip=same)
+    b.kpts = make_kpts(nose=0.30, feet=0.9)      # cùng cảnh, cổ chân lại thấy
+    assert pose_angle_dist(a, b)[0] < 20.0       # dáng gần như y hệt
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 1
+
+
+def test_khop_hai_frame_khi_yaw_chi_la_so_mac_dinh():
+    # v1.mp4 34.0 / 35.0 s (ca 91/93): frame không detect được mặt có yaw = 0.0
+    # (mặc định), frame kia thấy mặt nghiêng nên yaw = -90.0. Hiệu yaw 90 độ không
+    # mang thông tin gì về hướng nhìn, nên cỡ cảnh + dáng quyết định.
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    a = make_cand(t=34.0, h=200, src_h=640, yaw=0.0, clip=same)
+    a.kpts = make_kpts(nose=0.30, ear=0.1)     # mũi + tai khuất → nhóm "không rõ mặt"
+    b = make_cand(t=35.0, h=234, src_h=640, yaw=-90.0, face_px=82, clip=same)
+    b.kpts = make_kpts()
+    assert face_vis(a) < 0.60 and face_vis(b) > 0.60
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 1
+
+
+def test_hai_huong_quay_that_khac_nhau_van_giu():
+    # Mặt nhìn thấy ở cả hai, yaw không bão hoà và ngoại hình khác nhau: -90 vs -40
+    # là hai hướng thật (nhóm "nghiêng" vs "trái nhiều") -> phải giữ cả hai.
+    a = make_cand(t=45.0, h=200, face_px=200, yaw=-90.0, clip=[1.0, 0.0, 0.0] + [0.0] * 5)
+    a.kpts = make_kpts()
+    b = make_cand(t=70.0, h=200, face_px=200, yaw=-40.0, clip=[0.0, 1.0, 0.0] + [0.0] * 5)
+    b.kpts = make_kpts()
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2
+
+
+def test_khac_zoom_that_thi_khong_gop():
+    # v1.mp4 12.0 / 17.0 s: người ở xa (200 px) vs gần (1000 px) trong cùng khung
+    # 1280 px — cùng cảnh nhưng khác cỡ cảnh thật, phải giữ cả hai cho đa dạng.
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    a = make_cand(t=12.0, h=200, src_h=1280, face_px=40, clip=same)
+    a.kpts = make_kpts()
+    b = make_cand(t=17.0, h=1000, src_h=1280, face_px=200, clip=same)
+    b.kpts = make_kpts()
+    assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2
+
+def test_mat_huong_khac_ben_van_giu_khi_thieu_yaw():
+    # v1.mp4 17.0 s (nhìn thẳng, không đo được yaw) vs 17.5 s (quay lưng): yaw bị bỏ
+    # nhưng bucket "sau lưng" vẫn cho biết hướng thân → phải giữ cả hai.
+    a = make_cand(t=17.0, h=765, src_h=1280, clip=[1.0, 0.0, 0.0] + [0.0] * 5)
+    a.kpts = make_kpts(nose=0.30, ear=0.1, feet=0.9)   # không thấy mặt → yaw vô nghĩa
+    b = make_cand(t=17.5, h=659, src_h=1280, clip=[0.0, 1.0, 0.0] + [0.0] * 5)
+    b.kpts = make_kpts(nose=0.30, feet=0.9)
+    assert yaw_bucket(a) not in ("sau lưng", "sau lưng 3/4")
+    assert yaw_bucket(b) in ("sau lưng", "sau lưng 3/4")
     assert len(distinct_pose_pick([a, b], min_yaw=25.0, min_pose=0.08)) == 2

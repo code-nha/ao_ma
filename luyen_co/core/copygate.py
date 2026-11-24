@@ -29,7 +29,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from .select import _rank_key, pose_angle_dist
+from .select import _rank_key, _same_framing, pose_angle_dist
 from .types import Candidate
 
 # cạnh dài của ảnh đưa vào SIFT: đủ chi tiết, đủ nhanh (110 ảnh ≈ 6 s)
@@ -194,6 +194,13 @@ def copy_veto(cands: list[Candidate], min_inl: int = 45, min_ratio: float = 0.06
                 if float(np.dot(c.clip_vec, k.clip_vec)) < prefilter:
                     continue
             inl, ratio = copy_score(feat(c), feat(k))
+            # "Cùng một khung hình" thì cỡ cảnh phải như nhau. Crop quanh người đã
+            # chuẩn hoá kích thước, nên hai ảnh **khác zoom thật** (người ở xa vs
+            # ở gần) vẫn cho 40–50 inlier trên crop — nếu không chặn, cặp 12.0 s /
+            # 17.0 s của v1.mp4 (người ở xa vs gần, 47 inlier, scale 1.26) bị gộp
+            # oan và mất một cỡ cảnh khỏi dataset.
+            if not _same_framing(c, k):
+                continue
             if same_source:
                 if inl >= min_inl and ratio >= min_ratio:
                     if _pose_disagrees(c, k, max_pose_mean, max_pose_max):
