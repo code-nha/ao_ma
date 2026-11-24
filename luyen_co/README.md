@@ -32,13 +32,22 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
    người mặc giống nhau: đo thực tế trên clip văn phòng, người mặc áo xanh vẫn
    bị lẫn với một người mặc áo đen đi qua cùng lối. `--color-th` chỉ lọc được
    người khác màu áo rõ rệt.
-4. **Quay lưng sau khi camera đã xác nhận mặt**: nếu trong `--confirm-window`
-   giây (mặc định 30) trước/sau đó cùng camera có track khớp mặt, các frame
-   quay lưng vẫn được nhận với ngưỡng thấp hơn `--confirm-body-th` (0.55) và
-   vẫn phải qua kiểm tra màu áo. Đây là cách lấy được ảnh sau lưng/dáng đi mà
-   không cần bật body-only cho toàn bộ camera.
+4. **Quay lưng sau khi camera đã xác nhận mặt**: mỗi video có một "neo" ngoại
+   hình lấy từ track đã khớp mặt (trung bình vector CLIP của track đó). Các
+   track sau không thấy mặt vẫn được nhận nếu cosine với neo ≥ `--anchor-th`
+   (0.60). Nhờ vậy lấy được ảnh sau lưng/dáng đi kể cả khi ảnh tham chiếu mặc
+   trang phục khác. `--confirm-window` (mặc định 0 = không giới hạn) đặt giới
+   hạn thời gian nếu muốn chặt hơn.
 5. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, khuyến nghị nâng
    `--body-th`.
+
+Sau khi lọc trùng, ảnh được chọn theo `--select`:
+
+- `coverage` (mặc định): nhóm theo **(nguồn, cảnh, góc mặt)** — thẳng / trái /
+  phải / trái nhiều / phải nhiều / **sau lưng** (frame không thấy mặt) — mỗi
+  nhóm giữ tối đa `--per-bucket` ảnh tốt nhất (mặc định 2). Đảm bảo mỗi cảnh
+  đều có đủ góc để đối chiếu, kể cả cảnh chỉ có ảnh sau lưng.
+- `diversity`: chỉ giữ frame khác quá ngưỡng `--min-yaw` / `--min-pose`.
 
 Trước khi ghi ảnh còn một bước **lọc đa dạng**: một frame bị bỏ nếu **vừa** gần
 góc đầu (`< --min-yaw` độ) **vừa** gần dáng (`< --min-pose`) so với frame đã giữ
@@ -100,8 +109,10 @@ Tham số đáng chú ý:
 | `--save` | full | `full` = nguyên frame (có bối cảnh), `crop` = chỉ quanh người, `both` = cả hai |
 | `--min-yaw` | 20 | chênh góc đầu tối thiểu (độ) để giữ thêm ảnh |
 | `--min-pose` | 0.10 | chênh dáng (keypoint chuẩn hoá) tối thiểu để giữ thêm ảnh; 0 = tắt lọc đa dạng |
-| `--confirm-window` | 30 | giây: camera vừa xác nhận mặt thì nhận cả frame quay lưng (0 = tắt) |
-| `--confirm-body-th` | 0.55 | ngưỡng body cho frame quay lưng trong cửa sổ xác nhận |
+| `--confirm-window` | 0 | giới hạn giây tới mốc đã khớp mặt khi nhận frame quay lưng (0 = không giới hạn) |
+| `--anchor-th` | 0.60 | cosine tối thiểu với neo ngoại hình của video |
+| `--select` | coverage | `coverage` = đủ góc mỗi cảnh; `diversity` = theo ngưỡng yaw/pose |
+| `--per-bucket` | 2 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`) |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |

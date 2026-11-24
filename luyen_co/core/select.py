@@ -134,6 +134,45 @@ def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
     return kept
 
 
+YAW_BUCKETS = [
+    ("trái nhiều", -180, -25),
+    ("trái", -25, -10),
+    ("thẳng", -10, 10),
+    ("phải", 10, 25),
+    ("phải nhiều", 25, 180),
+]
+
+
+def yaw_bucket(c: Candidate) -> str:
+    """Nhóm góc: không thấy mặt = 'sau lưng/quay đi'; còn lại theo yaw."""
+    if not c.has_face:
+        return "sau lưng"
+    for label, lo, hi in YAW_BUCKETS:
+        if lo <= c.yaw < hi:
+            return label
+    return "thẳng"
+
+
+def coverage_pick(cands: list[Candidate], per_bucket: int = 2) -> list[Candidate]:
+    """Chọn ảnh theo độ phủ góc: mỗi nhóm góc giữ tối đa `per_bucket` ảnh tốt nhất.
+
+    Khác với `diverse_gate` (bỏ dần theo ngưỡng), cách này đảm bảo **có đủ** mặt
+    trái/phải/thẳng và cả ảnh sau lưng (frame không thấy mặt nhưng khớp ngoại
+    hình qua neo của video) — đúng nhu cầu đối chiếu danh tính.
+    """
+    buckets: dict[tuple[str, int, str], list[Candidate]] = {}
+    for c in cands:
+        buckets.setdefault((c.source, c.scene, yaw_bucket(c)), []).append(c)
+
+    picked: list[Candidate] = []
+    for items in buckets.values():
+        items.sort(key=lambda c: (c.face_sim if c.has_face else c.body_sim,
+                                  c.person_h, c.blur), reverse=True)
+        picked.extend(items[:per_bucket])
+    picked.sort(key=lambda c: (c.source, c.t))
+    return picked
+
+
 def pick_diverse(cands: list[Candidate], n: int, pose_weight: float = 1.0,
                  clip_weight: float = 1.0) -> list[Candidate]:
     """Chọn n frame phủ đa dạng nhất bằng greedy farthest-point sampling."""

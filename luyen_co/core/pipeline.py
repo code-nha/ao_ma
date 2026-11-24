@@ -32,8 +32,8 @@ from .frames import iter_video, list_inputs, video_duration
 from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
-from .select import (dedupe, diverse_gate, head_pose, pick_diverse, pose_vector,
-                     yaw_histogram)
+from .select import (coverage_pick, dedupe, diverse_gate, head_pose, pick_diverse,
+                     pose_vector, yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -58,8 +58,10 @@ class Config:
     save: str = "full"              # full | crop | both
     min_yaw: float = 20.0           # chênh góc đầu tối thiểu (độ) giữa 2 ảnh giữ lại
     min_pose: float = 0.10          # chênh pose keypoint tối thiểu (0–1)
-    confirm_window: float = 30.0    # giây: camera vừa xác nhận mặt → nhận frame quay lưng
-    confirm_body_th: float = 0.55   # ngưỡng body cho frame quay lưng trong cửa sổ đó
+    confirm_window: float = 0.0     # giây: 0 = không giới hạn (neo theo video)
+    anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
+    select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
+    per_bucket: int = 2             # số ảnh tối đa mỗi nhóm góc (coverage)
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -119,6 +121,8 @@ class Pipeline:
         self.accepted: list[Candidate] = []
         # mốc thời gian đã xác nhận mặt (mỗi nguồn), để nhận cả frame quay lưng
         self.confirmed: dict[str, list[list[float]]] = {}
+        # "neo" ngoại hình theo từng video: lấy từ track đã khớp mặt
+        self.anchors: dict[str, dict] = {}
         self.ref_face: np.ndarray | None = None
         self.ref_body: np.ndarray | None = None
         self.ref_torso: np.ndarray | None = None
@@ -176,7 +180,7 @@ class Pipeline:
     # ------------------------------------------------------------------ frame
     def _match_person(self, frame: np.ndarray, person, t: float, frame_idx: int,
                       source: str, kind: str, track_id: int,
-                      others: list | None = None) -> Candidate | None:
+                      others: list | None = None, scene: int = 0) -> Candidate | None:
         h, w = frame.shape[:2]
         x1, y1, x2, y2 = person.box
         person_h = int(y2 - y1)
@@ -238,7 +242,7 @@ class Pipeline:
             yaw=float(yaw), pitch=float(pitch), blur=float(blur), person_h=person_h,
             jpeg=encode_jpeg(crop, self.cfg.jpeg_quality),
             kpts=person.kpts, clip_vec=clip_vec, full_jpeg=full_jpeg,
-            src_w=int(w), src_h=int(h),
+            src_w=int(w), src_h=int(h), scene=int(scene),
             pose_vec=pose_vector(person.kpts, person.box),
         )
 
@@ -272,11 +276,12 @@ class Pipeline:
             kept = [c for c in buf
                     if c.face_sim >= cfg.face_th
                     or (not c.has_face and self._body_ok(c))]
-        elif self._near_confirmed(buf[0].source, buf) and len(buf) >= 2:
-            # camera vừa xác nhận mặt trong confirm_window giây → nhận frame
-            # quay lưng với ngưỡng body thấp hơn (vẫn phải khớp màu áo)
-            kept = [c for c in buf if c.body_sim >= cfg.confirm_body_th
-                    and (cfg.color_th <= 0 or c.color_sim < 0 or c.color_sim >= cfg.color_th)]
+        elif self._near_confirmed(buf[0].source, buf) and (anchor := self.anchors.get(buf[0].source)):
+            # video này đã khớp mặt ở đâu đó → so với chính ngoại hình đó (neo),
+            # không so với ảnh tham chiếu nữa (trang phục có thể đã khác)
+            kept = [c for c in buf
+                    if c.clip_vec is not None
+                    and float(np.dot(anchor["clip"], c.clip_vec)) >= cfg.anchor_th]
         elif cfg.allow_body_only and body_med >= cfg.body_th and len(buf) >= cfg.min_track:
             # track không có frame nào khớp mặt: chỉ nhận khi người dùng cho phép,
             # dễ nhầm người mặc giống → mặc định tắt
@@ -286,15 +291,9 @@ class Pipeline:
         return kept, face_max, body_med
 
     def _near_confirmed(self, source: str, buf: list[Candidate]) -> bool:
-        """Track này có nằm gần mốc đã xác nhận mặt trên cùng camera không.
-
-        Thực tế: người đi qua cam, lúc quay mặt lúc quay lưng. Khi camera vừa
-        khớp mặt trong `confirm_window` giây thì các frame quay lưng ngay sau đó
-        vẫn là cùng người, chỉ cần ngoại hình khớp ở ngưỡng thấp hơn.
-        """
         window = self.cfg.confirm_window
         if window <= 0 or not buf:
-            return False
+            return True
         t0, t1 = buf[0].t, buf[-1].t
         for a, b in self.confirmed.get(source, []):
             gap = max(a - t1, t0 - b, 0.0)
@@ -303,14 +302,27 @@ class Pipeline:
         return False
 
     def _remember(self, source: str, buf: list[Candidate]) -> None:
-        """Ghi lại khoảng thời gian đã xác nhận mặt, gộp các khoảng gần nhau."""
+        """Ghi khoảng thời gian đã khớp mặt + cập nhật neo ngoại hình của video."""
         intervals = self.confirmed.setdefault(source, [])
         lo, hi = buf[0].t, buf[-1].t
         for it in intervals:
-            if lo <= it[1] + self.cfg.confirm_window and hi >= it[0] - self.cfg.confirm_window:
+            if lo <= it[1] + 30 and hi >= it[0] - 30:
                 it[0], it[1] = min(it[0], lo), max(it[1], hi)
-                return
-        intervals.append([lo, hi])
+                break
+        else:
+            intervals.append([lo, hi])
+
+        vecs = [c.clip_vec for c in buf if c.clip_vec is not None]
+        if not vecs:
+            return
+        mean = np.mean(np.stack(vecs), axis=0)
+        mean = mean / max(1e-9, float(np.linalg.norm(mean)))
+        anchor = self.anchors.get(source)
+        if anchor is None:
+            self.anchors[source] = {"clip": mean.astype(np.float32)}
+        else:  # trung bình dần qua các lần xác nhận
+            merged = anchor["clip"] + mean
+            anchor["clip"] = (merged / max(1e-9, float(np.linalg.norm(merged)))).astype(np.float32)
 
     def _flush(self, tid: int, buf: list[Candidate]) -> None:
         if not buf:
@@ -374,6 +386,7 @@ class Pipeline:
         frame_idx = 0
         n_persons = 0
         cuts = 0
+        scene = 0
         prev_hist = None
         started = time.time()
         duration = video_duration(path)
@@ -396,6 +409,7 @@ class Pipeline:
                     self._flush(tid, buffers.pop(tid))
                 tracker = IoUTracker(max_age=max_age)
                 cuts += 1
+                scene += 1
             prev_hist = hist
 
             persons = self.detector.detect(frame)
@@ -406,7 +420,7 @@ class Pipeline:
                     self.stats.persons += 1
                     others = [p for j, p in enumerate(persons) if j != i]
                     cand = self._match_person(frame, person, t, frame_idx, str(path),
-                                              "video", tid, others)
+                                              "video", tid, others, scene)
                     if cand is not None:
                         self.stats.candidates += 1
                         self._add(tid, buffers[tid], cand)
@@ -486,10 +500,15 @@ class Pipeline:
                 log(f"đã xoá {len(old)} ảnh cũ trong {cfg.crops_dir}")
         cands = dedupe(self.accepted, cfg.dup_sim, cfg.min_gap)
         before = len(cands)
-        cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose)
-        if len(cands) != before:
-            log(f"lọc đa dạng (yaw {cfg.min_yaw}°, pose {cfg.min_pose}): "
+        if cfg.select == "coverage":
+            cands = coverage_pick(cands, cfg.per_bucket)
+            log(f"chọn theo độ phủ góc (tối đa {cfg.per_bucket} ảnh/nhóm): "
                 f"{before} → {len(cands)} ảnh")
+        else:
+            cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose)
+            if len(cands) != before:
+                log(f"lọc đa dạng (yaw {cfg.min_yaw}°, pose {cfg.min_pose}): "
+                    f"{before} → {len(cands)} ảnh")
         if cfg.limit and cfg.limit < len(cands):
             cands = pick_diverse(cands, cfg.limit)
             cands.sort(key=lambda c: (c.source, c.t))

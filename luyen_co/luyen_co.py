@@ -86,11 +86,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--min-pose", type=float, default=0.10,
                    help="chênh pose (keypoint chuẩn hoá, 0–1) tối thiểu để giữ thêm một ảnh; "
                         "đặt 0 để tắt lọc đa dạng")
-    g.add_argument("--confirm-window", type=float, default=30.0,
-                   help="giây: nếu camera vừa xác nhận mặt trong khoảng này thì nhận cả frame "
-                        "quay lưng (0 = tắt)")
-    g.add_argument("--confirm-body-th", type=float, default=0.55,
-                   help="ngưỡng body cho frame quay lưng trong cửa sổ xác nhận")
+    g.add_argument("--confirm-window", type=float, default=0.0,
+                   help="giây: giới hạn khoảng cách tới mốc đã khớp mặt khi nhận frame quay lưng "
+                        "(0 = không giới hạn, dựa vào neo ngoại hình của cả video)")
+    g.add_argument("--anchor-th", type=float, default=0.60,
+                   help="cosine tối thiểu với neo ngoại hình của video khi nhận frame quay lưng")
+    g.add_argument("--select", choices=["coverage", "diversity"], default="coverage",
+                   help="coverage = đảm bảo đủ góc (mặt trái/phải/thẳng + sau lưng); "
+                        "diversity = chỉ giữ frame khác nhau quá ngưỡng --min-yaw/--min-pose")
+    g.add_argument("--per-bucket", type=int, default=2,
+                   help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage")
 
     g = p.add_argument_group("lọc trùng & đa dạng")
     g.add_argument("--dup-sim", type=float, default=0.97, help="cosine coi là trùng hẳn (bỏ bớt)")
@@ -133,7 +138,8 @@ def main(argv: list[str] | None = None) -> int:
         max_other_area=args.max_other_area,
         crop_margin=args.crop_margin, save=args.save,
         min_yaw=args.min_yaw, min_pose=args.min_pose, dup_sim=args.dup_sim,
-        confirm_window=args.confirm_window, confirm_body_th=args.confirm_body_th,
+        confirm_window=args.confirm_window, anchor_th=args.anchor_th,
+        select=args.select, per_bucket=args.per_bucket,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
         skip_ref=not args.include_ref,

@@ -29,6 +29,7 @@ class Candidate:
     full_jpeg: bytes | None = None # nguyên frame (giữ bối cảnh) nếu --save full/both
     src_w: int = 0                 # kích thước frame gốc
     src_h: int = 0
+    scene: int = 0                 # chỉ số cảnh (cắt cảnh) trong video
     color_sim: float = -1.0        # tương quan histogram màu áo/quần với tham chiếu
     staged: "Path | None" = None   # file tạm trên đĩa (giải phóng RAM cho video dài)
     kpts: np.ndarray | None = None

@@ -9,7 +9,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from core.select import dedupe, diverse_gate, head_pose, pick_diverse, pose_vector
+from core.select import (coverage_pick, dedupe, diverse_gate, head_pose, pick_diverse,
+                         pose_vector, yaw_bucket)
 from core.tracker import IoUTracker
 from core.types import Candidate
 from core.utils import expand_box, letterbox, nms, others_area_fraction
@@ -140,6 +141,23 @@ def test_diverse_gate_keeps_different_body_pose():
     b.pose_vec = np.ones(34, np.float32)   # dáng khác hẳn
     kept = diverse_gate([a, b], min_yaw=20.0, min_pose=0.15)
     assert len(kept) == 2
+
+
+def test_yaw_bucket_and_coverage():
+    front = make_cand(t=0.0, yaw=0.0)
+    left = make_cand(t=1.0, yaw=-40.0)
+    right = make_cand(t=2.0, yaw=50.0)
+    back = make_cand(t=3.0, yaw=0.0)
+    back.face_sim = -1.0                      # không thấy mặt
+    assert yaw_bucket(front) == "thẳng"
+    assert yaw_bucket(left) == "trái nhiều"
+    assert yaw_bucket(right) == "phải nhiều"
+    assert yaw_bucket(back) == "sau lưng"
+
+    picked = coverage_pick([front, left, right, back], per_bucket=1)
+    # mỗi nhóm góc còn 1 ảnh, gồm cả ảnh sau lưng
+    assert len(picked) == 4
+    assert back in picked
 
 
 def test_pick_diverse_returns_distinct():
