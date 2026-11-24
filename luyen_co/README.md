@@ -137,6 +137,7 @@ chính frame phim làm ảnh tham chiếu:
 | Clip 60 s, ref = mặt nhân vật nữ | 121 frame → 16 track → 19 ảnh, đúng người, yaw trải +31°…−90° |
 | Clip đông người (3–7 người/frame) | 16 ảnh, crop đúng nhân vật trong đám đông, không lẫn người khác |
 | Ref phim A quét cả phim A + phim B | 16 ảnh đều của phim A, **0 ảnh** từ phim B |
+| 2 bản upload khác nhau của cùng bài diễn văn (480p), cùng folder có clip đám đông | 112 ảnh đúng người (mặt 0,47–0,55 vì ref chỉ 57 px), **0 ảnh** từ clip đám đông; `--limit 24` ra bộ 24 ảnh trải đều 2 video |
 | Folder rỗng / video hỏng / ảnh hỏng | báo lỗi hoặc bỏ qua, không crash |
 | Đường dẫn có dấu tiếng Việt + `--recursive` | chạy đúng |
 | Ref không có mặt (chỉ thân) | cảnh báo, tự chuyển sang so khớp toàn thân |
