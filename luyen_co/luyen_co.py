@@ -118,6 +118,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="hai ảnh CÙNG BÊN quay + cùng cỡ cảnh + cosine ngoại hình ≥ mức này "
                         "thì coi là trùng (bắt ca cùng váy/bối cảnh chỉ khác góc đầu vài chục "
                         "độ); 0 = tắt")
+    g.add_argument("--no-copy-gate", action="store_true",
+                   help="tắt cổng chặn ảnh trùng thật bằng khớp hình học (SIFT + RANSAC) — "
+                        "cổng này chạy xuyên mọi nguồn nên bắt được cả ảnh re-up từ kênh khác")
+    g.add_argument("--copy-min-inl", type=int, default=45,
+                   help="số điểm khớp tối thiểu (sau RANSAC) để coi là trùng, cặp CÙNG nguồn; "
+                        "đo trên obj_1: cặp trùng thật 46–77, cặp không trùng ≤ 39")
+    g.add_argument("--copy-min-ratio", type=float, default=0.06,
+                   help="sàn tỉ lệ inlier trên số keypoint ít hơn, cặp CÙNG nguồn "
+                        "(chỉ để chặn ca suy biến; tín hiệu chính là inlier tuyệt đối)")
     g.add_argument("--shot-per-bucket", type=int, default=0,
                    help="giới hạn số ảnh cho mỗi ô (nhóm góc × cỡ cảnh: đặc tả/cận cảnh/"
                         "trung cận/trung cảnh/toàn thân/viễn cảnh); 0 = tắt. "
@@ -190,6 +199,8 @@ def main(argv: list[str] | None = None) -> int:
         confirm_window=args.confirm_window, anchor_th=args.anchor_th,
         select=args.select, per_bucket=args.per_bucket,
         shot_per_bucket=args.shot_per_bucket, near_dup_th=args.near_dup_th,
+        copy_gate=not args.no_copy_gate,
+        copy_min_inl=args.copy_min_inl, copy_min_ratio=args.copy_min_ratio,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
         body_only_low=args.body_only_low, body_only_rel=args.body_only_rel,

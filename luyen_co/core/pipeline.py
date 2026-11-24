@@ -29,6 +29,7 @@ import cv2
 
 from .arcface import FaceEmbedder, cosine
 from .frames import iter_video, list_inputs, video_duration
+from .copygate import copy_veto
 from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
@@ -61,6 +62,11 @@ class Config:
     spark_ratio: float = 4.0        # bỏ frame lấp lánh > ratio × trung vị cùng cảnh
     blur_ratio: float = 0.25        # bỏ frame mờ < ratio × trung vị cùng cảnh
     near_dup_th: float = 0.84       # cùng bên + cùng cỡ cảnh + CLIP ≥ mức này = trùng
+    copy_gate: bool = True          # bỏ ảnh trùng thật (SIFT + RANSAC), xuyên nguồn
+    copy_min_inl: int = 45          # inlier tối thiểu cho cặp CÙNG nguồn
+    copy_min_ratio: float = 0.06    # sàn tỉ lệ inlier (chặn ca suy biến) — CÙNG nguồn
+    copy_cross_min_inl: int = 40    # inlier tối thiểu cho cặp KHÁC nguồn (nén lại)
+    copy_cross_min_ratio: float = 0.05  # sàn tỉ lệ inlier — KHÁC nguồn
     crop_margin: float = 0.12
     save: str = "full"              # full | crop | both
     min_yaw: float = 25.0           # chênh góc camera tối thiểu giữa 2 ảnh giữ lại
@@ -676,6 +682,17 @@ class Pipeline:
                     f"góc khớp < {cfg.min_pose_deg:.0f}° / max < {cfg.min_pose_max_deg:.0f}°, "
                     f"pose < {cfg.min_pose:.2f}; hoặc cùng bên + CLIP ≥ {cfg.near_dup_th:.2f}): "
                     f"{n_before} → {len(cands)} ảnh")
+        if cfg.copy_gate:
+            n_before = len(cands)
+            cands, copies = copy_veto(cands, cfg.copy_min_inl, cfg.copy_min_ratio,
+                                      cfg.copy_cross_min_inl, cfg.copy_cross_min_ratio)
+            self.copy_gate = (n_before, len(cands), copies)
+            if copies:
+                cross = sum(1 for c, k, _ in copies if c.source != k.source)
+                log(f"bỏ ảnh trùng thật (khớp hình học SIFT + RANSAC, xuyên nguồn): "
+                    f"{n_before} → {len(cands)} ảnh ({len(copies)} cặp, "
+                    f"{cross} cặp khác nguồn)")
+                self._save_copy_pairs(cfg, copies)
         if cfg.limit and cfg.limit < len(cands):
             cands = pick_diverse(cands, cfg.limit)
             cands.sort(key=lambda c: (c.source, c.t))
@@ -705,6 +722,35 @@ class Pipeline:
         self._write_report()
         self._write_sheet(rows)
         return rows
+
+    @staticmethod
+    def _save_copy_pairs(cfg: "Config", copies: list[tuple[Candidate, Candidate, int]]) -> None:
+        """Ghi lại **bằng chứng** các cặp bị bỏ, để soi lại bằng mắt.
+
+        Lưu ảnh bị bỏ vào `dropped_copies/` và bảng `copy_pairs.txt` (inlier,
+        nguồn/thời điểm của ảnh bị bỏ và ảnh được giữ). Không có bước này thì
+        người dùng chỉ thấy con số "110 → 98" mà không kiểm chứng được cổng có
+        bỏ oan ảnh tốt hay không.
+        """
+        folder = cfg.out / "dropped_copies"
+        folder.mkdir(parents=True, exist_ok=True)
+        lines = ["inlier\tbo\tgiu"]
+        used: set[str] = set()
+        for c, k, inl in sorted(copies, key=lambda p: (p[0].source, p[0].t)):
+            stem = _safe(Path(c.source).stem)
+            base = (f"{stem}__img" if c.kind == "image"
+                    else f"{stem}__{int(round(c.t * 1000)):09d}ms__t{c.track_id:03d}")
+            dst = Pipeline._alloc(folder, base, used)
+            src = c.staged if (c.staged is not None and Path(c.staged).exists()) else None
+            if src is not None:
+                dst.write_bytes(Path(src).read_bytes())
+            elif c.jpeg:
+                dst.write_bytes(c.jpeg)
+            kname = (f"{Path(k.source).stem}__img" if k.kind == "image"
+                     else f"{Path(k.source).stem}__{int(round(k.t * 1000)):09d}ms")
+            lines.append(f"{inl}\t{Path(c.source).name}@{c.t:.1f}s\t{Path(k.source).name}@{k.t:.1f}s"
+                         f"\t{dst.name}\t{kname}")
+        (cfg.out / "copy_pairs.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     @staticmethod
     def _alloc(folder: Path, base: str, used: set[str]) -> Path:
@@ -834,6 +880,13 @@ class Pipeline:
                          f"< {cfg.min_pose_deg:.0f}° và max < {cfg.min_pose_max_deg:.0f}°, "
                          f"góc quay < {cfg.min_yaw:.0f}°, pose < {cfg.min_pose:.2f}): "
                          f"{gate[0]} → {gate[1]} ảnh")
+        gate = getattr(self, "copy_gate", None)
+        if gate and gate[0] != gate[1]:
+            cross = sum(1 for c, k, _ in gate[2] if c.source != k.source)
+            lines.append("")
+            lines.append(f"bỏ ảnh trùng thật (khớp hình học SIFT + RANSAC trên chính "
+                         f"crop người, xuyên mọi nguồn): {gate[0]} → {gate[1]} ảnh "
+                         f"({len(gate[2])} cặp, {cross} cặp khác nguồn)")
         lines.append("")
         lines.append("độ phủ góc đầu của ảnh đã chọn:")
         lines.extend(f"  {label:12s} {n:5d}" for label, n in yaw_histogram(self.selected_cands))

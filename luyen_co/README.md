@@ -226,6 +226,35 @@ hình ≥ `--near-dup-th`** (mặc định 0.84) ⇒ coi là trùng, giữ ảnh
 - Muốn giữ nhiều hơn thì nâng `--near-dup-th` (0.90 = gần như chỉ gộp ảnh trùng
   hẳn); đặt 0 để tắt luật này.
 
+### Ảnh trùng thật: khớp hình học, chạy xuyên mọi nguồn
+
+Ba trục hình học ở trên trả lời *"hai ảnh trông giống nhau tới mức nào"* — một
+phép đo mềm, mỗi trục có vùng biên riêng, và hai ảnh chỉ cần lệch **một** trục là
+thoát. Bước cuối `copy_veto` (`core/copygate.py`) hỏi câu khác: *"hai ảnh này có
+phải cùng một khung hình không?"* — và trả lời bằng **bằng chứng hình học**: đếm
+số điểm SIFT khớp còn đúng sau khi ước lượng homography bằng RANSAC.
+
+- **Chạy xuyên mọi nguồn** — đây là điểm quan trọng nhất. Cả 4 bước dedupe khác
+  đều scope theo `source`, nên cùng một tấm ảnh nằm ở 2 kênh re-up là cặp trùng
+  mà pipeline **không thể thấy**. Đo trên obj_1: 3 cặp như vậy (190 / 198 / 61
+  inlier) nằm giữa `1750170793` ↔ `kimphung_makeup`, `1750171394` ↔ `DUV66d-Aegl`.
+- **Không dùng CLIP** cho việc này: CLIP là embedding *ngoại hình*, không phải bộ
+  dò bản sao. Đo trên 110 ảnh: tương quan hạng CLIP ↔ inlier SIFT chỉ **+0.25**;
+  3/5 cặp trùng thật có CLIP 0.745–0.832 (dưới ngưỡng 0.84), trong khi 89 cặp
+  **không** trùng có CLIP ≥ 0.84.
+- **Ngưỡng** (`--copy-min-inl`, mặc định 45): đo trên obj_1, cặp trùng thật 46–77
+  inlier, cặp không trùng ≤ 39. Cặp khác nguồn dùng ngưỡng riêng 40 vì đã qua
+  nén lại (`--copy-min-ratio` chỉ để chặn ca suy biến, không phải tín hiệu chính).
+- **Chặn gộp oan vì phông nền**: SIFT khớp được cả nền, nên hai frame cùng bối
+  cảnh mà người đổi dáng vẫn cho 40–90 inlier (đo được: cặp sofa 87 inlier, hai
+  dáng ngồi khác hẳn). Vì vậy nếu **dáng khác quá** (lệch trung bình ≥ 12° hoặc
+  lệch lớn nhất ≥ 30°) thì không gộp, dù hình học khớp.
+- **Kiểm chứng được**: cổng ghi `copy_pairs.txt` (inlier + nguồn/thời điểm của
+  ảnh bị bỏ và ảnh được giữ) và lưu ảnh bị bỏ vào `dropped_copies/`; dựng
+  `sheet_copy.jpg` để soi từng cặp.
+- Đo trên obj_1: 110 → **99 ảnh**, 11 cặp bị bỏ. Tắt bằng `--no-copy-gate`.
+- Chi phí: ~14 s cho 110 ảnh (SIFT 512 điểm/ảnh, cạnh dài 384).
+
 ## Cài đặt
 Windows + GPU rời (DirectML, **không cần** cài CUDA/cuDNN):
 
@@ -270,6 +299,9 @@ Tham số đáng chú ý:
 | `--min-blur` | 25 | phương sai Laplacian tối thiểu — bỏ frame nhoè |
 | `--face-sharp-ratio` | 0.35 | bỏ frame mà vùng **mặt** mờ dưới `ratio × trung vị cùng cảnh` — bắt frame chuyển cảnh chồng mờ (0 = tắt) |
 | `--near-dup-th` | 0.84 | cùng bên quay + cùng cỡ cảnh + cosine ngoại hình ≥ mức này thì coi là trùng; 0 = tắt |
+| `--no-copy-gate` | tắt | **tắt** cổng chặn ảnh trùng thật (SIFT + RANSAC). Cổng này chạy xuyên mọi nguồn nên bắt được ảnh re-up từ kênh khác |
+| `--copy-min-inl` | 45 | số điểm khớp tối thiểu sau RANSAC để coi là trùng (cặp cùng nguồn); đo trên obj_1: trùng thật 46–77, không trùng ≤ 39 |
+| `--copy-min-ratio` | 0.06 | sàn tỉ lệ inlier trên số keypoint ít hơn — chỉ để chặn ca suy biến |
 | `--min-person-score` | 0.5 | ngưỡng tin cậy detection người — tăng để bớt vật thể giống người |
 | `--max-overlap` | 0.35 | bỏ frame có người khác chồng lên người mục tiêu quá IoU này |
 | `--max-other-area` | 0.10 | bỏ frame mà người khác chiếm quá 10% diện tích crop (giữ đúng "1 ảnh 1 người") |
