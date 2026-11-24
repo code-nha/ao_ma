@@ -106,6 +106,34 @@ def dedupe(cands: list[Candidate], dup_sim: float = 0.97, min_gap: float = 0.35)
     return kept
 
 
+def diverse_gate(cands: list[Candidate], min_yaw: float = 12.0,
+                 min_pose: float = 0.08) -> list[Candidate]:
+    """Chỉ giữ frame khác biệt đủ rõ so với các frame đã giữ (cùng nguồn).
+
+    Một frame bị bỏ khi VỪA gần góc đầu VÀ gần dáng so với một frame đã giữ —
+    tức là hai ảnh gần như cùng một tư thế. Thực tế chỉ cần vài ảnh khác nhau
+    làm bằng chứng nhận dạng, không cần 20 ảnh cùng một pose.
+    """
+    if min_yaw <= 0 and min_pose <= 0:
+        return list(cands)
+    kept: list[Candidate] = []
+    for c in sorted(cands, key=lambda x: (x.source, x.t)):
+        drop = False
+        for k in kept:
+            if k.source != c.source:
+                continue
+            yaw_d = math.hypot(c.yaw - k.yaw, c.pitch - k.pitch)
+            pose_d = 1.0
+            if c.pose_vec is not None and k.pose_vec is not None:
+                pose_d = float(np.mean(np.abs(c.pose_vec - k.pose_vec)))
+            if yaw_d < min_yaw and pose_d < min_pose:
+                drop = True
+                break
+        if not drop:
+            kept.append(c)
+    return kept
+
+
 def pick_diverse(cands: list[Candidate], n: int, pose_weight: float = 1.0,
                  clip_weight: float = 1.0) -> list[Candidate]:
     """Chọn n frame phủ đa dạng nhất bằng greedy farthest-point sampling."""

@@ -6,9 +6,10 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 
 - **Đầu vào:** 1 folder chứa ảnh và/hoặc video, + 1 ảnh tham chiếu rõ nhất của
   người cần tìm.
-- **Đầu ra:** `crops/` (mỗi frame 1 ảnh, 1 người), `metadata.jsonl` (nguồn, giây,
-  bbox, điểm khớp mặt/toàn thân, góc đầu, pose), `report.csv`, `summary.txt`,
-  `sheet.jpg` (bảng ảnh xem nhanh).
+- **Đầu ra:** `crops/` (**mặc định là nguyên frame** — giữ bối cảnh để biết người
+  đó ở đâu, truy ra camera nào; `--save both` để có thêm ảnh crop quanh người),
+  `metadata.jsonl` (nguồn, giây, bbox, điểm khớp, góc đầu, pose), `report.csv`,
+  `summary.txt`, `sheet.jpg` (bảng ảnh xem nhanh).
 
 ## Cách hoạt động
 
@@ -34,10 +35,14 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 4. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, khuyến nghị nâng
    `--body-th`.
 
-Sau đó: lọc chất lượng (chiều cao người, độ nét Laplacian, ngưỡng tin cậy
-detection) → lọc trùng (cách nhau < `--min-gap` giây trong cùng track, hoặc
-`clip_sim ≥ --dup-sim`) → tuỳ chọn chọn `--limit N` frame đa dạng nhất bằng
-greedy farthest-point trên vector [góc đầu, 17 keypoint chuẩn hoá, CLIP].
+Trước khi ghi ảnh còn một bước **lọc đa dạng**: một frame bị bỏ nếu **vừa** gần
+góc đầu (`< --min-yaw` độ) **vừa** gần dáng (`< --min-pose`) so với frame đã giữ
+trong cùng nguồn. Mục đích không phải lấy thật nhiều ảnh, mà lấy **vài ảnh khác
+nhau làm bằng chứng nhận dạng** (thẳng / trái / phải / nghiêng / quay lưng /
+toàn thân ở xa). Đặt `--min-yaw 0 --min-pose 0` để tắt.
+
+Sau đó mới lọc trùng (`--dup-sim`, `--min-gap`) và tuỳ chọn `--limit N` (greedy
+farthest-point trên vector [góc đầu, 17 keypoint, CLIP]).
 
 ## Cài đặt
 
@@ -87,6 +92,9 @@ Tham số đáng chú ý:
 | `--max-other-area` | 0.10 | bỏ frame mà người khác chiếm quá 10% diện tích crop (giữ đúng "1 ảnh 1 người") |
 | `--dup-sim` | 0.97 | cosine coi là trùng hẳn |
 | `--min-gap` | 0.35 | giây tối thiểu giữa 2 ảnh cùng track |
+| `--save` | full | `full` = nguyên frame (có bối cảnh), `crop` = chỉ quanh người, `both` = cả hai |
+| `--min-yaw` | 20 | chênh góc đầu tối thiểu (độ) để giữ thêm ảnh |
+| `--min-pose` | 0.15 | chênh dáng (keypoint chuẩn hoá) tối thiểu để giữ thêm ảnh; 0 = tắt lọc đa dạng |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |

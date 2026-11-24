@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from core.select import dedupe, head_pose, pick_diverse, pose_vector
+from core.select import dedupe, diverse_gate, head_pose, pick_diverse, pose_vector
 from core.tracker import IoUTracker
 from core.types import Candidate
 from core.utils import expand_box, letterbox, nms, others_area_fraction
@@ -124,6 +124,22 @@ def test_tile_slices_cover_frame():
                 if (cy, cx) in corners:
                     covered.add((cy, cx))
     assert covered == corners
+
+
+def test_diverse_gate_drops_same_pose_keeps_other_angle():
+    a = make_cand(t=0.0, yaw=0.0)
+    b = make_cand(t=1.0, yaw=5.0)          # cùng dáng, góc lệch < 20° → bỏ
+    c = make_cand(t=2.0, yaw=35.0)         # góc lệch đủ → giữ
+    kept = diverse_gate([a, b, c], min_yaw=20.0, min_pose=0.15)
+    assert [k.t for k in kept] == [0.0, 2.0]
+
+
+def test_diverse_gate_keeps_different_body_pose():
+    a = make_cand(t=0.0, yaw=0.0)
+    b = make_cand(t=1.0, yaw=0.0)
+    b.pose_vec = np.ones(34, np.float32)   # dáng khác hẳn
+    kept = diverse_gate([a, b], min_yaw=20.0, min_pose=0.15)
+    assert len(kept) == 2
 
 
 def test_pick_diverse_returns_distinct():

@@ -32,7 +32,8 @@ from .frames import iter_video, list_inputs, video_duration
 from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
-from .select import dedupe, head_pose, pick_diverse, pose_vector, yaw_histogram
+from .select import (dedupe, diverse_gate, head_pose, pick_diverse, pose_vector,
+                     yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -54,6 +55,9 @@ class Config:
     max_other_area: float = 0.10
     min_blur: float = 25.0
     crop_margin: float = 0.12
+    save: str = "full"              # full | crop | both
+    min_yaw: float = 20.0           # chênh góc đầu tối thiểu (độ) giữa 2 ảnh giữ lại
+    min_pose: float = 0.15          # chênh pose keypoint tối thiểu (0–1)
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -120,6 +124,7 @@ class Pipeline:
         self._ref_path = cfg.ref.resolve()
         self._staging = cfg.out / ".staging"
         self._stage_idx = 0
+        self._frame_cache: tuple[tuple[str, int], bytes] | None = None
         self._load_ref()
 
     # ------------------------------------------------------------------ tham chiếu
@@ -215,13 +220,21 @@ class Pipeline:
         body_sim = cosine(self.ref_body, clip_vec)
         color_sim = hist_similarity(self.ref_torso, torso_hist(tight)) if tight.size else -1.0
 
+        full_jpeg = None
+        if self.cfg.save in ("full", "both"):
+            key = (source, frame_idx)
+            if self._frame_cache is None or self._frame_cache[0] != key:
+                self._frame_cache = (key, encode_jpeg(frame, 92))
+            full_jpeg = self._frame_cache[1]
+
         return Candidate(
             source=source, kind=kind, t=float(t), frame_idx=frame_idx, track_id=track_id,
             box=person.box, person_score=person.score, face_sim=face_sim, body_sim=body_sim,
             color_sim=color_sim,
             yaw=float(yaw), pitch=float(pitch), blur=float(blur), person_h=person_h,
             jpeg=encode_jpeg(crop, self.cfg.jpeg_quality),
-            kpts=person.kpts, clip_vec=clip_vec,
+            kpts=person.kpts, clip_vec=clip_vec, full_jpeg=full_jpeg,
+            src_w=int(w), src_h=int(h),
             pose_vec=pose_vector(person.kpts, person.box),
         )
 
@@ -434,32 +447,34 @@ class Pipeline:
             if old:
                 log(f"đã xoá {len(old)} ảnh cũ trong {cfg.crops_dir}")
         cands = dedupe(self.accepted, cfg.dup_sim, cfg.min_gap)
+        before = len(cands)
+        cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose)
+        if len(cands) != before:
+            log(f"lọc đa dạng (yaw {cfg.min_yaw}°, pose {cfg.min_pose}): "
+                f"{before} → {len(cands)} ảnh")
         if cfg.limit and cfg.limit < len(cands):
             cands = pick_diverse(cands, cfg.limit)
             cands.sort(key=lambda c: (c.source, c.t))
         self.selected_cands = cands
         self.stats.selected = len(cands)
 
-        rows: list[tuple[Candidate, Path]] = []
+        rows: list[tuple[Candidate, Path, Path | None]] = []
         used: set[str] = set()
         for c in cands:
             stem = _safe(Path(c.source).stem)
-            if c.kind == "image":
-                name = f"{stem}__img.jpg"
-            else:
-                name = f"{stem}__{int(round(c.t * 1000)):09d}ms__t{c.track_id:03d}.jpg"
-            base, name = name, name
-            n = 1
-            while name in used:
-                n += 1
-                name = f"{base[:-4]}_{n}.jpg"
-            used.add(name)
-            dst = cfg.crops_dir / name
-            if c.staged is not None and c.staged.exists():
-                c.staged.replace(dst)
-            else:
-                dst.write_bytes(c.jpeg)
-            rows.append((c, dst))
+            base = (f"{stem}__img" if c.kind == "image"
+                    else f"{stem}__{int(round(c.t * 1000)):09d}ms__t{c.track_id:03d}")
+            full_path = crop_path = None
+            if cfg.save in ("full", "both") and c.full_jpeg:
+                full_path = self._alloc(cfg.crops_dir, base, used)
+                full_path.write_bytes(c.full_jpeg)
+            if cfg.save in ("crop", "both") or (cfg.save == "full" and not c.full_jpeg):
+                crop_path = self._alloc(cfg.crops_dir, base + "__crop" if cfg.save == "both" else base, used)
+                if c.staged is not None and c.staged.exists():
+                    c.staged.replace(crop_path)
+                else:
+                    crop_path.write_bytes(c.jpeg)
+            rows.append((c, full_path or crop_path, crop_path))
         shutil.rmtree(self._staging, ignore_errors=True)
 
         self._write_metadata(rows)
@@ -467,12 +482,23 @@ class Pipeline:
         self._write_sheet(rows)
         return rows
 
-    def _write_metadata(self, rows: list[tuple[Candidate, Path]]) -> None:
+    @staticmethod
+    def _alloc(folder: Path, base: str, used: set[str]) -> Path:
+        """Tên file không trùng (thêm _2, _3… nếu cần)."""
+        name = f"{base}.jpg"
+        n = 1
+        while name in used:
+            n += 1
+            name = f"{base}_{n}.jpg"
+        used.add(name)
+        return folder / name
+
+    def _write_metadata(self, rows: list[tuple[Candidate, Path, Path | None]]) -> None:
         import json
 
         with open(self.cfg.out / "metadata.jsonl", "w", encoding="utf-8") as fh:
-            for c, dst in rows:
-                fh.write(json.dumps({
+            for c, dst, crop_path in rows:
+                rec = {
                     "path": str(dst.relative_to(self.cfg.out)).replace("\\", "/"),
                     "source": c.source, "kind": c.kind, "t": round(c.t, 3),
                     "frame": c.frame_idx, "track": c.track_id,
@@ -484,7 +510,12 @@ class Pipeline:
                     "yaw": round(c.yaw, 1), "pitch": round(c.pitch, 1),
                     "blur": round(c.blur, 1), "person_h": c.person_h,
                     "crop_margin": self.cfg.crop_margin,
-                }, ensure_ascii=False) + "\n")
+                    "src_width": c.src_w,
+                    "src_height": c.src_h,
+                }
+                if crop_path is not None and crop_path != dst:
+                    rec["crop_path"] = str(crop_path.relative_to(self.cfg.out)).replace("\\", "/")
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
     def _calibration_lines(self) -> list[str]:
         """Bảng ước lượng số frame nhận được ở các ngưỡng khác nhau.
@@ -563,14 +594,14 @@ class Pipeline:
             for src, n in by_source.items():
                 w.writerow([src, n])
 
-    def _write_sheet(self, rows: list[tuple[Candidate, Path]]) -> None:
+    def _write_sheet(self, rows: list[tuple[Candidate, Path, Path | None]]) -> None:
         if not self.cfg.sheet or not rows:
             return
         cols, cell, pad = 6, 180, 24
         items = rows[: self.cfg.sheet]
         n_rows = math.ceil(len(items) / cols)
         sheet = np.full((n_rows * (cell + pad + 14), cols * cell, 3), 255, np.uint8)
-        for i, (c, dst) in enumerate(items):
+        for i, (c, dst, _crop) in enumerate(items):
             img = cv2.imdecode(np.fromfile(str(dst), np.uint8), cv2.IMREAD_COLOR)
             if img is None:
                 continue

@@ -77,6 +77,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--min-blur", type=float, default=25.0, help="phương sai Laplacian tối thiểu (chống ảnh mờ)")
     g.add_argument("--crop-margin", type=float, default=0.12, help="nới bbox khi crop (tỉ lệ cạnh)")
 
+    g = p.add_argument_group("xuất ảnh")
+    g.add_argument("--save", choices=["full", "crop", "both"], default="full",
+                   help="full = giữ nguyên frame (có bối cảnh, dễ truy ra camera nào); "
+                        "crop = chỉ ảnh quanh người; both = cả hai")
+    g.add_argument("--min-yaw", type=float, default=20.0,
+                   help="chênh góc đầu tối thiểu (độ) để giữ thêm một ảnh")
+    g.add_argument("--min-pose", type=float, default=0.15,
+                   help="chênh pose (keypoint chuẩn hoá, 0–1) tối thiểu để giữ thêm một ảnh; "
+                        "đặt 0 để tắt lọc đa dạng")
+
     g = p.add_argument_group("lọc trùng & đa dạng")
     g.add_argument("--dup-sim", type=float, default=0.97, help="cosine coi là trùng hẳn (bỏ bớt)")
     g.add_argument("--min-gap", type=float, default=0.35, help="khoảng cách giây tối thiểu giữa 2 ảnh cùng track")
@@ -116,7 +126,8 @@ def main(argv: list[str] | None = None) -> int:
         min_person=args.min_person, min_blur=args.min_blur,
         min_person_score=args.min_person_score, max_overlap=args.max_overlap,
         max_other_area=args.max_other_area,
-        crop_margin=args.crop_margin, dup_sim=args.dup_sim,
+        crop_margin=args.crop_margin, save=args.save,
+        min_yaw=args.min_yaw, min_pose=args.min_pose, dup_sim=args.dup_sim,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
         skip_ref=not args.include_ref,
