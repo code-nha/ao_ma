@@ -32,10 +32,10 @@ from .frames import iter_video, list_inputs, video_duration
 from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
-from .select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate,
-                     drop_similar, drop_tiny_frames, head_pose,
-                     keep_best_body_tracks, pick_diverse, pose_vector, yaw_bucket,
-                     yaw_histogram)
+from .select import (SHOT_ABBR, coverage_pick, dedupe, distinct_pose_pick,
+                     diverse_gate, drop_similar, drop_tiny_frames, feet_visible, head_pose,
+                     keep_best_body_tracks, pick_diverse, pose_vector, shot_coverage_pick,
+                     shot_histogram, shot_scale, yaw_bucket, yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -64,6 +64,7 @@ class Config:
     anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
     select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
     per_bucket: int = 3             # số ảnh tối đa mỗi nhóm góc (coverage); bước lọc tư thế sẽ tỉa
+    shot_per_bucket: int = 0        # >0: giới hạn số ảnh mỗi ô (nhóm góc × cỡ cảnh)
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -230,6 +231,7 @@ class Pipeline:
         ctx = crop_xyxy(frame, ctx_box)
         faces = self.face_det.detect(ctx) if ctx.size else []
         best_face, face_sim = None, -1.0
+        face_px, face_box = 0, None
         yaw = pitch = 0.0
         if faces:
             def rank(f):
@@ -240,6 +242,12 @@ class Pipeline:
             emb = self.face_emb.embed_face(ctx, best_face.kps)
             face_sim = max((cosine(r, emb) for r in self.ref_faces), default=-1.0)
             yaw, pitch = head_pose(best_face.kps)
+            # kích thước mặt theo pixel frame gốc — cần cho nhãn cỡ cảnh (shot scale):
+            # SCRFD chạy trên ảnh `ctx` cắt 1:1 nên chỉ cần cộng gốc toạ độ
+            face_px = int(max(best_face.box[2] - best_face.box[0],
+                              best_face.box[3] - best_face.box[1]))
+            ox, oy = int(round(ctx_box[0])), int(round(ctx_box[1]))
+            face_box = best_face.box + np.array([ox, oy, ox, oy], dtype=np.float32)
 
         tight = crop_xyxy(frame, person.box)
         clip_vec = self.body_emb.embed(tight) if tight.size else None
@@ -262,6 +270,7 @@ class Pipeline:
             kpts=person.kpts, clip_vec=clip_vec, full_jpeg=full_jpeg,
             src_w=int(w), src_h=int(h), scene=int(scene),
             pose_vec=pose_vector(person.kpts, person.box),
+            face_px=face_px, face_box=face_box,
         )
 
     def _body_ok(self, c: Candidate, th: float | None = None,
@@ -620,6 +629,13 @@ class Pipeline:
             if len(cands) != before:
                 log(f"lọc đa dạng (yaw {cfg.min_yaw}°, pose {cfg.min_pose}): "
                     f"{before} → {len(cands)} ảnh")
+        if cfg.shot_per_bucket > 0:
+            n_before = len(cands)
+            cands = shot_coverage_pick(cands, cfg.shot_per_bucket)
+            self.shot_gate = (n_before, len(cands))
+            if len(cands) != n_before:
+                log(f"chọn theo cỡ cảnh (tối đa {cfg.shot_per_bucket} ảnh mỗi ô "
+                    f"góc × cỡ cảnh): {n_before} → {len(cands)} ảnh")
         if cfg.min_yaw > 0 or cfg.min_pose > 0:
             n_before = len(cands)
             cands = distinct_pose_pick(cands, cfg.min_yaw, cfg.min_pose)
@@ -684,6 +700,8 @@ class Pipeline:
                     "color_sim": round(c.color_sim, 4),
                     "yaw": round(c.yaw, 1), "pitch": round(c.pitch, 1),
                     "bucket": yaw_bucket(c),
+                    "shot": shot_scale(c), "face_px": c.face_px,
+                    "feet": feet_visible(c),
                     "blur": round(c.blur, 1), "person_h": c.person_h,
                     "crop_margin": self.cfg.crop_margin,
                     "src_width": c.src_w,
@@ -769,6 +787,20 @@ class Pipeline:
         lines.append("")
         lines.append("độ phủ góc đầu của ảnh đã chọn:")
         lines.extend(f"  {label:12s} {n:5d}" for label, n in yaw_histogram(self.selected_cands))
+        gate = getattr(self, "shot_gate", None)
+        if gate and gate[0] != gate[1]:
+            lines.append("")
+            lines.append(f"chọn theo cỡ cảnh (tối đa {cfg.shot_per_bucket} ảnh mỗi ô "
+                         f"góc × cỡ cảnh): {gate[0]} → {gate[1]} ảnh")
+        lines.append("")
+        lines.append("cỡ cảnh của ảnh đã chọn (đo theo kích thước mặt + phần thân thấy được):")
+        shot_hist = shot_histogram(self.selected_cands)
+        lines.extend(f"  {label:12s} {SHOT_ABBR[label]:4s} {n:5d}" for label, n in shot_hist)
+        missing = [label for label, n in shot_hist if n == 0]
+        if missing:
+            lines.append(f"  thiếu cỡ cảnh: {', '.join(missing)} — "
+                         f"muốn có phải thêm nguồn quay gần/xa hơn, "
+                         f"chạy lại không tự sinh ra được")
         (self.cfg.out / "summary.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
         by_source: dict[str, int] = defaultdict(int)
@@ -797,7 +829,7 @@ class Pipeline:
             r, col = divmod(i, cols)
             y0, x0 = r * (cell + pad + 14), col * cell
             sheet[y0:y0 + thumb.shape[0], x0:x0 + thumb.shape[1]] = thumb
-            label = f"{c.t:5.1f}s {yaw_bucket(c)}"
+            label = f"{c.t:5.1f}s {yaw_bucket(c)} {SHOT_ABBR[shot_scale(c)]}"
             cv2.putText(sheet, label, (x0 + 2, y0 + cell + 20), cv2.FONT_HERSHEY_SIMPLEX,
                         0.45, (30, 30, 30), 1, cv2.LINE_AA)
         write_image(self.cfg.out / "sheet.jpg", sheet, 90)

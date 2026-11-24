@@ -10,7 +10,7 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
   nhiều trang phục/góc khác nhau trong cùng khu vực.
 - **Đầu ra:** `crops/` (**mặc định là nguyên frame** — giữ bối cảnh để biết người
   đó ở đâu, truy ra camera nào; `--save both` để có thêm ảnh crop quanh người),
-  `metadata.jsonl` (nguồn, giây, bbox, điểm khớp, góc đầu, pose), `report.csv`,
+  `metadata.jsonl` (nguồn, giây, bbox, điểm khớp, góc đầu, cỡ cảnh, pose), `report.csv`,
   `summary.txt`, `sheet.jpg` (bảng ảnh xem nhanh).
 
 ## Cách hoạt động
@@ -54,15 +54,18 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 Sau khi lọc trùng, ảnh được chọn theo `--select`:
 
 - `coverage` (mặc định): nhóm theo **(nguồn, cảnh, góc)** — thẳng / trái / phải /
-  trái nhiều / phải nhiều / **ngửa** / **cúi** / **nghiêng** / **sau lưng** /
-  **không rõ mặt** — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm ảnh **khác biệt
-  nhất** nếu `--per-bucket` > 1.
+  trái nhiều / phải nhiều / **ngửa** / **cúi** / **nghiêng** / **sau lưng 3/4** /
+  **sau lưng** / **không rõ mặt** — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm ảnh
+  **khác biệt nhất** nếu `--per-bucket` > 1.
   - **sau lưng**: phần mặt bị khuất — `face_vis` (trung bình conf **mũi + 2 mắt**)
     < 0.60, trong khi vai > 0.45 và tai ≥ 0.25 (tai còn thấy nghĩa là keypoint
     đầu là thật, không phải model đoán bừa). Đo trên v1.mp4: frame quay lưng có
     `face_vis` 0.18–0.43, frame nhìn thẳng 0.73–0.97 — khoảng trống rộng nên
     cùng một đoạn đi bộ quay lưng không bị lật nhãn. (Cách cũ chỉ so conf **mũi**
     < 0.5: mũi nhảy 0.31 → 0.58 giữa hai frame liền nhau là nhãn lật ngay.)
+  - **sau lưng 3/4**: cùng điều kiện trên nhưng `face_vis` 0.50–0.60 — mặt khuất
+    một nửa, hướng cổ/vai khác hẳn ảnh chụp chính sau. Tách ra để ảnh 3/4 sau
+    không bị ảnh chính sau đè mất suất.
   - **nghiêng**: yaw ≥ 70° (khi có mặt) hoặc vai/hông chồng nhau theo phương
     ngang (khi không có mặt) — bắt được cả ảnh hông/thân nghiêng ở xa.
   - **không rõ mặt**: không thấy mặt nhưng thân vẫn mở rộng (người ở xa, mặt
@@ -99,6 +102,54 @@ cách nhau 0.019–0.058 về pose. Với `--per-bucket 3` (mặc định) rồi
 
 Sau đó mới lọc trùng (`--dup-sim`, `--min-gap`) và tuỳ chọn `--limit N` (greedy
 farthest-point trên vector [góc đầu, 17 keypoint, CLIP]).
+
+### Góc quay & cỡ cảnh
+
+Bộ lọc đang đo **3 trục**, trong đó 2 trục dùng được:
+
+| Trục | Đo bằng | Nhãn | Ghi chú |
+|---|---|---|---|
+| Ngang (yaw) | 5 landmark SCRFD | `thẳng` ±10°, `trái`/`phải` 10–25°, `trái nhiều`/`phải nhiều` 25–70°, `nghiêng` ≥ 70° | yaw bị kẹp ±90 nên không chia được 8 hướng đều |
+| Dọc (pitch) | 5 landmark SCRFD | `ngửa` > 15°, `cúi` < −15° | |
+| Cao độ máy | — | — | **không đo** (cần biết điểm tụ dọc; sai số lớn, không đáng) |
+| Cỡ cảnh | px mặt + px người | 6 mức bên dưới | quyết định ảnh có ích cho LoRA hay không |
+
+Cỡ cảnh (`shot` trong `metadata.jsonl`) — video nén không đọc được tiêu cự nên
+"zoom" chỉ đo gián tiếp qua chủ thể chiếm bao nhiêu khung. Metric chính là
+**số "đầu" trong khung** = `person_h / face_px` (thân người ≈ 7,5 đầu, bbox mặt
+của SCRFD ≈ 0,78 đầu):
+
+| Cỡ cảnh | Nhãn | `person_h / face_px` | Người thấy được |
+|---|---|---|---|
+| đặc tả | `ECU` | < 1.6 | mặt gần nửa khung |
+| cận cảnh | `CU` | 1.6 – 2.6 | đầu + vai |
+| trung cận | `MCU` | 2.6 – 3.8 | ngực trở lên |
+| trung cảnh | `MS` | 3.8 – 5.8 | eo/hông trở lên |
+| toàn thân | `FS` | 5.8 – 9.6 | đầu → bàn chân |
+| viễn cảnh | `LS` | ≥ 9.6 | người lẫn cảnh |
+
+Hai ngoại lệ được xét **trước** bảng trên:
+
+1. **Thấy cổ chân** (conf keypoint 15/16 ≥ 0.5) → chắc chắn cả người trong khung:
+   `toàn thân` nếu người ≥ 25% chiều cao khung, ngược lại `viễn cảnh`. Nhờ vậy
+   người đứng sát máy, chân chạm mép khung vẫn là `toàn thân` chứ không bị đếm
+   đầu xếp nhầm thành `cận cảnh`.
+2. **Không thấy mặt** (`face_px = 0`, thường là ảnh quay lưng ở xa) → chỉ còn
+   tỉ lệ người/khung: ≥ 0.85 `trung cận`, ≥ 0.50 `trung cảnh`, ≥ 0.25 `toàn thân`,
+   còn lại `viễn cảnh`.
+
+Không dùng `face_px / src_h` trực tiếp vì nó lẫn "máy quay gần" với "người to
+trong khung": cùng khung 1280 px, mặt 190 px là trung cảnh nếu thấy cả người
+nhưng là cận cảnh nếu người bị cắt ngang ngực. Ngưỡng hiệu chỉnh bằng cách soi
+ảnh sát biên từng mức trên 112 ảnh obj_1.
+
+- `--shot-per-bucket N` (mặc định 0 = tắt): giới hạn `N` ảnh cho mỗi ô
+  **(nhóm góc × cỡ cảnh)**. Không có nó, cỡ cảnh dồn hết vào một mức: 112 ảnh
+  obj_1 chia ra `MS` 41 / `FS` 46 / `MCU` 20 / `CU` 3 / `LS` 2 / **`ECU` 0**;
+  bật `--shot-per-bucket 2` còn 45 ảnh với phân bố phẳng hơn (`FS` 18 / `MS` 13 /
+  `MCU` 9 / `CU` 4 / `LS` 1).
+- Bước này chỉ **bỏ bớt**, không tự sinh ra cỡ cảnh đang thiếu — `summary.txt`
+  liệt kê mức đang trống, muốn có phải quay thêm nguồn gần hơn/xa hơn.
 
 ## Cài đặt
 
@@ -155,6 +206,7 @@ Tham số đáng chú ý:
 | `--anchor-th` | 0.60 | cosine tối thiểu với neo ngoại hình của video |
 | `--select` | coverage | `coverage` = đủ góc mỗi cảnh; `diversity` = theo ngưỡng yaw/pose |
 | `--per-bucket` | 3 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`); bước lọc trùng tư thế sau đó tỉa tiếp |
+| `--shot-per-bucket` | 0 | >0: giới hạn số ảnh cho mỗi ô (nhóm góc × cỡ cảnh) để dataset không dồn vào một cỡ cảnh |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân (dùng khi CCTV chỉ quay lưng) |
@@ -344,7 +396,7 @@ luyen_co/
     reid.py          embedding toàn thân (CLIP)
     tracker.py       gán track theo thời gian
     frames.py        đọc frame video / ảnh
-    select.py        góc đầu, pose, lọc trùng, chọn đa dạng
+    select.py        góc đầu, cỡ cảnh, pose, lọc trùng, chọn đa dạng
     pipeline.py      ghép các bước + xuất kết quả
   tests/             pytest cho phần logic thuần
   models/            model ONNX (tự tải, gitignore)

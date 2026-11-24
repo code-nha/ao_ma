@@ -103,6 +103,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage; "
                         "bước lọc trùng tư thế sau đó sẽ tỉa tiếp, nên để 3 cho clip "
                         "quay tay/liên tục vẫn đủ ảnh")
+    g.add_argument("--shot-per-bucket", type=int, default=0,
+                   help="giới hạn số ảnh cho mỗi ô (nhóm góc × cỡ cảnh: đặc tả/cận cảnh/"
+                        "trung cận/trung cảnh/toàn thân/viễn cảnh); 0 = tắt. "
+                        "Dùng để dataset không dồn hết vào một cỡ cảnh")
 
     g = p.add_argument_group("lọc trùng & đa dạng")
     g.add_argument("--dup-sim", type=float, default=0.97, help="cosine coi là trùng hẳn (bỏ bớt)")
@@ -168,6 +172,7 @@ def main(argv: list[str] | None = None) -> int:
         min_yaw=args.min_yaw, min_pose=args.min_pose, dup_sim=args.dup_sim,
         confirm_window=args.confirm_window, anchor_th=args.anchor_th,
         select=args.select, per_bucket=args.per_bucket,
+        shot_per_bucket=args.shot_per_bucket,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
         body_only_low=args.body_only_low, body_only_rel=args.body_only_rel,

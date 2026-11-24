@@ -34,6 +34,7 @@ class Candidate:
     staged: "Path | None" = None   # file tạm trên đĩa (giải phóng RAM cho video dài)
     kpts: np.ndarray | None = None
     face_box: np.ndarray | None = None
+    face_px: int = 0               # cạnh dài bbox mặt trong frame gốc (0 = không thấy mặt)
     clip_vec: np.ndarray | None = None
     pose_vec: np.ndarray | None = field(default=None)
     body_only: bool = False        # nhận chỉ nhờ toàn thân (track không khớp mặt)

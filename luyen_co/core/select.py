@@ -128,7 +128,9 @@ def _pose_dist(a: Candidate, b: Candidate) -> float:
     return float(np.mean(np.abs(a.pose_vec - b.pose_vec)))
 
 
-SOFT_BUCKETS = {"sau lưng", "không rõ mặt", "nghiêng"}
+# nhóm mà yaw không đo được (mặt khuất / thân nhìn ngang): so theo nhóm là đủ
+NO_FACE_BUCKETS = {"sau lưng", "sau lưng 3/4", "không rõ mặt", "nghiêng"}
+SOFT_BUCKETS = NO_FACE_BUCKETS
 
 
 def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float) -> bool:
@@ -259,6 +261,7 @@ YAW_BUCKETS = [
 
 
 FACE_VIS_BACK = 0.60   # TB conf (mũi + 2 mắt) dưới mức này = phần mặt bị khuất
+FACE_VIS_34 = 0.50     # khuất nặng (< 0.50) = chính sau; khuất một nửa = 3/4 sau
 EAR_VIS_MIN = 0.25     # tai vẫn thấy → keypoint đầu là thật, không phải đoán bừa
 SHOULDER_VIS = 0.45    # vai phải đủ rõ mới dám kết luận về hướng thân
 SIDE_SPAN = 0.22       # vai/hông hẹp hơn mức này (theo bề rộng bbox) = thân nhìn ngang
@@ -316,15 +319,19 @@ def _side_body(c: Candidate) -> bool:
 
 
 def yaw_bucket(c: Candidate) -> str:
-    """Nhóm góc: sau lưng / nghiêng / không rõ mặt, còn lại theo yaw/pitch.
+    """Nhóm góc: sau lưng / 3/4 sau / nghiêng / không rõ mặt, còn lại theo yaw/pitch.
 
     Trước đây mọi frame không thấy mặt (kể cả người ở xa, mặt quá nhỏ) đều bị
     gom vào "sau lưng", nên ảnh quay lưng thật bị ảnh nhìn thẳng ở xa "đè" mất.
     Giờ tách 3 nhóm riêng: mũi khuất → sau lưng, thân hẹp → nghiêng, còn lại
     → không rõ mặt.
+
+    "Sau lưng" tách đôi theo mức khuất mặt: khuất gần hết (`face_vis` < 0.50)
+    là chính sau; khuất một nửa (0.50–0.60) là **3/4 sau** — hướng cổ và vai
+    khác hẳn ảnh chụp chính diện lưng, nên để chung một nhóm là mất ảnh.
     """
     if _facing_away(c):
-        return "sau lưng"
+        return "sau lưng" if face_vis(c) < FACE_VIS_34 else "sau lưng 3/4"
     if c.has_face:
         if abs(c.yaw) >= 70:  # nghiêng gần hẳn: 5 điểm không còn đo được yaw
             return "nghiêng"
@@ -348,7 +355,7 @@ def _rank_key(c: Candidate) -> tuple[float, int, float]:
     xếp theo kích thước người rồi độ nét. Nhờ vậy frame quay lưng ở gần (người
     to, rõ) thắng frame nhìn thẳng ở xa — lỗi cũ khiến ảnh sau lưng bị loại.
     """
-    if c.has_face and yaw_bucket(c) not in ("sau lưng", "nghiêng", "không rõ mặt"):
+    if c.has_face and yaw_bucket(c) not in NO_FACE_BUCKETS:
         return (c.face_sim, c.person_h, c.blur)
     return (-1.0, c.person_h, c.blur)
 
@@ -358,9 +365,9 @@ def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
     """Chọn ảnh theo độ phủ góc: mỗi nhóm giữ tối đa `per_bucket` ảnh tốt nhất.
 
     Nhóm góc gồm: thẳng / trái / phải / trái nhiều / phải nhiều / ngửa / cúi /
-    nghiêng / sau lưng / không rõ mặt. Nhờ tách "sau lưng" và "nghiêng" khỏi
-    "không rõ mặt", mỗi nhóm luôn có suất riêng — ảnh quay lưng thật không còn
-    bị ảnh người ở xa (mặt không detect được) chiếm mất.
+    nghiêng / sau lưng 3/4 / sau lưng / không rõ mặt. Nhờ tách "sau lưng" và
+    "nghiêng" khỏi "không rõ mặt", mỗi nhóm luôn có suất riêng — ảnh quay lưng
+    thật không còn bị ảnh người ở xa (mặt không detect được) chiếm mất.
 
     Trong cùng một nhóm còn loại tiếp ảnh gần như trùng nhau (`bucket_dup`) để
     không ra 5 tấm cùng một tư thế.
@@ -438,7 +445,7 @@ def pick_diverse(cands: list[Candidate], n: int, pose_weight: float = 1.0,
 
 
 BUCKET_ORDER = ["trái nhiều", "trái", "thẳng", "phải", "phải nhiều",
-                "ngửa", "cúi", "nghiêng", "sau lưng", "không rõ mặt"]
+                "ngửa", "cúi", "nghiêng", "sau lưng 3/4", "sau lưng", "không rõ mặt"]
 
 
 def yaw_histogram(cands: list[Candidate]) -> list[tuple[str, int]]:
@@ -449,3 +456,107 @@ def yaw_histogram(cands: list[Candidate]) -> list[tuple[str, int]]:
     """
     counts = Counter(yaw_bucket(c) for c in cands)
     return [(label, counts.get(label, 0)) for label in BUCKET_ORDER]
+
+
+# ---------------------------------------------------------------------- cỡ cảnh
+# Thang cỡ cảnh (shot scale). Video nén không đọc được tiêu cự nên "zoom" chỉ đo
+# được gián tiếp qua chủ thể chiếm bao nhiêu khung:
+#   - `person_h / face_px` → còn bao nhiêu "đầu" trong khung (thân người ≈ 7,5 đầu;
+#     bbox mặt của SCRFD ≈ 0,78 đầu nên tỉ lệ này là số đầu thấy được, hơi rộng)
+#   - cổ chân (kpts 15/16) có thấy → chắc chắn cả người nằm trong khung
+#   - `person_h / src_h` → dự phòng khi không thấy mặt
+# Ngưỡng dưới đây hiệu chỉnh bằng 112 ảnh obj_1 (xem sheet_shot.jpg): chọn ảnh sát
+# biên mỗi mức rồi soi bằng mắt.
+SHOT_ORDER = ["đặc tả", "cận cảnh", "trung cận", "trung cảnh", "toàn thân", "viễn cảnh"]
+
+# nhãn ngắn cho sheet.jpg (cv2.putText chỉ vẽ được ASCII)
+SHOT_ABBR = {"đặc tả": "ECU", "cận cảnh": "CU", "trung cận": "MCU",
+             "trung cảnh": "MS", "toàn thân": "FS", "viễn cảnh": "LS"}
+
+# số "đầu" thấy được → mức cỡ cảnh; dưới ngưỡng đầu tiên là đặc tả, trên ngưỡng
+# cuối là viễn cảnh
+SHOT_HEAD_STEPS = [1.6, 2.6, 3.8, 5.8, 9.6]
+SHOT_HEAD_LABELS = ["đặc tả", "cận cảnh", "trung cận", "trung cảnh", "toàn thân"]
+
+SHOT_MCU = 0.85        # không thấy mặt: người chiếm ≥ 85% khung → trung cận
+SHOT_MS = 0.50         # người chiếm ≥ 50% khung → trung cảnh
+SHOT_FS = 0.25         # người chiếm ≥ 25% khung → toàn thân / viễn cảnh
+ANKLE_VIS = 0.5        # conf cổ chân đủ cao → thấy cả bàn chân trong khung
+
+
+def feet_visible(c: Candidate) -> bool:
+    """Có thấy cổ chân không — dấu hiệu chắc nhất của ảnh "toàn thân"."""
+    kp = c.kpts
+    if kp is None or len(kp) < 17:
+        return False
+    return max(float(kp[15, 2]), float(kp[16, 2])) >= ANKLE_VIS
+
+
+def _shot_from_body(person: float) -> str:
+    """Đoán cỡ cảnh khi không có mặt: chỉ còn tỉ lệ người/khung."""
+    if person >= SHOT_MCU:
+        return "trung cận"
+    if person >= SHOT_MS:
+        return "trung cảnh"
+    return "toàn thân" if person >= SHOT_FS else "viễn cảnh"
+
+
+def shot_scale(c: Candidate) -> str:
+    """Cỡ cảnh: đặc tả / cận cảnh / trung cận / trung cảnh / toàn thân / viễn cảnh.
+
+    Thứ tự ưu tiên:
+      1. Thấy cổ chân → cả người trong khung: "toàn thân" nếu người ≥ 25% chiều
+         cao khung, ngược lại "viễn cảnh". Đây là tín hiệu chắc nhất, và nó sửa
+         đúng lỗi "người kín khung nhưng vẫn là toàn thân" (chân đặt sát mép).
+      2. Không thấy mặt → đoán theo tỉ lệ người/khung (`_shot_from_body`).
+      3. Còn lại: đếm số "đầu" trong khung = `person_h / face_px`. Người ≈ 7,5 đầu
+         nên ảnh 2 đầu là cận cảnh (đầu + vai), 3 đầu là trung cận (ngực), 5 đầu
+         là trung cảnh (eo/hông), 7,5–9,6 đầu là toàn thân.
+
+    Không dùng `face_px / src_h` trực tiếp vì nó lẫn "máy quay gần" với "người to
+    trong khung": cùng 1 khung 1280px, mặt 190px là trung cảnh ở ảnh chụp cả
+    người, nhưng là cận cảnh nếu người bị cắt ngang ngực — tỉ lệ người/mặt phân
+    biệt được hai ca đó.
+    """
+    h = max(1, c.src_h)
+    person = c.person_h / h
+    if feet_visible(c):
+        return "toàn thân" if person >= SHOT_FS else "viễn cảnh"
+    if c.face_px <= 0:
+        return _shot_from_body(person)
+    heads = c.person_h / c.face_px
+    for label, step in zip(SHOT_HEAD_LABELS, SHOT_HEAD_STEPS):
+        if heads < step:
+            return label
+    return "viễn cảnh"
+
+
+def shot_histogram(cands: list[Candidate]) -> list[tuple[str, int]]:
+    """Đếm số ảnh theo từng cỡ cảnh (thứ tự từ gần tới xa)."""
+    counts = Counter(shot_scale(c) for c in cands)
+    return [(label, counts.get(label, 0)) for label in SHOT_ORDER]
+
+
+def shot_coverage_pick(cands: list[Candidate], per_cell: int = 2) -> list[Candidate]:
+    """Giới hạn số ảnh cho mỗi ô (nhóm góc × cỡ cảnh).
+
+    `coverage_pick` chỉ chia suất theo góc, nên một nhóm góc mà toàn ảnh trung
+    cảnh sẽ chiếm hết suất và dataset không còn ảnh gần/xa nào khác. Bước này
+    chặn thêm theo cỡ cảnh: mỗi cặp (góc, cỡ cảnh) giữ tối đa `per_cell` ảnh
+    tốt nhất theo `_rank_key`.
+
+    Lưu ý: bước này chỉ **bỏ bớt**, không tạo ra cỡ cảnh đang thiếu — summary sẽ
+    liệt kê ô trống để biết cần quay thêm loại cảnh nào.
+    """
+    if per_cell <= 0 or not cands:
+        return list(cands)
+    counts: Counter = Counter()
+    kept: list[Candidate] = []
+    for c in sorted(cands, key=_rank_key, reverse=True):
+        key = (yaw_bucket(c), shot_scale(c))
+        if counts[key] >= per_cell:
+            continue
+        counts[key] += 1
+        kept.append(c)
+    kept.sort(key=lambda c: (c.source, c.t))
+    return kept

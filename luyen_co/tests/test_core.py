@@ -11,6 +11,7 @@ import numpy as np
 
 from core.select import (coverage_pick, dedupe, distinct_pose_pick, diverse_gate, drop_similar, face_vis,
                          head_pose, keep_best_body_tracks, pick_diverse, pose_vector,
+                         shot_coverage_pick, shot_histogram, shot_scale,
                          yaw_bucket, yaw_histogram)
 from core.tracker import IoUTracker
 from core.types import Candidate
@@ -18,23 +19,25 @@ from core.utils import expand_box, letterbox, nms, others_area_fraction
 
 
 def make_cand(t=0.0, track=1, clip=None, source="a.mp4", yaw=0.0, blur=100.0, h=200,
-              body=0.85, pose=None, face=0.9):
+              body=0.85, pose=None, face=0.9, face_px=0, src_h=1280):
     return Candidate(
         source=source, kind="video", t=t, frame_idx=int(t * 10), track_id=track,
         box=np.array([10, 20, 110, 220], np.float32), person_score=0.9,
         face_sim=face, body_sim=body, yaw=yaw, pitch=0.0, blur=blur, person_h=h,
         jpeg=b"x", clip_vec=(np.array(clip, np.float32) if clip is not None else None),
         pose_vec=(np.zeros(34, np.float32) if pose is None else np.array(pose, np.float32)),
+        face_px=face_px, src_h=src_h,
     )
 
 
-def make_kpts(nose=0.99, span=0.5, shoulder_conf=0.99, eye=None, ear=0.9):
+def make_kpts(nose=0.99, span=0.5, shoulder_conf=0.99, eye=None, ear=0.9, feet=0.9):
     """17 keypoint COCO giả trong bbox rộng 100px.
 
     `span`: bề rộng vai/hông theo tỉ lệ bbox — người nhìn thẳng/quay lưng ~0.5,
     nhìn ngang (vai chồng nhau) ~0.05.
     `eye`: conf 2 mắt — mặc định đi theo `nose`, vì khi người quay lưng YOLO mất
     cả mũi lẫn mắt; đặt riêng để test ca mũi còn cao nhưng mắt đã khuất.
+    `feet`: conf cổ chân — dùng để test nhãn "toàn thân" (thấy bàn chân).
     """
     kp = np.zeros((17, 3), np.float32)
     kp[:, 2] = 0.9
@@ -50,6 +53,8 @@ def make_kpts(nose=0.99, span=0.5, shoulder_conf=0.99, eye=None, ear=0.9):
     kp[6] = [cx + half, 60.0, shoulder_conf]      # vai phải
     kp[11] = [cx - half, 150.0, 0.9]              # hông trái
     kp[12] = [cx + half, 150.0, 0.9]              # hông phải
+    kp[15] = [cx - 8, 200.0, feet]                # cổ chân trái
+    kp[16] = [cx + 8, 200.0, feet]                # cổ chân phải
     return kp
 
 
@@ -368,3 +373,74 @@ def test_pick_diverse_returns_distinct():
     picked = pick_diverse(cands, 4)
     assert len(picked) == 4
     assert len({c.t for c in picked}) == 4
+
+
+# ------------------------------------------------------------------- cỡ cảnh
+def test_yaw_bucket_tach_sau_lung_3_4():
+    # Mặt khuất một nửa (mũi 0.55, mắt 0.50 → face_vis ≈ 0.52) là 3/4 sau,
+    # khác hẳn chính sau (mũi 0.3 → face_vis 0.40) mà nhóm cũ gộp làm một.
+    c = make_cand(t=0.0)
+    c.face_sim = -1.0
+    c.kpts = make_kpts(nose=0.55, eye=0.50)
+    assert 0.50 <= face_vis(c) < 0.60
+    assert yaw_bucket(c) == "sau lưng 3/4"
+
+
+def test_shot_scale_dem_so_dau_trong_khung():
+    # Ngưỡng hiệu chỉnh trên obj_1: số "đầu" = person_h / face_px
+    assert shot_scale(make_cand(h=1080, face_px=432)) == "cận cảnh"      # 2.5 đầu
+    assert shot_scale(make_cand(h=1135, face_px=366)) == "trung cận"     # 3.1 đầu
+    assert shot_scale(make_cand(h=898, face_px=187)) == "trung cảnh"     # 4.8 đầu
+    assert shot_scale(make_cand(h=762, face_px=99)) == "toàn thân"       # 7.7 đầu
+    assert shot_scale(make_cand(h=294, face_px=28)) == "viễn cảnh"       # 10.5 đầu
+    # dưới 1.6 đầu = đặc tả (mặt chiếm gần nửa khung)
+    assert shot_scale(make_cand(h=1000, face_px=800)) == "đặc tả"
+
+
+def test_shot_scale_thay_ban_chan_thi_la_toan_than():
+    # Người chiếm 60% khung và thấy cổ chân → cả người trong khung: toàn thân,
+    # dù đếm đầu (2.5) sẽ xếp nhầm thành cận cảnh.
+    c = make_cand(h=768, face_px=300)
+    c.kpts = make_kpts(feet=0.8)
+    assert shot_scale(c) == "toàn thân"
+    # cùng tỉ lệ nhưng người rất bé trong khung → viễn cảnh
+    far = make_cand(h=200, face_px=80)
+    far.kpts = make_kpts()
+    assert shot_scale(far) == "viễn cảnh"
+
+
+def test_shot_scale_khong_thay_mat_thi_doan_theo_than():
+    near = make_cand(h=1200, face_px=0)          # kín khung → trung cận
+    near.kpts = make_kpts(feet=0.1)
+    assert shot_scale(near) == "trung cận"
+    mid = make_cand(h=700, face_px=0)            # 55% khung → trung cảnh
+    mid.kpts = make_kpts(feet=0.1)
+    assert shot_scale(mid) == "trung cảnh"
+    low = make_cand(h=400, face_px=0)            # 31% khung → toàn thân
+    low.kpts = make_kpts(feet=0.1)
+    assert shot_scale(low) == "toàn thân"
+    tiny = make_cand(h=200, face_px=0)           # 16% khung → viễn cảnh
+    tiny.kpts = make_kpts(feet=0.1)
+    assert shot_scale(tiny) == "viễn cảnh"
+
+
+def test_shot_histogram_du_6_muc_theo_thu_tu():
+    hist = shot_histogram([make_cand(h=1000, face_px=800)])
+    assert [label for label, _ in hist] == ["đặc tả", "cận cảnh", "trung cận",
+                                            "trung cảnh", "toàn thân", "viễn cảnh"]
+    assert dict(hist)["đặc tả"] == 1
+
+
+def test_shot_coverage_pick_chan_moi_o_goc_x_co():
+    # 3 ảnh cùng nhóm góc "thẳng" và cùng cỡ cảnh trung cảnh + 1 ảnh viễn cảnh:
+    # không giới hạn thì giữ cả 4, giới hạn 1/ô thì mỗi ô còn 1.
+    ms = [make_cand(t=float(i), h=800, blur=100.0 + i) for i in range(3)]
+    far = make_cand(t=9.0, h=200, blur=50.0)
+    far.kpts = make_kpts()
+    cands = ms + [far]
+    assert len(shot_coverage_pick(cands, per_cell=0)) == 4      # 0 = tắt
+    kept = shot_coverage_pick(cands, per_cell=1)
+    assert far in kept
+    assert len(kept) == 2
+    # trong ô trung cảnh giữ ảnh nét nhất (blur 102), không phải ảnh đầu danh sách
+    assert [c for c in kept if shot_scale(c) == "trung cảnh"] == [ms[2]]
