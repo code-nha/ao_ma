@@ -1,0 +1,135 @@
+"""Ước lượng góc đầu, vector pose, lọc trùng và chọn bộ frame đa dạng.
+
+Góc đầu (yaw/pitch) tính từ 5 landmark của SCRFD — đủ để phân biệt "nhìn
+thẳng / quay trái / quay phải / cúi / ngửa", không phải số đo chính xác.
+Pose toàn thân dùng 17 keypoint COCO chuẩn hoá theo bbox.
+"""
+
+from __future__ import annotations
+
+import math
+
+import numpy as np
+
+from .types import Candidate
+
+# Template ArcFace 112×112: mắt trái, mắt phải, mũi, mép trái, mép phải
+_EYE_DIST = 35.24
+_NOSE_DY = 20.2
+
+
+def head_pose(kps: np.ndarray | None) -> tuple[float, float]:
+    """(yaw, pitch) độ, dương = quay sang phải / cúi xuống. Không có mặt → (0, 0)."""
+    if kps is None or len(kps) < 5:
+        return 0.0, 0.0
+    eye_l, eye_r, nose, mouth_l, mouth_r = (np.asarray(p, dtype=np.float32) for p in kps[:5])
+    eye_mid = (eye_l + eye_r) / 2.0
+    mouth_mid = (mouth_l + mouth_r) / 2.0
+    eye_d = float(np.linalg.norm(eye_r - eye_l))
+    if eye_d < 1e-3:
+        return 0.0, 0.0
+    center_x = (eye_mid[0] + mouth_mid[0]) / 2.0
+    # mũi lệch khỏi trục mặt theo phương ngang ~ 0.35 × khoảng cách 2 mắt
+    ratio_x = (nose[0] - center_x) / (0.35 * eye_d)
+    yaw = math.degrees(math.asin(max(-1.0, min(1.0, ratio_x))))
+    ratio_y = (nose[1] - eye_mid[1]) / eye_d
+    pitch = (ratio_y - _NOSE_DY / _EYE_DIST) * 60.0
+    return float(yaw), float(pitch)
+
+
+def pose_vector(kpts: np.ndarray | None, box: np.ndarray) -> np.ndarray:
+    """17 keypoint chuẩn hoá trong bbox → vector 34 chiều (0.5 nếu thiếu)."""
+    out = np.full(34, 0.5, dtype=np.float32)
+    if kpts is None:
+        return out
+    x1, y1, x2, y2 = box
+    w = max(1.0, x2 - x1)
+    h = max(1.0, y2 - y1)
+    kp = np.asarray(kpts, dtype=np.float32)
+    xs = ((kp[:, 0] - x1) / w).clip(0, 1)
+    ys = ((kp[:, 1] - y1) / h).clip(0, 1)
+    conf = kp[:, 2]
+    ok = conf > 0.2
+    out[0::2] = np.where(ok, xs, 0.5)
+    out[1::2] = np.where(ok, ys, 0.5)
+    return out
+
+
+def _unit(v: np.ndarray) -> np.ndarray:
+    v = np.asarray(v, dtype=np.float32)
+    n = float(np.linalg.norm(v))
+    return v / n if n > 1e-9 else v
+
+
+def diversity_features(cands: list[Candidate], pose_weight: float = 1.0,
+                       clip_weight: float = 1.0) -> np.ndarray:
+    """Ma trận đặc trưng để đo độ khác nhau: góc đầu + pose + ngoại hình."""
+    feats = []
+    for c in cands:
+        head = _unit(np.array([c.yaw / 90.0, c.pitch / 60.0], dtype=np.float32))
+        pose = _unit(c.pose_vec if c.pose_vec is not None else np.zeros(34, np.float32))
+        clip = _unit(c.clip_vec) if c.clip_vec is not None else np.zeros(512, np.float32)
+        feats.append(np.concatenate([head * 1.5, pose * pose_weight, clip * clip_weight]))
+    return np.stack(feats) if feats else np.zeros((0, 0), np.float32)
+
+
+def dedupe(cands: list[Candidate], dup_sim: float = 0.97, min_gap: float = 0.35) -> list[Candidate]:
+    """Bỏ frame gần như trùng: sát thời gian trong cùng track, hoặc ngoại hình quá giống.
+
+    So sánh ngoại hình bằng 1 phép nhân ma trận mỗi frame (BLAS) thay vì vòng
+    lặp Python, để video CCTV vài chục nghìn frame vẫn chạy nhanh.
+    """
+    from collections import defaultdict
+
+    by_source: dict[str, list[Candidate]] = defaultdict(list)
+    for c in cands:
+        by_source[c.source].append(c)
+
+    kept: list[Candidate] = []
+    for items in by_source.values():
+        items.sort(key=lambda c: c.t)
+        mat: np.ndarray | None = None
+        last_t: dict[int, float] = {}
+        for c in items:
+            if c.track_id in last_t and abs(c.t - last_t[c.track_id]) < min_gap:
+                continue
+            similar = c.clip_vec is not None and mat is not None and \
+                float((mat @ c.clip_vec).max()) >= dup_sim
+            if similar:
+                continue
+            kept.append(c)
+            last_t[c.track_id] = c.t
+            if c.clip_vec is not None:
+                mat = c.clip_vec[None].copy() if mat is None else np.vstack([mat, c.clip_vec[None]])
+
+    kept.sort(key=lambda c: (c.source, c.t))
+    return kept
+
+
+def pick_diverse(cands: list[Candidate], n: int, pose_weight: float = 1.0,
+                 clip_weight: float = 1.0) -> list[Candidate]:
+    """Chọn n frame phủ đa dạng nhất bằng greedy farthest-point sampling."""
+    if n <= 0 or len(cands) <= n:
+        return list(cands)
+    feats = diversity_features(cands, pose_weight, clip_weight)
+    # bắt đầu từ frame có chất lượng tốt nhất (blur cao, người to)
+    first = int(np.argmax([c.blur * math.log1p(c.person_h) for c in cands]))
+    chosen = [first]
+    dist = np.linalg.norm(feats - feats[first], axis=1)
+    while len(chosen) < n:
+        idx = int(np.argmax(dist))
+        if dist[idx] <= 1e-6:
+            break
+        chosen.append(idx)
+        dist = np.minimum(dist, np.linalg.norm(feats - feats[idx], axis=1))
+    return [cands[i] for i in chosen]
+
+
+def yaw_histogram(cands: list[Candidate]) -> list[tuple[str, int]]:
+    """Đếm số frame theo 6 khoảng góc đầu, để báo cáo độ phủ góc."""
+    bins = [(-91, -60, "trái nhiều"), (-60, -30, "trái"), (-30, -12, "hơi trái"),
+            (-12, 12, "thẳng"), (12, 30, "hơi phải"), (30, 60, "phải"), (60, 91, "phải nhiều")]
+    counts = []
+    for lo, hi, label in bins:
+        counts.append((label, sum(1 for c in cands if lo <= c.yaw < hi)))
+    return counts

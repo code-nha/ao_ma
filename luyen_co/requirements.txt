@@ -1,0 +1,7 @@
+# Windows + GPU rời (dùng DirectML, không cần cài CUDA/cuDNN):
+onnxruntime-directml>=1.20
+# Linux hoặc máy có CUDA 12: thay bằng onnxruntime-gpu>=1.20 và bỏ dòng trên
+
+av>=14
+numpy>=1.26
+opencv-python-headless>=4.10
