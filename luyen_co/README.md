@@ -93,7 +93,9 @@ Tham số đáng chú ý:
 ## Chỉnh ngưỡng
 
 Chạy một lượt với mặc định, mở `summary.txt` xem phân bố `face_sim` /
-`body_sim` theo track và độ phủ góc đầu:
+`body_sim` theo track và độ phủ góc đầu. Trong đó có sẵn bảng **ước lượng số
+frame thô nhận được ở từng mức `--face-th` (0.30 → 0.55)**, tính từ chính dữ
+liệu vừa quét — nên chọn ngưỡng không cần chạy lại video:
 
 - Có track đúng người nhưng `face_sim` thấp (0.3–0.45) → hạ `--face-th` xuống
   ngay dưới mức đó.
@@ -118,6 +120,7 @@ góc đầu trải từ trái sang phải thì cấu hình đã ổn.
 | 1080p trở lên, nét | mặc định (`--face-th 0.45 --min-person 64 --min-blur 25`) |
 | 720p, nén vừa | `--face-th 0.40 --min-person 50` |
 | ≤ 360p hoặc nén mạnh | `--face-th 0.35 --min-person 40 --min-blur 15` |
+| Camera hồng ngoại / đen trắng | hạ thêm ~0.05 so với bảng trên (đo thực tế: `face_sim` 0.59 so với 0.98 bản màu) |
 | Chỉ thấy lưng, không bao giờ thấy mặt | thêm `--allow-body-only --body-th 0.78` |
 | Đám đông, cần nhiều ảnh hơn | nâng `--max-other-area` lên 0.2–0.3 (đổi lại crop có thể dính người bên cạnh) |
 

@@ -89,6 +89,9 @@ class Stats:
     selected: int = 0
     track_face: list[float] = field(default_factory=list)
     track_body: list[float] = field(default_factory=list)
+    # (face_max, body_med, face_sims từng frame, body_sims từng frame) để ước lượng
+    # số frame nhận được ở các ngưỡng khác nhau mà không phải quét lại
+    track_scores: list[tuple[float, float, list[float], list[float]]] = field(default_factory=list)
 
 
 def _safe(name: str) -> str:
@@ -237,6 +240,9 @@ class Pipeline:
         self.stats.tracks += 1
         self.stats.track_face.append(face_max)
         self.stats.track_body.append(body_med)
+        self.stats.track_scores.append((face_max, body_med,
+                                        [c.face_sim for c in buf],
+                                        [c.body_sim for c in buf]))
         if not kept:
             return
         self.stats.accepted_tracks += 1
@@ -444,6 +450,38 @@ class Pipeline:
                     "crop_margin": self.cfg.crop_margin,
                 }, ensure_ascii=False) + "\n")
 
+    def _calibration_lines(self) -> list[str]:
+        """Bảng ước lượng số frame nhận được ở các ngưỡng khác nhau.
+
+        Tính từ điểm của từng frame đã lưu trong lần chạy này, nên bro thấy ngay
+        nên đặt --face-th bao nhiêu mà không phải quét lại video.
+        """
+        cfg, st = self.cfg, self.stats
+        out = ["ước lượng số frame thô (trước lọc trùng) nếu đổi ngưỡng, "
+               "tính từ lần chạy này:"]
+        for th in (0.30, 0.35, 0.40, 0.45, 0.50, 0.55):
+            frames = sum(
+                1
+                for face_max, _, fs, bs in st.track_scores
+                for f, b in zip(fs, bs)
+                if f >= th or (f < 0 and face_max >= th and b >= cfg.body_th)
+            )
+            mark = "  ← đang dùng" if abs(th - cfg.face_th) < 1e-6 else ""
+            out.append(f"  --face-th {th:.2f} → {frames:6d} frame{mark}")
+        if cfg.allow_body_only or self.ref_face is None:
+            out.append("  (chế độ chỉ toàn thân)")
+            for th in (0.70, 0.75, 0.80, 0.85):
+                frames = sum(
+                    1
+                    for _, body_med, _, bs in st.track_scores
+                    if body_med >= th
+                    for b in bs
+                    if b >= th
+                )
+                mark = "  ← đang dùng" if abs(th - cfg.body_th) < 1e-6 else ""
+                out.append(f"  --body-th {th:.2f} → {frames:6d} frame{mark}")
+        return out
+
     def _write_report(self) -> None:
         cfg, st = self.cfg, self.stats
         lines = [
@@ -473,6 +511,8 @@ class Pipeline:
             lines.append("phân bố body_sim (để chỉnh --body-th):")
             lines.extend(f"  ≥ {th:.2f}: {sum(1 for v in bv if v >= th)} track"
                          for th in (0.85, 0.8, 0.75, 0.7, 0.65, 0.6))
+        lines.append("")
+        lines.extend(self._calibration_lines())
         lines.append("")
         lines.append("độ phủ góc đầu của ảnh đã chọn:")
         lines.extend(f"  {label:12s} {n:5d}" for label, n in yaw_histogram(self.selected_cands))
