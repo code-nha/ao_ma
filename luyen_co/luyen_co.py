@@ -44,6 +44,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--input", required=True, type=Path, help="folder chứa ảnh và video cần quét")
     p.add_argument("--ref", required=True, type=Path, help="ảnh tham chiếu rõ nhất của người cần tìm")
     p.add_argument("--out", type=Path, default=Path("out"), help="thư mục xuất kết quả")
+    p.add_argument("--clean", action="store_true",
+                   help="xoá ảnh cũ trong <out>/crops trước khi ghi kết quả mới")
     p.add_argument("--check", action="store_true", help="chỉ phân tích ảnh tham chiếu rồi thoát")
 
     g = p.add_argument_group("lấy mẫu")
@@ -51,7 +53,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--start", type=float, default=0.0, help="bắt đầu từ giây thứ")
     g.add_argument("--end", type=float, default=0.0, help="kết thúc ở giây thứ (0 = hết video)")
     g.add_argument("--max-frames", type=int, default=0, help="giới hạn số frame mỗi video (0 = không)")
-    g.add_argument("--recursive", action="store_true", help="quét cả thư mục con")
+    p.add_argument("--recursive", action="store_true", help="quét cả thư mục con")
+    p.add_argument("--include-ref", action="store_true",
+                   help="vẫn xử lý ảnh tham chiếu nếu nó nằm trong folder quét (mặc định bỏ qua)")
 
     g = p.add_argument_group("ngưỡng khớp danh tính")
     g.add_argument("--face-th", type=float, default=0.45, help="cosine ArcFace tối thiểu coi là đúng người")
@@ -102,18 +106,20 @@ def main(argv: list[str] | None = None) -> int:
         crop_margin=args.crop_margin, dup_sim=args.dup_sim,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
+        skip_ref=not args.include_ref,
         imgsz=args.imgsz, conf=args.conf, face_conf=args.face_conf,
         max_frames=args.max_frames, start=args.start,
         end=args.end if args.end > 0 else None, sheet=args.sheet,
+        clean=args.clean,
     )
     args.out.mkdir(parents=True, exist_ok=True)
 
     started = time.time()
     pipe = Pipeline(cfg)
     log(pipe.ref_note)
+    for warning in pipe.ref_warnings:
+        log(f"cảnh báo: {warning}")
     if args.check:
-        if pipe.ref_face is None:
-            log("cảnh báo: không thấy mặt trong ảnh tham chiếu — nên chọn ảnh thấy rõ mặt")
         return 0
 
     try:

@@ -27,7 +27,7 @@ import numpy as np
 import cv2
 
 from .arcface import FaceEmbedder, cosine
-from .frames import iter_video, list_inputs
+from .frames import iter_video, list_inputs, video_duration
 from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder
 from .scrfd import FaceDetector
@@ -62,8 +62,10 @@ class Config:
     end: float | None = None
     min_track: int = 3
     allow_body_only: bool = False
+    skip_ref: bool = True
     max_per_track: int = 300
     sheet: int = 60
+    clean: bool = False
     jpeg_quality: int = 95
 
     @property
@@ -103,6 +105,8 @@ class Pipeline:
         self.ref_face: np.ndarray | None = None
         self.ref_body: np.ndarray | None = None
         self.ref_note = ""
+        self.ref_warnings: list[str] = []
+        self._ref_path = cfg.ref.resolve()
         self._load_ref()
 
     # ------------------------------------------------------------------ tham chiếu
@@ -129,7 +133,8 @@ class Pipeline:
         self.ref_note = (f"tham chiếu: {w}×{h}, người={'có' if persons else 'không'}, "
                          f"mặt={'có' if self.ref_face is not None else 'KHÔNG'}")
         if self.ref_face is None:
-            log("cảnh báo: ảnh tham chiếu không phát hiện được mặt → chỉ so khớp toàn thân "
+            self.ref_warnings.append(
+                "ảnh tham chiếu không phát hiện được mặt → chỉ so khớp toàn thân "
                 "(nên dùng ảnh thấy rõ mặt để chính xác hơn)")
 
     # ------------------------------------------------------------------ frame
@@ -258,7 +263,8 @@ class Pipeline:
         cuts = 0
         prev_hist = None
         started = time.time()
-        log(f"video {path.name} …")
+        duration = video_duration(path)
+        log(f"video {path.name} …" + (f" ({duration / 60:.1f} phút)" if duration else ""))
         for t, frame in iter_video(path, cfg.fps, cfg.start, cfg.end):
             frame_idx += 1
             if cfg.max_frames and frame_idx > cfg.max_frames:
@@ -293,8 +299,13 @@ class Pipeline:
 
             if frame_idx % 100 == 0:
                 el = time.time() - started
-                log(f"  {frame_idx} frame ({t:.0f}s) · {n_persons} người · "
-                    f"{el / max(1, frame_idx):.3f}s/frame")
+                rate = el / max(1, frame_idx)
+                eta = ""
+                if duration and t > 0:
+                    eta = f" · còn ~{(duration - t) * rate / 60:.0f} phút"
+                pct = f" ({100 * t / duration:.0f}%)" if duration else ""
+                log(f"  {frame_idx} frame ({t:.0f}s{pct}) · {n_persons} người · "
+                    f"{rate:.3f}s/frame{eta}")
 
         for tid in list(buffers):
             self._flush(tid, buffers.pop(tid))
@@ -324,6 +335,12 @@ class Pipeline:
     def run(self, input_dir: Path, recursive: bool = False) -> None:
         self._input_dir = input_dir
         videos, images = list_inputs(input_dir, recursive)
+        if self.cfg.skip_ref:
+            before = len(videos) + len(images)
+            videos = [v for v in videos if v.resolve() != self._ref_path]
+            images = [i for i in images if i.resolve() != self._ref_path]
+            if before != len(videos) + len(images):
+                log("bỏ qua ảnh tham chiếu nằm trong folder quét (--include-ref để giữ)")
         if not videos and not images:
             raise SystemExit(f"không tìm thấy ảnh/video trong {input_dir}")
         log(f"{len(videos)} video, {len(images)} ảnh · backend {self.detector.backend}")
@@ -336,6 +353,13 @@ class Pipeline:
     def export(self) -> list[tuple[Candidate, Path]]:
         cfg = self.cfg
         cfg.crops_dir.mkdir(parents=True, exist_ok=True)
+        if cfg.clean:
+            old = [p for p in cfg.crops_dir.iterdir()
+                   if p.is_file() and p.suffix.lower() in (".jpg", ".jpeg", ".png")]
+            for p in old:
+                p.unlink()
+            if old:
+                log(f"đã xoá {len(old)} ảnh cũ trong {cfg.crops_dir}")
         cands = dedupe(self.accepted, cfg.dup_sim, cfg.min_gap)
         if cfg.limit and cfg.limit < len(cands):
             cands = pick_diverse(cands, cfg.limit)

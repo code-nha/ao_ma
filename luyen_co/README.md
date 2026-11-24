@@ -84,6 +84,8 @@ Tham số đáng chú ý:
 | `--min-gap` | 0.35 | giây tối thiểu giữa 2 ảnh cùng track |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |
+| `--clean` | tắt | xoá ảnh cũ trong `<out>/crops` trước khi ghi kết quả mới |
+| `--include-ref` | tắt | vẫn xử lý ảnh tham chiếu nếu nó nằm trong folder quét |
 | `--device` | auto | `auto` / `gpu` / `cpu` |
 
 ## Chỉnh ngưỡng
@@ -103,6 +105,24 @@ Chạy một lượt với mặc định, mở `summary.txt` xem phân bố `fac
 
 `sheet.jpg` là cách nhanh nhất để kiểm tra bằng mắt: nếu toàn ảnh đúng người và
 góc đầu trải từ trái sang phải thì cấu hình đã ổn.
+
+## Kiểm thử
+
+Đã chạy thật trên 2 clip phim 60 s (1 clip một người, 1 clip đông người) dùng
+chính frame phim làm ảnh tham chiếu:
+
+| Ca | Kết quả |
+|---|---|
+| Clip 60 s, ref = mặt nhân vật nữ | 121 frame → 16 track → 19 ảnh, đúng người, yaw trải +31°…−90° |
+| Clip đông người (3–7 người/frame) | 16 ảnh, crop đúng nhân vật trong đám đông, không lẫn người khác |
+| Ref phim A quét cả phim A + phim B | 16 ảnh đều của phim A, **0 ảnh** từ phim B |
+| Folder rỗng / video hỏng / ảnh hỏng | báo lỗi hoặc bỏ qua, không crash |
+| Đường dẫn có dấu tiếng Việt + `--recursive` | chạy đúng |
+| Ref không có mặt (chỉ thân) | cảnh báo, tự chuyển sang so khớp toàn thân |
+| Ảnh lẻ trong folder | nhận/loại theo cùng ngưỡng với video |
+
+Tốc độ đo trên clip đông người: ~0,05 s/frame khi 1–2 người, ~0,11 s/frame khi
+3–7 người (RTX 2070 Max-Q, DirectML, 1280×720).
 
 ## Hiệu năng (RTX 2070 Max-Q, DirectML)
 
