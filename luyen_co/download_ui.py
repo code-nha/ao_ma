@@ -1,8 +1,9 @@
 """Web UI nhỏ để tải video từ URL về máy — phục vụ việc kiếm dữ liệu test cho luyen_co.
 
-Nhận: link YouTube, TikTok, Facebook, Instagram, hoặc trang web có thẻ <video> /
-link .mp4 / .m3u8 trực tiếp. Tải bằng yt-dlp (ưu tiên) và tự fallback sang bóc
-link media trong HTML khi yt-dlp không hỗ trợ trang đó.
+Nhận: link YouTube, TikTok, Facebook, Instagram (cả reel video và post ảnh /
+carousel), hoặc trang web có thẻ <video> / link .mp4 / .m3u8 trực tiếp. Tải bằng
+yt-dlp (ưu tiên) và tự fallback sang bóc link media trong HTML khi yt-dlp không
+hỗ trợ trang đó.
 
 Chạy:
   python download_ui.py                 # mở http://127.0.0.1:8765
@@ -37,12 +38,13 @@ except ImportError:  # vẫn dùng được chế độ tải link trực tiếp
     yt_dlp = None
 
 VIDEO_EXT = {".mp4", ".mkv", ".webm", ".mov", ".avi", ".flv", ".ts", ".m4v", ".3gp"}
+IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".heic"}
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
 OUT_DIR = Path("downloads")
 MAX_HEIGHT = 1080
-APP_VERSION = "2026-11-24c"      # để biết server đang chạy code cũ hay mới
+APP_VERSION = "2026-11-24e"      # để biết server đang chạy code cũ hay mới
 
 
 @dataclass
@@ -68,6 +70,10 @@ JOBS: dict[str, Job] = {}
 ORDER: list[str] = []
 LOCK = threading.Lock()
 QUEUE: "Queue[tuple[str, str, bool, str, int]]" = Queue()
+# file đã do một job nào đó tải về: `_newest_video` phải bỏ qua, nếu không job
+# đang chạy sẽ "nhận vơ" file của job khác vừa xong (đã xảy ra thật khi tải
+# carousel ảnh song song với một reel).
+CLAIMED: set[str] = set()
 
 
 # --------------------------------------------------------------------- tải file
@@ -92,7 +98,127 @@ def _strip_byte_range(url: str) -> str:
 
 def _looks_like_media(url: str) -> bool:
     """URL trỏ thẳng vào file media (không phải trang web)."""
-    return Path(urlparse(url).path).suffix.lower() in VIDEO_EXT
+    return Path(urlparse(url).path).suffix.lower() in VIDEO_EXT | IMAGE_EXT
+
+
+# ----------------------------------------------------------------- ảnh Instagram
+# Post ảnh của IG không có "format video" nào nên yt-dlp báo
+# "No video formats found". Endpoint cũ `/p/<code>/media/?size=l` vẫn trả ảnh
+# 1080 px (đo thực tế: 1080×1619, 157–326 KB) — nét hơn hẳn thumbnail 750×750
+# mà `--ignore-no-formats-error` đưa ra.
+
+_IG_CODE_RE = re.compile(r"instagram\.com/(?:p|reel|reels|tv)/([A-Za-z0-9_-]{5,})")
+
+
+def _ig_codes(url: str) -> list[str]:
+    """Mã bài viết IG trong URL (carousel sẽ được mở rộng sau)."""
+    m = _IG_CODE_RE.search(url)
+    return [m.group(1)] if m else []
+
+
+def _ig_probe(url: str, cookies: str, cookiefile: str) -> tuple[bool, list[str], str]:
+    """(là post ảnh?, mã các ảnh con, tiêu đề) — best-effort qua yt-dlp.
+
+    Post ảnh của IG ra `_type=playlist`, không có format video nào; reel/video
+    thì ngược lại (`formats` > 0). Dựa vào đó để chọn đường tải cho đúng.
+    """
+    if yt_dlp is None:
+        return False, [], ""
+    opts = {"quiet": True, "no_warnings": True, "ignore_no_formats_error": True,
+            "extract_flat": True}
+    if cookies and cookies != "none":
+        opts["cookiesfrombrowser"] = (cookies,)
+    if cookiefile:
+        path = Path(cookiefile).expanduser()
+        if path.is_file():
+            opts["cookiefile"] = str(path)
+    try:
+        with yt_dlp.YoutubeDL(opts) as ydl:
+            info = ydl.extract_info(url, download=False, process=False)
+    except Exception:
+        return False, [], ""
+    entries = list(info.get("entries") or [])
+    title = str(info.get("title") or "")
+    is_photo = bool(entries) and not (info.get("formats") or [])
+    return is_photo, [e.get("id") for e in entries if e.get("id")], title
+
+
+def _ig_image_bytes(code: str) -> bytes | None:
+    """Tải ảnh IG ở cỡ lớn nhất mà endpoint công khai trả về."""
+    url = f"https://www.instagram.com/p/{code}/media/?size=l"
+    try:
+        req = Request(url, headers={"User-Agent": UA, "Accept": "image/*,*/*",
+                                    "Referer": "https://www.instagram.com/"})
+        with urlopen(req, timeout=60) as resp:
+            data = resp.read()
+            if resp.headers.get("Content-Type", "").startswith("image/") and len(data) > 20_000:
+                return data
+    except Exception:
+        return None
+    return None
+
+
+def _ig_thumbnail_bytes(code: str, cookies: str, cookiefile: str) -> bytes | None:
+    """Fallback: thumbnail 750 px mà yt-dlp lấy được khi không cần đăng nhập."""
+    if yt_dlp is None:
+        return None
+    opts = {"quiet": True, "no_warnings": True, "ignore_no_formats_error": True}
+    if cookies and cookies != "none":
+        opts["cookiesfrombrowser"] = (cookies,)
+    if cookiefile and Path(cookiefile).expanduser().is_file():
+        opts["cookiefile"] = str(Path(cookiefile).expanduser())
+    try:
+        with yt_dlp.YoutubeDL(opts) as ydl:
+            info = ydl.extract_info(f"https://www.instagram.com/p/{code}/",
+                                    download=False, process=False)
+        thumb = info.get("thumbnail")
+        if not thumb:
+            return None
+        with urlopen(Request(thumb, headers={"User-Agent": UA}), timeout=60) as resp:
+            return resp.read()
+    except Exception:
+        return None
+
+
+def _download_ig_images(url: str, job: Job, cookies: str, cookiefile: str,
+                        codes: list[str] | None = None, title: str = "") -> list[Path]:
+    """Lưu toàn bộ ảnh của post IG (kể cả carousel) vào OUT_DIR."""
+    if not codes:
+        _is_photo, codes, title = _ig_probe(url, cookies, cookiefile)
+    codes = codes or _ig_codes(url)
+    if not codes:
+        raise RuntimeError("không tìm thấy mã bài viết Instagram trong URL")
+    job.title = job.title or title
+    name = _sanitize(job.title or "instagram")
+    saved: list[Path] = []
+    for i, code in enumerate(codes, start=1):
+        data = _ig_image_bytes(code)
+        if data is None:
+            data = _ig_thumbnail_bytes(code, cookies, cookiefile)
+        if data is None:
+            continue
+        suffix = f"_{i}" if len(codes) > 1 else ""
+        dest = _unique(OUT_DIR / f"{title} [{code}]{suffix}.jpg")
+        dest.write_bytes(data)
+        CLAIMED.add(str(dest.resolve()))
+        saved.append(dest)
+        job.progress = i / len(codes)
+        job.size += len(data)
+    if not saved:
+        raise RuntimeError("Instagram không trả ảnh nào (bài cần đăng nhập? dán cookies.txt)")
+    return saved
+
+
+def _newest_video(since: float) -> Path | None:
+    """File video mới nhất trong OUT_DIR được tạo sau mốc `since` (chưa bị job khác nhận)."""
+    if not OUT_DIR.exists():
+        return None
+    cands = [p for p in OUT_DIR.iterdir()
+             if p.is_file() and p.suffix.lower() in VIDEO_EXT and p.stat().st_mtime >= since - 2
+             and str(p.resolve()) not in CLAIMED]
+    if not cands:
+        return None
+    return max(cands, key=lambda p: p.stat().st_mtime)
 
 
 def _sanitize(name: str, limit: int = 120) -> str:
@@ -323,6 +449,7 @@ def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False,
         downloads = info.get("requested_downloads") or []
         path = downloads[0].get("filepath") if downloads else None
         path = path or ydl.prepare_filename(info)
+        CLAIMED.add(str(Path(path).resolve()))
         return Path(path)
 
 
@@ -361,15 +488,18 @@ def _probe_size(path: Path) -> str:
     return ""
 
 
-def _newest_video(since: float) -> Path | None:
-    """File video mới nhất trong OUT_DIR được tạo sau mốc `since`."""
-    if not OUT_DIR.exists():
-        return None
-    cands = [p for p in OUT_DIR.iterdir()
-             if p.is_file() and p.suffix.lower() in VIDEO_EXT and p.stat().st_mtime >= since - 2]
-    if not cands:
-        return None
-    return max(cands, key=lambda p: p.stat().st_mtime)
+def _image_size(path: Path) -> str:
+    """Kích thước ảnh đã tải (vd. '1080×1619'); rỗng nếu không đọc được."""
+    try:
+        import cv2
+        import numpy as np
+
+        img = cv2.imdecode(np.fromfile(str(path), np.uint8), cv2.IMREAD_COLOR)
+        if img is not None:
+            return f"{img.shape[1]}×{img.shape[0]}"
+    except Exception:
+        pass
+    return ""
 
 
 def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") -> None:
@@ -377,31 +507,52 @@ def _run(job: Job, cookies: str, overwrite: bool = False, cookiefile: str = "") 
     started = time.time()
     job.url = _strip_byte_range(job.url)
     try:
-        path: Path | None = None
+        paths: list[Path] = []
         if _looks_like_media(job.url):
             # link file trực tiếp: tải bằng urllib, tránh yt-dlp đặt tên file
             # theo title sinh từ URL (dính query, có khi không mở được trên Windows)
             job.status = "downloading"
-            path = _direct_download(job.url, job)
+            paths = [_direct_download(job.url, job)]
         elif yt_dlp is not None:
-            try:
-                path = _ydl_download(job.url, job, cookies, overwrite, cookiefile,
-                                     job.max_height)
-            except Exception as exc:
-                job.error = str(exc)[:300]
-                path = None
-        if path is None or not Path(path).exists():
-            # yt-dlp ghép/đổi tên file xong có thể không khớp đường dẫn nó báo
-            path = _newest_video(started) or path
-        if path is None or not Path(path).exists():
+            is_photo, codes, title = (_ig_probe(job.url, cookies, cookiefile)
+                                      if _ig_codes(job.url) else (False, [], ""))
+            if is_photo:
+                # bài ảnh: đi đường ảnh ngay, đừng để yt-dlp tải nhầm video khác
+                job.status = "downloading"
+                paths = _download_ig_images(job.url, job, cookies, cookiefile,
+                                            codes, title)
+            else:
+                try:
+                    paths = [_ydl_download(job.url, job, cookies, overwrite, cookiefile,
+                                           job.max_height)]
+                except Exception as exc:
+                    job.error = str(exc)[:300]
+                    paths = []
+        if not paths and _ig_codes(job.url):
+            # Post ảnh IG không có format video → yt-dlp báo lỗi; đi đường ảnh
             job.status = "downloading"
             job.error = ""
-            path = _direct_download(job.url, job)
+            paths = _download_ig_images(job.url, job, cookies, cookiefile)
+        if not paths or not Path(paths[0]).exists():
+            # yt-dlp ghép/đổi tên file xong có thể không khớp đường dẫn nó báo
+            newest = _newest_video(started)
+            paths = [newest] if newest else paths
+        if not paths or not Path(paths[0]).exists():
+            job.status = "downloading"
+            job.error = ""
+            paths = [_direct_download(job.url, job)]
 
-        job.file = Path(path).name
-        job.size = Path(path).stat().st_size if Path(path).exists() else 0
-        job.codec = _probe_codec(Path(path)) if Path(path).exists() else ""
-        job.res = _probe_size(Path(path)) if Path(path).exists() else ""
+        first = Path(paths[0])
+        job.file = first.name if len(paths) == 1 else f"{first.name} (+{len(paths) - 1} ảnh)"
+        job.size = sum(p.stat().st_size for p in paths if p.exists())
+        if first.suffix.lower() in IMAGE_EXT:
+            job.codec = first.suffix.lstrip(".").lower()
+            job.res = _image_size(first)
+            job.progress = 1.0
+            job.status = "done"
+            return
+        job.codec = _probe_codec(first) if first.exists() else ""
+        job.res = _probe_size(first) if first.exists() else ""
         if job.codec and "/" in job.codec:
             vcodec, acodec = (job.codec.split("/") + ["", ""])[:2]
             if vcodec not in ("h264", "hevc"):
@@ -434,10 +585,10 @@ def _worker() -> None:
 # ------------------------------------------------------------------------ HTTP
 
 
-def _video_files() -> list[dict]:
+def _media_files() -> list[dict]:
     if not OUT_DIR.exists():
         return []
-    items = [p for p in OUT_DIR.iterdir() if p.is_file() and p.suffix.lower() in VIDEO_EXT]
+    items = [p for p in OUT_DIR.iterdir() if p.is_file() and p.suffix.lower() in VIDEO_EXT | IMAGE_EXT]
     items.sort(key=lambda p: p.stat().st_mtime, reverse=True)
     return [{"name": p.name, "size": p.stat().st_size, "mtime": p.stat().st_mtime}
             for p in items[:200]]
@@ -449,7 +600,7 @@ def _state() -> dict:
     return {"out": str(OUT_DIR.resolve()), "version": APP_VERSION,
             "has_ytdlp": yt_dlp is not None,
             "has_deno": DENO_PATH is not None, "deno": DENO_PATH or "",
-            "jobs": jobs, "files": _video_files()}
+            "jobs": jobs, "files": _media_files()}
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -574,7 +725,7 @@ PAGE = r"""<!doctype html>
 <body>
 <div class="wrap">
   <h1>Tải video từ web</h1>
-  <div class="sub">Dán link YouTube / TikTok / Facebook / Instagram / trang có video — mỗi dòng một link.
+  <div class="sub">Dán link YouTube / TikTok / Facebook / Instagram (bài ảnh cũng được) / trang có video — mỗi dòng một link.
     Tải xong, trỏ <code>luyen_co.py --input downloads</code> vào là quét được.</div>
 
   <div class="card">
@@ -613,7 +764,7 @@ https://example.com/trang-co-video"></textarea>
   </div>
 
   <div class="card">
-    <div class="sub" style="margin:0 0 8px">Video đã tải</div>
+    <div class="sub" style="margin:0 0 8px">File đã tải (video + ảnh)</div>
     <ul class="files" id="files"></ul>
     <div class="hint" id="hint"></div>
   </div>

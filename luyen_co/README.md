@@ -300,6 +300,12 @@ python luyen_co\download_ui.py --out luyen_co\downloads      # mở http://127.0
   tế: reel 720p tải về thành file 107 KB nhoè). Giờ cap theo cạnh ngắn nên reel
   dọc lấy đúng 720p; job hiện cả **độ phân giải thật** (vd. `720×1280`) để kiểm
   tra ngay, không phải đoán qua dung lượng
+- **tải được cả ảnh**: post ảnh / carousel Instagram (`/p/<code>/`) không có
+  format video nên yt-dlp báo "No video formats found"; web UI nhận ra bài ảnh
+  (playlist không có format) rồi lấy **từng ảnh con** qua
+  `/p/<code>/media/?size=l` — đo thực tế: **1080×1619, 157–326 KB** (thumbnail
+  mặc định chỉ 750×750). Ô chọn chất lượng chỉ áp cho video; ảnh luôn lấy cỡ
+  lớn nhất nguồn trả. Bài của tài khoản riêng tư vẫn cần `cookies.txt`
 - **cảnh báo không có tiếng**: có nguồn (nhất là Instagram reel) chỉ trả stream
   video-only, file tải về câm — job sẽ báo vàng "file không có tiếng"; cần tiếng
   thì dùng cookies đăng nhập để nguồn trả bản đầy đủ
