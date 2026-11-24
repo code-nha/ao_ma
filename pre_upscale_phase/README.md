@@ -35,12 +35,12 @@ bản upscale khi tải về. Senlab chỉ lo video; phụ đề do bên này lo
    (`output/relayvsr_film/<tên>_<jobid>_chunks/job.json`), không cần các chunk.
 3. **OCR phụ đề** (khi phim có sub bitmap DVD — sub bitmap sẽ bị dẹt vì node cắt viền):
    ```
-   .venv\Scripts\python ocr_vobsub.py "H:\...\phim.mkv"
+   .venv\Scripts\python ocr_vobsub.py "F:\...\phim.mkv"
    ```
    Ra `<tên gốc>.<lang>.srt` + `<tên gốc>.<lang>.ocr-review.txt` (dòng cần soát).
 4. **Ghép** — video upscale + audio gốc + SRT (mặc định, bỏ sub bitmap):
    ```
-   python mux_subs.py "phim_upscale.mp4" "H:\...\phim gốc.mkv"
+   python mux_subs.py "phim_upscale.mp4" "F:\...\phim gốc.mkv"
    python mux_subs.py --list pairs.txt   # mỗi dòng: "upscale" | "gốc"
    ```
    Offset lấy từ `job.json` → HHMMSS trong tên file → 0.

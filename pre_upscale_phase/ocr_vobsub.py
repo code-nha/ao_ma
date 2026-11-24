@@ -8,7 +8,7 @@ Cần: Tesseract (scoop install tesseract) + eng.traineddata (tessdata_best),
       .venv có av, pillow, pytesseract.
 
 Dùng:
-  .venv\\Scripts\\python ocr_vobsub.py "H:\\tmp\\Video\\phim.mkv"
+  .venv\\Scripts\\python ocr_vobsub.py "F:\\tmp\\Video\\phim.mkv"
   ... --stream 0 --lang eng --workers 6
 Output (cạnh file gốc):
   <tên gốc>.<lang>.srt          phụ đề chữ
