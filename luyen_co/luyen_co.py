@@ -83,9 +83,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         "crop = chỉ ảnh quanh người; both = cả hai")
     g.add_argument("--min-yaw", type=float, default=20.0,
                    help="chênh góc đầu tối thiểu (độ) để giữ thêm một ảnh")
-    g.add_argument("--min-pose", type=float, default=0.15,
+    g.add_argument("--min-pose", type=float, default=0.10,
                    help="chênh pose (keypoint chuẩn hoá, 0–1) tối thiểu để giữ thêm một ảnh; "
                         "đặt 0 để tắt lọc đa dạng")
+    g.add_argument("--confirm-window", type=float, default=30.0,
+                   help="giây: nếu camera vừa xác nhận mặt trong khoảng này thì nhận cả frame "
+                        "quay lưng (0 = tắt)")
+    g.add_argument("--confirm-body-th", type=float, default=0.55,
+                   help="ngưỡng body cho frame quay lưng trong cửa sổ xác nhận")
 
     g = p.add_argument_group("lọc trùng & đa dạng")
     g.add_argument("--dup-sim", type=float, default=0.97, help="cosine coi là trùng hẳn (bỏ bớt)")
@@ -128,6 +133,7 @@ def main(argv: list[str] | None = None) -> int:
         max_other_area=args.max_other_area,
         crop_margin=args.crop_margin, save=args.save,
         min_yaw=args.min_yaw, min_pose=args.min_pose, dup_sim=args.dup_sim,
+        confirm_window=args.confirm_window, confirm_body_th=args.confirm_body_th,
         min_gap=args.min_gap, limit=args.limit, device=args.device,
         min_track=args.min_track, allow_body_only=args.allow_body_only,
         skip_ref=not args.include_ref,

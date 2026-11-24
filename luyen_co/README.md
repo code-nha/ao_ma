@@ -32,7 +32,12 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
    người mặc giống nhau: đo thực tế trên clip văn phòng, người mặc áo xanh vẫn
    bị lẫn với một người mặc áo đen đi qua cùng lối. `--color-th` chỉ lọc được
    người khác màu áo rõ rệt.
-4. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, khuyến nghị nâng
+4. **Quay lưng sau khi camera đã xác nhận mặt**: nếu trong `--confirm-window`
+   giây (mặc định 30) trước/sau đó cùng camera có track khớp mặt, các frame
+   quay lưng vẫn được nhận với ngưỡng thấp hơn `--confirm-body-th` (0.55) và
+   vẫn phải qua kiểm tra màu áo. Đây là cách lấy được ảnh sau lưng/dáng đi mà
+   không cần bật body-only cho toàn bộ camera.
+5. Ảnh tham chiếu không có mặt → buộc phải dựa vào toàn thân, khuyến nghị nâng
    `--body-th`.
 
 Trước khi ghi ảnh còn một bước **lọc đa dạng**: một frame bị bỏ nếu **vừa** gần
@@ -94,7 +99,9 @@ Tham số đáng chú ý:
 | `--min-gap` | 0.35 | giây tối thiểu giữa 2 ảnh cùng track |
 | `--save` | full | `full` = nguyên frame (có bối cảnh), `crop` = chỉ quanh người, `both` = cả hai |
 | `--min-yaw` | 20 | chênh góc đầu tối thiểu (độ) để giữ thêm ảnh |
-| `--min-pose` | 0.15 | chênh dáng (keypoint chuẩn hoá) tối thiểu để giữ thêm ảnh; 0 = tắt lọc đa dạng |
+| `--min-pose` | 0.10 | chênh dáng (keypoint chuẩn hoá) tối thiểu để giữ thêm ảnh; 0 = tắt lọc đa dạng |
+| `--confirm-window` | 30 | giây: camera vừa xác nhận mặt thì nhận cả frame quay lưng (0 = tắt) |
+| `--confirm-body-th` | 0.55 | ngưỡng body cho frame quay lưng trong cửa sổ xác nhận |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |

@@ -57,7 +57,9 @@ class Config:
     crop_margin: float = 0.12
     save: str = "full"              # full | crop | both
     min_yaw: float = 20.0           # chênh góc đầu tối thiểu (độ) giữa 2 ảnh giữ lại
-    min_pose: float = 0.15          # chênh pose keypoint tối thiểu (0–1)
+    min_pose: float = 0.10          # chênh pose keypoint tối thiểu (0–1)
+    confirm_window: float = 30.0    # giây: camera vừa xác nhận mặt → nhận frame quay lưng
+    confirm_body_th: float = 0.55   # ngưỡng body cho frame quay lưng trong cửa sổ đó
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -115,6 +117,8 @@ class Pipeline:
         self.body_emb = BodyEmbedder(device=cfg.device)
         self.stats = Stats()
         self.accepted: list[Candidate] = []
+        # mốc thời gian đã xác nhận mặt (mỗi nguồn), để nhận cả frame quay lưng
+        self.confirmed: dict[str, list[list[float]]] = {}
         self.ref_face: np.ndarray | None = None
         self.ref_body: np.ndarray | None = None
         self.ref_torso: np.ndarray | None = None
@@ -268,6 +272,11 @@ class Pipeline:
             kept = [c for c in buf
                     if c.face_sim >= cfg.face_th
                     or (not c.has_face and self._body_ok(c))]
+        elif self._near_confirmed(buf[0].source, buf) and len(buf) >= 2:
+            # camera vừa xác nhận mặt trong confirm_window giây → nhận frame
+            # quay lưng với ngưỡng body thấp hơn (vẫn phải khớp màu áo)
+            kept = [c for c in buf if c.body_sim >= cfg.confirm_body_th
+                    and (cfg.color_th <= 0 or c.color_sim < 0 or c.color_sim >= cfg.color_th)]
         elif cfg.allow_body_only and body_med >= cfg.body_th and len(buf) >= cfg.min_track:
             # track không có frame nào khớp mặt: chỉ nhận khi người dùng cho phép,
             # dễ nhầm người mặc giống → mặc định tắt
@@ -275,6 +284,33 @@ class Pipeline:
         else:
             kept = []
         return kept, face_max, body_med
+
+    def _near_confirmed(self, source: str, buf: list[Candidate]) -> bool:
+        """Track này có nằm gần mốc đã xác nhận mặt trên cùng camera không.
+
+        Thực tế: người đi qua cam, lúc quay mặt lúc quay lưng. Khi camera vừa
+        khớp mặt trong `confirm_window` giây thì các frame quay lưng ngay sau đó
+        vẫn là cùng người, chỉ cần ngoại hình khớp ở ngưỡng thấp hơn.
+        """
+        window = self.cfg.confirm_window
+        if window <= 0 or not buf:
+            return False
+        t0, t1 = buf[0].t, buf[-1].t
+        for a, b in self.confirmed.get(source, []):
+            gap = max(a - t1, t0 - b, 0.0)
+            if gap <= window:
+                return True
+        return False
+
+    def _remember(self, source: str, buf: list[Candidate]) -> None:
+        """Ghi lại khoảng thời gian đã xác nhận mặt, gộp các khoảng gần nhau."""
+        intervals = self.confirmed.setdefault(source, [])
+        lo, hi = buf[0].t, buf[-1].t
+        for it in intervals:
+            if lo <= it[1] + self.cfg.confirm_window and hi >= it[0] - self.cfg.confirm_window:
+                it[0], it[1] = min(it[0], lo), max(it[1], hi)
+                return
+        intervals.append([lo, hi])
 
     def _flush(self, tid: int, buf: list[Candidate]) -> None:
         if not buf:
@@ -286,6 +322,8 @@ class Pipeline:
         self.stats.track_scores.append((face_max, body_med,
                                         [c.face_sim for c in buf],
                                         [c.body_sim for c in buf]))
+        if self.ref_face is not None and face_max >= self.cfg.face_th:
+            self._remember(buf[0].source, buf)
         if not kept:
             return
         self.stats.accepted_tracks += 1
