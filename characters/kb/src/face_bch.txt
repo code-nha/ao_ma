@@ -1,0 +1,554 @@
+# v3 source for groups B (head and face), C (natural hair), H (marks). One-off input of src/v3_face_life.py;
+# after that run, catalog/<slot>.jsonl is the source of truth (edit there, not here).
+# slot header:  ## slot|group|vi|flags(req,soul,multi)
+# value:        slug|sex(m/f/a)|phrase|vi|freq|bands|causes|sal|opts
+#   freq / sal: default letter then overrides KEY=letter, KEY = [m|f][Y|A|M|E]  (c/u/r ; p=plain m=mild k=marked)
+#   bands: letters YAME (contiguous) or lo-hi
+#   opts: B=<m|f><bands>,eth/<m|f><bands>  eth=<eth,...>  n=<facet:v+v&facet:v / ...>  fit=<tag,...>
+#         d=<dim:lo-hi,...>  r=<region,...>  ev=<rid or kid,...>  loc=<loc or loc group,...>
+#   Default population for freq: Vietnamese Kinh / Southeast Asian.
+
+## head|B|Hình đầu|
+normal|a|round head in proportion to the body|đầu tròn cân đối với thân|c|YAME||p|B=mYAME,fYAME ev=r0756
+flatback|a|head flat at the back, short front to back|đầu bẹt sau gáy|c|YAME|genetics,custom|m|ev=r0756
+broad|a|broad wide head, short and round|đầu to bề ngang, tròn ngắn|c|YAME|genetics|p|ev=r0756
+long|a|long narrow head, deep front to back|đầu dài và hẹp|u|YAME|genetics|m|ev=r0757
+large|a|large head for the size of the body|đầu to so với thân|u|YAME|genetics|k
+small|a|small head for the size of the body|đầu nhỏ so với thân|u|YAME|genetics|k
+domed|a|high domed crown|đỉnh đầu cao vồng|u|YAME|genetics|m
+pointed|a|crown rising to a blunt point|đỉnh đầu nhọn|r|YAME|genetics|k
+flattop|a|flat-topped head, square at the crown|đỉnh đầu bằng, vuông|u|YAME|genetics|m
+lumpy|a|uneven lumpy skull with dents and bumps|hộp sọ lồi lõm không đều|r|YAME|genetics,injury|k
+ball|a|very round ball-shaped head|đầu tròn như quả bóng|u|YAME|genetics|m
+egg|a|egg-shaped head, narrower at the top|đầu hình quả trứng, hẹp phía trên|u|YAME|genetics|m
+occiput|a|bony bump jutting at the back of the skull|u xương nhô sau gáy|u|YAME|genetics|m
+sideflat|a|head flattened on one side|đầu méo bẹt một bên|r|YAME|genetics,custom|k
+
+## face_shape|B|Khung mặt|req
+normal-m|m|oval face, wide at the cheekbones|mặt trái xoan, rộng ở gò má|c|YA||p|B=mYA ev=r0617,r0125
+normal-mid-m|m|broad face, squarer and fuller below|mặt rộng, vuông và đầy hơn phía dưới|c|M|ageing|p|B=mM ev=r0124,r0128
+normal-old-m|m|older face, sunken temples, loose jawline|mặt già, thái dương hóp, đường hàm chùng|c|E|ageing|p|B=mE ev=r0148,r0095
+normal-f|f|soft oval face, wide at the cheekbones|mặt trái xoan mềm, rộng ở gò má|c|YA||p|B=fYA ev=r0617,r0125
+normal-mid-f|f|broad soft face, fuller at the jaw|mặt rộng mềm, đầy ở hàm|c|M|ageing|p|B=fM ev=r0124
+normal-old-f|f|older face, hollow temples, softened jawline|mặt già, thái dương hóp, đường hàm mềm đi|c|E|ageing|p|B=fE ev=r0148,r0095
+round|a|round face, as wide as it is long|mặt tròn|c|YAME|genetics|m|ev=r0619
+square-m|m|square face with a wide straight jaw|mặt vuông, hàm rộng thẳng|c|YAME|genetics|m|ev=r1075
+rect-m|m|broad rectangular face, square at brow and jaw|mặt chữ điền|c|YAME|genetics|m|ev=r1075
+long|a|long narrow face|mặt dài, hẹp|u|YAME|genetics|m|ev=r0618
+heart|a|wide brow tapering to a narrow chin|mặt trái tim, trán rộng cằm nhọn|u|YAME|genetics|m
+diamond|a|diamond face, wide cheekbones, narrow brow and chin|mặt kim cương, gò má rộng, trán và cằm hẹp|c|YAME|genetics|m|ev=r0612
+flatbroad|a|flat broad face, features close together|mặt bánh đúc, phẳng rộng, nét dồn vào giữa|u|YAME|genetics|k|ev=r0617
+plough-m|m|long face with a jutting heavy lower jaw|mặt lưỡi cày|u|YAME|genetics|k|ev=r0770
+pear|a|face wider at the jaw than the brow|mặt tam giác, hàm rộng hơn trán|u|YAME|genetics,ageing|m|ev=r0128
+moon|a|puffy full moon face|mặt tròn phị|u|YAME|weight,illness|k|d=fat:4-7
+gaunt|a|gaunt narrow face, skin tight over bone|mặt hốc hác, da bọc xương|u|YAME|poverty,illness|k|d=fat:0-2 r=cheek_hollow ev=r0146
+angular|a|angular bony face, sharp planes|mặt góc cạnh, xương xẩu|u|YAME|genetics|m|d=fat:0-3
+wideshort|a|wide short face, broad cheekbones|mặt ngắn bè ngang|c|YAME|genetics|p|ev=r0619
+small|a|small face for the size of the head|mặt nhỏ so với đầu|u|YAME|genetics|m
+concave|a|dish face, flat midface and forward chin|mặt lõm giữa, cằm đưa ra|r|YAME|genetics|k|ev=r1059
+longmid|a|long midface, big gap between eyes and mouth|tầng giữa mặt dài|u|YAME|genetics|m
+heavy|a|heavy fleshy face, thick soft features|mặt nặng, nhiều thịt, nét dày|u|AME|weight,diet|m|d=fat:4-7
+babyface|a|childlike face, small features, round cheeks|mặt trẻ con, nét nhỏ, má tròn|u|YAM|genetics|k
+square-f|f|square face with a strong jaw|mặt vuông, hàm mạnh|u|YAME|genetics|m|ev=r1075
+oval-narrow-f|f|narrow oval face with a pointed chin|mặt trái xoan thon, cằm nhọn|c|YAME|genetics|p|ev=r1088
+melon-f|f|melon-seed face, full cheeks, small chin|mặt hạt dưa, má đầy, cằm nhỏ|u|YAM|genetics|m
+rect-f|f|long rectangular face, straight sides|mặt chữ nhật dài, hai bên thẳng|u|YAME|genetics|m
+deflated|a|deflated face, hollow temples and cheeks|mặt xẹp, thái dương và má hóp|r;E=u|ME|ageing,illness|k|d=fat:0-3 r=cheek_hollow ev=r0114,r0134
+sagging|a|heavily sagging face, jowls hanging|mặt chảy xệ nặng, hai bên hàm sa xuống|r;E=u|ME|ageing,weight|k|r=jowls ev=r0095,r0097
+
+## forehead|B|Trán|
+normal-m|m|forehead of ordinary height, slight slope|trán cao vừa, hơi dốc|c|YAME||p|B=mYAME ev=r1067
+normal-f|f|smooth rounded forehead of ordinary height|trán tròn, cao vừa|c|YAME||p|B=fYAME ev=r1068
+high|a|high broad forehead|trán cao rộng|c|YAME|genetics|m|ev=r0716
+low|a|low narrow forehead, hair close to the brows|trán thấp hẹp, tóc sát mày|u|YAME|genetics|m
+bulging|a|bulging rounded forehead jutting forward|trán dô|u|YAME|genetics|k|ev=r0722
+sloping-m|m|steeply sloping forehead running back|trán lẹm, dốc ra sau|u|YAME|genetics|m|ev=r1067
+flat|a|flat upright forehead like a wall|trán phẳng đứng|u|YAME|genetics|p|ev=r0717
+browridge-m|m|heavy brow ridge shading the eyes|gờ mày dày che bóng mắt|u|YAME|genetics|k|ev=r1084,r0588
+browridge-f|f|noticeable brow ridge above the eyes|gờ mày rõ|r|YAME|genetics|m|ev=r1064
+bossing|a|two rounded bumps on the upper forehead|trán có hai u nhô|u|YAME|genetics|m|ev=r1071
+wide|a|very wide forehead narrowing at the temples|trán rất rộng, hẹp dần ở thái dương|u|YAME|genetics|m
+narrow|a|narrow forehead, temples close together|trán hẹp|u|YAME|genetics|m
+temples|a|sunken hollow temples|thái dương hóp|u;E=c|ME|ageing,poverty,illness|m|r=temples ev=r0134
+veins|a|blue veins standing out on the temples|gân xanh nổi ở thái dương|u|ME|ageing|m
+tilted|a|forehead tilting back above prominent brows|trán ngả ra sau trên gờ mày|u|AME|ageing,genetics|p|ev=r0019
+dent|a|shallow dent in the forehead bone|vết lõm trên xương trán|r|YAME|injury|k
+tall-f|f|very tall forehead, hairline far back|trán rất cao, chân tóc lùi xa|u|YAME|genetics|k
+smooth-f|f|smooth flat forehead with no bulge|trán phẳng mịn, không dô|c|YAME|genetics|p
+
+## brows|B|Lông mày|
+normal-m|m|straight dark brows of medium thickness|lông mày thẳng, đậm vừa|c|YAM||p|B=mYAM ev=r1065
+normal-old-m|m|greying brows, a few long stray hairs|lông mày bạc dần, vài sợi dài|c|E|ageing|p|B=mE ev=r0104
+normal-f|f|thin natural brows, slightly arched|lông mày mảnh tự nhiên, hơi cong|c|YAM||p|B=fYAM ev=r1066
+normal-old-f|f|thinning faded brows, sparse at the tails|lông mày thưa nhạt, đuôi thưa|c|E|ageing|p|B=fE ev=r0104
+bushy|a|thick bushy brows|lông mày rậm|u;m=c|YAME|genetics|m|ev=r1065
+sparse|a|very sparse faint brows|lông mày rất thưa nhạt|u|YAME|genetics,illness|m
+unibrow|a|brows meeting above the nose|lông mày giao nhau|u|YAME|genetics|k
+short|a|short brows ending above the eye middle|lông mày ngắn|u|YAME|genetics|m
+long|a|long brows reaching past the eye corners|lông mày dài quá đuôi mắt|u|YAME|genetics|p
+arched|a|high arched brows|lông mày cong cao|u|YAME|genetics|m
+flat|a|flat straight brows with no arch|lông mày ngang, không cong|c|YAME|genetics|p
+upslant|a|brows slanting up at the outer ends|lông mày xếch|c|YAME|genetics|m
+droop|a|brows drooping at the outer tails|lông mày rủ đuôi|u;E=c|YAME|genetics,ageing|m|ev=r0104
+uneven|a|one brow sitting higher than the other|lông mày lệch, một bên cao|u|YAME|genetics|m|r=brow_level ev=r0723
+tailless|a|outer third of the brows missing|mất đuôi lông mày|u;E=c|AME|ageing,illness|m
+wiry-old-m|m|long wiry grey brow hairs sticking out|lông mày bạc dài lởm chởm|u;E=c|ME|ageing|k|d=grey:2-4
+overhang|a|heavy brows sagging over the eyelids|lông mày sụp che mí|u;E=c|ME|ageing|m|ev=r0586
+gap|a|brow split by a hairless scar gap|lông mày có vệt sẹo không mọc lông|r|YAME|injury|k|ev=r0739
+pale|a|pale brows barely darker than the skin|lông mày nhạt gần như màu da|r|YAME|genetics|m
+lowset|a|brows set low, close to the eyes|lông mày thấp, sát mắt|u;m=c|YAME|genetics|p|ev=r1065
+highset|a|brows set high, far above the eyes|lông mày cao, xa mắt|u|YAME|genetics|m|ev=r1066
+inked-f|f|flat dark brows inked into the skin|lông mày phun xăm đậm|c;Y=u|AME|grooming,custom|k|n=means:poor+modest+comfortable+rich
+plucked-f|f|over-plucked brows, thin pencil lines|lông mày nhổ mảnh như nét chì|u|YAME|grooming|m
+thick-f|f|thick straight dark brows|lông mày ngang dày đậm|u|YAM|genetics|m
+
+## eyes|B|Mắt|
+normal|a|dark brown almond eyes with a low lid crease|mắt nâu sẫm hình hạnh nhân, nếp mí thấp|c|YAM||p|B=mYAM,fYAM ev=r0663,r0666
+normal-old|a|dark eyes under heavier, looser upper lids|mắt sẫm, mí trên nặng và chùng|c|E|ageing|p|B=mE,fE ev=r0140,r0080
+monolid|a|single eyelids with no crease|mắt một mí|c|YAME|genetics|m|ev=r0665
+innerfold|a|inner eye corners hidden by a skin fold|khóe mắt trong bị nếp da che|c|YAME|genetics|p|ev=r0692,r0671
+double|a|distinct double eyelid crease|mắt hai mí rõ|c|YAME|genetics|p|ev=r0664
+small|a|small narrow eyes|mắt nhỏ, híp|c|YAME|genetics|m|ev=r0151
+large|a|large round eyes|mắt to tròn|u|YAME|genetics|k|ev=r0708
+wideset|a|wide-set eyes, far apart|mắt xa nhau|u|YAME|genetics|m
+closeset|a|close-set eyes near the nose bridge|mắt gần nhau, sát sống mũi|u|YAME|genetics|m|ev=r0699
+deepset|a|deep-set eyes under the brow|mắt sâu dưới gờ mày|u|YAME|genetics|m|ev=r0689
+bulging|a|prominent bulging eyes, white showing below|mắt lồi, lộ lòng trắng phía dưới|u|YAME|genetics,illness|k|ev=r0709,r0111
+upturned|a|outer eye corners tilting upward|mắt xếch|c|YAME|genetics|m|ev=r0705
+downturned|a|outer eye corners drooping down|mắt rủ đuôi|u;E=c|YAME|genetics,ageing|m|ev=r0055
+puffylid|a|puffy upper lids over narrow eyes|mí trên mọng, mắt híp|u|YAME|genetics|m|ev=r0109
+hooded|a|heavy hooded lids hiding the crease|mí trùm che nếp mí|u;M=c;E=c|AME|ageing,genetics|m|r=eyelid_droop ev=r0140
+ptosis|a|upper lids drooping halfway over the eyes|mí sụp che nửa mắt|r;E=u|YAME|ageing,illness|k|r=eyelid_droop ev=r0670,r1090
+onesmall|a|one eye noticeably smaller than the other|một mắt nhỏ hơn mắt kia|u|YAME|genetics|k|r=eye_unequal ev=r0714
+cross|a|one eye turned inward toward the nose|mắt lé trong|r|YAME|genetics,illness|k|r=eye_turn
+wall|a|one eye drifting outward|mắt lé ngoài|r|YAME|genetics,illness|k|r=eye_turn
+cataract|a|one eye clouded milky white|một mắt đục trắng|r;E=u|ME|illness,ageing|k
+arcus|a|pale grey arc around the irises|vòng cung xám nhạt quanh tròng đen|u;E=c|ME|ageing|m
+bloodshot|a|bloodshot yellowish eye whites|lòng trắng đỏ ngầu, ngả vàng|u|YAME|alcohol,substances,illness|m
+squint|a|eyes held narrowed, peering|mắt luôn nheo, nhìn dò|u|YAME|sun,temperament|m|r=eye_narrow fit=sea,farm,outdoor-manual
+lightbrown|a|light brown amber eyes|mắt nâu nhạt màu hổ phách|r|YAME|genetics|k
+blackeyes|a|very dark eyes, iris and pupil merging|mắt đen láy, tròng và con ngươi lẫn vào nhau|c|YAME|genetics|p
+lashes-long|a|long thick dark eyelashes|lông mi dài dày|u|YAME|genetics|m
+lashes-sparse|a|short sparse eyelashes|lông mi ngắn thưa|c|YAME|genetics|p
+blue|a|pale blue eyes|mắt xanh dương nhạt|c|YAME|genetics|k|eth=european
+greygreen|a|grey-green eyes|mắt xanh xám|u|YAME|genetics|k|eth=european
+hazel|a|hazel eyes, brown flecked with green|mắt màu nâu lục|c|YAME|genetics|m|eth=european
+eu-normal|a|brown eyes with a deep visible lid crease|mắt nâu, nếp mí sâu rõ|c|YAME|genetics|p|B=european/mYAME,european/fYAME eth=european ev=r0708
+af-normal|a|dark brown eyes with a visible lid crease|mắt nâu sẫm, nếp mí rõ|c|YAME|genetics|p|B=african/mYAME,african/fYAME eth=african
+
+## under_eye|B|Dưới mắt|
+normal-y|a|smooth under-eyes|vùng dưới mắt phẳng mịn|c|Y||p|B=mY,fY ev=r0121
+normal-a|a|faint shadows under the eyes|quầng nhạt dưới mắt|c|A||p|B=mA,fA
+normal-m|a|slight puffiness under the eyes|bọng nhẹ dưới mắt|c|M|ageing|p|B=mM,fM
+normal-e|a|soft bags and fine creases under the eyes|bọng mềm và nếp nhăn nhỏ dưới mắt|c|E|ageing|p|B=mE,fE ev=r1018
+dark|a|dark circles under the eyes|quầng thâm dưới mắt|c|YAME|genetics,stress,low-mood|m
+bags|a|heavy puffy bags under the eyes|bọng mắt nặng|u;M=c;E=c|AME|ageing,alcohol,genetics|k|ev=r1028
+hollow|a|deep hollow grooves under the eyes|rãnh lệ sâu dưới mắt|u;E=c|AME|ageing,weight-loss,genetics|m|ev=r0056
+crepey|a|crepey finely wrinkled lower lids|mí dưới nhăn nheo li ti|u;E=c|ME|ageing,sun|m|ev=r1018
+fatpads|a|bulging fat pads below the lower lids|túi mỡ phồng dưới mí dưới|u;E=c|ME|ageing,genetics|k|ev=r1028
+purple|a|purple-grey shadows around the eyes|quầng tím xám quanh mắt|u|YAME|stress,low-mood,illness|m
+swollen|a|swollen puffy lower lids|mí dưới sưng húp|u|YAME|alcohol,illness|m
+nasojugal|a|deep crease running down to the cheek|nếp hằn từ khóe mắt trong xuống má|u;E=c|ME|ageing|m|ev=r0713
+eyebulge|a|small fleshy roll under each lower lid|bọng thịt nhỏ dưới mi dưới|u|YA|genetics|p
+xanthelasma|a|small yellow patches near the inner corners|mảng vàng nhỏ gần khóe mắt trong|r|AME|illness|m
+pigmented|a|brownish skin all around the eyes|da quanh mắt sạm nâu|c|YAME|genetics,sun|p
+droopylid|a|lower lid sagging, red rim showing|mí dưới trễ, lộ viền đỏ|r|E|ageing,illness|k
+sunken|a|eyes sunk in dark hollow sockets|mắt trũng sâu trong hốc thâm|u|YAME|illness,poverty,substances|k|d=fat:0-3 ev=r0015
+festoons|a|puffy pouches on the upper cheeks|bọng phồng trên gò má dưới mắt|r;E=u|ME|ageing,alcohol|m|ev=r0053
+
+## nose|B|Mũi|
+normal|a|low nasal bridge and a soft rounded tip|sống mũi thấp, đầu mũi tròn mềm|c|YAME||p|B=mYAME,fYAME
+flat|a|very flat broad nose, wide nostrils|mũi tẹt, cánh mũi rộng|c|YAME|genetics|m
+highbridge|a|high straight nasal bridge|sống mũi cao thẳng|u|YAME|genetics|m
+hooked|a|hooked nose curving down at the tip|mũi khoằm|r|YAME|genetics|k
+bump|a|bony bump on the bridge|mũi gồ|u|YAME|genetics,injury|m|ev=r0937
+crooked|a|crooked broken nose bent to one side|mũi gãy lệch một bên|u|YAME|injury|k|r=nose_bend ev=r0891,r0929
+bulbous|a|fleshy bulbous nose tip|đầu mũi to tròn nhiều thịt|c|YAME|genetics|m|ev=r1034,r1086
+rednose|a|large red nose with enlarged pores|mũi to đỏ, lỗ chân lông to|u|ME|alcohol|k|ev=r1033
+button|a|small button nose|mũi nhỏ như cúc áo|u;f=c|YAME|genetics|m
+upturned|a|upturned nose showing the nostrils|mũi hếch|u|YAME|genetics|k|ev=r0917
+droop|a|long nose tip drooping downward|đầu mũi dài rủ xuống|u;E=c|AME|ageing,genetics|m|ev=r0949
+pinched|a|narrow pinched nose, thin nostrils|mũi hẹp, cánh mũi mỏng|u|YAME|genetics|m
+flaring|a|wide nostrils that flare out|cánh mũi bè, phập phồng|c|YAME|genetics|m
+large|a|nose too large for the face|mũi to so với mặt|u|YAME|genetics|k
+small|a|small short nose|mũi nhỏ ngắn|c|YAME|genetics|p
+squashed|a|flattened squashed nose|mũi bẹp dí|r|YAME|injury|k|r=nose_bend ev=r0891
+pointed|a|sharp pointed nose tip|đầu mũi nhọn|u|YAME|genetics|m
+uneven|a|uneven nostrils, one larger|lỗ mũi không đều|u|YAME|genetics,injury|m
+pores|a|shiny nose with large open pores|mũi bóng, lỗ chân lông to|c|YAME|genetics|p
+long|a|long straight nose|mũi dài thẳng|u|YAME|genetics|m|ev=r0915
+saddle|a|sunken saddle dip in the bridge|sống mũi lõm hình yên ngựa|r|YAME|injury,illness|k
+eu-normal|a|narrow nose with a high straight bridge|mũi hẹp, sống mũi cao thẳng|c|YAME|genetics|p|B=european/mYAME,european/fYAME eth=european
+af-normal|a|broad nose with a low wide bridge|mũi rộng, sống mũi thấp rộng|c|YAME|genetics|p|B=african/mYAME,african/fYAME eth=african ev=r0935,r1087
+
+## cheeks|B|Gò má, má|
+normal-y|a|full smooth cheeks over wide cheekbones|má đầy đặn, gò má rộng|c|YA||p|B=mYA,fYA ev=r0094,r0123
+normal-m|a|flatter cheeks, fuller below the cheekbones|má phẳng hơn, đầy phía dưới gò|c|M|ageing|p|B=mM,fM ev=r0126
+normal-e|a|flattened cheeks with slight hollows below|má xẹp, hơi hóp dưới gò|c|E|ageing|p|B=mE,fE ev=r0136
+highbones|a|high prominent cheekbones|gò má cao|c|YAME|genetics|m|ev=r0602
+widebones|a|wide flat cheekbones|gò má rộng phẳng|c|YAME|genetics|p|ev=r0617
+chubby|a|chubby round cheeks|má phúng phính|u;Y=c|YAME|genetics,weight|m|d=fat:3-7 ev=r0604
+hollow|a|hollow sunken cheeks|má hóp|u;E=c|YAME|poverty,illness,ageing|k|d=fat:0-3 r=cheek_hollow ev=r0129
+dimples|a|dimples when the face moves|lúm đồng tiền|u|YAME|genetics|m|ev=r0607
+onedimple|a|a single dimple on one cheek|lúm một bên má|r|YAME|genetics|m|ev=r0606
+sagging|a|heavy cheeks sagging toward the jaw|má xệ xuống hàm|u;E=c|ME|ageing,weight|m|r=jowls ev=r0135
+puffy|a|puffy swollen-looking cheeks|má sưng phù|u|YAME|alcohol,illness|m|d=fat:2-7
+jutting|a|cheekbones jutting under thin skin|gò má nhô dưới lớp da mỏng|u|YAME|poverty,illness,ageing|k|d=fat:0-2 ev=r0603
+apple-f|f|round high apple cheeks|má bầu tròn cao|u|YA|genetics|m|ev=r0123
+flat|a|flat cheeks with no visible cheekbones|má phẳng, không thấy gò má|u|YAME|genetics|p|ev=r0611
+ruddy|a|cheeks with a lasting red flush|má lúc nào cũng ửng đỏ|u|YAME|climate,alcohol,genetics|m|r=cheek_red
+lowbones|a|low cheekbones near nose level|gò má thấp ngang mũi|u|YAME|genetics|p
+gaunt-old|a|deep hollows below cheekbones, skin hanging|hõm sâu dưới gò má, da chùng|u|E|ageing,poverty|k|d=fat:0-3 r=cheek_hollow ev=r0146
+
+## mouth|B|Miệng, môi|
+normal|a|medium mouth with fairly full lips|miệng vừa, môi khá dày|c|YAM||p|B=mYAM,fYAM ev=r0807
+normal-old|a|thinner lips, upper lip grown longer|môi mỏng đi, nhân trung dài ra|c|E|ageing|p|B=mE,fE ev=r0004,r0098
+wide|a|wide mouth stretching across the face|miệng rộng|u|YAME|genetics|m|ev=r0863
+small|a|small narrow mouth|miệng nhỏ|u|YAME|genetics|m|ev=r0864
+full|a|thick full lips|môi dày|c|YAME|genetics|m
+thin|a|thin lips, little red showing|môi mỏng|u;E=c|YAME|genetics,ageing|m|ev=r0004
+thinupper|a|thin upper lip over a full lower lip|môi trên mỏng, môi dưới dày|c|YAME|genetics|p|ev=r0800
+protruding|a|lips pushed forward over the teeth|môi dày chìa ra trước|c|YAME|genetics|m|ev=r0867
+downturned|a|mouth corners turned down|khóe miệng trễ xuống|u;E=c|YAME|genetics,ageing,low-mood|m|r=mouth_corners ev=r0101
+upturned|a|mouth corners curving up at rest|khóe miệng cong lên|u|YAME|genetics,temperament|m|r=mouth_corners ev=r0118
+darklips|a|dark purplish lips|môi thâm tím|u|YAME|substances,illness,genetics|m
+cracked|a|dry cracked lips|môi khô nứt nẻ|u|YAME|sun,climate,neglect,poverty|m
+sunken|a|lips sunken inward over the gums|môi móm lõm vào lợi|u|E|ageing|k|d=teeth:0-1 ev=r0142
+droopylower|a|heavy lower lip hanging slightly open|môi dưới dày trề, hơi hé|u|YAME|genetics|m|ev=r1153
+bow|a|sharply peaked upper lip|môi trên có hai đỉnh nhọn rõ|u|YAM|genetics|m
+flatlip|a|flat straight upper lip, no peaks|môi trên phẳng, không có đỉnh|c|YAME|genetics|p|ev=r0785
+pale|a|pale bloodless lips|môi nhợt nhạt|u|YAME|illness,poverty|m
+longupper|a|long upper lip covering the teeth|môi trên dài che răng|u;E=c|AME|ageing,genetics|p|ev=r0141
+lopsided|a|mouth set slightly to one side|miệng hơi lệch một bên|u|YAME|genetics,injury|m|r=mouth_slant ev=r0862
+openmouth|a|mouth habitually hanging a little open|miệng hay há hờ|u|YAME|genetics,illness|m
+
+## teeth|B|Răng|
+normal-y|a|fairly even teeth, slightly crowded|răng khá đều, hơi khấp khểnh|c|YA||p|B=mYA,fYA d=teeth:3-4
+normal-m|a|teeth slightly yellowed and worn|răng hơi ố và mòn|c|M|ageing|p|B=mM,fM d=teeth:2-4
+normal-e|a|several teeth missing, the rest worn|rụng vài chiếc, số còn lại mòn|c|E|ageing|p|B=mE,fE d=teeth:1-3
+buck|a|protruding upper front teeth|răng hô|c|YAME|genetics|k|d=teeth:2-4 r=bite
+underbite|a|lower teeth jutting past the upper|răng móm, răng dưới chìa ra|u|YAME|genetics|k|d=teeth:2-4 r=bite
+crowded|a|crooked crowded teeth overlapping|răng mọc lộn xộn chen chúc|c|YAME|genetics,poverty|m|d=teeth:2-4
+snaggle|a|one canine tooth jutting out|răng khểnh|c|YAME|genetics|m|d=teeth:2-4
+gap|a|gap between the front teeth|răng cửa thưa|u|YAME|genetics|m|d=teeth:2-4
+chipped|a|chipped front tooth|răng cửa sứt mẻ|u|YAME|injury|m|d=teeth:2-4
+yellow|a|yellow-stained teeth|răng ố vàng|c|AME|substances,neglect,ageing|m|d=teeth:1-4
+brown|a|brown tobacco-stained teeth|răng ố nâu khói thuốc|u|AME|substances|m|d=teeth:1-4 fit=smoker
+betel-f|f|teeth stained dark red-black|răng đỏ thâm đen vì ăn trầu|r|75-120|custom|k|d=teeth:1-4
+lacquer-f|f|glossy black lacquered teeth|răng nhuộm đen bóng|r|80-120|custom|k|d=teeth:1-4
+missingfront|a|a front tooth missing|mất một răng cửa|u|YAME|injury,neglect,poverty|k|d=teeth:2-3
+gold|a|one gold-capped tooth|một răng bọc vàng|u|AME|custom,wealth|k|d=teeth:1-4 n=means:poor+modest+comfortable+rich
+silver|a|metal crowns on the side teeth|răng hàm bọc kim loại|u|AME|custom|m|d=teeth:1-4 n=means:poor+modest+comfortable+rich
+dentures|a|false teeth, too even and too white|răng giả đều trắng quá mức|u|ME|ageing|m|d=teeth:3-4 n=means:poor+modest+comfortable+rich
+toothless|a|toothless mouth, bare gums|móm, không còn răng|r;E=u|ME|ageing,poverty,neglect|k|d=teeth:0-0 ev=r0016
+fewleft|a|only a few teeth left|chỉ còn vài chiếc răng|u|ME|ageing,poverty,neglect|k|d=teeth:1-1
+veneers|a|very even bright white teeth|răng trắng đều tăm tắp|u|YAM|enhanced,wealth|m|d=teeth:4-4 n=means:comfortable+rich
+gummy|a|wide gums showing above the teeth|cười hở lợi|u|YAME|genetics|m|d=teeth:2-4
+small|a|small rounded teeth|răng nhỏ tròn|u|YAME|genetics|p|d=teeth:2-4
+large|a|large square front teeth|răng cửa to vuông|u|YAME|genetics|m|d=teeth:2-4
+worn|a|teeth worn down flat and short|răng mòn bằng, ngắn|u|ME|ageing,stress|m|d=teeth:1-3
+rotten|a|blackened rotting tooth stumps|chân răng sâu đen|u|AME|poverty,neglect|k|d=teeth:1-3
+receding|a|receding gums, long-looking teeth|tụt lợi, răng trông dài|u;E=c|ME|ageing,neglect|p|d=teeth:1-4
+
+## jaw_chin|B|Hàm, cằm|
+normal-m|m|rounded jaw, chin of ordinary size|hàm tròn, cằm vừa|c|YAM||p|B=mYAM
+normal-f|f|soft narrow jaw, small rounded chin|hàm thon mềm, cằm nhỏ tròn|c|YAM||p|B=fYAM ev=r1073
+normal-old|a|softened jawline, slight jowls|đường hàm mềm đi, hơi chảy|c|E|ageing|p|B=mE,fE ev=r0097
+square|a|square wide jaw|hàm vuông rộng|u;m=c|YAME|genetics|m|ev=r1072
+flared|a|flared jaw angles below the ears|quai hàm bạnh|c|YAME|genetics|m
+pointed|a|narrow pointed chin|cằm nhọn|u;f=c|YAME|genetics|m|ev=r1073
+receding|a|small receding chin|cằm lẹm|u|YAME|genetics|k|ev=r0770
+jutting|a|jutting prominent chin|cằm nhô|u|YAME|genetics|k|ev=r0770
+long|a|long heavy jaw|hàm dài nặng|u|YAME|genetics|m
+cleft|a|cleft chin with a central groove|cằm chẻ|r|YAME|genetics|m|ev=r0765
+double|a|soft double chin under the jaw|cằm đôi, có nọng|u;M=c|YAME|weight,diet,ageing|m|d=fat:4-7 r=chin_fat
+lost|a|jawline lost in a soft neck|đường hàm lẫn vào cổ|u|YAME|weight|m|d=fat:4-7 r=chin_fat ev=r0768
+jowls|a|heavy sagging jowls|hai bên hàm chảy xệ nặng|u;E=c|ME|ageing,weight|k|r=jowls ev=r0771
+delicate|a|small delicate jaw|hàm nhỏ thanh|u;f=c|YAME|genetics|p
+asym|a|lopsided jaw, one side bigger|hàm lệch, một bên to hơn|u|YAME|genetics,injury|m|r=jaw_side
+underjaw|a|lower jaw pushed forward|hàm dưới đưa ra trước|u|YAME|genetics|m|r=bite
+chindimple|a|dimpled puckered chin skin|da cằm lỗ chỗ, nhăn|u|AME|genetics,ageing|p|ev=r1061
+witch|a|chin jutting up toward the nose|cằm vểnh lên gần mũi|r|E|ageing|k|d=teeth:0-1 ev=r0016
+wideshort|a|short wide chin|cằm ngắn rộng|c|YAME|genetics|p
+bony|a|bony jaw edge showing under the skin|xương hàm lộ rõ dưới da|u|YAME|genetics,poverty|m|d=fat:0-3
+heavy|a|heavy fleshy lower face|nửa dưới mặt nặng, nhiều thịt|u|AME|weight|m|d=fat:4-7
+
+## ears|B|Tai|
+normal|a|ears of ordinary size lying close to the head|tai cỡ vừa, áp sát đầu|c|YAME||p|B=mYAME,fYAME
+large|a|large ears for the head size|tai to so với đầu|u|YAME|genetics|k|ev=r1055
+small|a|small ears set close|tai nhỏ, áp sát|u|YAME|genetics|p|ev=r1055
+protruding|a|ears sticking out from the head|tai vểnh|u|YAME|genetics|k|ev=r1057
+longlobes|a|long ears with thick fleshy lobes|tai dài, dái dày|u;E=c|YAME|genetics,ageing|m|ev=r1045
+attached|a|lobes attached straight to the cheek|dái tai dính liền má|c|YAME|genetics|p|ev=r1052
+thinlobes|a|thin small earlobes|dái tai mỏng nhỏ|c|YAME|genetics|p
+cauliflower|a|swollen lumpy cauliflower ear|tai sưng sùi như bông cải|r|YAME|injury,sport|k
+oneout|a|one ear sticking out more than the other|một tai vểnh hơn tai kia|u|YAME|genetics|m|r=ear_set ev=r1057
+lowset|a|ears set low on the head|tai mọc thấp|u|YAME|genetics|m|ev=r1056
+highset|a|ears set high, level with the brows|tai mọc cao ngang mày|u|YAME|genetics|m|ev=r1049
+pointed|a|ears with pointed upper tips|vành tai trên nhọn|r|YAME|genetics|m
+hairy-m|m|tufts of hair growing out of the ears|lông mọc ra từ tai|u;E=c|ME|ageing|m
+stretched|a|long stretched earlobes|dái tai dài trễ|u;E=c|ME|ageing|m
+cupped|a|top of the ear folded forward|vành tai trên gập xuống|r|YAME|genetics|m
+flathelix|a|flat ear rims with no curl|vành tai phẳng, không cuộn|u|YAME|genetics|p|ev=r1051
+narrowlong|a|narrow long ears|tai hẹp dài|c|YAME|genetics|p|ev=r1045
+wideshort|a|wide short rounded ears|tai ngắn rộng tròn|u|YAME|genetics|p|ev=r1044
+pierced-f|f|pierced earlobes with small holes|dái tai có lỗ xỏ|c|YAME|custom|p
+torn|a|earlobe split through|dái tai bị rách đôi|r|YAME|injury|m
+
+## neck|B|Cổ|
+normal-m|m|neck of ordinary length and thickness|cổ dài và to vừa|c|YAM||p|B=mYAM
+normal-f|f|slender neck of ordinary length|cổ thon, dài vừa|c|YAM||p|B=fYAM
+normal-old|a|thin neck with loose lined skin|cổ gầy, da chùng có nếp|c|E|ageing|p|B=mE,fE ev=r0057
+short|a|short thick neck|cổ ngắn to|c|YAME|genetics|m
+long|a|long thin neck|cổ dài gầy|u|YAME|genetics|m
+bull-m|m|thick muscular bull neck|cổ to bè nhiều cơ|u|YAM|manual-labour,gym,sport|k|d=muscle:3-4
+scrawny|a|scrawny neck, tendons standing out|cổ gầy nhom, gân nổi|u;E=c|YAME|poverty,ageing,illness|m|d=fat:0-3 ev=r1030
+wattle|a|loose wattle of skin under the chin|nọng da chùng dưới cằm|u;E=c|ME|ageing|m|r=chin_fat ev=r1232
+rings|a|deep horizontal creases around the neck|nếp ngấn ngang quanh cổ|u;E=c|AME|ageing,genetics|m|ev=r0106
+adam-m|m|prominent Adam's apple|yết hầu nhô|c|YAME|genetics|m|ev=r1085
+fat|a|thick fleshy neck with folds|cổ to nhiều mỡ, có ngấn|u|AME|weight,diet|m|d=fat:4-7 ev=r0885
+goiter|a|swelling at the front of the throat|bướu ở trước cổ|r|AME|illness|k
+bands|a|vertical cords showing on the neck|dải cơ dọc nổi trên cổ|u;E=c|ME|ageing|m|ev=r0886
+crepey-f|f|crepey loose skin on the neck|da cổ nhăn nheo|u;E=c|ME|ageing|m|ev=r0017
+swan-f|f|long slender neck|cổ cao thon|u|YA|genetics|m
+sunburnt|a|neck skin dark and creased at the back|da gáy sạm và nứt nẻ|u|AME|sun,manual-labour|m
+veins|a|thick veins standing out on the neck|tĩnh mạch nổi to trên cổ|u|AME|manual-labour,illness|m
+wide-m|m|neck as wide as the head|cổ to bằng đầu|u|YAME|genetics,weight|k|d=fat:3-7
+
+## skin_tone|B|Màu da|req
+normal-m|m|light golden-tan skin|da màu vàng nâu sáng|c|YAME||p|B=mYAME
+normal-f|f|fair skin with a warm yellow undertone|da sáng, ánh vàng ấm|c|YAME||p|B=fYAME
+pale|a|pale ivory skin|da trắng ngà|u;f=c|YAME|genetics,sedentary|m
+fair|a|fair yellowish skin|da sáng ngả vàng|c|YAME|genetics|p
+olive|a|light olive-brown skin|da nâu ô liu nhạt|c|YAME|genetics|p
+golden|a|medium golden-brown skin|da nâu vàng vừa|c|YAME|genetics,sun|p
+deeptan|a|deep brown sun-darkened skin|da nâu sẫm cháy nắng|c|YAME|sun,manual-labour|m
+darkbrown|a|dark brown skin|da nâu đậm|u|YAME|genetics,sun|m
+sallow|a|sallow greyish-yellow skin|da vàng xám xanh xao|u|YAME|illness,poverty,substances|m
+ruddy|a|ruddy reddish face|mặt đỏ au|u|YAME|alcohol,climate|m|r=cheek_red
+farmertan|a|face and neck much darker than the body|mặt và cổ sẫm hơn thân nhiều|u|YAME|sun,manual-labour|m
+ashen|a|ashen grey dull skin|da xám tro, xỉn|u|AME|illness|m
+jaundice|a|yellow tinge to skin and eyes|da và lòng trắng mắt vàng|r|AME|illness,alcohol|k
+eu-normal|a|pale pinkish skin|da trắng hồng|c|YAME|genetics|p|B=european/mYAME,european/fYAME eth=european
+af-normal|a|dark brown skin with a cool undertone|da nâu đậm ánh lạnh|c|YAME|genetics|p|B=african/mYAME,african/fYAME eth=african
+verydark|a|very dark brown skin|da nâu rất đậm|c|YAME|genetics|m|eth=african,south-asian
+reddens|a|pale skin that reddens easily|da trắng dễ ửng đỏ|c|YAME|genetics|m|eth=european
+
+## skin_texture|B|Da mặt|
+normal-y|a|smooth skin with a few small pores|da mịn, lỗ chân lông nhỏ|c|Y||p|B=mY,fY
+normal-a|a|even skin, slightly dull|da đều màu, hơi xỉn|c|A||p|B=mA,fA
+normal-m|a|coarser skin, a few brown spots|da thô hơn, vài đốm nâu|c|M|ageing,sun|p|B=mM,fM ev=r1024
+normal-e|a|thin dry skin with age spots|da mỏng khô, có đồi mồi|c|E|ageing|p|B=mE,fE ev=r0090,r0133
+oily|a|oily shiny skin with large pores|da dầu bóng, lỗ chân lông to|c|YAM|genetics|m
+acne|a|red acne spots on cheeks and forehead|mụn đỏ trên má và trán|c;A=u;M=r|YAM|youth,hormones|k
+acnescars|a|pitted acne scars on the cheeks|sẹo rỗ trên má|u|YAME|youth,genetics|k|ev=r1025
+pox|a|old pockmarks scattered over the face|vết rỗ cũ khắp mặt (đậu mùa)|r|65-120|illness|k|ev=r1025
+freckles|a|freckles across the nose and cheeks|tàn nhang trên mũi và má|u|YAME|genetics,sun|m
+melasma-f|f|brown patches on the cheeks and forehead|nám trên má và trán|c;Y=u|AME|hormones,sun,childbearing|m|ev=r1024
+melasma-m|m|brown patches on the cheekbones|nám trên gò má|u|AME|sun|m|ev=r1024
+sunspots|a|dark sun spots on cheeks and temples|đốm nâu đậm trên má và thái dương|c|ME|sun,ageing|m|ev=r1024
+warts|a|raised brown warty spots on the face|đốm sần nâu nổi trên mặt|u;E=c|ME|ageing|m|ev=r0133
+leathery|a|thick leathery face skin, deep creases|da mặt dày như da thuộc, nếp sâu|u|AME|sun,water-work,manual-labour|k|d=lines:2-4 ev=r0112,r0052
+veins|a|broken red veins on nose and cheeks|mao mạch đỏ vỡ trên mũi và má|u|AME|alcohol,sun|m|ev=r0062
+rosacea|a|flushed blotchy red cheeks and nose|má và mũi đỏ loang lổ|u|AME|genetics,alcohol|m|r=cheek_red
+dry|a|dry flaky skin|da khô bong vảy|u|YAME|climate,neglect,illness|p
+dull|a|dull sallow skin, uneven tone|da xỉn, không đều màu|u|YAME|poverty,neglect,substances|p
+chapped|a|rough wind-chapped cheeks|má thô nứt nẻ vì gió|u|YAME|climate,sun,water-work|m
+tags|a|small skin tags on the eyelids and neck|mụn thịt nhỏ trên mí và cổ|u;E=c|ME|ageing,weight|m
+milia|a|tiny white bumps around the eyes|hạt kê trắng li ti quanh mắt|u|YAME|genetics|p
+crepey|a|thin crepey skin, fine wrinkles everywhere|da mỏng nhăn li ti khắp mặt|u;E=c|E|ageing|m|d=lines:2-4 ev=r1018
+pigment|a|uneven blotchy pigment over the face|sắc tố loang lổ khắp mặt|u;E=c|ME|sun,ageing|m|ev=r0091,r1024
+pores|a|large open pores on nose and cheeks|lỗ chân lông to trên mũi và má|c|YAME|genetics|p
+smooth-old|a|smooth fine skin for the age|da mịn so với tuổi|u|ME|genetics,grooming,wealth|m|d=lines:0-2
+blackheads|a|blackheads on the nose and chin|mụn đầu đen trên mũi và cằm|c|YA|youth,neglect|p
+eczema|a|red scaly patches on the face|mảng đỏ có vảy trên mặt|r|YAME|illness|m
+
+## wrinkles|B|Nếp nhăn|
+normal-y|a|smooth face, no set lines|mặt phẳng, chưa có nếp|c|Y||p|B=mY,fY d=lines:0-1
+normal-a|a|faint lines at the eye corners|nếp nhăn mờ ở đuôi mắt|c|A||p|B=mA,fA d=lines:0-2
+normal-m|a|set forehead lines and nasolabial folds|nếp trán và rãnh mũi má đã rõ|c|M|ageing|p|B=mM,fM d=lines:1-3 ev=r0002
+normal-e|a|deep lines across the whole face|nếp nhăn sâu khắp mặt|c|E|ageing|p|B=mE,fE d=lines:2-4 ev=r0001,r0052
+forehead|a|deep horizontal furrows across the forehead|nếp nhăn ngang sâu trên trán|u;M=c|AME|ageing,temperament|m|d=lines:2-4 ev=r0005
+frown|a|deep vertical frown lines between the brows|nếp cau dọc sâu giữa hai mày|u|AME|temperament,stress|k|d=lines:1-4 ev=r0576,r0006
+crowsfeet|a|deep crow's feet fanning out at the eyes|vết chân chim sâu ở đuôi mắt|u;M=c|AME|sun,ageing,temperament|m|d=lines:1-4 ev=r0684
+nasolabial|a|deep folds running nose to mouth|rãnh mũi má sâu|u;E=c|AME|ageing|m|d=lines:2-4 ev=r0002
+marionette|a|lines running down below the mouth corners|nếp kéo xuống dưới khóe miệng|u;E=c|ME|ageing|m|d=lines:2-4 ev=r0007,r0879
+barcode|a|fine vertical lines above the upper lip|nếp nhăn dọc nhỏ trên môi trên|u;E=c|ME|ageing,substances|m|d=lines:2-4 ev=r0100
+squint|a|pale squint creases at the eye corners|nếp nheo trắng ở đuôi mắt|u|AME|sun,water-work|m|d=lines:1-4
+smoothage|a|unusually smooth unlined face|mặt ít nếp nhăn lạ thường|u|ME|genetics,wealth,grooming|k|d=lines:0-1
+crisscross|a|criss-cross creases over cheeks and neck|nếp nhăn đan chéo trên má và cổ|u|E|sun,ageing|m|d=lines:3-4 ev=r0112
+sunkenlined|a|cheeks folded into long vertical creases|má gấp thành nếp dọc dài|u|E|ageing,weight-loss|m|d=lines:3-4,fat:0-4
+earlylines|a|lines deeper than usual for the age|nếp nhăn sâu hơn tuổi|u|YA|sun,substances,stress|m|d=lines:2-3
+nosebridge|a|horizontal crease across the nose bridge|nếp ngang trên sống mũi|u|AME|temperament|p|ev=r1015
+laughlines|a|curved laugh lines around the mouth|nếp cười quanh miệng|u|AME|temperament|p|d=lines:1-4
+chinline|a|deep crease below the lower lip|nếp hằn sâu dưới môi dưới|u|ME|ageing|p|ev=r0011
+
+## facial_hair|B|Lông mặt, râu|
+normal-m|m|sparse facial hair, mostly clean-shaven|râu thưa, thường cạo sạch|c|YAM||p|B=mYAM
+normal-old-m|m|sparse grey stubble on chin and lip|râu lún phún bạc ở cằm và mép|c|E|ageing|p|B=mE
+normal-f|f|smooth face with faint fine down|mặt mịn, lông tơ mờ|c|YAME||p|B=fYAME ev=r0079
+wispy-m|m|wispy thin mustache|ria mép lưa thưa|c|YAME|genetics|m
+tuft-m|m|thin tuft of long hairs on the chin|chòm râu dài thưa ở cằm|u|AME|custom,ageing|k
+stubble-m|m|patchy dark stubble on the jaw|râu lởm chởm từng mảng ở hàm|c|YAME|neglect|m
+full-m|m|full thick beard|râu quai nón rậm|r|AME|genetics|k
+shadow-m|m|blue-grey shadow of shaved beard|vệt râu cạo xanh|u|YAME|genetics|p
+whitebeard-m|m|long white wispy beard|râu dài trắng lưa thưa|r;E=u|ME|custom,ageing|k|d=grey:3-4
+goatee-m|m|sparse goatee and mustache|râu dê thưa và ria|u|YAME|genetics|m
+hairless-m|m|almost hairless face, no beard growth|mặt gần như không có râu|c|YAME|genetics|p|ev=r0741
+greystubble-m|m|white stubble all over the jaw|râu trắng lún phún khắp hàm|u|ME|neglect,ageing|m|d=grey:3-4
+sideburns-m|m|long thin sideburns|tóc mai dài mảnh|u|YAME|genetics|p
+neckbeard-m|m|scraggly hairs on the neck and jaw|lông lởm chởm ở cổ và hàm|u|YA|neglect|m
+lipdown-f|f|faint dark hair on the upper lip|lông tơ sẫm trên môi trên|u|YAME|genetics,hormones|m
+chinhairs-f|f|a few coarse dark chin hairs|vài sợi lông cứng ở cằm|u;E=c|ME|hormones,ageing|m
+sidedown-f|f|downy hair along the cheeks|lông tơ dọc hai bên má|u|YAME|genetics|p
+mustache-f|f|noticeable dark mustache hair|ria mép sẫm rõ|r|AME|hormones,illness|k
+whitehairs-f|f|white stray hairs on chin and lip|vài sợi lông trắng ở cằm và môi|u|E|ageing|p
+
+## asymmetry|B|Bất cân xứng|
+normal|a|face roughly even on both sides|mặt khá cân hai bên|c|YAME||p|B=mYAME,fYAME ev=r0714
+eyelower|a|one eye set slightly lower|một mắt thấp hơn|u|YAME|genetics|m|r=eye_unequal ev=r0714
+nosebent|a|nose bent toward one side|mũi lệch một bên|u|YAME|injury,genetics|m|r=nose_bend
+mouthpull|a|mouth pulling toward one side|miệng kéo lệch một bên|u|YAME|genetics|m|r=mouth_slant ev=r0878
+droop|a|one side of the face drooping|một bên mặt xệ|r;E=u|ME|illness|k|r=face_droop,mouth_slant
+jaw|a|jaw longer on one side|hàm một bên dài hơn|u|YAME|genetics,injury|m|r=jaw_side
+earup|a|one ear set higher than the other|một tai cao hơn tai kia|u|YAME|genetics|p|r=ear_set ev=r0731
+browhigh|a|one brow always higher|một bên mày luôn cao hơn|u|YAME|genetics|m|r=brow_level ev=r0723
+smallhalf|a|one half of the face smaller|nửa mặt nhỏ hơn nửa kia|r|YAME|genetics|k|ev=r0611
+cheekfull|a|one cheek fuller than the other|một bên má đầy hơn|u|YAME|genetics,injury|m|r=cheek_side
+palsy|a|one eyelid and mouth corner slack|một bên mí và khóe miệng chùng|r|YAME|illness|k|r=face_droop,eyelid_droop
+crookedsmile|a|lopsided smile lifting one side|nụ cười lệch một bên|u|YAME|genetics,temperament|m|r=mouth_slant
+
+## resting_face|B|Nét mặt khi nghỉ|soul
+normal|a|relaxed neutral face|mặt thả lỏng, trung tính|c|YAM||p|B=mYAM,fYAM
+normal-old|a|neutral face, mouth corners slightly down|mặt trung tính, khóe miệng hơi trễ|c|E|ageing|p|B=mE,fE ev=r0101
+stern|a|stern set face, mouth tight|mặt nghiêm, miệng mím chặt|u|YAME|temperament|m|ev=r1212,r1213
+frown|a|habitual frown, brows drawn together|hay cau mày|u|YAME|temperament,stress|k|ev=r0576
+gentle|a|gentle soft look in the eyes|ánh mắt hiền|c|YAME|temperament|m
+vacant|a|vacant dazed look|vẻ mặt ngơ ngác|u|YAME|temperament,illness,low-mood|m
+disdain|a|faintly disdainful look, one lip raised|vẻ khinh khỉnh, môi nhếch|u|YAME|temperament|k
+tired|a|tired drooping look|vẻ mặt mệt mỏi, sụp xuống|c|AME|low-mood,stress|m|ev=r1215,r1219
+tense|a|tense face, jaw clenched|mặt căng, quai hàm nghiến|u|YAME|stress,temperament|m
+wary|a|wary narrowed eyes, watchful|mắt nheo cảnh giác|u|YAME|temperament|m|r=eye_narrow
+smile|a|faint smile even at rest|mặt lúc nào cũng hơi cười|u|YAME|temperament|m|r=mouth_corners
+worried|a|worried look, inner brows raised|vẻ lo âu, đầu mày nhướng|u|YAME|stress,temperament|m
+sad|a|sad downcast look|vẻ buồn, mắt nhìn xuống|u|YAME|low-mood|m|ev=r1216
+absent|a|absent look, eyes unfocused|ánh mắt lơ đãng|u|YAME|temperament|p
+sullen|a|sullen pout, lower lip pushed out|mặt hờn dỗi, môi dưới trề|u|YAME|temperament,low-mood|m|ev=r1153
+alert|a|alert bright-eyed look|vẻ lanh lợi, mắt sáng|u|YAM|temperament|p
+sleepy|a|sleepy look, lids half lowered|vẻ buồn ngủ, mí sụp nửa|u|YAME|temperament,illness|m|r=eyelid_droop ev=r1090
+smug|a|smug half-smile at rest|nửa miệng cười tự mãn|u|YAME|temperament|k|r=mouth_corners
+startled|a|startled wide-eyed look|vẻ giật mình, mắt mở to|r|YAME|temperament,stress|k
+grim|a|grim look, mouth turned hard down|vẻ khắc khổ, miệng trễ xuống|u|AME|temperament,low-mood|k|r=mouth_corners
+calm|a|calm steady gaze|ánh mắt điềm tĩnh|c|AME|temperament|p
+sour|a|sour pinched look|vẻ mặt chua chát|u|AME|temperament|m
+blank|a|blank unreadable face|mặt lạnh, khó đoán|u|YAME|temperament|m
+
+## hair_color|C|Màu tóc|req
+normal-y|a|natural black hair|tóc đen tự nhiên|c|YA||p|B=mYA,fYA d=grey:0-1
+normal-m|a|black hair with scattered grey strands|tóc đen lốm đốm sợi bạc|c|M|ageing|p|B=mM,fM d=grey:1-2
+normal-e|a|mostly grey hair|tóc bạc gần hết|c|E|ageing|p|B=mE,fE d=grey:2-4 ev=r1135
+jet|a|jet black hair|tóc đen nhánh|c|YAME|genetics|p|d=grey:0-0
+brownblack|a|dark brown-black hair|tóc nâu đen|c|YAME|genetics|p|d=grey:0-1
+sunfaded|a|brownish sun-faded hair ends|ngọn tóc cháy nắng ngả nâu|u|YAME|sun,water-work|m|d=grey:0-2
+reddish|a|reddish-brown sun-bleached hair|tóc nâu đỏ cháy nắng|u|YAM|sun,water-work|m|d=grey:0-1
+premature|a|early grey streaks in dark hair|tóc bạc sớm từng vệt|u|YA|genetics,stress|k|d=grey:1-2
+saltpepper|a|even salt-and-pepper grey hair|tóc muối tiêu|u;M=c|AME|ageing|m|d=grey:2-2
+irongrey|a|dark iron-grey hair all over|tóc xám bạc đều|u;E=c|ME|ageing|m|d=grey:3-3
+white|a|pure white hair|tóc bạc trắng|u;E=c;M=r|ME|ageing|k|d=grey:4-4
+yellowwhite|a|yellow-tinged white hair|tóc trắng ngả vàng|u|E|ageing,substances|m|d=grey:4-4
+temples|a|grey only at the temples|tóc bạc ở hai bên thái dương|u;M=c|AME|ageing|m|d=grey:1-2
+whitestreak|a|single white streak at the front|một lọn tóc trắng phía trước|r|YAME|genetics|k|d=grey:0-2
+dullbrown|a|dull dry brownish-black hair|tóc đen ngả nâu xỉn|u|YAME|poverty,illness|p|d=grey:0-2
+lightbrown|a|light brown hair|tóc nâu nhạt|c|YAME|genetics|p|d=grey:0-1 eth=european
+blond|a|fair blond hair|tóc vàng|u|YAME|genetics|m|d=grey:0-1 eth=european
+red|a|coppery red hair|tóc đỏ|r|YAME|genetics|k|d=grey:0-1 eth=european
+eu-normal|a|mid-brown hair|tóc nâu vừa|c|YAM|genetics|p|B=european/mYA,european/fYA d=grey:0-1 eth=european
+eu-mid|a|brown hair going grey|tóc nâu đang bạc dần|c|ME|ageing|p|B=european/mM,european/fM d=grey:1-3 eth=european
+
+## hair_texture|C|Chất tóc|
+normal|a|thick straight coarse hair|tóc thẳng dày, sợi to|c|YAM||p|B=mYAM,fYAM ev=r0733
+normal-old|a|straight hair, coarser and drier|tóc thẳng, thô và khô hơn|c|E|ageing|p|B=mE,fE
+fine|a|fine soft straight hair|tóc thẳng mảnh mềm|c|YAME|genetics|p
+wave|a|slight natural wave in the hair|tóc hơi gợn sóng tự nhiên|u|YAME|genetics|p
+wavy|a|clearly wavy natural hair|tóc gợn sóng rõ|u|YAME|genetics|m
+curly|a|naturally curly hair|tóc xoăn tự nhiên|r|YAME|genetics|k
+coils|a|tightly coiled hair|tóc xoăn tít|c|YAME|genetics|m|B=african/mYAME,african/fYAME eth=african
+bristly|a|stiff bristly hair standing up|tóc cứng dựng đứng (tóc rễ tre)|u|YAME|genetics|m
+frizzy|a|frizzy dry hair|tóc xù khô|u|YAME|climate,genetics|m
+limp|a|limp flat oily hair|tóc bết dầu, xẹp|u|YAME|neglect|m
+brittle|a|brittle dry hair, split ends|tóc khô giòn, chẻ ngọn|u|YAME|sun,water-work,poverty|m
+cowlick|a|cowlick sticking up at the front|xoáy tóc dựng ở phía trước|u|YAME|genetics|m
+doublecrown|a|two crown whorls, hair parting oddly|hai xoáy tóc, tóc rẽ lạ|r|YAME|genetics|p
+wiry|a|wiry springy grey hair|tóc bạc cứng như sợi thép|u;E=c|ME|ageing|m|d=grey:2-4
+silky|a|very straight sleek fine hair|tóc rất thẳng, mượt, sợi mảnh|u|YA|genetics|p
+straw|a|thick stiff hair like straw|tóc dày cứng như rơm|u|YAME|sun,genetics|m
+eu-normal|a|fine straight-to-wavy hair|tóc mảnh, thẳng đến hơi gợn|c|YAME|genetics|p|B=european/mYAME,european/fYAME eth=european
+
+## hair_density|C|Độ dày tóc|
+normal-y|a|full thick head of hair|tóc dày|c|YA||p|B=mYA,fYA d=scalp:3-4
+normal-m|a|hair of medium thickness|tóc dày vừa|c|M|ageing|p|B=mM,fM d=scalp:2-4
+normal-e|a|thinner hair, scalp faintly showing|tóc thưa, thấp thoáng da đầu|c|E|ageing|p|B=mE,fE d=scalp:1-3 ev=r0075
+verythick|a|very thick dense hair|tóc rất dày|c|YAME|genetics|m|d=scalp:4-4 ev=r0732
+thin|a|thin fine hair, scalp showing through|tóc mỏng, lộ da đầu|u;E=c|YAME|genetics,ageing|m|d=scalp:1-2
+patchy|a|patchy hair with round bald spots|tóc rụng từng mảng tròn|r|YAME|illness,stress|k|d=scalp:1-3
+wispy|a|sparse wispy hair|tóc lưa thưa|u;E=c|ME|ageing,illness|m|d=scalp:1-1
+diffuse-f|f|thin all over, wide parting|tóc mỏng đều, đường ngôi rộng|u;E=c|AME|hormones,ageing|m|d=scalp:1-2 r=parting ev=r0736,r1082
+crownthin|a|hair thinning at the crown|tóc thưa ở đỉnh đầu|u;M=c|AME|ageing,genetics|m|d=scalp:1-3
+scarbald|a|bald scar patch in the hair|mảng sẹo không mọc tóc trên đầu|r|YAME|injury|k|d=scalp:1-4 ev=r0739
+
+## hairline|C|Chân tóc, hói|
+normal-m|m|even straight hairline|chân tóc thẳng đều|c|YA||p|B=mYA
+normal-mid-m|m|temples receding slightly|chân tóc hai bên thái dương hơi lùi|c|M|ageing|p|B=mM ev=r0074
+normal-old-m|m|receding hairline, thin on top|chân tóc lùi, đỉnh đầu thưa|c|E|ageing|p|B=mE d=scalp:1-3 ev=r0075
+normal-f|f|even rounded hairline|chân tóc tròn đều|c|YAME||p|B=fYAME
+low|a|low hairline close to the brows|chân tóc thấp sát mày|u|YAME|genetics|m
+high|a|high hairline, large bare forehead|chân tóc cao, trán lộ nhiều|u|YAME|genetics|m
+peak|a|sharp widow's peak hairline|chân tóc nhọn giữa trán|u|YAME|genetics|m
+mshape-m|m|deep M-shaped recession at the temples|hói chữ M sâu hai bên trán|u;M=c|AME|genetics,ageing|k|d=scalp:2-4 ev=r1080
+crown-m|m|round bald spot on the crown|hói đỉnh đầu|u;M=c|AME|genetics,ageing|m|d=scalp:1-3 ev=r0737
+top-m|m|bald on top, fringe at the sides|hói đỉnh, còn viền tóc hai bên|u;E=c|ME|genetics,ageing|k|d=scalp:0-2 ev=r0089
+fullbald-m|m|completely bald shiny head|đầu hói bóng hoàn toàn|r;E=u|AME|genetics,illness|k|d=scalp:0-0
+forelock-m|m|bald crown with a tuft at the front|hói đỉnh, còn chỏm tóc phía trước|u|ME|genetics,ageing|m|d=scalp:0-2 ev=r0735
+uneven|a|uneven hairline, lower on one side|chân tóc lệch, một bên thấp|u|YAME|genetics|p|ev=r0723
+earlyrecede-m|m|hairline receding early at the temples|chân tóc lùi sớm ở thái dương|u|YA|genetics|m|d=scalp:2-4
+square-m|m|square straight-cut hairline at the temples|chân tóc vuông ở thái dương|u|YAME|genetics|p
+temple-f|f|thinning hair at the temples|tóc thưa ở thái dương|u|AME|hormones,custom|m|d=scalp:1-3
+widepart-f|f|widened parting, scalp showing|đường ngôi rộng, lộ da đầu|u;E=c|AME|hormones,ageing|m|d=scalp:1-2 r=parting ev=r1081
+recede-f|f|hairline receding at the front|chân tóc lùi ở trán|r;E=u|ME|hormones,ageing|k|d=scalp:1-3
+bald-f|f|large bald patches on the scalp|hói từng mảng lớn|r|AME|illness|k|d=scalp:0-2
+
+## marks|H|Dấu vết|multi
+none|a|no notable scars or marks|không có dấu vết đáng kể|c|YAME||p|B=mYAME,fYAME
+mole|a|small dark mole on the {loc}|nốt ruồi nhỏ ở {loc}|c|YAME|genetics|m|loc=face,neck,arms,torso
+molehair|a|large raised mole with long hairs on the {loc}|nốt ruồi to nổi có lông dài ở {loc}|u|AME|genetics|k|loc=face,neck
+moles|a|cluster of small moles on the {loc}|chùm nốt ruồi nhỏ ở {loc}|u|YAME|genetics|m|loc=face,neck,torso,arms
+birthmark|a|flat brown birthmark on the {loc}|bớt nâu phẳng ở {loc}|u|YAME|genetics|m|loc=face,neck,arms,torso,legs
+portwine|a|purple-red port-wine stain on the {loc}|bớt rượu vang đỏ tím ở {loc}|r|YAME|genetics|k|loc=face,neck,arms
+bluepatch|a|blue-grey birthmark patch on the {loc}|bớt xanh xám ở {loc}|r|YAME|genetics|k|loc=temple-l,temple-r,cheek-l,cheek-r,forehead
+burn|a|shiny puckered burn scar on the {loc}|sẹo bỏng bóng, nhăn rúm ở {loc}|u|YAME|injury|k|loc=face,neck,arms,torso,legs ev=r1025
+knife|a|thin straight knife scar on the {loc}|sẹo dao mảnh thẳng ở {loc}|r|YAME|injury|k|loc=face,neck,arms,torso
+jagged|a|jagged torn scar on the {loc}|sẹo rách nham nhở ở {loc}|u|YAME|injury|k|loc=face,arms,legs,torso
+surgical|a|long straight surgical scar on the {loc}|sẹo mổ dài thẳng ở {loc}|u|AME|illness|m|loc=belly,chest,throat,knee-l,knee-r
+stitch|a|small pale stitch scar on the {loc}|sẹo khâu nhỏ nhạt màu ở {loc}|c|YAME|injury|m|loc=face,arms,legs
+vaccine|a|round pitted vaccination scar on the {loc}|sẹo chủng ngừa tròn lõm ở {loc}|c|YAME|custom|p|loc=upperarm-l,shoulder-l
+coin|a|red coin-rubbing streaks on the {loc}|vệt đỏ cạo gió ở {loc}|u|YAME|custom|m|loc=neck,back,chest,forehead
+tattoo-old|a|faded blue homemade tattoo on the {loc}|hình xăm tự làm xanh đã phai ở {loc}|u;f=r|AME|custom|k|loc=arms,chest,back,hand-l,hand-r
+tattoo-small|a|small modern tattoo on the {loc}|hình xăm nhỏ hiện đại ở {loc}|u|YAM|custom|m|loc=arms,neck,hand-l,hand-r,torso
+tattoo-big|a|large colourful tattoo covering the {loc}|hình xăm màu lớn phủ {loc}|r|YAM|custom|k|loc=upperarm-l,upperarm-r,forearm-l,forearm-r,back,chest
+fingerstump|a|missing finger, a stump on the {loc}|cụt một ngón ở {loc}|r|YAME|injury|k|loc=hand-l,hand-r
+fingertip|a|missing fingertip on the {loc}|cụt đầu ngón tay ở {loc}|u|YAME|injury|m|loc=hand-l,hand-r
+earnotch|a|notched torn rim on the {loc}|vành tai khuyết ở {loc}|r|YAME|injury|k|loc=ear-l,ear-r
+shrapnel|a|pitted shrapnel scars on the {loc}|sẹo mảnh đạn lỗ chỗ ở {loc}|r;E=u|ME|injury|k|loc=arms,legs,torso,face
+keloid|a|raised thick keloid scar on the {loc}|sẹo lồi dày ở {loc}|u|YAME|injury,genetics|k|loc=face,neck,arms,torso
+wart|a|rough wart on the {loc}|mụn cóc sần ở {loc}|u|YAME|illness|m|loc=face,hand-l,hand-r
+vitiligo|a|pale white patches of skin on the {loc}|mảng da trắng (bạch biến) ở {loc}|r|YAME|illness|k|loc=face,hand-l,hand-r,arms,neck
+tracks|a|needle marks along the {loc}|vết kim tiêm dọc {loc}|r|YAM|substances|k|loc=forearm-l,forearm-r
+selfharm|a|rows of thin pale scars on the {loc}|nhiều vệt sẹo mảnh nhạt song song ở {loc}|r|YAM|injury,low-mood|k|loc=forearm-l,forearm-r,thigh-l,thigh-r
+cleft|a|thin vertical scar on the {loc}|sẹo dọc mảnh ở {loc} (sứt môi đã mổ)|r|YAME|genetics|m|loc=lip
+polecallus|a|thick callus pad on the {loc}|chai dày ở {loc} (đòn gánh)|u|AME|manual-labour|m|loc=shoulder-l,shoulder-r
+kneecallus|a|dark callused patches on the {loc}|mảng chai sẫm ở {loc}|u|AME|manual-labour,custom|p|loc=knee-l,knee-r
+bite|a|puncture bite scars on the {loc}|sẹo vết cắn ở {loc}|u|YAME|injury|m|loc=arms,legs,hand-l,hand-r
+legloss|a|{loc} missing below the knee|mất {loc} dưới gối|r|AME|injury|k|loc=leg-l,leg-r
+armloss|a|{loc} missing below the elbow|mất {loc} dưới khuỷu|r|AME|injury|k|loc=arm-l,arm-r
+eyeloss|a|sunken sewn-shut {loc}|{loc} đã mất, mí khâu lõm|r|AME|injury,illness|k|loc=eye-l,eye-r
+pit|a|single deep pit scar on the {loc}|một vết sẹo rỗ sâu ở {loc}|u|YAME|illness|m|loc=face

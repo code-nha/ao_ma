@@ -1,0 +1,189 @@
+## shoulders|D|Vai
+normal-m|m|average male shoulders|vai nam bình thường|c|YAME||7
+broad-m|m|broad wide shoulders|vai rộng|u|YAME|genetics,sport|225,88
+very-broad-m|m|very broad shoulders that dwarf the head|vai cực rộng, đầu trông nhỏ|r|YA|gym-display,sport|459
+narrow-m|m|narrow shoulders for a man|vai hẹp|c|YAME|genetics|198,456
+sloping-m|m|steeply sloping shoulders|vai xuôi|c|YAME|genetics|
+square-m|m|square level shoulders|vai ngang vuông|u|YAM|genetics|552
+rounded-m|m|rounded shoulders rolled forward|vai tròn, đổ về trước|c|YAME|sedentary|609,603
+uneven-m|m|one shoulder higher than the other|vai lệch|u|YAME|manual-labour,scoliosis|404
+bony-m|m|bony shoulders, collarbones jutting|vai xương, xương đòn nhô|u|YAME|poverty,ageing|103,4
+raised-m|m|tense raised shoulders, short-looking neck|vai nhô lên căng thẳng|u|YAME|stress|402,467,571
+traps-m|m|thick trapezius, neck sunk between shoulders|cơ thang dày, cổ lút giữa vai|u|AM|manual-labour,gym-display|225
+pole-m|m|callused thickened shoulder from carrying loads|vai chai dày do gánh vác|u|AME|manual-labour|
+fleshy-m|m|soft rounded fleshy shoulders|vai tròn nhiều thịt|c|AME|sedentary|653
+delts-m|m|rounded gym-built shoulder caps|vai tròn cơ delta do tập|u|YA|gym-display|264,263
+drooping-m|m|shrunken drooping old shoulders|vai già teo, rũ xuống|c|E|ageing|644
+winged-m|m|shoulder blades sticking out from the back|xương bả vai nhô ra|u|YAE|genetics,poverty|103
+normal-f|f|average narrow female shoulders|vai nữ bình thường, hẹp|c|YAME||72,74
+narrow-f|f|very narrow small shoulders|vai rất hẹp|u|YAME|genetics|
+sloping-f|f|soft sloping shoulders|vai xuôi mềm|c|YAME|genetics|
+broad-f|f|broad shoulders for a woman|vai rộng so với nữ|u|YAME|genetics,sport|84
+square-f|f|square straight shoulders|vai ngang thẳng|u|YAM|genetics|84
+bony-f|f|bony shoulders with sharp collarbones|vai xương, xương đòn sắc|u|YAME|dieting,poverty,ageing|4,12,103
+rounded-f|f|rounded shoulders rolled forward|vai tròn, đổ về trước|c|YAME|sedentary,big-bust|609,603
+uneven-f|f|one shoulder lower than the other|vai lệch|u|YAME|carrying-child,scoliosis|404
+raised-f|f|tense hunched-up shoulders|vai rụt lên căng thẳng|u|YAME|stress|402,590
+fleshy-f|f|soft plump rounded shoulders|vai tròn đầy thịt|c|AME|ageing|653
+load-f|f|strong rounded shoulders from carrying loads|vai chắc tròn do gánh gồng|u|AME|manual-labour|
+swimmer-f|f|athletic shoulders with visible muscle|vai thể thao, thấy cơ|r|YA|sport|265
+blades-f|f|shoulder blades clearly outlined on the back|xương bả vai lộ rõ|c|YA|genetics|0
+drooping-f|f|shrunken drooping old shoulders|vai già teo, rũ xuống|c|E|ageing|644
+## chest|D|Ngực
+normal-m|m|average flat male chest|ngực nam bình thường, phẳng|c|YAME||185
+sunken-m|m|sunken chest with hollow breastbone|ngực lõm, xương ức trũng|r|YAME|genetics|
+pigeon-m|m|pigeon chest, breastbone jutting forward|ngực gà, xương ức nhô|r|YAME|genetics|
+thin-m|m|thin flat chest, ribs showing|ngực lép, lộ sườn|c|YAME|poverty,genetics|241
+narrow-m|m|narrow shallow chest|ngực hẹp, nông|c|YAME|genetics|
+barrel-m|m|deep barrel chest|ngực thùng, sâu|u|AME|genetics,illness|
+muscular-m|m|broad muscular chest|ngực rộng, có cơ|u|YA|sport,manual-labour|185,213,250
+gym-pecs-m|m|big square gym-built pecs with deep groove|cơ ngực vuông to do tập, rãnh sâu|u|YA|gym-display|254,253,189
+overbuilt-m|m|huge projecting pecs, small shoulders|ngực cực to, vai nhỏ|r|YA|gym-display,enhanced|258
+labour-m|m|solid thick chest from hard work|ngực dày chắc do lao động|u|AME|manual-labour|89
+soft-m|m|soft fleshy chest, no muscle shape|ngực mềm nhiều thịt|c|AME|sedentary|192,252
+moobs-m|m|sagging fatty man breasts|ngực mỡ xệ kiểu vú đàn ông|u|AME|diet,sedentary|194,653
+gyno-m|m|puffy swollen nipples on a slim chest|núm vú sưng phồng trên ngực gầy|u|YA|illness,hormones|193
+sagging-m|m|sagging old chest with loose skin|ngực già chùng nhão|c|E|ageing|642,195
+bony-old-m|m|bony old chest, sternum and ribs showing|ngực già trơ xương ức, xương sườn|c|E|ageing,illness|647,646
+uneven-m|m|one side of the chest larger than the other|ngực lệch một bên to hơn|r|YAME|manual-labour,genetics|323
+normal-f|f|average medium bust|ngực nữ vừa phải|c|YAME||155,158
+flat-f|f|nearly flat chest|ngực gần như phẳng|u|YAME|genetics|
+small-f|f|small natural breasts|ngực nhỏ|c|YAME|genetics|155
+small-high-f|f|small high-set breasts|ngực nhỏ, nằm cao|u|YA|genetics|173
+full-f|f|full heavy bust|ngực đầy, nặng|u|YAME|genetics,weight|155
+very-large-f|f|very large heavy breasts|ngực rất to, nặng|r|YAME|genetics,weight|174
+wide-set-f|f|wide-set breasts with a wide gap|ngực cách xa nhau|u|YAME|genetics|175
+low-set-f|f|low-set breasts far below the collarbone|ngực nằm thấp|u|YAME|genetics|173
+slight-droop-f|f|slightly drooping natural breasts|ngực hơi trễ|c|AME|ageing,childbirth|177,179
+sagging-f|f|breasts sagging after years of nursing|ngực xệ sau nhiều năm cho con bú|c|AME|childbirth|177,179
+deflated-f|f|deflated breasts with loose empty skin|ngực xẹp, da lép|u|AME|weight-loss,childbirth|182,178
+pendulous-f|f|long pendulous old breasts|ngực già dài, chảy xệ|c|E|ageing|648
+uneven-f|f|one breast noticeably larger than the other|một bên ngực to hơn rõ|u|YAME|genetics|170
+tuberous-f|f|narrow tube-shaped breasts|ngực hình ống, đáy hẹp|r|YAME|genetics|156
+implants-f|f|round implant breasts, bulging upper slope|ngực độn tròn, phần trên căng phồng|u|YA|enhanced,wealth|162,171,163
+old-implant-f|f|old implants sagging low inside stretched skin|ngực độn cũ trễ xuống|r|ME|enhanced,ageing|181
+bony-f|f|small breasts over a bony ribbed chest|ngực nhỏ trên khung sườn lộ|u|YAME|poverty,dieting|241
+athletic-f|f|small breasts over firm chest muscle|ngực nhỏ trên cơ ngực săn|u|YA|sport|
+## waist_belly|D|Eo, bụng
+normal-m|m|ordinary male waist and flattish belly|eo bụng nam bình thường|c|YAME||
+sixpack-m|m|visible six-pack abs|bụng sáu múi rõ|r|YA|sport,gym-display|237,345,348
+lean-flat-m|m|flat lean stomach, faint ab outline|bụng phẳng săn, thấy mờ cơ|c|YA|manual-labour,sport,poverty|239,224
+vtaper-m|m|narrow waist under a wide back|eo hẹp dưới lưng rộng|u|YA|gym-display,sport|223,233
+thick-m|m|thick straight waist, no taper|eo dày thẳng, không thon|c|AME|genetics|202,319
+soft-m|m|soft belly over the waistline|bụng mềm xệ qua cạp|c|AME|sedentary|651
+beer-m|m|hard round beer belly|bụng bia tròn cứng|c|AME|alcohol,ageing|328,211
+gut-m|m|large belly hanging over the hips|bụng to xệ qua hông|u|ME|diet,alcohol|458
+loves-m|m|love handles bulging over the hip bones|mỡ hông bánh mì|c|AME|sedentary|22,230
+pot-thin-m|m|potbelly on a skinny body|bụng phệ trên người gầy|c|ME|alcohol,ageing,poverty|
+hollow-m|m|sunken hollow stomach|bụng lép hõm|u|YAME|poverty,illness|124
+rolls-m|m|belly folding into soft rolls|bụng gấp thành ngấn|u|AME|diet|378,493
+hernia-m|m|small bulging navel hernia|lồi rốn|r|ME|manual-labour,ageing|
+loose-m|m|loose wrinkled belly skin|da bụng chùng nhăn|u|E|ageing,weight-loss|340
+twopack-m|m|uneven half-visible abs, lopsided lines|cơ bụng mờ, lệch không đều|u|YA|sport|238,350
+normal-f|f|natural waist with a slightly rounded belly|eo tự nhiên, bụng hơi tròn|c|YAME||236
+narrow-f|f|narrow defined waist|eo thon rõ|u|YA|genetics|226,481
+straight-f|f|straight waist with little curve|eo thẳng, ít cong|c|YAME|genetics|556,422
+thick-meno-f|f|thickened waist, little difference to the hips|eo dày lên, gần bằng hông|c|ME|ageing,menopause|219
+soft-f|f|soft rounded lower belly|bụng dưới tròn mềm|c|YAME|genetics|30,28
+pooch-f|f|loose lower belly after childbirth|bụng dưới chùng sau sinh|c|AME|childbirth|240,337
+diastasis-f|f|belly bulging along the midline after pregnancy|bụng phình giữa do tách cơ sau sinh|u|AME|childbirth|240,341,327
+apron-f|f|belly fold hanging over the lower abdomen|ngấn bụng xệ thành vạt|u|ME|childbirth,weight|340
+toned-f|f|flat toned stomach with a faint midline|bụng phẳng săn, đường giữa mờ|u|YA|sport|236
+abs-f|f|visible abdominal muscles on a woman|nữ thấy rõ cơ bụng|r|YA|sport,gym-display|313
+apple-f|f|round firm apple belly|bụng tròn hình quả táo|u|AME|ageing,diet|30
+muffin-f|f|soft roll above the hips|ngấn mỡ trên hông|c|YAME|sedentary|230,246
+rolls-f|f|belly folding into several soft rolls|bụng nhiều ngấn|u|AME|diet|493,378
+hollow-f|f|concave stomach between jutting hip bones|bụng lõm, xương hông nhô|r|YA|dieting,illness|
+lownavel-f|f|low-set navel on a heavy belly|rốn thấp trên bụng nặng|u|AME|childbirth,weight|243
+hernia-f|f|small bulge at the navel|lồi rốn|u|AME|childbirth|326
+loose-f|f|soft wrinkled crepey belly skin|da bụng nhăn nheo mềm|c|E|ageing|340
+## hips|D|Hông, mông
+normal-m|m|narrow male hips|hông nam hẹp bình thường|c|YAME||74
+flat-m|m|flat buttocks, narrow hips|mông lép, hông hẹp|c|YAME|genetics,sedentary|
+muscular-m|m|firm muscular buttocks|mông chắc có cơ|u|YA|sport,manual-labour|281,275
+wide-m|m|wide hips for a man|hông rộng so với nam|u|YAME|genetics|108
+heavy-m|m|heavy wide hips and seat|hông mông to nặng|u|AME|diet,sedentary|26
+bony-m|m|bony hips, hip points showing|hông xương, lộ mấu|u|YAME|poverty,illness|
+dimples-m|m|small dimples above the buttocks|lúm đồng tiền trên mông|u|YA|lean|1,277
+sagging-m|m|flat sagging old buttocks|mông già lép chảy|c|E|ageing|648
+overhang-m|m|flank fat spilling over the hip bones|mỡ hông tràn qua xương chậu|c|AME|sedentary|22,3
+tight-m|m|small tight high buttocks|mông nhỏ gọn, nằm cao|u|YA|genetics,sport|281
+pear-m|m|soft pear-shaped lower body for a man|thân dưới mềm hình quả lê|u|AME|hormones,genetics|108
+uneven-m|m|one hip set higher than the other|hông lệch, một bên cao|u|YAME|injury,scoliosis|
+bony-old-m|m|bony narrow old hips|hông già gầy xương|c|E|ageing|647
+thighheavy-m|m|broad pelvis over heavy thighs|xương chậu rộng, đùi to|u|AME|genetics,manual-labour|
+normal-f|f|medium hips with rounded buttocks|hông vừa, mông tròn|c|YAME||78
+narrow-f|f|narrow boyish hips|hông hẹp kiểu con trai|u|YAME|genetics|84,556
+wide-f|f|wide hips and pelvis|hông rộng|c|YAME|genetics,childbirth|72,74
+very-wide-f|f|very wide hips and heavy thighs|hông rất rộng, đùi nặng|u|YAME|genetics|489,589
+flat-f|f|flat buttocks, little rear curve|mông lép|c|YAME|genetics,ageing|537
+round-f|f|full round buttocks|mông tròn đầy|u|YA|genetics|537,281
+large-f|f|large heavy buttocks|mông to nặng|u|AME|genetics,weight|301
+shelf-f|f|high shelf-like buttocks|mông cong cao|r|YA|genetics|276
+sagging-f|f|low sagging buttocks|mông chảy xệ|c|ME|ageing|648,248
+dips-f|f|hip dips, inward dent below the hip bone|hông lõm dưới xương chậu|c|YAME|genetics|282
+saddle-f|f|bulging outer hips and thighs|hông và đùi ngoài phình|c|AME|genetics|28,34
+dimples-f|f|small dimples above the buttocks|lúm đồng tiền trên mông|u|YA|lean|1,311,277
+augmented-f|f|surgically rounded lifted buttocks|mông nâng độn tròn|r|YA|enhanced,wealth|227,273
+bony-old-f|f|bony narrow old hips|hông già gầy xương|u|E|ageing|647
+uneven-f|f|one hip set higher than the other|hông lệch, một bên cao|u|YAME|scoliosis,carrying-child|
+diamond-f|f|soft diamond-shaped fat pad above the buttocks|đệm mỡ hình thoi trên mông|u|YAM|genetics|25
+## back|D|Lưng
+normal|a|ordinary straight back|lưng thẳng bình thường|c|YAME||615
+hunch|a|rounded upper back, slight hunch|lưng trên tròn, hơi gù|c|AME|sedentary|603
+kyphosis|a|strongly hunched old back|lưng gù nặng|c|E|ageing,illness|644,645
+hump-f|f|dowager's hump at the base of the neck|bướu sau gáy|u|E|ageing,osteoporosis|
+fieldbent|a|back bent from decades of stooped fieldwork|lưng còng do cúi làm đồng|u|E|manual-labour,ageing|
+sway|a|swayback, deep inward lower curve|lưng võng, ưỡn sâu|u|YAME|genetics,pregnancy|611
+flat|a|flat back with no lower curve|lưng phẳng, mất đường cong|u|YAME|genetics|613
+scoliosis|a|spine curved sideways, uneven shoulder blades|cột sống cong vẹo|r|YAME|genetics,illness|
+vback-m|m|broad V-shaped muscular back|lưng chữ V có cơ|u|YA|gym-display,sport|255,233
+broad-m|m|broad thick back from heavy lifting|lưng rộng dày do khuân vác|u|AME|manual-labour|260
+columns|a|thick muscle columns along the spine|hai dải cơ dày dọc sống lưng|u|YA|sport,manual-labour|257,310
+bony|a|bony back, spine and ribs visible|lưng gầy, lộ cột sống, sườn|u|YAME|poverty,illness|103
+blades|a|sharp protruding shoulder blades|xương bả vai nhô sắc|u|YAME|genetics,poverty|103,0
+rolls|a|soft fat rolls across the back|ngấn mỡ ngang lưng|c|AME|diet,sedentary|256,548
+slim-f|f|slim female back with faint spine groove|lưng nữ mảnh, rãnh sống mờ|c|YA|genetics|235
+stiff|a|stiff rigid back, moves as one block|lưng cứng đơ|u|ME|ageing,injury|
+lean-sideways|a|spine leaning to one side from carrying loads|lưng nghiêng một bên do gánh|u|AME|manual-labour|
+## body_skin|D|Da thân
+normal-m|m|ordinary body skin, light body hair|da thân bình thường, lông nhẹ|c|YAME||
+hairless-m|m|nearly hairless smooth male body|người gần như không lông|c|YAME|genetics|
+hairychest-m|m|hairy chest and belly|ngực bụng nhiều lông|u|YAME|genetics|
+veryhairy-m|m|very hairy body including shoulders and back|lông khắp người cả vai lưng|r|AME|genetics|
+greyhair-m|m|sparse grey chest hair|lông ngực bạc lưa thưa|c|E|ageing|
+farmertan-m|m|sun-darkened arms and neck, pale torso|tay cổ cháy nắng, thân trắng|c|YAME|sun,manual-labour|
+leathery-m|m|deeply sun-darkened leathery skin all over|da toàn thân sạm như da thuộc|u|AME|sun,manual-labour,fishing|
+pale-m|m|pale indoor skin that rarely sees sun|da trắng xanh ít nắng|c|YAME|sedentary,wealth|128,129
+ruddy-m|m|ruddy blotchy skin with broken capillaries|da đỏ loang, mao mạch vỡ|u|ME|alcohol|133,125
+stretch-m|m|stretch marks on belly and sides|rạn da bụng và hông|u|YAME|weight,gym-display|339
+loose-m|m|loose hanging skin after weight loss|da chùng sau giảm cân|r|AME|weight-loss|182,342
+crepey-m|m|thin crepey wrinkled skin|da mỏng nhăn nheo|c|E|ageing|646
+spots-m|m|age spots on shoulders and back|đồi mồi trên vai lưng|c|ME|ageing,sun|
+acne-m|m|acne spots on back and shoulders|mụn lưng và vai|u|Y|youth,hormones|357
+fungal-m|m|pale fungal patches on chest and back|lang ben trên ngực lưng|u|YAM|tropical,poverty|
+dry-m|m|dry ashy flaky skin|da khô bong vảy|u|AME|poverty,ageing|135
+bruised-m|m|scattered bruises on the skin|vết bầm rải rác|u|YA|sport,fighting,manual-labour|597,125
+vitiligo-m|m|white vitiligo patches on darker skin|bạch biến từng mảng|r|YAME|illness|
+psoriasis-m|m|scaly red psoriasis patches on elbows and back|vảy nến từng mảng|r|AME|illness|
+rash-m|m|prickly heat rash on chest and neck|rôm sảy ở ngực cổ|u|YA|tropical,heat|
+normal-f|f|ordinary smooth body skin|da thân bình thường|c|YAME||
+hairless-f|f|very smooth hairless skin|da trơn gần như không lông|c|YAME|genetics|
+forearmhair-f|f|visible dark hair on forearms|lông tay sẫm rõ|u|YAME|genetics|
+farmertan-f|f|sun-darkened arms and neck, pale torso|tay cổ cháy nắng, thân trắng|c|YAME|sun,manual-labour|
+leathery-f|f|deeply sun-darkened weathered skin|da sạm dày vì nắng gió|u|AME|sun,manual-labour,fishing|
+pale-f|f|pale indoor skin that rarely sees sun|da trắng xanh ít nắng|c|YAME|sedentary,wealth|128,131
+stretch-f|f|silvery stretch marks on belly and hips|rạn da bạc trên bụng hông|c|YAME|childbirth,weight|339,325
+breaststretch-f|f|stretch marks on breasts and thighs|rạn da ngực và đùi|u|YA|growth,weight|339
+cellulite-f|f|dimpled cellulite on thighs and buttocks|da sần vỏ cam ở đùi mông|c|YAME|genetics|577
+loose-f|f|loose hanging skin after weight loss|da chùng sau giảm cân|r|AME|weight-loss|182,342
+crepey-f|f|thin crepey wrinkled skin|da mỏng nhăn nheo|c|E|ageing|646
+spots-f|f|age spots on shoulders and chest|đồi mồi trên vai ngực|c|ME|ageing,sun|
+acne-f|f|acne spots on back and shoulders|mụn lưng và vai|u|Y|youth,hormones|
+ruddy-f|f|ruddy blotchy skin with broken capillaries|da đỏ loang, mao mạch vỡ|u|ME|alcohol,genetics|133
+fungal-f|f|pale fungal patches on chest and back|lang ben trên ngực lưng|u|YAM|tropical,poverty|
+dry-f|f|dry ashy flaky skin|da khô bong vảy|u|AME|poverty,ageing|135
+veins-f|f|blue veins visible through pale chest skin|gân xanh lộ qua da ngực trắng|u|YAM|genetics|128
+linea-f|f|faint dark line down the belly|đường thâm dọc bụng|u|AM|childbirth|
+vitiligo-f|f|white vitiligo patches on darker skin|bạch biến từng mảng|r|YAME|illness|
+bruised-f|f|scattered bruises on the skin|vết bầm rải rác|r|YAME|sport,abuse,illness|597

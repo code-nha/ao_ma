@@ -1,0 +1,176 @@
+## arms|E|Cánh tay
+normal-m|m|average male arms|tay nam bình thường|c|YAME||
+skinny-m|m|thin skinny arms|tay gầy nhỏ|c|YAME|genetics,poverty|456
+wiry-m|m|wiry veiny forearms|cẳng tay gân guốc nổi gân xanh|c|YAME|manual-labour|89
+forearms-m|m|thick strong forearms from hard work|cẳng tay to khỏe do làm nặng|u|AME|manual-labour|
+muscular-m|m|naturally muscular arms|tay có cơ|u|YA|sport|266,270
+biceps-m|m|big round gym biceps|bắp tay tròn to do tập gym|u|YA|gym-display|269,307
+huge-m|m|huge bodybuilder arms with bulging veins|tay cực to kiểu thể hình|r|YA|gym-display,enhanced|323
+soft-m|m|soft heavy upper arms|bắp tay mềm nặng|c|AME|sedentary|653
+fat-m|m|thick fat arms with no definition|tay to mỡ, không thấy cơ|u|AME|diet|653
+long-m|m|long arms, hands reaching mid-thigh|tay dài, buông quá giữa đùi|u|YAME|genetics|9,56
+short-m|m|short thick arms|tay ngắn to|u|YAME|genetics|86
+loose-m|m|loose skin hanging under the upper arms|da bắp tay dưới chùng|c|E|ageing|330,52
+stick-m|m|stick-thin old arms with bony elbows|tay già que củi, khuỷu xương|c|E|ageing,illness|647
+onesided-m|m|one arm thicker than the other|một tay to hơn tay kia|u|AME|manual-labour|
+hairy-m|m|thick dark hair on the forearms|cẳng tay nhiều lông sẫm|u|YAME|genetics|
+normal-f|f|slim average female arms|tay nữ thon bình thường|c|YAME||77
+thin-f|f|thin bony arms|tay gầy xương|c|YAME|genetics,dieting|558
+soft-f|f|soft rounded upper arms|bắp tay tròn mềm|c|YAME|genetics|652
+heavy-f|f|heavy fleshy upper arms|bắp tay nhiều thịt|u|AME|weight,ageing|330,652
+batwing-f|f|loose skin hanging under the upper arms|da bắp tay chảy xệ|c|ME|ageing,weight-loss|330,331
+toned-f|f|toned slim arms with faint definition|tay thon săn, hơi thấy cơ|u|YA|sport|332
+muscular-f|f|visibly muscular arms on a woman|nữ tay có cơ rõ|r|YA|gym-display,sport|
+forearms-f|f|strong work-hardened forearms|cẳng tay cứng chắc do làm lụng|u|AME|manual-labour|
+wiry-f|f|wiry sinewy arms with raised veins|tay gân guốc nổi gân|u|AME|manual-labour,poverty|
+plump-f|f|short plump arms|tay ngắn mũm mĩm|u|YAME|genetics|
+long-f|f|long thin arms|tay dài mảnh|u|YAME|genetics|9
+stick-f|f|stick-thin old arms with bony elbows|tay già que củi, khuỷu xương|c|E|ageing,illness|647
+crepey-f|f|crepey wrinkled skin on the arms|da tay nhăn mỏng|c|E|ageing|577
+## hands|E|Bàn tay
+normal-m|m|average male hands with broad palms|tay nam bình thường, lòng rộng|c|YAME||93,45
+normal-f|f|average female hands, slim and smaller|tay nữ bình thường, nhỏ thon|c|YAME||76
+large|a|large hands with long palms|bàn tay to|u|YAME|genetics|9,48
+small|a|small short hands|bàn tay nhỏ|u|YAME|genetics|76
+long-fingers|a|long thin fingers|ngón tay dài mảnh|u|YAME|genetics|
+stubby|a|short stubby fingers|ngón tay ngắn mập|u|YAME|genetics|399
+sausage|a|thick puffy sausage fingers|ngón tay to múp|u|AME|weight|
+plump|a|plump soft dimpled hands|bàn tay mập mềm có lúm|u|YAME|weight|
+bony-m|m|large bony muscular hands|tay to xương, gân guốc|u|YAME|genetics,manual-labour|93
+square-m|m|broad square work hands|bàn tay vuông rộng của người lao động|c|AME|manual-labour|
+calloused|a|thick calloused palms|lòng bàn tay chai dày|c|YAME|manual-labour|
+cracked|a|rough cracked skin on the hands|da tay thô nứt nẻ|c|AME|manual-labour,poverty|
+stained|a|hands stained dark from work|tay ám màu do công việc|u|YAME|manual-labour|
+soft-smooth|a|soft smooth uncalloused hands|tay mềm mịn không chai|u|YAM|wealth,sedentary|
+veiny|a|prominent veins on the backs of the hands|gân xanh nổi mu bàn tay|c|YAME|lean,manual-labour|
+old-thin|a|thin bony old hands with loose skin|tay già gầy, da nhăn chùng|c|E|ageing|52
+arthritic|a|swollen knuckles and bent arthritic fingers|khớp ngón sưng, ngón cong vẹo|u|ME|ageing,manual-labour|
+spots|a|age spots on the backs of the hands|đồi mồi mu bàn tay|c|ME|ageing,sun|
+red-chapped|a|red chapped hands|tay đỏ nứt nẻ|u|YAME|cold,washing|
+waterlogged|a|pale wrinkled water-soaked hands|tay trắng nhăn vì ngâm nước|u|AME|fishing,washing|
+clubbed|a|clubbed rounded fingertips|đầu ngón tay dùi trống|r|ME|illness|
+dupuytren|a|ring finger curled stiffly into the palm|ngón áp út co quắp vào lòng|r|E|illness,ageing|
+hairy-m|m|hairy knuckles and backs of hands|lông ở mu tay, đốt ngón|u|AME|genetics|
+delicate-f|f|small delicate hands with thin fingers|tay nhỏ thanh, ngón mảnh|u|YA|genetics|76
+crooked|a|one crooked finger from an old break|một ngón tay cong do gãy cũ|u|AME|injury,manual-labour|
+tense|a|tense knotted hands, fingers held stiff|tay gồng cứng, ngón căng|u|YAME|stress|396,402
+## nails|E|Móng tay
+normal|a|short clean natural nails|móng ngắn sạch|c|YAME||
+dirty|a|short nails with dirt under them|móng ngắn có đất bẩn|c|YAME|manual-labour,poverty|
+bitten|a|bitten-down nails with ragged edges|móng cắn trụi, mép nham nhở|c|YA|stress|
+broken|a|chipped and broken nails|móng mẻ gãy|c|AME|manual-labour|
+thick-yellow|a|thick yellowed nails|móng dày ố vàng|u|E|ageing,fungal|
+ridged|a|ridged brittle nails|móng có gờ, giòn|u|ME|ageing|
+nicotine|a|nicotine-stained fingertips and nails|đầu ngón, móng ám vàng thuốc lá|u|AME|smoking|
+long-uncut|a|long uncut natural nails|móng dài không cắt|u|YAME|neglect|
+pinky-m|m|one long grown-out pinky nail|để móng út dài|u|AME|custom|
+trimmed|a|neatly trimmed buffed nails|móng cắt gọn, đánh bóng|u|YAM|wealth|
+black|a|one blackened bruised nail|một móng bầm đen|u|YAME|injury,manual-labour|
+pale|a|pale bluish nails|móng nhợt tái xanh|r|ME|illness|
+cuticles|a|torn ragged cuticles|da quanh móng xước tưa|c|YA|stress|
+spoon|a|thin spoon-shaped nails|móng mỏng lõm hình thìa|r|AME|illness,anemia|
+shaped-f|f|natural nails kept slightly long and shaped|móng để hơi dài, dũa gọn|c|YAM|grooming|
+stained-betel-f|f|reddish-stained fingertips from chewing betel|đầu ngón ám đỏ trầu|r|E|custom|
+## legs|F|Chân
+normal-m|m|ordinary straight male legs|chân nam thẳng bình thường|c|YAME||
+long-m|m|long legs, short torso|chân dài|u|YAME|genetics|11
+short-m|m|short legs under a long torso|chân ngắn, thân dài|c|YAME|genetics|
+bow-m|m|bow legs, knees curving apart|chân vòng kiềng|u|YAME|genetics,rickets,riding|
+knock-m|m|knock knees, knees touching|chân chữ X|u|YAME|genetics|
+skinny-m|m|skinny legs with thin calves|chân gầy, bắp nhỏ|c|YAME|genetics,poverty|
+chicken-m|m|thin legs under a heavy upper body|chân gầy dưới thân trên nặng|u|AME|sedentary,gym-display|
+thighs-m|m|thick muscular thighs|đùi to có cơ|u|YA|sport|283,293
+calves-m|m|big hard calves from walking and carrying|bắp chân to cứng do đi bộ, gánh vác|c|AME|manual-labour,walking|289
+cyclist-m|m|lean sinewy legs from years of pedalling|chân gân guốc của người đạp xích lô|u|AME|manual-labour|
+heavy-m|m|heavy fleshy thighs|đùi to nhiều thịt|u|AME|diet|653
+varicose-m|m|bulging varicose veins on the calves|giãn tĩnh mạch nổi ở bắp chân|u|ME|standing-work,ageing|
+knobbly-m|m|thin old legs with knobbly knees|chân già gầy, gối lồi|c|E|ageing|647
+swollen-m|m|swollen puffy ankles|mắt cá sưng phù|u|E|illness|
+hairy-m|m|thick dark hair on the legs|chân nhiều lông sẫm|u|YAME|genetics|
+hairless-m|m|smooth nearly hairless legs|chân nhẵn gần như không lông|c|YAME|genetics|
+wasted-m|m|one leg thin and wasted|một chân teo nhỏ|r|YAME|illness,injury|
+normal-f|f|ordinary legs with slightly soft thighs|chân nữ bình thường, đùi hơi mềm|c|YAME||63
+long-f|f|long slim legs|chân dài thon|u|YA|genetics|85
+short-f|f|short legs with heavier thighs|chân ngắn, đùi to|c|YAME|genetics|63
+thighs-touch-f|f|full thighs that touch|đùi đầy chạm nhau|c|YAME|genetics|299
+thin-f|f|thin straight legs with a gap between thighs|chân gầy thẳng, đùi hở|u|YA|genetics,dieting|555
+calves-f|f|thick sturdy calves|bắp chân to chắc|c|YAME|manual-labour,walking|
+cankles-f|f|thick ankles with little taper|cổ chân to, không thon|u|AME|genetics,weight|295
+bow-f|f|bow legs, knees curving apart|chân vòng kiềng|u|YAME|genetics|
+knock-f|f|knock knees, knees touching|chân chữ X|u|YAME|genetics|
+varicose-f|f|bulging varicose veins on the calves|giãn tĩnh mạch nổi ở bắp chân|c|ME|childbirth,standing-work|
+spider-f|f|fine spider veins on the thighs|mạch máu li ti trên đùi|c|AME|childbirth,ageing|
+athletic-f|f|muscular athletic thighs and calves|đùi bắp chân thể thao có cơ|u|YA|sport|80,289
+fatknees-f|f|soft knees blurred by fat|đầu gối mờ vì mỡ|u|AME|weight|287,291
+knobbly-f|f|thin old legs with knobbly knees|chân già gầy, gối lồi|c|E|ageing|647
+swollen-f|f|swollen puffy ankles|mắt cá sưng phù|u|ME|illness,pregnancy|
+heavy-f|f|heavy column-like legs|chân to như cột|u|AME|weight,illness|653
+hairy-f|f|visible dark hair on the shins|ống chân có lông sẫm|u|YAME|genetics|
+## feet|F|Bàn chân
+normal|a|ordinary average-sized feet|bàn chân bình thường|c|YAME||
+normal-f|f|small narrow female feet with an arch|bàn chân nữ nhỏ thon có vòm|c|YAME||79
+large|a|large long feet|bàn chân to dài|u|YAME|genetics|11
+small|a|small short feet|bàn chân nhỏ|u|YAME|genetics|
+wide-flat|a|wide flat feet with splayed toes|bàn chân bè phẳng, ngón xòe|c|YAME|barefoot,manual-labour|
+high-arch|a|high-arched bony feet|bàn chân vòm cao, xương|u|YAME|genetics|79
+flat|a|flat feet with no arch|bàn chân bẹt, không vòm|c|YAME|genetics,weight|
+bunion|a|bunion with the big toe bent inward|ngón cái vẹo vào trong, u xương|u|ME|ageing,tight-shoes|
+hammer|a|curled hammer toes|ngón chân quặp|u|ME|ageing,tight-shoes|
+cracked|a|deeply cracked dry heels|gót chân nứt nẻ sâu|c|AME|poverty,barefoot|
+calloused|a|thick calloused soles from walking barefoot|lòng bàn chân chai dày do đi chân đất|c|AME|barefoot,manual-labour,poverty|
+splayed|a|toes spread wide from years of going barefoot|ngón chân xòe rộng do quen đi chân đất|c|AME|barefoot|
+gnarled|a|gnarled bony old feet with thick nails|bàn chân già xương xẩu, móng dày|c|E|ageing|
+swollen|a|swollen puffy feet|bàn chân sưng phù|u|ME|illness,standing-work|
+soft|a|soft pale uncalloused feet|bàn chân trắng mềm không chai|u|YAM|wealth|
+dirty|a|dusty feet with dirt in the toe creases|bàn chân bụi bặm, kẽ ngón dính đất|u|YAME|poverty,manual-labour|
+toenails|a|thick yellow fungal toenails|móng chân dày vàng do nấm|u|ME|ageing,fungal|
+long-toe|a|second toe longer than the big toe|ngón trỏ dài hơn ngón cái|u|YAME|genetics|
+broad-m|m|broad heavy male feet|bàn chân nam to bè|c|AME|genetics|
+water-feet|a|pale wrinkled feet from standing in water|chân trắng nhăn vì ngâm nước|u|AME|fishing,farming|
+## posture|G|Tư thế đứng
+normal|a|relaxed ordinary upright stance|đứng thẳng thoải mái bình thường|c|YAME||95
+upright|a|tall upright posture, long spine|đứng thẳng, sống lưng vươn|u|YAM|discipline|600,617,601
+rigid|a|rigid upright military bearing|đứng thẳng cứng kiểu nhà binh|u|AME|discipline|380
+slouched|a|slouching posture, chest caved in|đứng khom, ngực thụt|c|YAME|sedentary,low-mood|375,581,618
+desk-hunch|a|hunched upper back from desk work|lưng trên gù do ngồi bàn|c|YAM|sedentary|603
+headforward|a|head jutting forward of the shoulders|đầu chồm ra trước vai|c|YAME|sedentary|645
+stooped-old|a|stooped elderly posture with bent knees|dáng còng của người già, gối khuỵu|c|E|ageing|644,645
+labour-bent|a|permanently stooped from years of fieldwork|dáng cúi lom khom do làm đồng|u|ME|manual-labour|
+chestout-m|m|chest puffed out, chin raised|ưỡn ngực, hếch cằm|u|YAM|confidence,status|606,608,143
+bellyfwd|a|leaning back with the belly pushed forward|ngả người ra sau, bụng đẩy tới|u|AME|weight,pregnancy|461,442
+oneleg|a|standing with weight on one leg|đứng dồn trọng lượng một chân|c|YAME|relaxed|95,658
+shouldersfwd|a|shoulders hanging forward, listless stance|vai thõng về trước, dáng uể oải|c|YAME|low-mood|609
+raised-shoulders|a|tense stance with raised shoulders|đứng căng, vai nhô|u|YAME|stress|402,467
+shrinking|a|shoulders drawn in, making the body small|thu vai, thu người nhỏ lại|u|YAME|timidity|145,618
+heels|a|slumped stance resting back on the heels|đứng sụm, dồn trọng lượng về gót|u|YAME|tall,low-mood|117
+listing|a|body listing to one side|người nghiêng lệch một bên|u|AME|carrying-loads,scoliosis,injury|
+weary|a|collapsed weary stance, heavy shoulders, head low|dáng mệt rã, vai nặng, đầu cúi|u|AME|exhaustion|116,123
+planted-m|m|wide planted square stance|đứng chân rộng, vững như cọc|u|YAME|dominance|423,110
+handsonhips|a|standing with hands on hips, elbows out|đứng chống nạnh|u|YAME|dominance|424
+armscrossed|a|habitually crossed arms, leaning back|hay khoanh tay, ngả ra sau|u|YAME|guarded|122
+neck-lifted-f|f|upright with a lifted neck and level chin|thẳng người, cổ vươn, cằm ngang|u|YAM|discipline|605,377
+hipcocked-f|f|one hip cocked out in a relaxed stance|đứng lệch hông|u|YA|relaxed|433,513
+square-child-like|a|standing square and symmetrical, feet together|đứng vuông vức, hai chân khép|u|YAME|awkward|622,462
+## gait|G|Dáng đi
+normal|a|ordinary even walk|đi bình thường|c|YAME||
+brisk|a|quick brisk stride|đi nhanh gọn|c|YAM|busy|144
+heavy|a|slow heavy-footed walk|đi chậm, bước nặng|c|AME|weight,exhaustion|634
+shuffle|a|shuffling small steps, feet barely lifted|lê bước nhỏ, chân không nhấc|c|E|ageing,illness|
+limp|a|walks with a limp|đi khập khiễng|u|YAME|injury,illness|
+waddle|a|waddling side-to-side walk|đi lạch bạch lắc sang hai bên|u|AME|weight,pregnancy,hip-problem|
+bouncy|a|bouncy springy step|bước nảy nhẹ|u|YA|youth,cheerful|634,144
+loping|a|long loping stride|sải bước dài lòng thòng|u|YAM|tall|117
+toesout|a|walks with toes pointed out|đi chân chữ bát|c|AME|genetics,weight|118
+toesin|a|pigeon-toed walk, toes turned in|đi chân chụm mũi vào trong|u|YAME|genetics|
+hipsway-f|f|walk with swaying hips|đi lắc hông|u|YA|confidence|144,635,75
+armswing|a|walk with wide swinging arms|đi vung tay rộng|u|YAME|confidence|75,144
+stiffarms|a|stiff walk with arms held still|đi cứng, tay không vung|u|YAME|tension|145
+swagger-m|m|rolling swagger, shoulders swinging|đi nghênh ngang, vai lắc|u|YA|dominance|144
+mincing-f|f|small quick mincing steps|bước nhỏ vội|u|YAME|timidity|145
+hardheel|a|hard-heeled purposeful walk|bước gót chắc nịch, dứt khoát|u|AME|authority|634
+cautious|a|unsteady cautious steps|bước chậm dè dặt, chao đảo|c|E|ageing,illness|
+hurried-stoop|a|hurried stooped walk, head first|đi vội, lom khom, đầu đi trước|u|AME|busy,manual-labour|645
+rolling-sailor|a|wide rolling gait of someone used to boats|dáng đi lắc lư của người quen sông nước|r|AME|fishing|
+plod|a|flat-footed plodding walk|đi bệt chân, lì lợm|u|AME|manual-labour,weight|
+dragfoot|a|dragging one foot slightly|đi hơi kéo lê một chân|r|ME|illness,stroke|
+load-trot|a|quick short trot of a load carrier|bước ngắn nhanh của người gánh hàng|u|AME|manual-labour|

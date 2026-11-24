@@ -1,0 +1,77 @@
+file,sha256,sex,n,stat,pair,value
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~biacromialbreadth,0.532
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~biacromialbreadth,0.388
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~bideltoidbreadth,0.313
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~bideltoidbreadth,0.835
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~hipbreadth,0.383
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~hipbreadth,0.76
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~chestcircumference,0.247
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~chestcircumference,0.898
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~waistcircumference,0.208
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~waistcircumference,0.897
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~wristcircumference,0.49
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~wristcircumference,0.562
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~neckcircumference,0.195
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~neckcircumference,0.796
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~span,0.823
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~span,0.071
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~handlength,0.673
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~handlength,0.124
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~footlength,0.718
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~footlength,0.17
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~sittingheight,0.779
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~sittingheight,0.046
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~thighcircumference,0.255
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~thighcircumference,0.887
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~calfcircumference,0.266
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~calfcircumference,0.8
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~buttockcircumference,0.34
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~buttockcircumference,0.878
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~sitting_ratio,-0.338
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,bmi~waist_to_height,0.909
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,pearson_r,stature~bmi,0.002
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,402,share,P(shoulders z>=1.28 | stature z<-1.28),0.005
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,4082,share,P(shoulders z>=1.28 | all),0.104
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,414,share,P(shoulders z<-1.28 | stature z>=1.28),0.012
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,402,share,P(wrist z>=1.28 | stature z<-1.28),0.01
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,402,share,P(hips z>=1.28 | stature z<-1.28),0.025
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,653,share,P(waist z>=1.28 | bmi z<-1),0.0
+ANSUR_II_MALE_Public.csv,0547aea0170e5293,male,628,share,P(waist z<-1.28 | bmi z>=1),0.0
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~biacromialbreadth,0.566
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~biacromialbreadth,0.217
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~bideltoidbreadth,0.359
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~bideltoidbreadth,0.813
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~hipbreadth,0.387
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~hipbreadth,0.756
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~chestcircumference,0.26
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~chestcircumference,0.832
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~waistcircumference,0.229
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~waistcircumference,0.857
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~wristcircumference,0.543
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~wristcircumference,0.528
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~neckcircumference,0.295
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~neckcircumference,0.732
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~span,0.819
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~span,0.119
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~handlength,0.646
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~handlength,0.199
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~footlength,0.722
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~footlength,0.217
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~sittingheight,0.764
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~sittingheight,0.04
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~thighcircumference,0.317
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~thighcircumference,0.874
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~calfcircumference,0.343
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~calfcircumference,0.745
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~buttockcircumference,0.379
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~buttockcircumference,0.862
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~sitting_ratio,-0.371
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,bmi~waist_to_height,0.856
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,pearson_r,stature~bmi,0.054
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,193,share,P(shoulders z>=1.28 | stature z<-1.28),0.005
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,1986,share,P(shoulders z>=1.28 | all),0.101
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,210,share,P(shoulders z<-1.28 | stature z>=1.28),0.01
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,193,share,P(wrist z>=1.28 | stature z<-1.28),0.005
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,193,share,P(hips z>=1.28 | stature z<-1.28),0.021
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,311,share,P(waist z>=1.28 | bmi z<-1),0.0
+ANSUR_II_FEMALE_Public.csv,ed7e800aa97a4d42,female,303,share,P(waist z<-1.28 | bmi z>=1),0.0

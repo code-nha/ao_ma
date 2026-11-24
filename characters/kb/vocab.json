@@ -1,0 +1,1028 @@
+{
+ "schema": 3,
+ "slots": {
+  "height": {
+   "group": "A",
+   "order": 0,
+   "required_in_prompt": true,
+   "multi": false,
+   "std": [
+    "dvi:408-height",
+    "tt22:chieu-cao"
+   ]
+  },
+  "frame": {
+   "group": "A",
+   "order": 1,
+   "required_in_prompt": true,
+   "multi": false,
+   "std": [
+    "dvi:416-build-medium"
+   ]
+  },
+  "fat": {
+   "group": "A",
+   "order": 2,
+   "required_in_prompt": true,
+   "multi": false,
+   "std": [
+    "dvi:412-weight"
+   ]
+  },
+  "muscle": {
+   "group": "A",
+   "order": 3,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "fat_where": {
+   "group": "A",
+   "order": 4,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "head": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 5
+  },
+  "face_shape": {
+   "group": "B",
+   "required_in_prompt": true,
+   "multi": false,
+   "order": 6
+  },
+  "forehead": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 7
+  },
+  "brows": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 8,
+   "std": [
+    "tt22:long-may",
+    "dvi:eyebrows-distinctive"
+   ]
+  },
+  "eyes": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 9,
+   "std": [
+    "tt22:mat"
+   ]
+  },
+  "under_eye": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 10
+  },
+  "nose": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 11,
+   "std": [
+    "tt22:song-mui",
+    "dvi:nose-distinctive"
+   ]
+  },
+  "cheeks": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 12
+  },
+  "mouth": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 13,
+   "std": [
+    "dvi:lips-distinctive"
+   ]
+  },
+  "teeth": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 14,
+   "std": [
+    "dvi:mouth-teeth-distinctive"
+   ]
+  },
+  "jaw_chin": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 15,
+   "std": [
+    "dvi:chin-distinctive"
+   ]
+  },
+  "ears": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 16,
+   "std": [
+    "tt22:dai-tai",
+    "dvi:ears-distinctive"
+   ]
+  },
+  "neck": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 17,
+   "std": [
+    "dvi:neck-distinctive"
+   ]
+  },
+  "skin_tone": {
+   "group": "B",
+   "required_in_prompt": true,
+   "multi": false,
+   "order": 18,
+   "std": [
+    "tt22:mau-da"
+   ]
+  },
+  "skin_texture": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 19
+  },
+  "wrinkles": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 20
+  },
+  "facial_hair": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 21,
+   "std": [
+    "dvi:facial-hair-shaved"
+   ]
+  },
+  "asymmetry": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 22
+  },
+  "resting_face": {
+   "group": "B",
+   "required_in_prompt": false,
+   "multi": false,
+   "soul": true,
+   "order": 23
+  },
+  "hair_color": {
+   "group": "C",
+   "required_in_prompt": true,
+   "multi": false,
+   "order": 24,
+   "std": [
+    "tt22:toc"
+   ]
+  },
+  "hair_texture": {
+   "group": "C",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 25,
+   "std": [
+    "tt22:toc"
+   ]
+  },
+  "hair_density": {
+   "group": "C",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 26
+  },
+  "hairline": {
+   "group": "C",
+   "required_in_prompt": false,
+   "multi": false,
+   "order": 27,
+   "std": [
+    "dvi:420-hair-distinctive"
+   ]
+  },
+  "shoulders": {
+   "group": "D",
+   "order": 28,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "chest": {
+   "group": "D",
+   "order": 29,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "waist_belly": {
+   "group": "D",
+   "order": 30,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "hips": {
+   "group": "D",
+   "order": 31,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "back": {
+   "group": "D",
+   "order": 32,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "body_skin": {
+   "group": "D",
+   "order": 33,
+   "required_in_prompt": false,
+   "multi": false,
+   "std": [
+    "dvi:body-hair-distinctive"
+   ]
+  },
+  "arms": {
+   "group": "E",
+   "order": 34,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "hands": {
+   "group": "E",
+   "order": 35,
+   "required_in_prompt": false,
+   "multi": false,
+   "std": [
+    "dvi:hands-nails-distinctive"
+   ]
+  },
+  "nails": {
+   "group": "E",
+   "order": 36,
+   "required_in_prompt": false,
+   "multi": false,
+   "std": [
+    "dvi:hands-nails-distinctive"
+   ]
+  },
+  "legs": {
+   "group": "F",
+   "order": 37,
+   "required_in_prompt": false,
+   "multi": false
+  },
+  "feet": {
+   "group": "F",
+   "order": 38,
+   "required_in_prompt": false,
+   "multi": false,
+   "std": [
+    "dvi:feet-nails-distinctive"
+   ]
+  },
+  "posture": {
+   "group": "G",
+   "order": 39,
+   "required_in_prompt": false,
+   "multi": false,
+   "soul": true
+  },
+  "gait": {
+   "group": "G",
+   "order": 40,
+   "required_in_prompt": false,
+   "multi": false,
+   "soul": true
+  },
+  "marks": {
+   "group": "H",
+   "required_in_prompt": false,
+   "multi": true,
+   "order": 41,
+   "std": [
+    "dvi:404-scars",
+    "dvi:404-skin-marks",
+    "dvi:404-tattoos",
+    "dvi:404-amputations",
+    "tt22:dac-diem-khac"
+   ]
+  }
+ },
+ "groups": {
+  "A": "overall build",
+  "B": "head and face",
+  "C": "natural hair",
+  "D": "torso",
+  "E": "arms and hands",
+  "F": "legs and feet",
+  "G": "posture and gait",
+  "H": "marks"
+ },
+ "sexes": [
+  "male",
+  "female",
+  "any"
+ ],
+ "age_bands": {
+  "young": [
+   18,
+   29
+  ],
+  "adult": [
+   30,
+   44
+  ],
+  "middle": [
+   45,
+   64
+  ],
+  "elderly": [
+   65,
+   120
+  ]
+ },
+ "age_limits": [
+  18,
+  120
+ ],
+ "causes": {
+  "genetics": "inborn build or trait",
+  "youth": "body not yet filled out, adolescence",
+  "ageing": "normal ageing",
+  "hormones": "hormonal changes incl. menopause",
+  "childbearing": "pregnancy, childbirth, nursing, carrying children",
+  "manual-labour": "heavy physical work, carrying, farming, standing work",
+  "water-work": "long hours in water: fishing, washing",
+  "barefoot": "going barefoot",
+  "footwear": "tight or poor shoes",
+  "sun": "long sun exposure",
+  "climate": "hot humid or cold climate",
+  "sedentary": "sitting, little movement",
+  "sport": "sport, riding, running, dancing",
+  "gym": "gym training for looks",
+  "enhanced": "drugs or surgery to change the body",
+  "poverty": "poor food, hard living",
+  "wealth": "money, easy living, care",
+  "diet": "eating a lot or rich food",
+  "weight": "being heavy",
+  "weight-loss": "dieting or large weight loss",
+  "alcohol": "drinking",
+  "substances": "smoking, drugs",
+  "illness": "illness or medical condition",
+  "injury": "injury, fights, abuse",
+  "custom": "local custom or habit (betel, long pinky nail)",
+  "grooming": "careful self-care",
+  "neglect": "little self-care",
+  "stress": "tension, stress",
+  "low-mood": "sadness, exhaustion",
+  "temperament": "personality shown in stance or walk"
+ },
+ "cause_map_v1": {
+  "genetics": "genetics",
+  "tall": "genetics",
+  "lean": "genetics",
+  "big-bust": "genetics",
+  "youth": "youth",
+  "growth": "youth",
+  "ageing": "ageing",
+  "osteoporosis": "ageing",
+  "hormones": "hormones",
+  "menopause": "hormones",
+  "childbirth": "childbearing",
+  "pregnancy": "childbearing",
+  "carrying-child": "childbearing",
+  "manual-labour": "manual-labour",
+  "carrying-loads": "manual-labour",
+  "farming": "manual-labour",
+  "standing-work": "manual-labour",
+  "walking": "manual-labour",
+  "fishing": "water-work",
+  "washing": "water-work",
+  "barefoot": "barefoot",
+  "tight-shoes": "footwear",
+  "sun": "sun",
+  "tropical": "climate",
+  "heat": "climate",
+  "cold": "climate",
+  "sedentary": "sedentary",
+  "sport": "sport",
+  "riding": "sport",
+  "gym-display": "gym",
+  "enhanced": "enhanced",
+  "poverty": "poverty",
+  "rickets": "poverty",
+  "wealth": "wealth",
+  "diet": "diet",
+  "weight": "weight",
+  "weight-loss": "weight-loss",
+  "dieting": "weight-loss",
+  "alcohol": "alcohol",
+  "smoking": "substances",
+  "addiction": "substances",
+  "illness": "illness",
+  "anemia": "illness",
+  "stroke": "illness",
+  "scoliosis": "illness",
+  "hip-problem": "illness",
+  "fungal": "illness",
+  "injury": "injury",
+  "fighting": "injury",
+  "abuse": "injury",
+  "custom": "custom",
+  "grooming": "grooming",
+  "neglect": "neglect",
+  "stress": "stress",
+  "tension": "stress",
+  "low-mood": "low-mood",
+  "exhaustion": "low-mood",
+  "confidence": "temperament",
+  "dominance": "temperament",
+  "timidity": "temperament",
+  "relaxed": "temperament",
+  "discipline": "temperament",
+  "guarded": "temperament",
+  "awkward": "temperament",
+  "cheerful": "temperament",
+  "authority": "temperament",
+  "status": "temperament",
+  "busy": "temperament"
+ },
+ "freq_classes": [
+  "common",
+  "uncommon",
+  "rare"
+ ],
+ "freq_thresholds": {
+  "common": 0.1,
+  "uncommon": 0.02,
+  "note": "share of people in the same sex x age band x population; rare below uncommon"
+ },
+ "freq_basis": [
+  "stat",
+  "proxy",
+  "est"
+ ],
+ "salience": {
+  "plain": "nobody would notice",
+  "mild": "noticeable on a close look, not memorable",
+  "marked": "people remember it"
+ },
+ "when_keys": [
+  "sex",
+  "band"
+ ],
+ "dims": {
+  "fat": {
+   "range": [
+    0,
+    7
+   ],
+   "scale": "0 emaciated, 1 very thin, 2 thin/lean, 3 average, 4 soft, 5 overweight, 6 obese, 7 severely obese"
+  },
+  "muscle": {
+   "range": [
+    0,
+    4
+   ],
+   "scale": "0 wasted, 1 soft, 2 ordinary, 3 firm/hard, 4 bulky"
+  },
+  "frame": {
+   "range": [
+    0,
+    4
+   ],
+   "scale": "0 small, 1 narrow, 2 medium, 3 broad/stocky, 4 heavy"
+  },
+  "spine": {
+   "range": [
+    0,
+    3
+   ],
+   "scale": "0 upright, 1 slightly rounded, 2 stooped, 3 strongly bent"
+  },
+  "lines": {
+   "range": [
+    0,
+    4
+   ],
+   "scale": "face lines: 0 smooth, 1 fine, 2 moderate, 3 deep, 4 very deep"
+  },
+  "scalp": {
+   "range": [
+    0,
+    4
+   ],
+   "scale": "scalp hair: 0 bald, 1 very sparse, 2 thin, 3 medium, 4 thick"
+  },
+  "grey": {
+   "range": [
+    0,
+    4
+   ],
+   "scale": "grey hair: 0 none, 1 a few, 2 salt-and-pepper, 3 mostly grey, 4 white"
+  },
+  "teeth": {
+   "range": [
+    0,
+    4
+   ],
+   "scale": "teeth: 0 none, 1 few left, 2 several missing, 3 full but worn, 4 full"
+  }
+ },
+ "regions": [
+  "belly",
+  "buttocks",
+  "calves",
+  "chest",
+  "flanks",
+  "hips",
+  "knees",
+  "loose_skin",
+  "lower_back",
+  "neck",
+  "shoulder_blades",
+  "thighs",
+  "upper_arms",
+  "upper_back",
+  "bite",
+  "brow_level",
+  "cheek_hollow",
+  "cheek_red",
+  "cheek_side",
+  "chin_fat",
+  "ear_set",
+  "eye_narrow",
+  "eye_turn",
+  "eye_unequal",
+  "eyelid_droop",
+  "face_droop",
+  "jaw_side",
+  "jowls",
+  "mouth_corners",
+  "mouth_slant",
+  "nose_bend",
+  "parting",
+  "temples"
+ ],
+ "statuses": [
+  "active",
+  "merged",
+  "split",
+  "deprecated"
+ ],
+ "ev_rel": [
+  "describes",
+  "supports",
+  "freq"
+ ],
+ "budget": {
+  "call_tokens": 3500,
+  "menu_k": 14,
+  "chars_per_token": 3.5
+ },
+ "facets": {
+  "means": [
+   "destitute",
+   "poor",
+   "modest",
+   "comfortable",
+   "rich"
+  ],
+  "life": [
+   "outdoor-manual",
+   "sea",
+   "farm",
+   "street",
+   "office",
+   "display",
+   "domestic",
+   "military",
+   "idle"
+  ],
+  "diet": [
+   "underfed",
+   "plain-diet",
+   "well-fed",
+   "overfed"
+  ],
+  "alcohol": [
+   "sober",
+   "drinks",
+   "heavy-drinker"
+  ],
+  "smoke": [
+   "smoker",
+   "non-smoker"
+  ],
+  "place": [
+   "rural",
+   "urban",
+   "coastal",
+   "highland"
+  ],
+  "era": [
+   "born-pre1960",
+   "born-1960-1989",
+   "born-1990plus"
+  ],
+  "eth": [
+   "kinh",
+   "sea-asian",
+   "east-asian",
+   "south-asian",
+   "european",
+   "african",
+   "mixed"
+  ]
+ },
+ "fact_keywords": {
+  "means": [
+   [
+    "destitute",
+    "\\b(destitute|homeless|beggar|penniless)"
+   ],
+   [
+    "poor",
+    "\\b(poor|poverty|hard[- ]up|scrap(es)? by)"
+   ],
+   [
+    "rich",
+    "\\b(rich|wealthy|millionaire|tycoon|owns? (a )?(company|factory|chain))"
+   ],
+   [
+    "comfortable",
+    "\\b(well[- ]off|comfortable|middle[- ]class|affluent)"
+   ],
+   [
+    "modest",
+    "\\b(modest|working[- ]class|ordinary income|small shop)"
+   ]
+  ],
+  "life": [
+   [
+    "sea",
+    "\\b(fish|fisher\\w*|boat|nets?\\b|squid|sailor|seaman)"
+   ],
+   [
+    "farm",
+    "\\b(farm\\w*|rice field|paddy|buffalo|peasant)"
+   ],
+   [
+    "outdoor-manual",
+    "\\b(fish\\w*|farm\\w*|porter|builder|construction|labou?rer|mason|carpenter|cyclo|motorbike taxi|xe ôm|vendor|carr(y|ies) (goods|loads)|mend\\w* nets|haul)"
+   ],
+   [
+    "street",
+    "\\b(street vendor|hawker|scavenger|beggar|shoeshine)"
+   ],
+   [
+    "office",
+    "\\b(office|clerk|accountant|teacher|programmer|engineer|student|official|banker|manager|lawyer|doctor)"
+   ],
+   [
+    "display",
+    "\\b(model|actor|actress|singer|idol|influencer|fitness|bodybuilder|dancer)"
+   ],
+   [
+    "domestic",
+    "\\b(housewife|homemaker|maid|nanny|cook\\b)"
+   ],
+   [
+    "military",
+    "\\b(soldier|army|police|officer|militia)"
+   ],
+   [
+    "idle",
+    "\\b(retired|unemployed|idle|heir)"
+   ]
+  ],
+  "diet": [
+   [
+    "underfed",
+    "\\b(eats? little|skips? meals|hungry|starv\\w*|goes hungry|not enough to eat)"
+   ],
+   [
+    "overfed",
+    "\\b(eats? a lot|overeat\\w*|gluttor\\w*|feasts? (often|every)|heavy eater)"
+   ],
+   [
+    "plain-diet",
+    "\\b(simple meals?|plain food|avoids heavy|rice and (salted|dried) fish|frugal)"
+   ],
+   [
+    "well-fed",
+    "\\b(eats well|rich food|good food|restaurants?)"
+   ]
+  ],
+  "alcohol": [
+   [
+    "heavy-drinker",
+    "\\b(drunk\\w*|alcoholic|drinks? heavily|heavy drink\\w*|every (night|day)[^.;]*(wine|beer|liquor))"
+   ],
+   [
+    "sober",
+    "\\b(never drinks?|does not drink|doesn't drink|teetotal\\w*|no alcohol)"
+   ],
+   [
+    "drinks",
+    "\\b(rice wine|beer|liquor|rượu|bia|glass of wine|drinks? (with|a glass|occasionally))"
+   ]
+  ],
+  "smoke": [
+   [
+    "non-smoker",
+    "\\b(never smok\\w*|does not smoke|non-?smoker)"
+   ],
+   [
+    "smoker",
+    "\\b(smok\\w*|tobacco|cigarette|thuốc lào|pipe)"
+   ]
+  ],
+  "place": [
+   [
+    "coastal",
+    "\\b(fishing village|coast\\w*|seaside|by the sea|port)"
+   ],
+   [
+    "highland",
+    "\\b(highland|mountain|central highlands)"
+   ],
+   [
+    "urban",
+    "\\b(city|hanoi|hà nội|saigon|sài gòn|ho chi minh|hồ chí minh|đà nẵng|district|downtown|urban)"
+   ],
+   [
+    "rural",
+    "\\b(village|countryside|commune|hamlet|rural)"
+   ]
+  ],
+  "eth": [
+   [
+    "mixed",
+    "\\b(mixed|half-)"
+   ],
+   [
+    "sea-asian",
+    "\\b(cham|khmer|thai|lao|hmong|tày|tay|mường|muong|ê đê|ede|jarai|bahnar)"
+   ],
+   [
+    "east-asian",
+    "\\b(hoa\\b|chinese|korean|japanese)"
+   ],
+   [
+    "south-asian",
+    "\\b(indian|pakistani|bangladeshi|sri lankan)"
+   ],
+   [
+    "african",
+    "\\b(african|nigerian|kenyan|black american)"
+   ],
+   [
+    "european",
+    "\\b(french|american|european|russian|german|british|english|australian|white)"
+   ],
+   [
+    "kinh",
+    "\\b(kinh|vietnamese|việt)"
+   ]
+  ]
+ },
+ "cause_keywords": {
+  "injury": "\\b(injur\\w*|wound\\w*|accident|broke|broken|fractur\\w*|fight\\w*|beaten|bitten|bite|burn\\w*|scar\\w*|stab\\w*|shot|shrapnel|bomb\\w*|mine\\b|landmine|fell|crash\\w*|lost (a|his|her) (finger|leg|arm|eye|hand)|limp\\w*)",
+  "illness": "\\b(ill\\b|illness|sick\\w*|disease|stroke|fever|cancer|polio|leprosy|tubercul\\w*|malaria|hospital\\w*|surgery|operation)",
+  "water-work": "\\b(at sea|to sea|out to sea|on the sea|fish(ing|ed|es|erman|ermen)?\\b|nets?\\b|squid|(on|in|aboard) (the |a |his |her |their |big |small |fishing )*boats?\\b|rivers?\\b|paddy|paddies|rice fields?|transplant\\w*|washing|laundry|div(ing|er)\\b)",
+  "sun": "\\b(at sea|to sea|out to sea|fish(ing|ed|erman|ermen)?\\b|(on|in|aboard) (the |a |his |her |their |big |small |fishing )*boats?\\b|farm\\w*|fields?\\b|paddy|paddies|sun\\w*|outdoors?|in the open|market stall|street vend\\w*|construction|building site|herd\\w*)",
+  "manual-labour": "\\b(haul\\w*|carr(y|ied|ies|ying)|labou?r\\w*|farm\\w*|build(ing|er|ers)\\b|construct\\w*|porter|fish(ing|ed|erman|ermen)?\\b|at sea|to sea|nets?\\b|(on|in|aboard) (the |a |his |her |their |big |small |fishing )*boats?\\b|heavy work|plough\\w*|dig(s|ging)?\\b|factory|mine\\b|mines\\b|quarry|load(s|ing)?\\b)",
+  "poverty": "\\b(poor|poverty|hunger|hungry|starv\\w*|cassava|sweet potato|debt)",
+  "wealth": "\\b(rich|wealth\\w*|inherit\\w*|fortune)",
+  "childbearing": "\\b(gave birth|giving birth|give birth|pregnan\\w*|childbirth|miscarr\\w*|breast-?fe\\w*|bore (a|her|him|two|three|four|five|six|seven)\\b|had (a|her|their) (first |second |third )?(baby|son|daughter|child)|raised (two|three|four|five|six|seven|\\d+) children|mother of)",
+  "alcohol": "\\b(drink\\w*|alcohol\\w*|wine|beer|drunk\\w*)",
+  "substances": "\\b(smok\\w*|tobacco|opium|drugs?|heroin|cigarettes?)",
+  "low-mood": "\\b(died|death|grief|mourn\\w*|lost his|lost her|alone|lonely)",
+  "stress": "\\b(war|wartime|storm|fear\\w*|debt|prison|nearly did not come back|survived)",
+  "sport": "\\b(sport|boxing|football|martial|wrestl\\w*|gym|athlet\\w*)",
+  "custom": "\\b(betel|lacquer\\w*|tradition\\w*|temple)",
+  "sedentary": "\\b(office|desk|computer|sits all day)",
+  "weight": "\\b(overweight|fat\\b|obese)",
+  "weight-loss": "\\b(lost weight|weight loss|dieting)"
+ },
+ "other_death": "\\b(wife|husband|son|daughter|father|mother|friend|brother|sister|grandson|granddaughter)\\b[^.]*\\b(died|killed|death|deceased)",
+ "eth_default": "kinh",
+ "fact_fields": {
+  "means": "social|position|occupation|wealth|means|status",
+  "life": "occupation|job|work|social|position|lifestyle",
+  "diet": "eat|food|diet|habit|lifestyle",
+  "alcohol": "drink|habit|lifestyle|eat",
+  "smoke": "smok|habit|groom|lifestyle",
+  "place": "hometown|place|home|live|born",
+  "era": "era|year|place",
+  "eth": "nationality|ethnic|origin|race|people"
+ },
+ "cite": {
+  "generic": [
+   "genetics",
+   "ageing",
+   "youth",
+   "temperament",
+   "hormones",
+   "climate"
+  ],
+  "soul_causes": [
+   "temperament",
+   "stress",
+   "low-mood"
+  ],
+  "identity_skip": [
+   "Name",
+   "Relationships"
+  ],
+  "note": "rare or notable picks need a cite 'LIFE <n>', 'IDENTITY <field>' or (soul slots) 'SOUL'. The cited item must carry one of the value's causes: LIFE items carry causes read from their event text (not the Interpretation); IDENTITY Age carries ageing/hormones (45+) or youth (<30); Nationality/Hometown carry genetics/climate; SOUL carries temperament/stress/low-mood. A reason text may not claim a specific cause (claim_causes) that the cited item and the facets (facet_causes) do not show.",
+  "claim_causes": [
+   "injury",
+   "illness",
+   "alcohol",
+   "substances",
+   "childbearing",
+   "weight-loss"
+  ],
+  "facet_causes": {
+   "smoker": [
+    "substances"
+   ],
+   "drinks": [
+    "alcohol"
+   ],
+   "heavy-drinker": [
+    "alcohol"
+   ],
+   "poor": [
+    "poverty"
+   ],
+   "destitute": [
+    "poverty"
+   ],
+   "underfed": [
+    "poverty"
+   ],
+   "overfed": [
+    "diet"
+   ],
+   "well-fed": [
+    "diet"
+   ],
+   "sea": [
+    "water-work",
+    "sun",
+    "manual-labour"
+   ],
+   "farm": [
+    "sun",
+    "manual-labour",
+    "water-work"
+   ],
+   "outdoor-manual": [
+    "sun",
+    "manual-labour"
+   ],
+   "street": [
+    "sun"
+   ],
+   "military": [
+    "sun",
+    "manual-labour"
+   ],
+   "office": [
+    "sedentary"
+   ]
+  }
+ },
+ "marks": {
+  "max": 3,
+  "loc_words": {
+   "forehead": "forehead",
+   "temple-l": "left temple",
+   "temple-r": "right temple",
+   "brow-l": "left brow",
+   "brow-r": "right brow",
+   "cheek-l": "left cheek",
+   "cheek-r": "right cheek",
+   "nose": "nose",
+   "lip": "upper lip",
+   "chin": "chin",
+   "jaw-l": "left jaw",
+   "jaw-r": "right jaw",
+   "ear-l": "left ear",
+   "ear-r": "right ear",
+   "neck": "neck",
+   "throat": "throat",
+   "scalp": "scalp",
+   "shoulder-l": "left shoulder",
+   "shoulder-r": "right shoulder",
+   "upperarm-l": "left upper arm",
+   "upperarm-r": "right upper arm",
+   "forearm-l": "left forearm",
+   "forearm-r": "right forearm",
+   "hand-l": "left hand",
+   "hand-r": "right hand",
+   "chest": "chest",
+   "belly": "belly",
+   "back": "back",
+   "thigh-l": "left thigh",
+   "thigh-r": "right thigh",
+   "knee-l": "left knee",
+   "knee-r": "right knee",
+   "shin-l": "left shin",
+   "shin-r": "right shin",
+   "foot-l": "left foot",
+   "foot-r": "right foot",
+   "leg-l": "left leg",
+   "leg-r": "right leg",
+   "arm-l": "left arm",
+   "arm-r": "right arm",
+   "eye-l": "left eye",
+   "eye-r": "right eye"
+  },
+  "loc_groups": {
+   "face": [
+    "forehead",
+    "temple-l",
+    "temple-r",
+    "brow-l",
+    "brow-r",
+    "cheek-l",
+    "cheek-r",
+    "nose",
+    "lip",
+    "chin",
+    "jaw-l",
+    "jaw-r",
+    "ear-l",
+    "ear-r"
+   ],
+   "neck": [
+    "neck",
+    "throat"
+   ],
+   "arms": [
+    "shoulder-l",
+    "shoulder-r",
+    "upperarm-l",
+    "upperarm-r",
+    "forearm-l",
+    "forearm-r",
+    "hand-l",
+    "hand-r"
+   ],
+   "torso": [
+    "chest",
+    "belly",
+    "back"
+   ],
+   "legs": [
+    "thigh-l",
+    "thigh-r",
+    "knee-l",
+    "knee-r",
+    "shin-l",
+    "shin-r",
+    "foot-l",
+    "foot-r"
+   ]
+  },
+  "hidden": [
+   "chest",
+   "belly",
+   "back",
+   "thigh-l",
+   "thigh-r"
+  ],
+  "note": "a marks pick is '<id>@<loc>'; hidden locations count as mild (not a signature)"
+ },
+ "baseline_facets": [
+  "life",
+  "place"
+ ],
+ "cause_only_sex": {
+  "childbearing": "female"
+ }
+}

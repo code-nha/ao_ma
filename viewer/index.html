@@ -96,6 +96,9 @@ tr.rep td { color: var(--soft); }
 .cut { margin: 10px 4%; padding: 8px 12px; border: 1px dashed var(--line); border-radius: 8px; font-size: 13px; color: var(--muted); }
 .cut b { color: var(--text); }
 .other { font: 12px ui-monospace, Consolas, monospace; color: var(--muted); margin: 6px 0; overflow-wrap: anywhere; }
+.other.look { font: 13px system-ui, sans-serif; color: inherit; border: 1px solid var(--line, #8884); border-radius: 8px; padding: 8px 10px; }
+.other.look pre { white-space: pre-wrap; font: 12px ui-monospace, Consolas, monospace; max-height: 320px; overflow: auto; margin: 4px 0; }
+.other.look summary { cursor: pointer; margin-top: 4px; }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 .probe { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 7px 10px; margin: 6px 0; }
 .probe.isbad { border-color: var(--bad); }
@@ -243,7 +246,33 @@ function norm(r, i) {
     n.flag = n.bad.length > 0 || n.fixed || !!n.retellRaw || !!n.retellFinal;
     return n;
   }
+  if (Array.isArray(r.calls) || (r.style !== undefined && r.look !== undefined)) { n.kind = "look"; return n; }  // luan_hoi / style_look
   n.kind = "other"; return n;
+}
+const ROLE_VI = { luan_hoi: "Luân hồi lọc menu", character_step1: "Nhân vật: chọn nét", character_step2: "Nhân vật: chọn giá trị",
+  check: "Luân hồi kiểm mâu thuẫn", character: "Nhân vật chọn" };
+function lookHTML(r) {
+  const head = `<b>${esc(r.char || "?")}</b> · ${esc(r.ts || "")} · ${esc(r.model || "")}`
+    + (r.story ? ` · story ${esc(r.story)}` : "") + (r.group ? ` · ${esc(r.group)}` : "") + (r.kb_version ? ` · kb ${esc(r.kb_version)}` : "");
+  let h = `<div class="other look"><div>${head}</div>`;
+  if (r.facts) h += `<div class="meta"><span class="kv">facts: ${esc(typeof r.facts === "object" ? JSON.stringify(r.facts) : r.facts)}</span></div>`;
+  if (r.style !== undefined) {
+    h += `<details open><summary>STYLE</summary><pre>${esc(r.style)}</pre></details><details open><summary>LOOK</summary><pre>${esc(r.look)}</pre></details>`;
+  }
+  for (const c of arr(r.calls)) {
+    const errs = arr(c.errors).concat(arr(c.out && c.out.conflicts).map(x => "mâu thuẫn: " + JSON.stringify(x)));
+    const lbl = (ROLE_VI[c.role] || c.role) + (c.round != null ? ` · lần ${c.round}` : "") + (c.group ? ` · ${c.group}` : "")
+      + (c.slots ? ` · ${arr(c.slots).length} ô` : "");
+    h += `<details${errs.length ? " open" : ""}><summary>${esc(lbl)} — ${fmtN(c.prompt_tokens)} token vào, ${c.secs ?? "–"} s`
+      + (errs.length ? ` <span class="tag warn">${errs.length} lỗi</span>` : "") + `</summary>`
+      + (errs.length ? `<ul>${errs.map(e => `<li>${esc(String(e))}</li>`).join("")}</ul>` : "")
+      + `<pre>${esc(JSON.stringify(c.out, null, 1))}</pre></details>`;
+  }
+  const prompt = r.prompt || r.body_prompt;
+  if (prompt) h += `<div><b>Prompt:</b> ${esc(prompt)}</div>`;
+  for (const k of ["code_caught", "llm_caught", "cites"]) if (r[k] != null && (!Array.isArray(r[k]) || r[k].length))
+    h += `<details><summary>${esc(k)}</summary><pre>${esc(JSON.stringify(r[k], null, 1))}</pre></details>`;
+  return h + `</div>`;
 }
 
 // ---------- server ----------
@@ -403,6 +432,8 @@ class Pane {
         out.push(this.memoryHTML(n.r));
       } else if (n.kind === "cut" && !filtering) {
         out.push(`<div class="cut">✂ <b>Hết cảnh ${esc(n.scene)}</b> — lý do: <b>${esc(CUT_VI[n.r.cut] || n.r.cut)}</b>${n.r.summary ? `<br>Tóm tắt: ${mk(n.r.summary)}` : ""}${kvChips(n.r) ? `<div class="meta">${kvChips(n.r)}</div>` : ""}</div>`);
+      } else if (n.kind === "look" && !filtering) {
+        out.push(lookHTML(n.r));
       } else if (n.kind === "other" && !filtering) {
         out.push(`<div class="other">${esc(JSON.stringify(n.r))}</div>`);
       }

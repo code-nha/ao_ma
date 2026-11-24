@@ -1,0 +1,72 @@
+{
+ "chars": {
+  "lao_bay": {
+   "id": "lao_bay",
+   "group": "male-elderly",
+   "kb_version": "3.31f2ab63c9",
+   "picks": {
+    "height": "height.shrunken-m",
+    "frame": "frame.normal-m",
+    "fat": "fat.normal-m",
+    "muscle": "muscle.ropy-labour-m",
+    "fat_where": "fat_where.normal-m",
+    "head": "head.normal",
+    "face_shape": "face_shape.normal-old-m",
+    "forehead": "forehead.normal-m",
+    "brows": "brows.normal-old-m",
+    "eyes": "eyes.squint",
+    "under_eye": "under_eye.normal-e",
+    "nose": "nose.large",
+    "cheeks": "cheeks.normal-e",
+    "mouth": "mouth.cracked",
+    "teeth": "teeth.brown",
+    "jaw_chin": "jaw_chin.normal-old",
+    "ears": "ears.normal",
+    "neck": "neck.normal-old",
+    "skin_tone": "skin_tone.farmertan",
+    "skin_texture": "skin_texture.leathery",
+    "wrinkles": "wrinkles.crowsfeet",
+    "facial_hair": "facial_hair.normal-old-m",
+    "asymmetry": "asymmetry.normal",
+    "resting_face": "resting_face.normal-old",
+    "hair_color": "hair_color.normal-e",
+    "hair_texture": "hair_texture.normal-old",
+    "hair_density": "hair_density.normal-e",
+    "hairline": "hairline.normal-old-m",
+    "shoulders": "shoulders.normal-old-m",
+    "chest": "chest.normal-old-m",
+    "waist_belly": "waist_belly.normal-old-m",
+    "hips": "hips.normal-old-m",
+    "back": "back.normal-old",
+    "body_skin": "body_skin.farmertan-m",
+    "arms": "arms.normal-old-m",
+    "hands": "hands.bony-m",
+    "nails": "nails.normal",
+    "legs": "legs.normal-old-m",
+    "feet": "feet.normal",
+    "posture": "posture.labour-bent",
+    "gait": "gait.normal-old",
+    "marks": [
+     "marks.none"
+    ]
+   }
+  }
+ },
+ "counts": {
+  "male-elderly": {
+   "height.shrunken-m": 1,
+   "muscle.ropy-labour-m": 1,
+   "eyes.squint": 1,
+   "nose.large": 1,
+   "mouth.cracked": 1,
+   "teeth.brown": 1,
+   "skin_tone.farmertan": 1,
+   "skin_texture.leathery": 1,
+   "wrinkles.crowsfeet": 1,
+   "body_skin.farmertan-m": 1,
+   "hands.bony-m": 1,
+   "posture.labour-bent": 1
+  }
+ },
+ "kb_version": "3.31f2ab63c9"
+}

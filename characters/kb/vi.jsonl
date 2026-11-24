@@ -1,0 +1,1039 @@
+{"id": "height", "vi": "Chiều cao"}
+{"id": "frame", "vi": "Khung xương"}
+{"id": "fat", "vi": "Mỡ toàn thân"}
+{"id": "muscle", "vi": "Cơ"}
+{"id": "fat_where", "vi": "Mỡ dồn ở đâu"}
+{"id": "shoulders", "vi": "Vai"}
+{"id": "chest", "vi": "Ngực"}
+{"id": "waist_belly", "vi": "Eo, bụng"}
+{"id": "hips", "vi": "Hông, mông"}
+{"id": "back", "vi": "Lưng"}
+{"id": "body_skin", "vi": "Da thân"}
+{"id": "arms", "vi": "Cánh tay"}
+{"id": "hands", "vi": "Bàn tay"}
+{"id": "nails", "vi": "Móng tay"}
+{"id": "legs", "vi": "Chân"}
+{"id": "feet", "vi": "Bàn chân"}
+{"id": "posture", "vi": "Tư thế đứng"}
+{"id": "gait", "vi": "Dáng đi"}
+{"id": "arms.batwing-f", "vi": "da bắp tay chảy xệ"}
+{"id": "arms.biceps-m", "vi": "bắp tay tròn to do tập gym"}
+{"id": "arms.crepey-f", "vi": "da tay nhăn mỏng"}
+{"id": "arms.fat-m", "vi": "tay to mỡ, không thấy cơ"}
+{"id": "arms.forearms-f", "vi": "cẳng tay cứng chắc do làm lụng"}
+{"id": "arms.forearms-m", "vi": "cẳng tay to khỏe do làm nặng"}
+{"id": "arms.hairy-m", "vi": "cẳng tay nhiều lông sẫm"}
+{"id": "arms.heavy-f", "vi": "bắp tay nhiều thịt"}
+{"id": "arms.huge-m", "vi": "tay cực to kiểu thể hình"}
+{"id": "arms.long-f", "vi": "tay dài mảnh"}
+{"id": "arms.long-m", "vi": "tay dài, buông quá giữa đùi"}
+{"id": "arms.loose-m", "vi": "da bắp tay dưới chùng"}
+{"id": "arms.muscular-f", "vi": "nữ tay có cơ rõ"}
+{"id": "arms.muscular-m", "vi": "tay có cơ"}
+{"id": "arms.normal-f", "vi": "tay nữ thon bình thường"}
+{"id": "arms.normal-m", "vi": "tay nam bình thường"}
+{"id": "arms.normal-old-m", "vi": "tay người già gầy hơn, da hơi chùng"}
+{"id": "arms.onesided-m", "vi": "một tay to hơn tay kia"}
+{"id": "arms.plump-f", "vi": "tay ngắn mũm mĩm"}
+{"id": "arms.short-m", "vi": "tay ngắn to"}
+{"id": "arms.skinny-m", "vi": "tay gầy nhỏ"}
+{"id": "arms.soft-f", "vi": "bắp tay tròn mềm"}
+{"id": "arms.soft-m", "vi": "bắp tay mềm nặng"}
+{"id": "arms.stick-f", "vi": "tay già que củi, khuỷu xương"}
+{"id": "arms.stick-m", "vi": "tay già que củi, khuỷu xương"}
+{"id": "arms.thin-f", "vi": "tay gầy xương"}
+{"id": "arms.toned-f", "vi": "tay thon săn, hơi thấy cơ"}
+{"id": "arms.wiry-f", "vi": "tay gân guốc nổi gân"}
+{"id": "arms.wiry-m", "vi": "cẳng tay gân guốc nổi gân xanh"}
+{"id": "back.blades", "vi": "xương bả vai nhô sắc"}
+{"id": "back.bony", "vi": "lưng gầy, lộ cột sống, sườn"}
+{"id": "back.broad-m", "vi": "lưng rộng dày do khuân vác"}
+{"id": "back.columns", "vi": "hai dải cơ dày dọc sống lưng"}
+{"id": "back.fieldbent", "vi": "lưng còng do cúi làm đồng"}
+{"id": "back.flat", "vi": "lưng phẳng, mất đường cong"}
+{"id": "back.hump-f", "vi": "bướu sau gáy"}
+{"id": "back.hunch", "vi": "lưng trên tròn, hơi gù"}
+{"id": "back.kyphosis", "vi": "lưng gù nặng"}
+{"id": "back.lean-sideways", "vi": "lưng nghiêng một bên do gánh"}
+{"id": "back.normal", "vi": "lưng thẳng bình thường"}
+{"id": "back.normal-old", "vi": "lưng trên hơi tròn của người già"}
+{"id": "back.rolls", "vi": "ngấn mỡ ngang lưng"}
+{"id": "back.scoliosis", "vi": "cột sống cong vẹo"}
+{"id": "back.slim-f", "vi": "lưng nữ mảnh, rãnh sống mờ"}
+{"id": "back.stiff", "vi": "lưng cứng đơ"}
+{"id": "back.sway", "vi": "lưng võng, ưỡn sâu"}
+{"id": "back.vback-m", "vi": "lưng chữ V có cơ"}
+{"id": "body_skin.acne-f", "vi": "mụn lưng và vai"}
+{"id": "body_skin.acne-m", "vi": "mụn lưng và vai"}
+{"id": "body_skin.breaststretch-f", "vi": "rạn da ngực và đùi"}
+{"id": "body_skin.bruised-f", "vi": "vết bầm rải rác"}
+{"id": "body_skin.bruised-m", "vi": "vết bầm rải rác"}
+{"id": "body_skin.cellulite-f", "vi": "da sần vỏ cam ở đùi mông"}
+{"id": "body_skin.crepey-f", "vi": "da mỏng nhăn nheo"}
+{"id": "body_skin.crepey-m", "vi": "da mỏng nhăn nheo"}
+{"id": "body_skin.dry-f", "vi": "da khô bong vảy"}
+{"id": "body_skin.dry-m", "vi": "da khô bong vảy"}
+{"id": "body_skin.farmertan-f", "vi": "tay cổ cháy nắng, thân trắng"}
+{"id": "body_skin.farmertan-m", "vi": "tay cổ cháy nắng, thân trắng"}
+{"id": "body_skin.forearmhair-f", "vi": "lông tay sẫm rõ"}
+{"id": "body_skin.fungal-f", "vi": "lang ben trên ngực lưng"}
+{"id": "body_skin.fungal-m", "vi": "lang ben trên ngực lưng"}
+{"id": "body_skin.greyhair-m", "vi": "lông ngực bạc lưa thưa"}
+{"id": "body_skin.hairless-f", "vi": "da trơn gần như không lông"}
+{"id": "body_skin.hairless-m", "vi": "người gần như không lông"}
+{"id": "body_skin.hairychest-m", "vi": "ngực bụng nhiều lông"}
+{"id": "body_skin.leathery-f", "vi": "da sạm dày vì nắng gió"}
+{"id": "body_skin.leathery-m", "vi": "da toàn thân sạm như da thuộc"}
+{"id": "body_skin.linea-f", "vi": "đường thâm dọc bụng"}
+{"id": "body_skin.loose-f", "vi": "da chùng sau giảm cân"}
+{"id": "body_skin.loose-m", "vi": "da chùng sau giảm cân"}
+{"id": "body_skin.normal-f", "vi": "da thân bình thường"}
+{"id": "body_skin.normal-m", "vi": "da thân bình thường, lông nhẹ"}
+{"id": "body_skin.pale-f", "vi": "da trắng xanh ít nắng"}
+{"id": "body_skin.pale-m", "vi": "da trắng xanh ít nắng"}
+{"id": "body_skin.psoriasis-m", "vi": "vảy nến từng mảng"}
+{"id": "body_skin.rash-m", "vi": "rôm sảy ở ngực cổ"}
+{"id": "body_skin.ruddy-f", "vi": "da đỏ loang, mao mạch vỡ"}
+{"id": "body_skin.ruddy-m", "vi": "da đỏ loang, mao mạch vỡ"}
+{"id": "body_skin.spots-f", "vi": "đồi mồi trên vai ngực"}
+{"id": "body_skin.spots-m", "vi": "đồi mồi trên vai lưng"}
+{"id": "body_skin.stretch-f", "vi": "rạn da bạc trên bụng hông"}
+{"id": "body_skin.stretch-m", "vi": "rạn da bụng và hông"}
+{"id": "body_skin.veins-f", "vi": "gân xanh lộ qua da ngực trắng"}
+{"id": "body_skin.veryhairy-m", "vi": "lông khắp người cả vai lưng"}
+{"id": "body_skin.vitiligo-f", "vi": "bạch biến từng mảng"}
+{"id": "body_skin.vitiligo-m", "vi": "bạch biến từng mảng"}
+{"id": "chest.athletic-f", "vi": "ngực nhỏ trên cơ ngực săn"}
+{"id": "chest.barrel-m", "vi": "ngực thùng, sâu"}
+{"id": "chest.bony-f", "vi": "ngực nhỏ trên khung sườn lộ"}
+{"id": "chest.bony-old-m", "vi": "ngực già trơ xương ức, xương sườn"}
+{"id": "chest.deflated-f", "vi": "ngực xẹp, da lép"}
+{"id": "chest.flat-f", "vi": "ngực gần như phẳng"}
+{"id": "chest.full-f", "vi": "ngực đầy, nặng"}
+{"id": "chest.gym-pecs-m", "vi": "cơ ngực vuông to do tập, rãnh sâu"}
+{"id": "chest.gyno-m", "vi": "núm vú sưng phồng trên ngực gầy"}
+{"id": "chest.implants-f", "vi": "ngực độn tròn, phần trên căng phồng"}
+{"id": "chest.labour-m", "vi": "ngực dày chắc do lao động"}
+{"id": "chest.low-set-f", "vi": "ngực nằm thấp"}
+{"id": "chest.moobs-m", "vi": "ngực mỡ xệ kiểu vú đàn ông"}
+{"id": "chest.muscular-m", "vi": "ngực rộng, có cơ"}
+{"id": "chest.narrow-m", "vi": "ngực hẹp, nông"}
+{"id": "chest.normal-f", "vi": "ngực nữ vừa phải"}
+{"id": "chest.normal-m", "vi": "ngực nam bình thường, phẳng"}
+{"id": "chest.normal-old-f", "vi": "ngực người già bình thường, mềm, thấp"}
+{"id": "chest.normal-old-m", "vi": "ngực người già bình thường, da hơi chùng"}
+{"id": "chest.old-implant-f", "vi": "ngực độn cũ trễ xuống"}
+{"id": "chest.overbuilt-m", "vi": "ngực cực to, vai nhỏ"}
+{"id": "chest.pendulous-f", "vi": "ngực già dài, chảy xệ"}
+{"id": "chest.pigeon-m", "vi": "ngực gà, xương ức nhô"}
+{"id": "chest.sagging-f", "vi": "ngực xệ sau nhiều năm cho con bú"}
+{"id": "chest.sagging-m", "vi": "ngực già chùng nhão"}
+{"id": "chest.slight-droop-f", "vi": "ngực hơi trễ"}
+{"id": "chest.small-f", "vi": "ngực nhỏ"}
+{"id": "chest.small-high-f", "vi": "ngực nhỏ, nằm cao"}
+{"id": "chest.soft-m", "vi": "ngực mềm nhiều thịt"}
+{"id": "chest.sunken-m", "vi": "ngực lõm, xương ức trũng"}
+{"id": "chest.thin-m", "vi": "ngực lép, lộ sườn"}
+{"id": "chest.tuberous-f", "vi": "ngực hình ống, đáy hẹp"}
+{"id": "chest.uneven-f", "vi": "một bên ngực to hơn rõ"}
+{"id": "chest.uneven-m", "vi": "ngực lệch một bên to hơn"}
+{"id": "chest.very-large-f", "vi": "ngực rất to, nặng"}
+{"id": "chest.wide-set-f", "vi": "ngực cách xa nhau"}
+{"id": "fat.bloated-m", "vi": "phù nề, nung núc"}
+{"id": "fat.chubby-m", "vi": "mũm mĩm"}
+{"id": "fat.emaciated-f", "vi": "gầy trơ xương"}
+{"id": "fat.emaciated-m", "vi": "gầy trơ xương"}
+{"id": "fat.gaunt-ill-f", "vi": "tiều tụy vì bệnh"}
+{"id": "fat.gaunt-ill-m", "vi": "tiều tụy vì bệnh"}
+{"id": "fat.lean-f", "vi": "gọn, săn, ít mỡ"}
+{"id": "fat.lean-m", "vi": "săn, ít mỡ"}
+{"id": "fat.loose-after-loss-f", "vi": "người xẹp, da chùng sau giảm cân lớn"}
+{"id": "fat.loose-after-loss-m", "vi": "người xẹp, da chùng sau giảm cân lớn"}
+{"id": "fat.normal-f", "vi": "cân nặng trung bình"}
+{"id": "fat.normal-m", "vi": "cân nặng trung bình"}
+{"id": "fat.obese-f", "vi": "béo phì"}
+{"id": "fat.obese-m", "vi": "béo phì"}
+{"id": "fat.overweight-f", "vi": "thừa cân, nặng eo hông"}
+{"id": "fat.overweight-m", "vi": "thừa cân, nặng phần giữa"}
+{"id": "fat.plump-f", "vi": "đẫy đà, tròn mềm"}
+{"id": "fat.skinnyfat-f", "vi": "tay chân thon, bụng mềm"}
+{"id": "fat.skinnyfat-m", "vi": "tay chân gầy, bụng mềm"}
+{"id": "fat.softish-m", "vi": "hơi mềm, dư chút cân"}
+{"id": "fat.stout-f", "vi": "chắc nịch, to nặng"}
+{"id": "fat.stout-m", "vi": "chắc nịch, to nặng"}
+{"id": "fat.thin-f", "vi": "gầy"}
+{"id": "fat.thin-m", "vi": "gầy"}
+{"id": "fat.very-obese-f", "vi": "béo phì nặng"}
+{"id": "fat.very-obese-m", "vi": "béo phì nặng"}
+{"id": "fat.very-thin-f", "vi": "rất gầy, lộ xương đòn, xương sườn"}
+{"id": "fat.very-thin-m", "vi": "rất gầy, lộ sườn"}
+{"id": "fat_where.apple-f", "vi": "mỡ dồn bụng, chân thon"}
+{"id": "fat_where.backroll-f", "vi": "ngấn mỡ lưng trên"}
+{"id": "fat_where.belly-m", "vi": "mỡ dồn bụng"}
+{"id": "fat_where.bust-f", "vi": "mỡ dồn ngực, thân trên"}
+{"id": "fat_where.buttocks-f", "vi": "mỡ dồn mông"}
+{"id": "fat_where.chest-m", "vi": "mỡ dồn ngực"}
+{"id": "fat_where.flanks-f", "vi": "ngấn mỡ hai bên eo"}
+{"id": "fat_where.flanks-m", "vi": "mỡ hai bên hông, bánh mì"}
+{"id": "fat_where.innerthigh-f", "vi": "đùi trong đầy, cọ vào nhau"}
+{"id": "fat_where.knees-f", "vi": "mỡ trên đầu gối"}
+{"id": "fat_where.knees-m", "vi": "mỡ quanh đầu gối"}
+{"id": "fat_where.lipedema-f", "vi": "chân to như cột, thân trên nhỏ"}
+{"id": "fat_where.lowback-m", "vi": "mỡ lưng dưới"}
+{"id": "fat_where.nape-m", "vi": "mỡ dồn gáy, lưng trên"}
+{"id": "fat_where.neck-f", "vi": "mỡ dưới cằm, cổ"}
+{"id": "fat_where.neck-face-m", "vi": "mỡ dồn cổ, nọng"}
+{"id": "fat_where.none-f", "vi": "gần như không có mỡ"}
+{"id": "fat_where.none-m", "vi": "không thấy mỡ chỗ nào"}
+{"id": "fat_where.normal-f", "vi": "mỡ phân bố đều"}
+{"id": "fat_where.normal-m", "vi": "mỡ phân bố đều"}
+{"id": "fat_where.pear-f", "vi": "mỡ dồn hông đùi"}
+{"id": "fat_where.pooch-f", "vi": "ngấn mỡ bụng dưới"}
+{"id": "fat_where.saddle-f", "vi": "mỡ đùi ngoài"}
+{"id": "fat_where.saghip-m", "vi": "mỡ chảy xuống dưới hông"}
+{"id": "fat_where.seat-m", "vi": "mỡ dồn mông đùi"}
+{"id": "fat_where.upperarm-f", "vi": "bắp tay trên nhiều mỡ"}
+{"id": "fat_where.visceral-m", "vi": "bụng tròn cứng, tay chân gầy"}
+{"id": "feet.broad-m", "vi": "bàn chân nam to bè"}
+{"id": "feet.bunion", "vi": "ngón cái vẹo vào trong, u xương"}
+{"id": "feet.calloused", "vi": "lòng bàn chân chai dày do đi chân đất"}
+{"id": "feet.cracked", "vi": "gót chân nứt nẻ sâu"}
+{"id": "feet.dirty", "vi": "bàn chân bụi bặm, kẽ ngón dính đất"}
+{"id": "feet.flat", "vi": "bàn chân bẹt, không vòm"}
+{"id": "feet.gnarled", "vi": "bàn chân già xương xẩu, móng dày"}
+{"id": "feet.hammer", "vi": "ngón chân quặp"}
+{"id": "feet.high-arch", "vi": "bàn chân vòm cao, xương"}
+{"id": "feet.large", "vi": "bàn chân to dài"}
+{"id": "feet.long-toe", "vi": "ngón trỏ dài hơn ngón cái"}
+{"id": "feet.normal", "vi": "bàn chân bình thường"}
+{"id": "feet.normal-f", "vi": "bàn chân nữ nhỏ thon có vòm"}
+{"id": "feet.small", "vi": "bàn chân nhỏ"}
+{"id": "feet.soft", "vi": "bàn chân trắng mềm không chai"}
+{"id": "feet.splayed", "vi": "ngón chân xòe rộng do quen đi chân đất"}
+{"id": "feet.swollen", "vi": "bàn chân sưng phù"}
+{"id": "feet.toenails", "vi": "móng chân dày vàng do nấm"}
+{"id": "feet.water-feet", "vi": "chân trắng nhăn vì ngâm nước"}
+{"id": "feet.wide-flat", "vi": "bàn chân bè phẳng, ngón xòe"}
+{"id": "frame.angular-f", "vi": "khung gầy góc cạnh"}
+{"id": "frame.angular-m", "vi": "khung gầy góc cạnh, khớp nhô"}
+{"id": "frame.barrel-m", "vi": "thân hình thùng phi"}
+{"id": "frame.broad-f", "vi": "khung to, xương thô"}
+{"id": "frame.broad-m", "vi": "khung to, xương thô"}
+{"id": "frame.narrow-f", "vi": "khung hẹp, thẳng đuột"}
+{"id": "frame.narrow-m", "vi": "khung hẹp, xương dài mảnh"}
+{"id": "frame.normal-f", "vi": "khung xương vừa"}
+{"id": "frame.normal-m", "vi": "khung xương vừa"}
+{"id": "frame.pear-f", "vi": "vai hẹp, xương chậu rộng"}
+{"id": "frame.pyramid-m", "vi": "vai hẹp hông rộng"}
+{"id": "frame.small-f", "vi": "khung nhỏ, xương mảnh"}
+{"id": "frame.small-m", "vi": "khung nhỏ, cổ tay mảnh"}
+{"id": "frame.stocky-m", "vi": "khung thấp, vuông, chắc"}
+{"id": "frame.sturdy-f", "vi": "khung thấp chắc nịch"}
+{"id": "frame.wedge-m", "vi": "vai rộng hông hẹp"}
+{"id": "frame.wideshoulder-f", "vi": "vai rộng hông hẹp"}
+{"id": "gait.armswing", "vi": "đi vung tay rộng"}
+{"id": "gait.bouncy", "vi": "bước nảy nhẹ"}
+{"id": "gait.brisk", "vi": "đi nhanh gọn"}
+{"id": "gait.cautious", "vi": "bước chậm dè dặt, chao đảo"}
+{"id": "gait.dragfoot", "vi": "đi hơi kéo lê một chân"}
+{"id": "gait.hardheel", "vi": "bước gót chắc nịch, dứt khoát"}
+{"id": "gait.heavy", "vi": "đi chậm, bước nặng"}
+{"id": "gait.hipsway-f", "vi": "đi lắc hông"}
+{"id": "gait.hurried-stoop", "vi": "đi vội, lom khom, đầu đi trước"}
+{"id": "gait.limp", "vi": "đi khập khiễng"}
+{"id": "gait.load-trot", "vi": "bước ngắn nhanh của người gánh hàng"}
+{"id": "gait.loping", "vi": "sải bước dài lòng thòng"}
+{"id": "gait.mincing-f", "vi": "bước nhỏ vội"}
+{"id": "gait.normal", "vi": "đi bình thường"}
+{"id": "gait.normal-old", "vi": "đi chậm rãi vững, bước ngắn hơn"}
+{"id": "gait.plod", "vi": "đi bệt chân, lì lợm"}
+{"id": "gait.rolling-sailor", "vi": "dáng đi lắc lư của người quen sông nước"}
+{"id": "gait.shuffle", "vi": "lê bước nhỏ, chân không nhấc"}
+{"id": "gait.stiffarms", "vi": "đi cứng, tay không vung"}
+{"id": "gait.swagger-m", "vi": "đi nghênh ngang, vai lắc"}
+{"id": "gait.toesin", "vi": "đi chân chụm mũi vào trong"}
+{"id": "gait.toesout", "vi": "đi chân chữ bát"}
+{"id": "gait.waddle", "vi": "đi lạch bạch lắc sang hai bên"}
+{"id": "hands.arthritic", "vi": "khớp ngón sưng, ngón cong vẹo"}
+{"id": "hands.bony-m", "vi": "tay to xương, gân guốc"}
+{"id": "hands.calloused", "vi": "lòng bàn tay chai dày"}
+{"id": "hands.clubbed", "vi": "đầu ngón tay dùi trống"}
+{"id": "hands.cracked", "vi": "da tay thô nứt nẻ"}
+{"id": "hands.crooked", "vi": "một ngón tay cong do gãy cũ"}
+{"id": "hands.delicate-f", "vi": "tay nhỏ thanh, ngón mảnh"}
+{"id": "hands.dupuytren", "vi": "ngón áp út co quắp vào lòng"}
+{"id": "hands.hairy-m", "vi": "lông ở mu tay, đốt ngón"}
+{"id": "hands.large", "vi": "bàn tay to"}
+{"id": "hands.long-fingers", "vi": "ngón tay dài mảnh"}
+{"id": "hands.normal-f", "vi": "tay nữ bình thường, nhỏ thon"}
+{"id": "hands.normal-m", "vi": "tay nam bình thường, lòng rộng"}
+{"id": "hands.normal-old", "vi": "bàn tay người già, da mỏng, lộ gân"}
+{"id": "hands.old-thin", "vi": "tay già gầy, da nhăn chùng"}
+{"id": "hands.plump", "vi": "bàn tay mập mềm có lúm"}
+{"id": "hands.red-chapped", "vi": "tay đỏ nứt nẻ"}
+{"id": "hands.sausage", "vi": "ngón tay to múp"}
+{"id": "hands.small", "vi": "bàn tay nhỏ"}
+{"id": "hands.soft-smooth", "vi": "tay mềm mịn không chai"}
+{"id": "hands.spots", "vi": "đồi mồi mu bàn tay"}
+{"id": "hands.square-m", "vi": "bàn tay vuông rộng của người lao động"}
+{"id": "hands.stained", "vi": "tay ám màu do công việc"}
+{"id": "hands.stubby", "vi": "ngón tay ngắn mập"}
+{"id": "hands.tense", "vi": "tay gồng cứng, ngón căng"}
+{"id": "hands.veiny", "vi": "gân xanh nổi mu bàn tay"}
+{"id": "hands.waterlogged", "vi": "tay trắng nhăn vì ngâm nước"}
+{"id": "height.dwarf-f", "vi": "nữ lùn bẩm sinh"}
+{"id": "height.dwarf-m", "vi": "nam lùn bẩm sinh, tay chân ngắn"}
+{"id": "height.gangly-m", "vi": "thanh niên cao gầy chưa đầy đặn"}
+{"id": "height.normal-f", "vi": "nữ cao trung bình"}
+{"id": "height.normal-m", "vi": "nam cao trung bình"}
+{"id": "height.short-f", "vi": "nữ thấp"}
+{"id": "height.short-m", "vi": "nam thấp"}
+{"id": "height.shrunken-f", "vi": "bà cụ teo lùn"}
+{"id": "height.shrunken-m", "vi": "ông già teo lùn đi"}
+{"id": "height.tall-f", "vi": "nữ cao"}
+{"id": "height.tall-m", "vi": "đàn ông cao, cao hơn phần lớn đàn ông"}
+{"id": "height.very-short-f", "vi": "nữ rất thấp, nhỏ xíu"}
+{"id": "height.very-short-m", "vi": "nam rất thấp, nhỏ con"}
+{"id": "height.very-tall-f", "vi": "nữ rất cao, ngang đàn ông cao"}
+{"id": "height.very-tall-m", "vi": "đàn ông rất cao, lêu nghêu, vượt hẳn mọi người"}
+{"id": "hips.augmented-f", "vi": "mông nâng độn tròn"}
+{"id": "hips.bony-m", "vi": "hông xương, lộ mấu"}
+{"id": "hips.bony-old-f", "vi": "hông già gầy xương"}
+{"id": "hips.bony-old-m", "vi": "hông già gầy xương"}
+{"id": "hips.diamond-f", "vi": "đệm mỡ hình thoi trên mông"}
+{"id": "hips.dimples-f", "vi": "lúm đồng tiền trên mông"}
+{"id": "hips.dimples-m", "vi": "lúm đồng tiền trên mông"}
+{"id": "hips.dips-f", "vi": "hông lõm dưới xương chậu"}
+{"id": "hips.flat-f", "vi": "mông lép"}
+{"id": "hips.flat-m", "vi": "mông lép, hông hẹp"}
+{"id": "hips.heavy-m", "vi": "hông mông to nặng"}
+{"id": "hips.large-f", "vi": "mông to nặng"}
+{"id": "hips.muscular-m", "vi": "mông chắc có cơ"}
+{"id": "hips.narrow-f", "vi": "hông hẹp kiểu con trai"}
+{"id": "hips.normal-f", "vi": "hông vừa, mông tròn"}
+{"id": "hips.normal-m", "vi": "hông nam hẹp bình thường"}
+{"id": "hips.normal-old-f", "vi": "hông vừa, mông người già phẳng mềm hơn"}
+{"id": "hips.normal-old-m", "vi": "hông nam hẹp, mông người già phẳng hơn"}
+{"id": "hips.overhang-m", "vi": "mỡ hông tràn qua xương chậu"}
+{"id": "hips.pear-m", "vi": "thân dưới mềm hình quả lê"}
+{"id": "hips.round-f", "vi": "mông tròn đầy"}
+{"id": "hips.saddle-f", "vi": "hông và đùi ngoài phình"}
+{"id": "hips.sagging-f", "vi": "mông chảy xệ"}
+{"id": "hips.sagging-m", "vi": "mông già lép chảy"}
+{"id": "hips.shelf-f", "vi": "mông cong cao"}
+{"id": "hips.thighheavy-m", "vi": "xương chậu rộng, đùi to"}
+{"id": "hips.tight-m", "vi": "mông nhỏ gọn, nằm cao"}
+{"id": "hips.uneven-f", "vi": "hông lệch, một bên cao"}
+{"id": "hips.uneven-m", "vi": "hông lệch, một bên cao"}
+{"id": "hips.very-wide-f", "vi": "hông rất rộng, đùi nặng"}
+{"id": "hips.wide-f", "vi": "hông rộng"}
+{"id": "hips.wide-m", "vi": "hông rộng so với nam"}
+{"id": "legs.athletic-f", "vi": "đùi bắp chân thể thao có cơ"}
+{"id": "legs.bow-f", "vi": "chân vòng kiềng"}
+{"id": "legs.bow-m", "vi": "chân vòng kiềng"}
+{"id": "legs.calves-f", "vi": "bắp chân to chắc"}
+{"id": "legs.calves-m", "vi": "bắp chân to cứng do đi bộ, gánh vác"}
+{"id": "legs.cankles-f", "vi": "cổ chân to, không thon"}
+{"id": "legs.chicken-m", "vi": "chân gầy dưới thân trên nặng"}
+{"id": "legs.cyclist-m", "vi": "chân gân guốc của người đạp xích lô"}
+{"id": "legs.fatknees-f", "vi": "đầu gối mờ vì mỡ"}
+{"id": "legs.hairless-m", "vi": "chân nhẵn gần như không lông"}
+{"id": "legs.hairy-f", "vi": "ống chân có lông sẫm"}
+{"id": "legs.hairy-m", "vi": "chân nhiều lông sẫm"}
+{"id": "legs.heavy-f", "vi": "chân to như cột"}
+{"id": "legs.heavy-m", "vi": "đùi to nhiều thịt"}
+{"id": "legs.knobbly-f", "vi": "chân già gầy, gối lồi"}
+{"id": "legs.knobbly-m", "vi": "chân già gầy, gối lồi"}
+{"id": "legs.knock-f", "vi": "chân chữ X"}
+{"id": "legs.knock-m", "vi": "chân chữ X"}
+{"id": "legs.long-f", "vi": "chân dài thon"}
+{"id": "legs.long-m", "vi": "chân dài"}
+{"id": "legs.normal-f", "vi": "chân nữ bình thường, đùi hơi mềm"}
+{"id": "legs.normal-m", "vi": "chân nam thẳng bình thường"}
+{"id": "legs.normal-old-f", "vi": "chân người già bình thường, đùi mềm, bắp chân gầy"}
+{"id": "legs.normal-old-m", "vi": "chân người già bình thường, bắp chân gầy hơn"}
+{"id": "legs.short-f", "vi": "chân ngắn, đùi to"}
+{"id": "legs.short-m", "vi": "chân ngắn, thân dài"}
+{"id": "legs.skinny-m", "vi": "chân gầy, bắp nhỏ"}
+{"id": "legs.spider-f", "vi": "mạch máu li ti trên đùi"}
+{"id": "legs.swollen-f", "vi": "mắt cá sưng phù"}
+{"id": "legs.swollen-m", "vi": "mắt cá sưng phù"}
+{"id": "legs.thighs-m", "vi": "đùi to có cơ"}
+{"id": "legs.thighs-touch-f", "vi": "đùi đầy chạm nhau"}
+{"id": "legs.thin-f", "vi": "chân gầy thẳng, đùi hở"}
+{"id": "legs.varicose-f", "vi": "giãn tĩnh mạch nổi ở bắp chân"}
+{"id": "legs.varicose-m", "vi": "giãn tĩnh mạch nổi ở bắp chân"}
+{"id": "legs.wasted-m", "vi": "một chân teo nhỏ"}
+{"id": "muscle.athletic-f", "vi": "vóc nữ thể thao, khỏe"}
+{"id": "muscle.athletic-m", "vi": "vóc thể thao, có cơ"}
+{"id": "muscle.bodybuilder-f", "vi": "nữ thể hình cơ to"}
+{"id": "muscle.bodybuilder-m", "vi": "cơ cực to kiểu thể hình"}
+{"id": "muscle.dancer-f", "vi": "cơ dài mảnh kiểu múa"}
+{"id": "muscle.farm-strong-f", "vi": "người chắc khỏe do làm đồng"}
+{"id": "muscle.gone-soft-f", "vi": "từng khỏe nay đã mềm"}
+{"id": "muscle.gone-soft-m", "vi": "vóc từng tập nay đã mềm"}
+{"id": "muscle.gym-bulky-m", "vi": "cơ ngực tay to do tập gym"}
+{"id": "muscle.gym-muscular-f", "vi": "nữ tập gym, cơ rõ"}
+{"id": "muscle.normal-f", "vi": "cơ bình thường, mềm"}
+{"id": "muscle.normal-m", "vi": "cơ bình thường, không tập"}
+{"id": "muscle.normal-old-f", "vi": "cơ người già bình thường, hơi nhão"}
+{"id": "muscle.normal-old-m", "vi": "cơ người già bình thường, hơi nhão"}
+{"id": "muscle.old-strong-f", "vi": "già mà vẫn gân guốc dẻo dai"}
+{"id": "muscle.old-strong-m", "vi": "già mà cơ vẫn cứng, gân guốc"}
+{"id": "muscle.onesided-m", "vi": "một bên tay vai to hơn do làm lặp"}
+{"id": "muscle.overbuilt-m", "vi": "cơ quá nét, kiểu dùng thuốc"}
+{"id": "muscle.padded-strong-m", "vi": "khỏe nhưng phủ mỡ"}
+{"id": "muscle.powerlifter-m", "vi": "to khỏe, bụng chắc"}
+{"id": "muscle.ropy-labour-m", "vi": "cơ cứng như thừng do lao động"}
+{"id": "muscle.runner-m", "vi": "vóc chạy bộ, thân trên mảnh"}
+{"id": "muscle.slack-f", "vi": "cơ teo nhão"}
+{"id": "muscle.slack-m", "vi": "cơ teo nhão"}
+{"id": "muscle.slight-f", "vi": "mảnh, gần như không thấy cơ"}
+{"id": "muscle.soft-f", "vi": "người mềm, không thấy cơ"}
+{"id": "muscle.soft-m", "vi": "người mềm, không thấy cơ"}
+{"id": "muscle.strong-legs-f", "vi": "đùi bắp chân khỏe, tay mềm"}
+{"id": "muscle.swimmer-m", "vi": "lưng vai rộng kiểu bơi lội"}
+{"id": "muscle.thick-labour-m", "vi": "cơ dày do làm nặng, không nét"}
+{"id": "muscle.toned-f", "vi": "cơ săn, đường cơ mờ"}
+{"id": "muscle.toned-m", "vi": "cơ săn, thấy nhẹ đường cơ"}
+{"id": "muscle.wiry-f", "vi": "gầy mà gân guốc, dẻo dai"}
+{"id": "muscle.wiry-m", "vi": "cơ dẻo dai, gân guốc"}
+{"id": "nails.bitten", "vi": "móng cắn trụi, mép nham nhở"}
+{"id": "nails.black", "vi": "một móng bầm đen"}
+{"id": "nails.broken", "vi": "móng mẻ gãy"}
+{"id": "nails.cuticles", "vi": "da quanh móng xước tưa"}
+{"id": "nails.dirty", "vi": "móng ngắn có đất bẩn"}
+{"id": "nails.long-uncut", "vi": "móng dài không cắt"}
+{"id": "nails.nicotine", "vi": "đầu ngón, móng ám vàng thuốc lá"}
+{"id": "nails.normal", "vi": "móng ngắn sạch"}
+{"id": "nails.pale", "vi": "móng nhợt tái xanh"}
+{"id": "nails.pinky-m", "vi": "để móng út dài"}
+{"id": "nails.ridged", "vi": "móng có gờ, giòn"}
+{"id": "nails.shaped-f", "vi": "móng để hơi dài, dũa gọn"}
+{"id": "nails.spoon", "vi": "móng mỏng lõm hình thìa"}
+{"id": "nails.stained-betel-f", "vi": "đầu ngón ám đỏ trầu"}
+{"id": "nails.thick-yellow", "vi": "móng dày ố vàng"}
+{"id": "nails.trimmed", "vi": "móng cắt gọn, đánh bóng"}
+{"id": "posture.armscrossed", "vi": "hay khoanh tay, ngả ra sau"}
+{"id": "posture.bellyfwd", "vi": "ngả người ra sau, bụng đẩy tới"}
+{"id": "posture.chestout-m", "vi": "ưỡn ngực, hếch cằm"}
+{"id": "posture.desk-hunch", "vi": "lưng trên gù do ngồi bàn"}
+{"id": "posture.handsonhips", "vi": "đứng chống nạnh"}
+{"id": "posture.headforward", "vi": "đầu chồm ra trước vai"}
+{"id": "posture.heels", "vi": "đứng sụm, dồn trọng lượng về gót"}
+{"id": "posture.hipcocked-f", "vi": "đứng lệch hông"}
+{"id": "posture.labour-bent", "vi": "dáng cúi lom khom do làm đồng"}
+{"id": "posture.listing", "vi": "người nghiêng lệch một bên"}
+{"id": "posture.neck-lifted-f", "vi": "thẳng người, cổ vươn, cằm ngang"}
+{"id": "posture.normal", "vi": "đứng thẳng thoải mái bình thường"}
+{"id": "posture.normal-old", "vi": "dáng đứng người già bình thường, hơi đổ về trước"}
+{"id": "posture.oneleg", "vi": "đứng dồn trọng lượng một chân"}
+{"id": "posture.planted-m", "vi": "đứng chân rộng, vững như cọc"}
+{"id": "posture.raised-shoulders", "vi": "đứng căng, vai nhô"}
+{"id": "posture.rigid", "vi": "đứng thẳng cứng kiểu nhà binh"}
+{"id": "posture.shouldersfwd", "vi": "vai thõng về trước, dáng uể oải"}
+{"id": "posture.shrinking", "vi": "thu vai, thu người nhỏ lại"}
+{"id": "posture.slouched", "vi": "đứng khom, ngực thụt"}
+{"id": "posture.square-child-like", "vi": "đứng vuông vức, hai chân khép"}
+{"id": "posture.stooped-old", "vi": "dáng còng của người già, gối khuỵu"}
+{"id": "posture.upright", "vi": "đứng thẳng, sống lưng vươn"}
+{"id": "posture.weary", "vi": "dáng mệt rã, vai nặng, đầu cúi"}
+{"id": "shoulders.blades-f", "vi": "xương bả vai lộ rõ"}
+{"id": "shoulders.bony-f", "vi": "vai xương, xương đòn sắc"}
+{"id": "shoulders.bony-m", "vi": "vai xương, xương đòn nhô"}
+{"id": "shoulders.broad-f", "vi": "vai rộng so với nữ"}
+{"id": "shoulders.broad-m", "vi": "vai rộng"}
+{"id": "shoulders.delts-m", "vi": "vai tròn cơ delta do tập"}
+{"id": "shoulders.drooping-f", "vi": "vai già teo, rũ xuống"}
+{"id": "shoulders.drooping-m", "vi": "vai già teo, rũ xuống"}
+{"id": "shoulders.fleshy-f", "vi": "vai tròn đầy thịt"}
+{"id": "shoulders.fleshy-m", "vi": "vai tròn nhiều thịt"}
+{"id": "shoulders.load-f", "vi": "vai chắc tròn do gánh gồng"}
+{"id": "shoulders.narrow-f", "vi": "vai rất hẹp"}
+{"id": "shoulders.narrow-m", "vi": "vai hẹp"}
+{"id": "shoulders.normal-f", "vi": "vai nữ bình thường, hẹp"}
+{"id": "shoulders.normal-m", "vi": "vai nam bình thường"}
+{"id": "shoulders.normal-old-f", "vi": "vai người già bình thường, hẹp, xuôi"}
+{"id": "shoulders.normal-old-m", "vi": "vai người già bình thường, hơi hẹp và xuôi"}
+{"id": "shoulders.pole-m", "vi": "vai chai dày do gánh vác"}
+{"id": "shoulders.raised-f", "vi": "vai rụt lên căng thẳng"}
+{"id": "shoulders.raised-m", "vi": "vai nhô lên căng thẳng"}
+{"id": "shoulders.rounded-f", "vi": "vai tròn, đổ về trước"}
+{"id": "shoulders.rounded-m", "vi": "vai tròn, đổ về trước"}
+{"id": "shoulders.sloping-f", "vi": "vai xuôi mềm"}
+{"id": "shoulders.sloping-m", "vi": "vai xuôi"}
+{"id": "shoulders.square-f", "vi": "vai ngang thẳng"}
+{"id": "shoulders.square-m", "vi": "vai ngang vuông"}
+{"id": "shoulders.swimmer-f", "vi": "vai thể thao, thấy cơ"}
+{"id": "shoulders.traps-m", "vi": "cơ thang dày, cổ lút giữa vai"}
+{"id": "shoulders.uneven-f", "vi": "vai lệch"}
+{"id": "shoulders.uneven-m", "vi": "vai lệch"}
+{"id": "shoulders.very-broad-m", "vi": "vai cực rộng, đầu trông nhỏ"}
+{"id": "shoulders.winged-m", "vi": "xương bả vai nhô ra"}
+{"id": "waist_belly.abs-f", "vi": "nữ thấy rõ cơ bụng"}
+{"id": "waist_belly.apple-f", "vi": "bụng tròn hình quả táo"}
+{"id": "waist_belly.apron-f", "vi": "ngấn bụng xệ thành vạt"}
+{"id": "waist_belly.beer-m", "vi": "bụng bia tròn cứng"}
+{"id": "waist_belly.diastasis-f", "vi": "bụng phình giữa do tách cơ sau sinh"}
+{"id": "waist_belly.gut-m", "vi": "bụng to xệ qua hông"}
+{"id": "waist_belly.hernia-f", "vi": "lồi rốn"}
+{"id": "waist_belly.hernia-m", "vi": "lồi rốn"}
+{"id": "waist_belly.hollow-f", "vi": "bụng lõm, xương hông nhô"}
+{"id": "waist_belly.hollow-m", "vi": "bụng lép hõm"}
+{"id": "waist_belly.lean-flat-m", "vi": "bụng phẳng săn, thấy mờ cơ"}
+{"id": "waist_belly.loose-f", "vi": "da bụng nhăn nheo mềm"}
+{"id": "waist_belly.loose-m", "vi": "da bụng chùng nhăn"}
+{"id": "waist_belly.loves-m", "vi": "mỡ hông bánh mì"}
+{"id": "waist_belly.lownavel-f", "vi": "rốn thấp trên bụng nặng"}
+{"id": "waist_belly.muffin-f", "vi": "ngấn mỡ trên hông"}
+{"id": "waist_belly.narrow-f", "vi": "eo thon rõ"}
+{"id": "waist_belly.normal-f", "vi": "eo tự nhiên, bụng hơi tròn"}
+{"id": "waist_belly.normal-m", "vi": "eo bụng nam bình thường"}
+{"id": "waist_belly.normal-old-f", "vi": "eo người già dày ra, bụng hơi tròn"}
+{"id": "waist_belly.normal-old-m", "vi": "eo bụng người già bình thường, bụng hơi mềm"}
+{"id": "waist_belly.pooch-f", "vi": "bụng dưới chùng sau sinh"}
+{"id": "waist_belly.pot-thin-m", "vi": "bụng phệ trên người gầy"}
+{"id": "waist_belly.rolls-f", "vi": "bụng nhiều ngấn"}
+{"id": "waist_belly.rolls-m", "vi": "bụng gấp thành ngấn"}
+{"id": "waist_belly.sixpack-m", "vi": "bụng sáu múi rõ"}
+{"id": "waist_belly.soft-f", "vi": "bụng dưới tròn mềm"}
+{"id": "waist_belly.soft-m", "vi": "bụng mềm xệ qua cạp"}
+{"id": "waist_belly.straight-f", "vi": "eo thẳng, ít cong"}
+{"id": "waist_belly.thick-m", "vi": "eo dày thẳng, không thon"}
+{"id": "waist_belly.thick-meno-f", "vi": "eo dày lên, gần bằng hông"}
+{"id": "waist_belly.toned-f", "vi": "bụng phẳng săn, đường giữa mờ"}
+{"id": "waist_belly.twopack-m", "vi": "cơ bụng mờ, lệch không đều"}
+{"id": "waist_belly.vtaper-m", "vi": "eo hẹp dưới lưng rộng"}
+{"id": "head", "vi": "Hình đầu"}
+{"id": "head.normal", "vi": "đầu tròn cân đối với thân"}
+{"id": "head.flatback", "vi": "đầu bẹt sau gáy"}
+{"id": "head.broad", "vi": "đầu to bề ngang, tròn ngắn"}
+{"id": "head.long", "vi": "đầu dài và hẹp"}
+{"id": "head.large", "vi": "đầu to so với thân"}
+{"id": "head.small", "vi": "đầu nhỏ so với thân"}
+{"id": "head.domed", "vi": "đỉnh đầu cao vồng"}
+{"id": "head.pointed", "vi": "đỉnh đầu nhọn"}
+{"id": "head.flattop", "vi": "đỉnh đầu bằng, vuông"}
+{"id": "head.lumpy", "vi": "hộp sọ lồi lõm không đều"}
+{"id": "head.ball", "vi": "đầu tròn như quả bóng"}
+{"id": "head.egg", "vi": "đầu hình quả trứng, hẹp phía trên"}
+{"id": "head.occiput", "vi": "u xương nhô sau gáy"}
+{"id": "head.sideflat", "vi": "đầu méo bẹt một bên"}
+{"id": "face_shape", "vi": "Khung mặt"}
+{"id": "face_shape.normal-m", "vi": "mặt trái xoan, rộng ở gò má"}
+{"id": "face_shape.normal-mid-m", "vi": "mặt rộng, vuông và đầy hơn phía dưới"}
+{"id": "face_shape.normal-old-m", "vi": "mặt già, thái dương hóp, đường hàm chùng"}
+{"id": "face_shape.normal-f", "vi": "mặt trái xoan mềm, rộng ở gò má"}
+{"id": "face_shape.normal-mid-f", "vi": "mặt rộng mềm, đầy ở hàm"}
+{"id": "face_shape.normal-old-f", "vi": "mặt già, thái dương hóp, đường hàm mềm đi"}
+{"id": "face_shape.round", "vi": "mặt tròn"}
+{"id": "face_shape.square-m", "vi": "mặt vuông, hàm rộng thẳng"}
+{"id": "face_shape.rect-m", "vi": "mặt chữ điền"}
+{"id": "face_shape.long", "vi": "mặt dài, hẹp"}
+{"id": "face_shape.heart", "vi": "mặt trái tim, trán rộng cằm nhọn"}
+{"id": "face_shape.diamond", "vi": "mặt kim cương, gò má rộng, trán và cằm hẹp"}
+{"id": "face_shape.flatbroad", "vi": "mặt bánh đúc, phẳng rộng, nét dồn vào giữa"}
+{"id": "face_shape.plough-m", "vi": "mặt lưỡi cày"}
+{"id": "face_shape.pear", "vi": "mặt tam giác, hàm rộng hơn trán"}
+{"id": "face_shape.moon", "vi": "mặt tròn phị"}
+{"id": "face_shape.gaunt", "vi": "mặt hốc hác, da bọc xương"}
+{"id": "face_shape.angular", "vi": "mặt góc cạnh, xương xẩu"}
+{"id": "face_shape.wideshort", "vi": "mặt ngắn bè ngang"}
+{"id": "face_shape.small", "vi": "mặt nhỏ so với đầu"}
+{"id": "face_shape.concave", "vi": "mặt lõm giữa, cằm đưa ra"}
+{"id": "face_shape.longmid", "vi": "tầng giữa mặt dài"}
+{"id": "face_shape.heavy", "vi": "mặt nặng, nhiều thịt, nét dày"}
+{"id": "face_shape.babyface", "vi": "mặt trẻ con, nét nhỏ, má tròn"}
+{"id": "face_shape.square-f", "vi": "mặt vuông, hàm mạnh"}
+{"id": "face_shape.oval-narrow-f", "vi": "mặt trái xoan thon, cằm nhọn"}
+{"id": "face_shape.melon-f", "vi": "mặt hạt dưa, má đầy, cằm nhỏ"}
+{"id": "face_shape.rect-f", "vi": "mặt chữ nhật dài, hai bên thẳng"}
+{"id": "face_shape.deflated", "vi": "mặt xẹp, thái dương và má hóp"}
+{"id": "face_shape.sagging", "vi": "mặt chảy xệ nặng, hai bên hàm sa xuống"}
+{"id": "forehead", "vi": "Trán"}
+{"id": "forehead.normal-m", "vi": "trán cao vừa, hơi dốc"}
+{"id": "forehead.normal-f", "vi": "trán tròn, cao vừa"}
+{"id": "forehead.high", "vi": "trán cao rộng"}
+{"id": "forehead.low", "vi": "trán thấp hẹp, tóc sát mày"}
+{"id": "forehead.bulging", "vi": "trán dô"}
+{"id": "forehead.sloping-m", "vi": "trán lẹm, dốc ra sau"}
+{"id": "forehead.flat", "vi": "trán phẳng đứng"}
+{"id": "forehead.browridge-m", "vi": "gờ mày dày che bóng mắt"}
+{"id": "forehead.browridge-f", "vi": "gờ mày rõ"}
+{"id": "forehead.bossing", "vi": "trán có hai u nhô"}
+{"id": "forehead.wide", "vi": "trán rất rộng, hẹp dần ở thái dương"}
+{"id": "forehead.narrow", "vi": "trán hẹp"}
+{"id": "forehead.temples", "vi": "thái dương hóp"}
+{"id": "forehead.veins", "vi": "gân xanh nổi ở thái dương"}
+{"id": "forehead.tilted", "vi": "trán ngả ra sau trên gờ mày"}
+{"id": "forehead.dent", "vi": "vết lõm trên xương trán"}
+{"id": "forehead.tall-f", "vi": "trán rất cao, chân tóc lùi xa"}
+{"id": "forehead.smooth-f", "vi": "trán phẳng mịn, không dô"}
+{"id": "brows", "vi": "Lông mày"}
+{"id": "brows.normal-m", "vi": "lông mày thẳng, đậm vừa"}
+{"id": "brows.normal-old-m", "vi": "lông mày bạc dần, vài sợi dài"}
+{"id": "brows.normal-f", "vi": "lông mày mảnh tự nhiên, hơi cong"}
+{"id": "brows.normal-old-f", "vi": "lông mày thưa nhạt, đuôi thưa"}
+{"id": "brows.bushy", "vi": "lông mày rậm"}
+{"id": "brows.sparse", "vi": "lông mày rất thưa nhạt"}
+{"id": "brows.unibrow", "vi": "lông mày giao nhau"}
+{"id": "brows.short", "vi": "lông mày ngắn"}
+{"id": "brows.long", "vi": "lông mày dài quá đuôi mắt"}
+{"id": "brows.arched", "vi": "lông mày cong cao"}
+{"id": "brows.flat", "vi": "lông mày ngang, không cong"}
+{"id": "brows.upslant", "vi": "lông mày xếch"}
+{"id": "brows.droop", "vi": "lông mày rủ đuôi"}
+{"id": "brows.uneven", "vi": "lông mày lệch, một bên cao"}
+{"id": "brows.tailless", "vi": "mất đuôi lông mày"}
+{"id": "brows.wiry-old-m", "vi": "lông mày bạc dài lởm chởm"}
+{"id": "brows.overhang", "vi": "lông mày sụp che mí"}
+{"id": "brows.gap", "vi": "lông mày có vệt sẹo không mọc lông"}
+{"id": "brows.pale", "vi": "lông mày nhạt gần như màu da"}
+{"id": "brows.lowset", "vi": "lông mày thấp, sát mắt"}
+{"id": "brows.highset", "vi": "lông mày cao, xa mắt"}
+{"id": "brows.inked-f", "vi": "lông mày phun xăm đậm"}
+{"id": "brows.plucked-f", "vi": "lông mày nhổ mảnh như nét chì"}
+{"id": "brows.thick-f", "vi": "lông mày ngang dày đậm"}
+{"id": "eyes", "vi": "Mắt"}
+{"id": "eyes.normal", "vi": "mắt nâu sẫm hình hạnh nhân, nếp mí thấp"}
+{"id": "eyes.normal-old", "vi": "mắt sẫm, mí trên nặng và chùng"}
+{"id": "eyes.monolid", "vi": "mắt một mí"}
+{"id": "eyes.innerfold", "vi": "khóe mắt trong bị nếp da che"}
+{"id": "eyes.double", "vi": "mắt hai mí rõ"}
+{"id": "eyes.small", "vi": "mắt nhỏ, híp"}
+{"id": "eyes.large", "vi": "mắt to tròn"}
+{"id": "eyes.wideset", "vi": "mắt xa nhau"}
+{"id": "eyes.closeset", "vi": "mắt gần nhau, sát sống mũi"}
+{"id": "eyes.deepset", "vi": "mắt sâu dưới gờ mày"}
+{"id": "eyes.bulging", "vi": "mắt lồi, lộ lòng trắng phía dưới"}
+{"id": "eyes.upturned", "vi": "mắt xếch"}
+{"id": "eyes.downturned", "vi": "mắt rủ đuôi"}
+{"id": "eyes.puffylid", "vi": "mí trên mọng, mắt híp"}
+{"id": "eyes.hooded", "vi": "mí trùm che nếp mí"}
+{"id": "eyes.ptosis", "vi": "mí sụp che nửa mắt"}
+{"id": "eyes.onesmall", "vi": "một mắt nhỏ hơn mắt kia"}
+{"id": "eyes.cross", "vi": "mắt lé trong"}
+{"id": "eyes.wall", "vi": "mắt lé ngoài"}
+{"id": "eyes.cataract", "vi": "một mắt đục trắng"}
+{"id": "eyes.arcus", "vi": "vòng cung xám nhạt quanh tròng đen"}
+{"id": "eyes.bloodshot", "vi": "lòng trắng đỏ ngầu, ngả vàng"}
+{"id": "eyes.squint", "vi": "mắt luôn nheo, nhìn dò"}
+{"id": "eyes.lightbrown", "vi": "mắt nâu nhạt màu hổ phách"}
+{"id": "eyes.blackeyes", "vi": "mắt đen láy, tròng và con ngươi lẫn vào nhau"}
+{"id": "eyes.lashes-long", "vi": "lông mi dài dày"}
+{"id": "eyes.lashes-sparse", "vi": "lông mi ngắn thưa"}
+{"id": "eyes.blue", "vi": "mắt xanh dương nhạt"}
+{"id": "eyes.greygreen", "vi": "mắt xanh xám"}
+{"id": "eyes.hazel", "vi": "mắt màu nâu lục"}
+{"id": "eyes.eu-normal", "vi": "mắt nâu, nếp mí sâu rõ"}
+{"id": "eyes.af-normal", "vi": "mắt nâu sẫm, nếp mí rõ"}
+{"id": "under_eye", "vi": "Dưới mắt"}
+{"id": "under_eye.normal-y", "vi": "vùng dưới mắt phẳng mịn"}
+{"id": "under_eye.normal-a", "vi": "quầng nhạt dưới mắt"}
+{"id": "under_eye.normal-m", "vi": "bọng nhẹ dưới mắt"}
+{"id": "under_eye.normal-e", "vi": "bọng mềm và nếp nhăn nhỏ dưới mắt"}
+{"id": "under_eye.dark", "vi": "quầng thâm dưới mắt"}
+{"id": "under_eye.bags", "vi": "bọng mắt nặng"}
+{"id": "under_eye.hollow", "vi": "rãnh lệ sâu dưới mắt"}
+{"id": "under_eye.crepey", "vi": "mí dưới nhăn nheo li ti"}
+{"id": "under_eye.fatpads", "vi": "túi mỡ phồng dưới mí dưới"}
+{"id": "under_eye.purple", "vi": "quầng tím xám quanh mắt"}
+{"id": "under_eye.swollen", "vi": "mí dưới sưng húp"}
+{"id": "under_eye.nasojugal", "vi": "nếp hằn từ khóe mắt trong xuống má"}
+{"id": "under_eye.eyebulge", "vi": "bọng thịt nhỏ dưới mi dưới"}
+{"id": "under_eye.xanthelasma", "vi": "mảng vàng nhỏ gần khóe mắt trong"}
+{"id": "under_eye.pigmented", "vi": "da quanh mắt sạm nâu"}
+{"id": "under_eye.droopylid", "vi": "mí dưới trễ, lộ viền đỏ"}
+{"id": "under_eye.sunken", "vi": "mắt trũng sâu trong hốc thâm"}
+{"id": "under_eye.festoons", "vi": "bọng phồng trên gò má dưới mắt"}
+{"id": "nose", "vi": "Mũi"}
+{"id": "nose.normal", "vi": "sống mũi thấp, đầu mũi tròn mềm"}
+{"id": "nose.flat", "vi": "mũi tẹt, cánh mũi rộng"}
+{"id": "nose.highbridge", "vi": "sống mũi cao thẳng"}
+{"id": "nose.hooked", "vi": "mũi khoằm"}
+{"id": "nose.bump", "vi": "mũi gồ"}
+{"id": "nose.crooked", "vi": "mũi gãy lệch một bên"}
+{"id": "nose.bulbous", "vi": "đầu mũi to tròn nhiều thịt"}
+{"id": "nose.rednose", "vi": "mũi to đỏ, lỗ chân lông to"}
+{"id": "nose.button", "vi": "mũi nhỏ như cúc áo"}
+{"id": "nose.upturned", "vi": "mũi hếch"}
+{"id": "nose.droop", "vi": "đầu mũi dài rủ xuống"}
+{"id": "nose.pinched", "vi": "mũi hẹp, cánh mũi mỏng"}
+{"id": "nose.flaring", "vi": "cánh mũi bè, phập phồng"}
+{"id": "nose.large", "vi": "mũi to so với mặt"}
+{"id": "nose.small", "vi": "mũi nhỏ ngắn"}
+{"id": "nose.squashed", "vi": "mũi bẹp dí"}
+{"id": "nose.pointed", "vi": "đầu mũi nhọn"}
+{"id": "nose.uneven", "vi": "lỗ mũi không đều"}
+{"id": "nose.pores", "vi": "mũi bóng, lỗ chân lông to"}
+{"id": "nose.long", "vi": "mũi dài thẳng"}
+{"id": "nose.saddle", "vi": "sống mũi lõm hình yên ngựa"}
+{"id": "nose.eu-normal", "vi": "mũi hẹp, sống mũi cao thẳng"}
+{"id": "nose.af-normal", "vi": "mũi rộng, sống mũi thấp rộng"}
+{"id": "cheeks", "vi": "Gò má, má"}
+{"id": "cheeks.normal-y", "vi": "má đầy đặn, gò má rộng"}
+{"id": "cheeks.normal-m", "vi": "má phẳng hơn, đầy phía dưới gò"}
+{"id": "cheeks.normal-e", "vi": "má xẹp, hơi hóp dưới gò"}
+{"id": "cheeks.highbones", "vi": "gò má cao"}
+{"id": "cheeks.widebones", "vi": "gò má rộng phẳng"}
+{"id": "cheeks.chubby", "vi": "má phúng phính"}
+{"id": "cheeks.hollow", "vi": "má hóp"}
+{"id": "cheeks.dimples", "vi": "lúm đồng tiền"}
+{"id": "cheeks.onedimple", "vi": "lúm một bên má"}
+{"id": "cheeks.sagging", "vi": "má xệ xuống hàm"}
+{"id": "cheeks.puffy", "vi": "má sưng phù"}
+{"id": "cheeks.jutting", "vi": "gò má nhô dưới lớp da mỏng"}
+{"id": "cheeks.apple-f", "vi": "má bầu tròn cao"}
+{"id": "cheeks.flat", "vi": "má phẳng, không thấy gò má"}
+{"id": "cheeks.ruddy", "vi": "má lúc nào cũng ửng đỏ"}
+{"id": "cheeks.lowbones", "vi": "gò má thấp ngang mũi"}
+{"id": "cheeks.gaunt-old", "vi": "hõm sâu dưới gò má, da chùng"}
+{"id": "mouth", "vi": "Miệng, môi"}
+{"id": "mouth.normal", "vi": "miệng vừa, môi khá dày"}
+{"id": "mouth.normal-old", "vi": "môi mỏng đi, nhân trung dài ra"}
+{"id": "mouth.wide", "vi": "miệng rộng"}
+{"id": "mouth.small", "vi": "miệng nhỏ"}
+{"id": "mouth.full", "vi": "môi dày"}
+{"id": "mouth.thin", "vi": "môi mỏng"}
+{"id": "mouth.thinupper", "vi": "môi trên mỏng, môi dưới dày"}
+{"id": "mouth.protruding", "vi": "môi dày chìa ra trước"}
+{"id": "mouth.downturned", "vi": "khóe miệng trễ xuống"}
+{"id": "mouth.upturned", "vi": "khóe miệng cong lên"}
+{"id": "mouth.darklips", "vi": "môi thâm tím"}
+{"id": "mouth.cracked", "vi": "môi khô nứt nẻ"}
+{"id": "mouth.sunken", "vi": "môi móm lõm vào lợi"}
+{"id": "mouth.droopylower", "vi": "môi dưới dày trề, hơi hé"}
+{"id": "mouth.bow", "vi": "môi trên có hai đỉnh nhọn rõ"}
+{"id": "mouth.flatlip", "vi": "môi trên phẳng, không có đỉnh"}
+{"id": "mouth.pale", "vi": "môi nhợt nhạt"}
+{"id": "mouth.longupper", "vi": "môi trên dài che răng"}
+{"id": "mouth.lopsided", "vi": "miệng hơi lệch một bên"}
+{"id": "mouth.openmouth", "vi": "miệng hay há hờ"}
+{"id": "teeth", "vi": "Răng"}
+{"id": "teeth.normal-y", "vi": "răng khá đều, hơi khấp khểnh"}
+{"id": "teeth.normal-m", "vi": "răng hơi ố và mòn"}
+{"id": "teeth.normal-e", "vi": "rụng vài chiếc, số còn lại mòn"}
+{"id": "teeth.buck", "vi": "răng hô"}
+{"id": "teeth.underbite", "vi": "răng móm, răng dưới chìa ra"}
+{"id": "teeth.crowded", "vi": "răng mọc lộn xộn chen chúc"}
+{"id": "teeth.snaggle", "vi": "răng khểnh"}
+{"id": "teeth.gap", "vi": "răng cửa thưa"}
+{"id": "teeth.chipped", "vi": "răng cửa sứt mẻ"}
+{"id": "teeth.yellow", "vi": "răng ố vàng"}
+{"id": "teeth.brown", "vi": "răng ố nâu khói thuốc"}
+{"id": "teeth.betel-f", "vi": "răng đỏ thâm đen vì ăn trầu"}
+{"id": "teeth.lacquer-f", "vi": "răng nhuộm đen bóng"}
+{"id": "teeth.missingfront", "vi": "mất một răng cửa"}
+{"id": "teeth.gold", "vi": "một răng bọc vàng"}
+{"id": "teeth.silver", "vi": "răng hàm bọc kim loại"}
+{"id": "teeth.dentures", "vi": "răng giả đều trắng quá mức"}
+{"id": "teeth.toothless", "vi": "móm, không còn răng"}
+{"id": "teeth.fewleft", "vi": "chỉ còn vài chiếc răng"}
+{"id": "teeth.veneers", "vi": "răng trắng đều tăm tắp"}
+{"id": "teeth.gummy", "vi": "cười hở lợi"}
+{"id": "teeth.small", "vi": "răng nhỏ tròn"}
+{"id": "teeth.large", "vi": "răng cửa to vuông"}
+{"id": "teeth.worn", "vi": "răng mòn bằng, ngắn"}
+{"id": "teeth.rotten", "vi": "chân răng sâu đen"}
+{"id": "teeth.receding", "vi": "tụt lợi, răng trông dài"}
+{"id": "jaw_chin", "vi": "Hàm, cằm"}
+{"id": "jaw_chin.normal-m", "vi": "hàm tròn, cằm vừa"}
+{"id": "jaw_chin.normal-f", "vi": "hàm tròn mềm, cằm nhỏ tròn"}
+{"id": "jaw_chin.normal-old", "vi": "đường hàm mềm đi, hơi chảy"}
+{"id": "jaw_chin.square", "vi": "hàm vuông rộng"}
+{"id": "jaw_chin.flared", "vi": "quai hàm bạnh"}
+{"id": "jaw_chin.pointed", "vi": "cằm nhọn"}
+{"id": "jaw_chin.receding", "vi": "cằm lẹm"}
+{"id": "jaw_chin.jutting", "vi": "cằm nhô"}
+{"id": "jaw_chin.long", "vi": "hàm dài nặng"}
+{"id": "jaw_chin.cleft", "vi": "cằm chẻ"}
+{"id": "jaw_chin.double", "vi": "cằm đôi, có nọng"}
+{"id": "jaw_chin.lost", "vi": "đường hàm lẫn vào cổ"}
+{"id": "jaw_chin.jowls", "vi": "hai bên hàm chảy xệ nặng"}
+{"id": "jaw_chin.delicate", "vi": "hàm nhỏ thanh"}
+{"id": "jaw_chin.asym", "vi": "hàm lệch, một bên to hơn"}
+{"id": "jaw_chin.underjaw", "vi": "hàm dưới đưa ra trước"}
+{"id": "jaw_chin.chindimple", "vi": "da cằm lỗ chỗ, nhăn"}
+{"id": "jaw_chin.witch", "vi": "cằm vểnh lên gần mũi"}
+{"id": "jaw_chin.wideshort", "vi": "cằm ngắn rộng"}
+{"id": "jaw_chin.bony", "vi": "xương hàm lộ rõ dưới da"}
+{"id": "jaw_chin.heavy", "vi": "nửa dưới mặt nặng, nhiều thịt"}
+{"id": "ears", "vi": "Tai"}
+{"id": "ears.normal", "vi": "tai cỡ vừa, áp sát đầu"}
+{"id": "ears.large", "vi": "tai to so với đầu"}
+{"id": "ears.small", "vi": "tai nhỏ, áp sát"}
+{"id": "ears.protruding", "vi": "tai vểnh"}
+{"id": "ears.longlobes", "vi": "tai dài, dái dày"}
+{"id": "ears.attached", "vi": "dái tai dính liền má"}
+{"id": "ears.thinlobes", "vi": "dái tai mỏng nhỏ"}
+{"id": "ears.cauliflower", "vi": "tai sưng sùi như bông cải"}
+{"id": "ears.oneout", "vi": "một tai vểnh hơn tai kia"}
+{"id": "ears.lowset", "vi": "tai mọc thấp"}
+{"id": "ears.highset", "vi": "tai mọc cao ngang mày"}
+{"id": "ears.pointed", "vi": "vành tai trên nhọn"}
+{"id": "ears.hairy-m", "vi": "lông mọc ra từ tai"}
+{"id": "ears.stretched", "vi": "dái tai dài trễ"}
+{"id": "ears.cupped", "vi": "vành tai trên gập xuống"}
+{"id": "ears.flathelix", "vi": "vành tai phẳng, không cuộn"}
+{"id": "ears.narrowlong", "vi": "tai hẹp dài"}
+{"id": "ears.wideshort", "vi": "tai ngắn rộng tròn"}
+{"id": "ears.pierced-f", "vi": "dái tai có lỗ xỏ"}
+{"id": "ears.torn", "vi": "dái tai bị rách đôi"}
+{"id": "neck", "vi": "Cổ"}
+{"id": "neck.normal-m", "vi": "cổ dài và to vừa"}
+{"id": "neck.normal-f", "vi": "cổ thon, dài vừa"}
+{"id": "neck.normal-old", "vi": "cổ gầy, da chùng có nếp"}
+{"id": "neck.short", "vi": "cổ ngắn to"}
+{"id": "neck.long", "vi": "cổ dài gầy"}
+{"id": "neck.bull-m", "vi": "cổ to bè nhiều cơ"}
+{"id": "neck.scrawny", "vi": "cổ gầy nhom, gân nổi"}
+{"id": "neck.wattle", "vi": "nọng da chùng dưới cằm"}
+{"id": "neck.rings", "vi": "nếp ngấn ngang quanh cổ"}
+{"id": "neck.adam-m", "vi": "yết hầu nhô"}
+{"id": "neck.fat", "vi": "cổ to nhiều mỡ, có ngấn"}
+{"id": "neck.goiter", "vi": "bướu ở trước cổ"}
+{"id": "neck.bands", "vi": "dải cơ dọc nổi trên cổ"}
+{"id": "neck.crepey-f", "vi": "da cổ nhăn nheo"}
+{"id": "neck.swan-f", "vi": "cổ cao thon"}
+{"id": "neck.sunburnt", "vi": "da gáy sạm và nứt nẻ"}
+{"id": "neck.veins", "vi": "tĩnh mạch nổi to trên cổ"}
+{"id": "neck.wide-m", "vi": "cổ to bằng đầu"}
+{"id": "skin_tone", "vi": "Màu da"}
+{"id": "skin_tone.normal-m", "vi": "da màu vàng nâu sáng"}
+{"id": "skin_tone.normal-f", "vi": "da sáng, ánh vàng ấm"}
+{"id": "skin_tone.pale", "vi": "da trắng ngà"}
+{"id": "skin_tone.fair", "vi": "da sáng ngả vàng"}
+{"id": "skin_tone.olive", "vi": "da nâu ô liu nhạt"}
+{"id": "skin_tone.golden", "vi": "da nâu vàng vừa"}
+{"id": "skin_tone.deeptan", "vi": "da nâu sẫm cháy nắng"}
+{"id": "skin_tone.darkbrown", "vi": "da nâu đậm"}
+{"id": "skin_tone.sallow", "vi": "da vàng xám xanh xao"}
+{"id": "skin_tone.ruddy", "vi": "mặt đỏ au"}
+{"id": "skin_tone.farmertan", "vi": "mặt và cổ sẫm hơn thân nhiều"}
+{"id": "skin_tone.ashen", "vi": "da xám tro, xỉn"}
+{"id": "skin_tone.jaundice", "vi": "da và lòng trắng mắt vàng"}
+{"id": "skin_tone.eu-normal", "vi": "da trắng hồng"}
+{"id": "skin_tone.af-normal", "vi": "da nâu đậm ánh lạnh"}
+{"id": "skin_tone.verydark", "vi": "da nâu rất đậm"}
+{"id": "skin_tone.reddens", "vi": "da trắng dễ ửng đỏ"}
+{"id": "skin_texture", "vi": "Da mặt"}
+{"id": "skin_texture.normal-y", "vi": "da mịn, lỗ chân lông nhỏ"}
+{"id": "skin_texture.normal-a", "vi": "da đều màu, hơi xỉn"}
+{"id": "skin_texture.normal-m", "vi": "da thô hơn, vài đốm nâu"}
+{"id": "skin_texture.normal-e", "vi": "da mỏng khô, có đồi mồi"}
+{"id": "skin_texture.oily", "vi": "da dầu bóng, lỗ chân lông to"}
+{"id": "skin_texture.acne", "vi": "mụn đỏ trên má và trán"}
+{"id": "skin_texture.acnescars", "vi": "sẹo rỗ trên má"}
+{"id": "skin_texture.pox", "vi": "vết rỗ cũ khắp mặt (đậu mùa)"}
+{"id": "skin_texture.freckles", "vi": "tàn nhang trên mũi và má"}
+{"id": "skin_texture.melasma-f", "vi": "nám trên má và trán"}
+{"id": "skin_texture.melasma-m", "vi": "nám trên gò má"}
+{"id": "skin_texture.sunspots", "vi": "đốm nâu đậm trên má và thái dương"}
+{"id": "skin_texture.warts", "vi": "đốm sần nâu nổi trên mặt"}
+{"id": "skin_texture.leathery", "vi": "da mặt dày như da thuộc, nếp sâu"}
+{"id": "skin_texture.veins", "vi": "mao mạch đỏ vỡ trên mũi và má"}
+{"id": "skin_texture.rosacea", "vi": "má và mũi đỏ loang lổ"}
+{"id": "skin_texture.dry", "vi": "da khô bong vảy"}
+{"id": "skin_texture.dull", "vi": "da xỉn, không đều màu"}
+{"id": "skin_texture.chapped", "vi": "má thô nứt nẻ vì gió"}
+{"id": "skin_texture.tags", "vi": "mụn thịt nhỏ trên mí và cổ"}
+{"id": "skin_texture.milia", "vi": "hạt kê trắng li ti quanh mắt"}
+{"id": "skin_texture.crepey", "vi": "da mỏng nhăn li ti khắp mặt"}
+{"id": "skin_texture.pigment", "vi": "sắc tố loang lổ khắp mặt"}
+{"id": "skin_texture.pores", "vi": "lỗ chân lông to trên mũi và má"}
+{"id": "skin_texture.smooth-old", "vi": "da mịn so với tuổi"}
+{"id": "skin_texture.blackheads", "vi": "mụn đầu đen trên mũi và cằm"}
+{"id": "skin_texture.eczema", "vi": "mảng đỏ có vảy trên mặt"}
+{"id": "wrinkles", "vi": "Nếp nhăn"}
+{"id": "wrinkles.normal-y", "vi": "mặt phẳng, chưa có nếp"}
+{"id": "wrinkles.normal-a", "vi": "nếp nhăn mờ ở đuôi mắt"}
+{"id": "wrinkles.normal-m", "vi": "nếp trán và rãnh mũi má đã rõ"}
+{"id": "wrinkles.normal-e", "vi": "nếp nhăn sâu khắp mặt"}
+{"id": "wrinkles.forehead", "vi": "nếp nhăn ngang sâu trên trán"}
+{"id": "wrinkles.frown", "vi": "nếp cau dọc sâu giữa hai mày"}
+{"id": "wrinkles.crowsfeet", "vi": "vết chân chim sâu ở đuôi mắt"}
+{"id": "wrinkles.nasolabial", "vi": "rãnh mũi má sâu"}
+{"id": "wrinkles.marionette", "vi": "nếp kéo xuống dưới khóe miệng"}
+{"id": "wrinkles.barcode", "vi": "nếp nhăn dọc nhỏ trên môi trên"}
+{"id": "wrinkles.squint", "vi": "nếp nheo trắng ở đuôi mắt"}
+{"id": "wrinkles.smoothage", "vi": "mặt ít nếp nhăn lạ thường"}
+{"id": "wrinkles.crisscross", "vi": "nếp nhăn đan chéo trên má và cổ"}
+{"id": "wrinkles.sunkenlined", "vi": "má gấp thành nếp dọc dài"}
+{"id": "wrinkles.earlylines", "vi": "nếp nhăn sâu hơn tuổi"}
+{"id": "wrinkles.nosebridge", "vi": "nếp ngang trên sống mũi"}
+{"id": "wrinkles.laughlines", "vi": "nếp cười quanh miệng"}
+{"id": "wrinkles.chinline", "vi": "nếp hằn sâu dưới môi dưới"}
+{"id": "facial_hair", "vi": "Lông mặt, râu"}
+{"id": "facial_hair.normal-m", "vi": "râu thưa, thường cạo sạch"}
+{"id": "facial_hair.normal-old-m", "vi": "râu lún phún bạc ở cằm và mép"}
+{"id": "facial_hair.normal-f", "vi": "mặt mịn, lông tơ mờ"}
+{"id": "facial_hair.wispy-m", "vi": "ria mép lưa thưa"}
+{"id": "facial_hair.tuft-m", "vi": "chòm râu dài thưa ở cằm"}
+{"id": "facial_hair.stubble-m", "vi": "râu lởm chởm từng mảng ở hàm"}
+{"id": "facial_hair.full-m", "vi": "râu quai nón rậm"}
+{"id": "facial_hair.shadow-m", "vi": "vệt râu cạo xanh"}
+{"id": "facial_hair.whitebeard-m", "vi": "râu dài trắng lưa thưa"}
+{"id": "facial_hair.goatee-m", "vi": "râu dê thưa và ria"}
+{"id": "facial_hair.hairless-m", "vi": "mặt gần như không có râu"}
+{"id": "facial_hair.greystubble-m", "vi": "râu trắng lún phún khắp hàm"}
+{"id": "facial_hair.sideburns-m", "vi": "tóc mai dài mảnh"}
+{"id": "facial_hair.neckbeard-m", "vi": "lông lởm chởm ở cổ và hàm"}
+{"id": "facial_hair.lipdown-f", "vi": "lông tơ sẫm trên môi trên"}
+{"id": "facial_hair.chinhairs-f", "vi": "vài sợi lông cứng ở cằm"}
+{"id": "facial_hair.sidedown-f", "vi": "lông tơ dọc hai bên má"}
+{"id": "facial_hair.mustache-f", "vi": "ria mép sẫm rõ"}
+{"id": "facial_hair.whitehairs-f", "vi": "vài sợi lông trắng ở cằm và môi"}
+{"id": "asymmetry", "vi": "Bất cân xứng"}
+{"id": "asymmetry.normal", "vi": "mặt khá cân hai bên"}
+{"id": "asymmetry.eyelower", "vi": "một mắt thấp hơn"}
+{"id": "asymmetry.nosebent", "vi": "mũi lệch một bên"}
+{"id": "asymmetry.mouthpull", "vi": "miệng kéo lệch một bên"}
+{"id": "asymmetry.droop", "vi": "một bên mặt xệ"}
+{"id": "asymmetry.jaw", "vi": "hàm một bên dài hơn"}
+{"id": "asymmetry.earup", "vi": "một tai cao hơn tai kia"}
+{"id": "asymmetry.browhigh", "vi": "một bên mày luôn cao hơn"}
+{"id": "asymmetry.smallhalf", "vi": "nửa mặt nhỏ hơn nửa kia"}
+{"id": "asymmetry.cheekfull", "vi": "một bên má đầy hơn"}
+{"id": "asymmetry.palsy", "vi": "một bên mí và khóe miệng chùng"}
+{"id": "asymmetry.crookedsmile", "vi": "nụ cười lệch một bên"}
+{"id": "resting_face", "vi": "Nét mặt khi nghỉ"}
+{"id": "resting_face.normal", "vi": "mặt thả lỏng, trung tính"}
+{"id": "resting_face.normal-old", "vi": "mặt trung tính, khóe miệng hơi trễ"}
+{"id": "resting_face.stern", "vi": "mặt nghiêm, miệng mím chặt"}
+{"id": "resting_face.frown", "vi": "hay cau mày"}
+{"id": "resting_face.gentle", "vi": "ánh mắt hiền"}
+{"id": "resting_face.vacant", "vi": "vẻ mặt ngơ ngác"}
+{"id": "resting_face.disdain", "vi": "vẻ khinh khỉnh, môi nhếch"}
+{"id": "resting_face.tired", "vi": "vẻ mặt mệt mỏi, sụp xuống"}
+{"id": "resting_face.tense", "vi": "mặt căng, quai hàm nghiến"}
+{"id": "resting_face.wary", "vi": "mắt nheo cảnh giác"}
+{"id": "resting_face.smile", "vi": "mặt lúc nào cũng hơi cười"}
+{"id": "resting_face.worried", "vi": "vẻ lo âu, đầu mày nhướng"}
+{"id": "resting_face.sad", "vi": "vẻ buồn, mắt nhìn xuống"}
+{"id": "resting_face.absent", "vi": "ánh mắt lơ đãng"}
+{"id": "resting_face.sullen", "vi": "mặt hờn dỗi, môi dưới trề"}
+{"id": "resting_face.alert", "vi": "vẻ lanh lợi, mắt sáng"}
+{"id": "resting_face.sleepy", "vi": "vẻ buồn ngủ, mí sụp nửa"}
+{"id": "resting_face.smug", "vi": "nửa miệng cười tự mãn"}
+{"id": "resting_face.startled", "vi": "vẻ giật mình, mắt mở to"}
+{"id": "resting_face.grim", "vi": "vẻ khắc khổ, miệng trễ xuống"}
+{"id": "resting_face.calm", "vi": "ánh mắt điềm tĩnh"}
+{"id": "resting_face.sour", "vi": "vẻ mặt chua chát"}
+{"id": "resting_face.blank", "vi": "mặt lạnh, khó đoán"}
+{"id": "hair_color", "vi": "Màu tóc"}
+{"id": "hair_color.normal-y", "vi": "tóc đen tự nhiên"}
+{"id": "hair_color.normal-m", "vi": "tóc đen lốm đốm sợi bạc"}
+{"id": "hair_color.normal-e", "vi": "tóc bạc gần hết"}
+{"id": "hair_color.jet", "vi": "tóc đen nhánh"}
+{"id": "hair_color.brownblack", "vi": "tóc nâu đen"}
+{"id": "hair_color.sunfaded", "vi": "ngọn tóc cháy nắng ngả nâu"}
+{"id": "hair_color.reddish", "vi": "tóc nâu đỏ cháy nắng"}
+{"id": "hair_color.premature", "vi": "tóc bạc sớm từng vệt"}
+{"id": "hair_color.saltpepper", "vi": "tóc muối tiêu"}
+{"id": "hair_color.irongrey", "vi": "tóc xám bạc đều"}
+{"id": "hair_color.white", "vi": "tóc bạc trắng"}
+{"id": "hair_color.yellowwhite", "vi": "tóc trắng ngả vàng"}
+{"id": "hair_color.temples", "vi": "tóc bạc ở hai bên thái dương"}
+{"id": "hair_color.whitestreak", "vi": "một lọn tóc trắng phía trước"}
+{"id": "hair_color.dullbrown", "vi": "tóc đen ngả nâu xỉn"}
+{"id": "hair_color.lightbrown", "vi": "tóc nâu nhạt"}
+{"id": "hair_color.blond", "vi": "tóc vàng"}
+{"id": "hair_color.red", "vi": "tóc đỏ"}
+{"id": "hair_color.eu-normal", "vi": "tóc nâu vừa"}
+{"id": "hair_color.eu-mid", "vi": "tóc nâu đang bạc dần"}
+{"id": "hair_texture", "vi": "Chất tóc"}
+{"id": "hair_texture.normal", "vi": "tóc thẳng dày, sợi to"}
+{"id": "hair_texture.normal-old", "vi": "tóc thẳng, thô và khô hơn"}
+{"id": "hair_texture.fine", "vi": "tóc thẳng mảnh mềm"}
+{"id": "hair_texture.wave", "vi": "tóc hơi gợn sóng tự nhiên"}
+{"id": "hair_texture.wavy", "vi": "tóc gợn sóng rõ"}
+{"id": "hair_texture.curly", "vi": "tóc xoăn tự nhiên"}
+{"id": "hair_texture.coils", "vi": "tóc xoăn tít"}
+{"id": "hair_texture.bristly", "vi": "tóc cứng dựng đứng (tóc rễ tre)"}
+{"id": "hair_texture.frizzy", "vi": "tóc xù khô"}
+{"id": "hair_texture.limp", "vi": "tóc bết dầu, xẹp"}
+{"id": "hair_texture.brittle", "vi": "tóc khô giòn, chẻ ngọn"}
+{"id": "hair_texture.cowlick", "vi": "xoáy tóc dựng ở phía trước"}
+{"id": "hair_texture.doublecrown", "vi": "hai xoáy tóc, tóc rẽ lạ"}
+{"id": "hair_texture.wiry", "vi": "tóc bạc cứng như sợi thép"}
+{"id": "hair_texture.silky", "vi": "tóc rất thẳng, mượt, sợi mảnh"}
+{"id": "hair_texture.straw", "vi": "tóc dày cứng như rơm"}
+{"id": "hair_texture.eu-normal", "vi": "tóc mảnh, thẳng đến hơi gợn"}
+{"id": "hair_density", "vi": "Độ dày tóc"}
+{"id": "hair_density.normal-y", "vi": "tóc dày"}
+{"id": "hair_density.normal-m", "vi": "tóc dày vừa"}
+{"id": "hair_density.normal-e", "vi": "tóc thưa, thấp thoáng da đầu"}
+{"id": "hair_density.verythick", "vi": "tóc rất dày"}
+{"id": "hair_density.thin", "vi": "tóc mỏng, lộ da đầu"}
+{"id": "hair_density.patchy", "vi": "tóc rụng từng mảng tròn"}
+{"id": "hair_density.wispy", "vi": "tóc lưa thưa"}
+{"id": "hair_density.diffuse-f", "vi": "tóc mỏng đều, đường ngôi rộng"}
+{"id": "hair_density.crownthin", "vi": "tóc thưa ở đỉnh đầu"}
+{"id": "hair_density.scarbald", "vi": "mảng sẹo không mọc tóc trên đầu"}
+{"id": "hairline", "vi": "Chân tóc, hói"}
+{"id": "hairline.normal-m", "vi": "chân tóc thẳng đều"}
+{"id": "hairline.normal-mid-m", "vi": "chân tóc hai bên thái dương hơi lùi"}
+{"id": "hairline.normal-old-m", "vi": "chân tóc lùi, đỉnh đầu thưa"}
+{"id": "hairline.normal-f", "vi": "chân tóc tròn đều"}
+{"id": "hairline.low", "vi": "chân tóc thấp sát mày"}
+{"id": "hairline.high", "vi": "chân tóc cao, trán lộ nhiều"}
+{"id": "hairline.peak", "vi": "chân tóc nhọn giữa trán"}
+{"id": "hairline.mshape-m", "vi": "hói chữ M sâu hai bên trán"}
+{"id": "hairline.crown-m", "vi": "hói đỉnh đầu"}
+{"id": "hairline.top-m", "vi": "hói đỉnh, còn viền tóc hai bên"}
+{"id": "hairline.fullbald-m", "vi": "đầu hói bóng hoàn toàn"}
+{"id": "hairline.forelock-m", "vi": "hói đỉnh, còn chỏm tóc phía trước"}
+{"id": "hairline.uneven", "vi": "chân tóc lệch, một bên thấp"}
+{"id": "hairline.earlyrecede-m", "vi": "chân tóc lùi sớm ở thái dương"}
+{"id": "hairline.square-m", "vi": "chân tóc vuông ở thái dương"}
+{"id": "hairline.temple-f", "vi": "tóc thưa ở thái dương"}
+{"id": "hairline.widepart-f", "vi": "đường ngôi rộng, lộ da đầu"}
+{"id": "hairline.recede-f", "vi": "chân tóc lùi ở trán"}
+{"id": "hairline.bald-f", "vi": "hói từng mảng lớn"}
+{"id": "marks", "vi": "Dấu vết"}
+{"id": "marks.none", "vi": "không có dấu vết đáng kể"}
+{"id": "marks.mole", "vi": "nốt ruồi nhỏ ở {loc}"}
+{"id": "marks.molehair", "vi": "nốt ruồi to nổi có lông dài ở {loc}"}
+{"id": "marks.moles", "vi": "chùm nốt ruồi nhỏ ở {loc}"}
+{"id": "marks.birthmark", "vi": "bớt nâu phẳng ở {loc}"}
+{"id": "marks.portwine", "vi": "bớt rượu vang đỏ tím ở {loc}"}
+{"id": "marks.bluepatch", "vi": "bớt xanh xám ở {loc}"}
+{"id": "marks.burn", "vi": "sẹo bỏng bóng, nhăn rúm ở {loc}"}
+{"id": "marks.knife", "vi": "sẹo dao mảnh thẳng ở {loc}"}
+{"id": "marks.jagged", "vi": "sẹo rách nham nhở ở {loc}"}
+{"id": "marks.surgical", "vi": "sẹo mổ dài thẳng ở {loc}"}
+{"id": "marks.stitch", "vi": "sẹo khâu nhỏ nhạt màu ở {loc}"}
+{"id": "marks.vaccine", "vi": "sẹo chủng ngừa tròn lõm ở {loc}"}
+{"id": "marks.coin", "vi": "vệt đỏ cạo gió ở {loc}"}
+{"id": "marks.tattoo-old", "vi": "hình xăm tự làm xanh đã phai ở {loc}"}
+{"id": "marks.tattoo-small", "vi": "hình xăm nhỏ hiện đại ở {loc}"}
+{"id": "marks.tattoo-big", "vi": "hình xăm màu lớn phủ {loc}"}
+{"id": "marks.fingerstump", "vi": "cụt một ngón ở {loc}"}
+{"id": "marks.fingertip", "vi": "cụt đầu ngón tay ở {loc}"}
+{"id": "marks.earnotch", "vi": "vành tai khuyết ở {loc}"}
+{"id": "marks.shrapnel", "vi": "sẹo mảnh đạn lỗ chỗ ở {loc}"}
+{"id": "marks.keloid", "vi": "sẹo lồi dày ở {loc}"}
+{"id": "marks.wart", "vi": "mụn cóc sần ở {loc}"}
+{"id": "marks.vitiligo", "vi": "mảng da trắng (bạch biến) ở {loc}"}
+{"id": "marks.tracks", "vi": "vết kim tiêm dọc {loc}"}
+{"id": "marks.selfharm", "vi": "nhiều vệt sẹo mảnh nhạt song song ở {loc}"}
+{"id": "marks.cleft", "vi": "sẹo dọc mảnh ở {loc} (sứt môi đã mổ)"}
+{"id": "marks.polecallus", "vi": "chai dày ở {loc} (đòn gánh)"}
+{"id": "marks.kneecallus", "vi": "mảng chai sẫm ở {loc}"}
+{"id": "marks.bite", "vi": "sẹo vết cắn ở {loc}"}
+{"id": "marks.legloss", "vi": "mất {loc} dưới gối"}
+{"id": "marks.armloss", "vi": "mất {loc} dưới khuỷu"}
+{"id": "marks.eyeloss", "vi": "{loc} đã mất, mí khâu lõm"}
+{"id": "marks.pit", "vi": "một vết sẹo rỗ sâu ở {loc}"}
+{"id": "head.oval", "vi": "đầu hình bầu dục, dài vừa trước sau"}
+{"id": "nose.slim", "vi": "mũi hẹp, cánh mũi thon"}
+{"id": "eyes.glasseye", "vi": "một mắt giả, đứng yên vô hồn"}
+{"id": "ears.lobecrease", "vi": "nếp gấp chéo trên dái tai"}
+{"id": "ears.darwin", "vi": "u nhỏ trên vành tai"}
+{"id": "ears.pit", "vi": "lỗ rò nhỏ trước tai"}
+{"id": "ears.tag", "vi": "mẩu thịt thừa trước tai"}
+{"id": "hands.extrafinger", "vi": "ngón thừa nhỏ cạnh ngón cái"}
+{"id": "hands.webbed", "vi": "hai ngón dính nhau bằng da"}
+{"id": "hands.claw", "vi": "một bàn tay co cứng, ngón quặp"}
+{"id": "legs.oneshort", "vi": "một chân ngắn hơn, hông lệch bên đó"}
+{"id": "feet.sandalgap", "vi": "kẽ rộng giữa ngón cái và ngón hai"}

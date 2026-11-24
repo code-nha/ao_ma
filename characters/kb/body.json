@@ -1,0 +1,8951 @@
+{
+ "version": 1,
+ "age_bands": {
+  "young": [
+   18,
+   30
+  ],
+  "adult": [
+   30,
+   45
+  ],
+  "middle": [
+   45,
+   65
+  ],
+  "elderly": [
+   65,
+   120
+  ]
+ },
+ "slots": {
+  "height": {
+   "group": "A",
+   "vi": "Chiều cao",
+   "values": [
+    {
+     "id": "height.normal-m",
+     "sex": "male",
+     "phrase": "average height man",
+     "vi": "nam cao trung bình",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00069"
+     ]
+    },
+    {
+     "id": "height.short-m",
+     "sex": "male",
+     "phrase": "short man, below average height",
+     "vi": "nam thấp",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "height.very-short-m",
+     "sex": "male",
+     "phrase": "very short man, small slight stature",
+     "vi": "nam rất thấp, nhỏ con",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "height.tall-m",
+     "sex": "male",
+     "phrase": "tall man, a head above most",
+     "vi": "nam cao",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "wealth"
+     ],
+     "src": [
+      "k00058",
+      "k00204"
+     ]
+    },
+    {
+     "id": "height.very-tall-m",
+     "sex": "male",
+     "phrase": "very tall lanky man towering over others",
+     "vi": "nam rất cao, lêu nghêu",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00117"
+     ]
+    },
+    {
+     "id": "height.gangly-m",
+     "sex": "male",
+     "phrase": "gangly young man, tall and not filled out",
+     "vi": "thanh niên cao gầy chưa đầy đặn",
+     "freq": "uncommon",
+     "ages": [
+      "young"
+     ],
+     "causes": [
+      "genetics",
+      "youth"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "height.shrunken-m",
+     "sex": "male",
+     "phrase": "shrunken old man, lost height with age",
+     "vi": "ông già teo lùn đi",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00042",
+      "k00644",
+      "k00643"
+     ]
+    },
+    {
+     "id": "height.dwarf-m",
+     "sex": "male",
+     "phrase": "man with dwarfism, short limbs, normal-sized torso",
+     "vi": "nam lùn bẩm sinh, tay chân ngắn",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "height.normal-f",
+     "sex": "female",
+     "phrase": "average height woman",
+     "vi": "nữ cao trung bình",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00069"
+     ]
+    },
+    {
+     "id": "height.short-f",
+     "sex": "female",
+     "phrase": "short woman, petite stature",
+     "vi": "nữ thấp",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "k00063"
+     ]
+    },
+    {
+     "id": "height.very-short-f",
+     "sex": "female",
+     "phrase": "very short small woman, tiny stature",
+     "vi": "nữ rất thấp, nhỏ xíu",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "height.tall-f",
+     "sex": "female",
+     "phrase": "tall woman, taller than most women",
+     "vi": "nữ cao",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "wealth"
+     ],
+     "src": [
+      "k00553"
+     ]
+    },
+    {
+     "id": "height.very-tall-f",
+     "sex": "female",
+     "phrase": "very tall woman, as tall as tall men",
+     "vi": "nữ rất cao, ngang đàn ông cao",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00587"
+     ]
+    },
+    {
+     "id": "height.shrunken-f",
+     "sex": "female",
+     "phrase": "tiny shrunken old woman, lost height with age",
+     "vi": "bà cụ teo lùn",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00042",
+      "k00644",
+      "k00643"
+     ]
+    },
+    {
+     "id": "height.dwarf-f",
+     "sex": "female",
+     "phrase": "woman with dwarfism, short limbs, normal-sized torso",
+     "vi": "nữ lùn bẩm sinh",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "frame": {
+   "group": "A",
+   "vi": "Khung xương",
+   "values": [
+    {
+     "id": "frame.normal-m",
+     "sex": "male",
+     "phrase": "medium-boned male frame",
+     "vi": "khung xương vừa",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00200",
+      "k00318"
+     ]
+    },
+    {
+     "id": "frame.small-m",
+     "sex": "male",
+     "phrase": "small-boned slight male frame, thin wrists",
+     "vi": "khung nhỏ, cổ tay mảnh",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00199"
+     ]
+    },
+    {
+     "id": "frame.narrow-m",
+     "sex": "male",
+     "phrase": "narrow lanky frame, long thin bones",
+     "vi": "khung hẹp, xương dài mảnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00198",
+      "k00317"
+     ]
+    },
+    {
+     "id": "frame.broad-m",
+     "sex": "male",
+     "phrase": "broad heavy-boned frame, thick wrists",
+     "vi": "khung to, xương thô",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00202",
+      "k00319"
+     ]
+    },
+    {
+     "id": "frame.stocky-m",
+     "sex": "male",
+     "phrase": "short stocky square-built frame",
+     "vi": "khung thấp, vuông, chắc",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "manual-labour"
+     ],
+     "src": [
+      "k00110",
+      "k00632"
+     ]
+    },
+    {
+     "id": "frame.barrel-m",
+     "sex": "male",
+     "phrase": "barrel-shaped thick torso frame",
+     "vi": "thân hình thùng phi",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00115"
+     ]
+    },
+    {
+     "id": "frame.pyramid-m",
+     "sex": "male",
+     "phrase": "narrow shoulders over wide hips frame",
+     "vi": "vai hẹp hông rộng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00108"
+     ]
+    },
+    {
+     "id": "frame.wedge-m",
+     "sex": "male",
+     "phrase": "wide-shouldered narrow-hipped frame",
+     "vi": "vai rộng hông hẹp",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics",
+      "sport"
+     ],
+     "src": [
+      "k00107",
+      "k00632"
+     ]
+    },
+    {
+     "id": "frame.angular-m",
+     "sex": "male",
+     "phrase": "bony angular frame, joints and bones jutting",
+     "vi": "khung gầy góc cạnh, khớp nhô",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "ageing"
+     ],
+     "src": [
+      "k00103",
+      "k00081"
+     ]
+    },
+    {
+     "id": "frame.normal-f",
+     "sex": "female",
+     "phrase": "medium-boned female frame",
+     "vi": "khung xương vừa",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00072"
+     ]
+    },
+    {
+     "id": "frame.small-f",
+     "sex": "female",
+     "phrase": "small delicate fine-boned frame, thin wrists",
+     "vi": "khung nhỏ, xương mảnh",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00079"
+     ]
+    },
+    {
+     "id": "frame.narrow-f",
+     "sex": "female",
+     "phrase": "narrow straight frame, little curve",
+     "vi": "khung hẹp, thẳng đuột",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00556",
+      "k00555"
+     ]
+    },
+    {
+     "id": "frame.broad-f",
+     "sex": "female",
+     "phrase": "broad big-boned female frame",
+     "vi": "khung to, xương thô",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "frame.sturdy-f",
+     "sex": "female",
+     "phrase": "short sturdy square-built female frame",
+     "vi": "khung thấp chắc nịch",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "manual-labour"
+     ],
+     "src": [
+      "k00632"
+     ]
+    },
+    {
+     "id": "frame.pear-f",
+     "sex": "female",
+     "phrase": "narrow shoulders and wide pelvis frame",
+     "vi": "vai hẹp, xương chậu rộng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00074",
+      "k00489"
+     ]
+    },
+    {
+     "id": "frame.wideshoulder-f",
+     "sex": "female",
+     "phrase": "broad-shouldered narrow-hipped female frame",
+     "vi": "vai rộng hông hẹp",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "sport"
+     ],
+     "src": [
+      "k00084"
+     ]
+    },
+    {
+     "id": "frame.angular-f",
+     "sex": "female",
+     "phrase": "bony angular frame, joints and bones jutting",
+     "vi": "khung gầy góc cạnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "ageing"
+     ],
+     "src": [
+      "k00081",
+      "k00555"
+     ]
+    }
+   ]
+  },
+  "fat": {
+   "group": "A",
+   "vi": "Mỡ toàn thân",
+   "values": [
+    {
+     "id": "fat.normal-m",
+     "sex": "male",
+     "phrase": "average weight, neither thin nor fat",
+     "vi": "cân nặng trung bình",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat.emaciated-m",
+     "sex": "male",
+     "phrase": "emaciated, skin stretched over bones",
+     "vi": "gầy trơ xương",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "poverty",
+      "addiction"
+     ],
+     "src": [
+      "k00124",
+      "k00081"
+     ]
+    },
+    {
+     "id": "fat.very-thin-m",
+     "sex": "male",
+     "phrase": "very thin, ribs and hip bones showing",
+     "vi": "rất gầy, lộ sườn",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "illness",
+      "genetics"
+     ],
+     "src": [
+      "k00241",
+      "k00081"
+     ]
+    },
+    {
+     "id": "fat.thin-m",
+     "sex": "male",
+     "phrase": "thin slight body",
+     "vi": "gầy",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "k00199"
+     ]
+    },
+    {
+     "id": "fat.lean-m",
+     "sex": "male",
+     "phrase": "lean, very little body fat",
+     "vi": "săn, ít mỡ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "manual-labour",
+      "sport"
+     ],
+     "src": [
+      "k00089",
+      "k00345"
+     ]
+    },
+    {
+     "id": "fat.softish-m",
+     "sex": "male",
+     "phrase": "slightly soft, a little extra weight",
+     "vi": "hơi mềm, dư chút cân",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00201"
+     ]
+    },
+    {
+     "id": "fat.chubby-m",
+     "sex": "male",
+     "phrase": "chubby, soft and round",
+     "vi": "mũm mĩm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "sedentary"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat.skinnyfat-m",
+     "sex": "male",
+     "phrase": "thin limbs with a soft paunch",
+     "vi": "tay chân gầy, bụng mềm",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat.overweight-m",
+     "sex": "male",
+     "phrase": "overweight, heavy around the middle",
+     "vi": "thừa cân, nặng phần giữa",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "wealth",
+      "alcohol"
+     ],
+     "src": [
+      "k00651",
+      "k00092"
+     ]
+    },
+    {
+     "id": "fat.stout-m",
+     "sex": "male",
+     "phrase": "stout, thick and heavy-set",
+     "vi": "chắc nịch, to nặng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "diet"
+     ],
+     "src": [
+      "k00632"
+     ]
+    },
+    {
+     "id": "fat.obese-m",
+     "sex": "male",
+     "phrase": "obese, large rounded body",
+     "vi": "béo phì",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "sedentary",
+      "genetics"
+     ],
+     "src": [
+      "k00109",
+      "k00653"
+     ]
+    },
+    {
+     "id": "fat.very-obese-m",
+     "sex": "male",
+     "phrase": "severely obese, huge heavy body",
+     "vi": "béo phì nặng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "illness",
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat.gaunt-ill-m",
+     "sex": "male",
+     "phrase": "gaunt and wasted from long illness",
+     "vi": "tiều tụy vì bệnh",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "k00646",
+      "k00124"
+     ]
+    },
+    {
+     "id": "fat.bloated-m",
+     "sex": "male",
+     "phrase": "puffy bloated body, swollen soft look",
+     "vi": "phù nề, nung núc",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "alcohol",
+      "illness"
+     ],
+     "src": [
+      "k00133"
+     ]
+    },
+    {
+     "id": "fat.normal-f",
+     "sex": "female",
+     "phrase": "average weight, neither thin nor fat",
+     "vi": "cân nặng trung bình",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00221"
+     ]
+    },
+    {
+     "id": "fat.emaciated-f",
+     "sex": "female",
+     "phrase": "emaciated, skin stretched over bones",
+     "vi": "gầy trơ xương",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "poverty",
+      "dieting"
+     ],
+     "src": [
+      "k00124",
+      "k00081"
+     ]
+    },
+    {
+     "id": "fat.very-thin-f",
+     "sex": "female",
+     "phrase": "very thin, collarbones and ribs showing",
+     "vi": "rất gầy, lộ xương đòn, xương sườn",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "dieting",
+      "poverty",
+      "illness"
+     ],
+     "src": [
+      "k00241",
+      "k00555"
+     ]
+    },
+    {
+     "id": "fat.thin-f",
+     "sex": "female",
+     "phrase": "thin slight body",
+     "vi": "gầy",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00553"
+     ]
+    },
+    {
+     "id": "fat.lean-f",
+     "sex": "female",
+     "phrase": "lean wiry body, little fat",
+     "vi": "gọn, săn, ít mỡ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "manual-labour",
+      "sport"
+     ],
+     "src": [
+      "k00236"
+     ]
+    },
+    {
+     "id": "fat.plump-f",
+     "sex": "female",
+     "phrase": "plump, soft and rounded",
+     "vi": "đẫy đà, tròn mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "childbirth"
+     ],
+     "src": [
+      "k00032"
+     ]
+    },
+    {
+     "id": "fat.skinnyfat-f",
+     "sex": "female",
+     "phrase": "slim limbs with a soft belly",
+     "vi": "tay chân thon, bụng mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "childbirth"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat.overweight-f",
+     "sex": "female",
+     "phrase": "overweight, heavy through waist and hips",
+     "vi": "thừa cân, nặng eo hông",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "childbirth",
+      "ageing"
+     ],
+     "src": [
+      "k00652"
+     ]
+    },
+    {
+     "id": "fat.stout-f",
+     "sex": "female",
+     "phrase": "stout, thick and heavy-set",
+     "vi": "chắc nịch, to nặng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "manual-labour"
+     ],
+     "src": [
+      "k00632"
+     ]
+    },
+    {
+     "id": "fat.obese-f",
+     "sex": "female",
+     "phrase": "obese, large rounded body",
+     "vi": "béo phì",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "sedentary",
+      "genetics"
+     ],
+     "src": [
+      "k00109",
+      "k00653"
+     ]
+    },
+    {
+     "id": "fat.very-obese-f",
+     "sex": "female",
+     "phrase": "severely obese, huge heavy body",
+     "vi": "béo phì nặng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "illness",
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat.gaunt-ill-f",
+     "sex": "female",
+     "phrase": "gaunt and wasted from long illness",
+     "vi": "tiều tụy vì bệnh",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "k00646",
+      "k00124"
+     ]
+    },
+    {
+     "id": "fat.loose-after-loss-f",
+     "sex": "female",
+     "phrase": "deflated body with loose skin after big weight loss",
+     "vi": "người xẹp, da chùng sau giảm cân lớn",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight-loss"
+     ],
+     "src": [
+      "k00182",
+      "k00329"
+     ]
+    },
+    {
+     "id": "fat.loose-after-loss-m",
+     "sex": "male",
+     "phrase": "deflated body with loose skin after big weight loss",
+     "vi": "người xẹp, da chùng sau giảm cân lớn",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight-loss"
+     ],
+     "src": [
+      "k00342",
+      "k00329"
+     ]
+    }
+   ]
+  },
+  "muscle": {
+   "group": "A",
+   "vi": "Cơ",
+   "values": [
+    {
+     "id": "muscle.normal-m",
+     "sex": "male",
+     "phrase": "ordinary untrained muscle tone",
+     "vi": "cơ bình thường, không tập",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.slack-m",
+     "sex": "male",
+     "phrase": "slack wasted muscles, thin and soft",
+     "vi": "cơ teo nhão",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness",
+      "sedentary"
+     ],
+     "src": [
+      "k00646",
+      "k00209"
+     ]
+    },
+    {
+     "id": "muscle.soft-m",
+     "sex": "male",
+     "phrase": "soft body, no visible muscle definition",
+     "vi": "người mềm, không thấy cơ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00642",
+      "k00653"
+     ]
+    },
+    {
+     "id": "muscle.wiry-m",
+     "sex": "male",
+     "phrase": "wiry, stringy lean muscles",
+     "vi": "cơ dẻo dai, gân guốc",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "poverty"
+     ],
+     "src": [
+      "k00089"
+     ]
+    },
+    {
+     "id": "muscle.ropy-labour-m",
+     "sex": "male",
+     "phrase": "hard ropy muscles from years of manual labour",
+     "vi": "cơ cứng như thừng do lao động",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "k00089"
+     ]
+    },
+    {
+     "id": "muscle.thick-labour-m",
+     "sex": "male",
+     "phrase": "thick work-built muscle, strong but undefined",
+     "vi": "cơ dày do làm nặng, không nét",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.toned-m",
+     "sex": "male",
+     "phrase": "toned body, some visible muscle",
+     "vi": "cơ săn, thấy nhẹ đường cơ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00205",
+      "k00232"
+     ]
+    },
+    {
+     "id": "muscle.athletic-m",
+     "sex": "male",
+     "phrase": "athletic muscular build",
+     "vi": "vóc thể thao, có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00200",
+      "k00229"
+     ]
+    },
+    {
+     "id": "muscle.gym-bulky-m",
+     "sex": "male",
+     "phrase": "bulky gym-built chest and arms",
+     "vi": "cơ ngực tay to do tập gym",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "wealth"
+     ],
+     "src": [
+      "k00196",
+      "k00269",
+      "k00307"
+     ]
+    },
+    {
+     "id": "muscle.bodybuilder-m",
+     "sex": "male",
+     "phrase": "massive bodybuilder muscles, veins standing out",
+     "vi": "cơ cực to kiểu thể hình",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display"
+     ],
+     "src": [
+      "k00258"
+     ]
+    },
+    {
+     "id": "muscle.overbuilt-m",
+     "sex": "male",
+     "phrase": "over-defined steroid-look muscles, unnaturally even",
+     "vi": "cơ quá nét, kiểu dùng thuốc",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "enhanced"
+     ],
+     "src": [
+      "k00323",
+      "k00258"
+     ]
+    },
+    {
+     "id": "muscle.padded-strong-m",
+     "sex": "male",
+     "phrase": "strong muscles padded with fat",
+     "vi": "khỏe nhưng phủ mỡ",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "sedentary",
+      "manual-labour"
+     ],
+     "src": [
+      "k00201"
+     ]
+    },
+    {
+     "id": "muscle.powerlifter-m",
+     "sex": "male",
+     "phrase": "thick powerful build with a solid gut",
+     "vi": "to khỏe, bụng chắc",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00105"
+     ]
+    },
+    {
+     "id": "muscle.runner-m",
+     "sex": "male",
+     "phrase": "lean runner's build, thin upper body",
+     "vi": "vóc chạy bộ, thân trên mảnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.swimmer-m",
+     "sex": "male",
+     "phrase": "broad smooth swimmer's back and shoulders",
+     "vi": "lưng vai rộng kiểu bơi lội",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00225"
+     ]
+    },
+    {
+     "id": "muscle.gone-soft-m",
+     "sex": "male",
+     "phrase": "former athlete's build gone soft",
+     "vi": "vóc từng tập nay đã mềm",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "ageing",
+      "sedentary"
+     ],
+     "src": [
+      "k00642",
+      "k00201"
+     ]
+    },
+    {
+     "id": "muscle.onesided-m",
+     "sex": "male",
+     "phrase": "one arm and shoulder more muscled from repetitive work",
+     "vi": "một bên tay vai to hơn do làm lặp",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.old-strong-m",
+     "sex": "male",
+     "phrase": "old but still hard sinewy muscles",
+     "vi": "già mà cơ vẫn cứng, gân guốc",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "k00089"
+     ]
+    },
+    {
+     "id": "muscle.normal-f",
+     "sex": "female",
+     "phrase": "ordinary soft muscle tone",
+     "vi": "cơ bình thường, mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00077",
+      "k00080"
+     ]
+    },
+    {
+     "id": "muscle.slack-f",
+     "sex": "female",
+     "phrase": "slack wasted muscles, thin and soft",
+     "vi": "cơ teo nhão",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness",
+      "sedentary"
+     ],
+     "src": [
+      "k00646",
+      "k00209"
+     ]
+    },
+    {
+     "id": "muscle.soft-f",
+     "sex": "female",
+     "phrase": "soft body, no visible muscle",
+     "vi": "người mềm, không thấy cơ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00080"
+     ]
+    },
+    {
+     "id": "muscle.slight-f",
+     "sex": "female",
+     "phrase": "slender with little visible muscle",
+     "vi": "mảnh, gần như không thấy cơ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00077"
+     ]
+    },
+    {
+     "id": "muscle.toned-f",
+     "sex": "female",
+     "phrase": "toned body, faint muscle lines",
+     "vi": "cơ săn, đường cơ mờ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00236",
+      "k00205"
+     ]
+    },
+    {
+     "id": "muscle.athletic-f",
+     "sex": "female",
+     "phrase": "athletic strong female build",
+     "vi": "vóc nữ thể thao, khỏe",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00228"
+     ]
+    },
+    {
+     "id": "muscle.gym-muscular-f",
+     "sex": "female",
+     "phrase": "visibly muscular gym-trained woman",
+     "vi": "nữ tập gym, cơ rõ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.bodybuilder-f",
+     "sex": "female",
+     "phrase": "heavily muscled female bodybuilder physique",
+     "vi": "nữ thể hình cơ to",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "enhanced"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.dancer-f",
+     "sex": "female",
+     "phrase": "long lean dancer's muscles",
+     "vi": "cơ dài mảnh kiểu múa",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.farm-strong-f",
+     "sex": "female",
+     "phrase": "sturdy strong body from field work",
+     "vi": "người chắc khỏe do làm đồng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "muscle.wiry-f",
+     "sex": "female",
+     "phrase": "wiry sinewy woman, hard thin muscles",
+     "vi": "gầy mà gân guốc, dẻo dai",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "poverty"
+     ],
+     "src": [
+      "k00089"
+     ]
+    },
+    {
+     "id": "muscle.strong-legs-f",
+     "sex": "female",
+     "phrase": "strong thighs and calves, soft arms",
+     "vi": "đùi bắp chân khỏe, tay mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "walking",
+      "manual-labour"
+     ],
+     "src": [
+      "k00080"
+     ]
+    },
+    {
+     "id": "muscle.gone-soft-f",
+     "sex": "female",
+     "phrase": "once-fit body gone soft",
+     "vi": "từng khỏe nay đã mềm",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "ageing",
+      "childbirth"
+     ],
+     "src": [
+      "k00642"
+     ]
+    },
+    {
+     "id": "muscle.old-strong-f",
+     "sex": "female",
+     "phrase": "old but still tough sinewy muscles",
+     "vi": "già mà vẫn gân guốc dẻo dai",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "fat_where": {
+   "group": "A",
+   "vi": "Mỡ dồn ở đâu",
+   "values": [
+    {
+     "id": "fat_where.normal-m",
+     "sex": "male",
+     "phrase": "fat spread evenly over the body",
+     "vi": "mỡ phân bố đều",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat_where.none-m",
+     "sex": "male",
+     "phrase": "no visible fat anywhere",
+     "vi": "không thấy mỡ chỗ nào",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "manual-labour",
+      "sport",
+      "poverty"
+     ],
+     "src": [
+      "k00303"
+     ]
+    },
+    {
+     "id": "fat_where.belly-m",
+     "sex": "male",
+     "phrase": "weight carried in the belly",
+     "vi": "mỡ dồn bụng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "alcohol",
+      "sedentary"
+     ],
+     "src": [
+      "k00651",
+      "k00302"
+     ]
+    },
+    {
+     "id": "fat_where.visceral-m",
+     "sex": "male",
+     "phrase": "hard round belly on thin limbs",
+     "vi": "bụng tròn cứng, tay chân gầy",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "alcohol",
+      "ageing"
+     ],
+     "src": [
+      "k00328",
+      "k00211"
+     ]
+    },
+    {
+     "id": "fat_where.flanks-m",
+     "sex": "male",
+     "phrase": "fat on the flanks, love handles",
+     "vi": "mỡ hai bên hông, bánh mì",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00026",
+      "k00022",
+      "k00230"
+     ]
+    },
+    {
+     "id": "fat_where.chest-m",
+     "sex": "male",
+     "phrase": "fat on the chest, soft fleshy pecs",
+     "vi": "mỡ dồn ngực",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "genetics"
+     ],
+     "src": [
+      "k00194",
+      "k00192"
+     ]
+    },
+    {
+     "id": "fat_where.neck-face-m",
+     "sex": "male",
+     "phrase": "fat in the neck and jowls, thick short neck",
+     "vi": "mỡ dồn cổ, nọng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet"
+     ],
+     "src": [
+      "k00151",
+      "k00653"
+     ]
+    },
+    {
+     "id": "fat_where.nape-m",
+     "sex": "male",
+     "phrase": "fat pad on the upper back and nape",
+     "vi": "mỡ dồn gáy, lưng trên",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat_where.lowback-m",
+     "sex": "male",
+     "phrase": "soft fat pad over the lower back",
+     "vi": "mỡ lưng dưới",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00256"
+     ]
+    },
+    {
+     "id": "fat_where.saghip-m",
+     "sex": "male",
+     "phrase": "sagging fat below the hip line",
+     "vi": "mỡ chảy xuống dưới hông",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00248"
+     ]
+    },
+    {
+     "id": "fat_where.seat-m",
+     "sex": "male",
+     "phrase": "fat in the buttocks and thighs",
+     "vi": "mỡ dồn mông đùi",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00026"
+     ]
+    },
+    {
+     "id": "fat_where.knees-m",
+     "sex": "male",
+     "phrase": "fat pads around the knees",
+     "vi": "mỡ quanh đầu gối",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet"
+     ],
+     "src": [
+      "k00026",
+      "k00033"
+     ]
+    },
+    {
+     "id": "fat_where.normal-f",
+     "sex": "female",
+     "phrase": "fat spread evenly over the body",
+     "vi": "mỡ phân bố đều",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "fat_where.none-f",
+     "sex": "female",
+     "phrase": "very little fat anywhere",
+     "vi": "gần như không có mỡ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "poverty",
+      "dieting"
+     ],
+     "src": [
+      "k00303"
+     ]
+    },
+    {
+     "id": "fat_where.pear-f",
+     "sex": "female",
+     "phrase": "weight carried in the hips and thighs",
+     "vi": "mỡ dồn hông đùi",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00299",
+      "k00301",
+      "k00489"
+     ]
+    },
+    {
+     "id": "fat_where.apple-f",
+     "sex": "female",
+     "phrase": "weight carried in the belly, slim legs",
+     "vi": "mỡ dồn bụng, chân thon",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "sedentary"
+     ],
+     "src": [
+      "k00030",
+      "k00219"
+     ]
+    },
+    {
+     "id": "fat_where.pooch-f",
+     "sex": "female",
+     "phrase": "soft fat pouch on the lower belly",
+     "vi": "ngấn mỡ bụng dưới",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth"
+     ],
+     "src": [
+      "k00028",
+      "k00240"
+     ]
+    },
+    {
+     "id": "fat_where.flanks-f",
+     "sex": "female",
+     "phrase": "soft rolls on the flanks above the hips",
+     "vi": "ngấn mỡ hai bên eo",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00230",
+      "k00246"
+     ]
+    },
+    {
+     "id": "fat_where.bust-f",
+     "sex": "female",
+     "phrase": "weight carried in the bust and upper body",
+     "vi": "mỡ dồn ngực, thân trên",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00652"
+     ]
+    },
+    {
+     "id": "fat_where.upperarm-f",
+     "sex": "female",
+     "phrase": "heavy fleshy upper arms",
+     "vi": "bắp tay trên nhiều mỡ",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00652",
+      "k00330"
+     ]
+    },
+    {
+     "id": "fat_where.backroll-f",
+     "sex": "female",
+     "phrase": "soft rolls of fat on the upper back",
+     "vi": "ngấn mỡ lưng trên",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "sedentary"
+     ],
+     "src": [
+      "k00256"
+     ]
+    },
+    {
+     "id": "fat_where.saddle-f",
+     "sex": "female",
+     "phrase": "fat on the outer thighs, saddlebags",
+     "vi": "mỡ đùi ngoài",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00028",
+      "k00034"
+     ]
+    },
+    {
+     "id": "fat_where.innerthigh-f",
+     "sex": "female",
+     "phrase": "full inner thighs that rub together",
+     "vi": "đùi trong đầy, cọ vào nhau",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00028",
+      "k00299"
+     ]
+    },
+    {
+     "id": "fat_where.buttocks-f",
+     "sex": "female",
+     "phrase": "fat carried mostly in the buttocks",
+     "vi": "mỡ dồn mông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00024",
+      "k00301"
+     ]
+    },
+    {
+     "id": "fat_where.neck-f",
+     "sex": "female",
+     "phrase": "fat under the chin and on the neck",
+     "vi": "mỡ dưới cằm, cổ",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "diet"
+     ],
+     "src": [
+      "k00626",
+      "k00151"
+     ]
+    },
+    {
+     "id": "fat_where.knees-f",
+     "sex": "female",
+     "phrase": "fat pads above the knees",
+     "vi": "mỡ trên đầu gối",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00287",
+      "k00028"
+     ]
+    },
+    {
+     "id": "fat_where.lipedema-f",
+     "sex": "female",
+     "phrase": "heavy column-like legs, slim upper body",
+     "vi": "chân to như cột, thân trên nhỏ",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "shoulders": {
+   "group": "D",
+   "vi": "Vai",
+   "values": [
+    {
+     "id": "shoulders.normal-m",
+     "sex": "male",
+     "phrase": "average male shoulders",
+     "vi": "vai nam bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00007"
+     ]
+    },
+    {
+     "id": "shoulders.broad-m",
+     "sex": "male",
+     "phrase": "broad wide shoulders",
+     "vi": "vai rộng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "sport"
+     ],
+     "src": [
+      "k00225",
+      "k00088"
+     ]
+    },
+    {
+     "id": "shoulders.very-broad-m",
+     "sex": "male",
+     "phrase": "very broad shoulders that dwarf the head",
+     "vi": "vai cực rộng, đầu trông nhỏ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "sport"
+     ],
+     "src": [
+      "k00459"
+     ]
+    },
+    {
+     "id": "shoulders.narrow-m",
+     "sex": "male",
+     "phrase": "narrow shoulders for a man",
+     "vi": "vai hẹp",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00198",
+      "k00456"
+     ]
+    },
+    {
+     "id": "shoulders.sloping-m",
+     "sex": "male",
+     "phrase": "steeply sloping shoulders",
+     "vi": "vai xuôi",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "shoulders.square-m",
+     "sex": "male",
+     "phrase": "square level shoulders",
+     "vi": "vai ngang vuông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00552"
+     ]
+    },
+    {
+     "id": "shoulders.rounded-m",
+     "sex": "male",
+     "phrase": "rounded shoulders rolled forward",
+     "vi": "vai tròn, đổ về trước",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00609",
+      "k00603"
+     ]
+    },
+    {
+     "id": "shoulders.uneven-m",
+     "sex": "male",
+     "phrase": "one shoulder higher than the other",
+     "vi": "vai lệch",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "scoliosis"
+     ],
+     "src": [
+      "k00404"
+     ]
+    },
+    {
+     "id": "shoulders.bony-m",
+     "sex": "male",
+     "phrase": "bony shoulders, collarbones jutting",
+     "vi": "vai xương, xương đòn nhô",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "ageing"
+     ],
+     "src": [
+      "k00103",
+      "k00004"
+     ]
+    },
+    {
+     "id": "shoulders.raised-m",
+     "sex": "male",
+     "phrase": "tense raised shoulders, short-looking neck",
+     "vi": "vai nhô lên căng thẳng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "stress"
+     ],
+     "src": [
+      "k00402",
+      "k00467",
+      "k00571"
+     ]
+    },
+    {
+     "id": "shoulders.traps-m",
+     "sex": "male",
+     "phrase": "thick trapezius, neck sunk between shoulders",
+     "vi": "cơ thang dày, cổ lút giữa vai",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "manual-labour",
+      "gym-display"
+     ],
+     "src": [
+      "k00225"
+     ]
+    },
+    {
+     "id": "shoulders.pole-m",
+     "sex": "male",
+     "phrase": "callused thickened shoulder from carrying loads",
+     "vi": "vai chai dày do gánh vác",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "shoulders.fleshy-m",
+     "sex": "male",
+     "phrase": "soft rounded fleshy shoulders",
+     "vi": "vai tròn nhiều thịt",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00653"
+     ]
+    },
+    {
+     "id": "shoulders.delts-m",
+     "sex": "male",
+     "phrase": "rounded gym-built shoulder caps",
+     "vi": "vai tròn cơ delta do tập",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display"
+     ],
+     "src": [
+      "k00264",
+      "k00263"
+     ]
+    },
+    {
+     "id": "shoulders.drooping-m",
+     "sex": "male",
+     "phrase": "shrunken drooping old shoulders",
+     "vi": "vai già teo, rũ xuống",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00644"
+     ]
+    },
+    {
+     "id": "shoulders.winged-m",
+     "sex": "male",
+     "phrase": "shoulder blades sticking out from the back",
+     "vi": "xương bả vai nhô ra",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "k00103"
+     ]
+    },
+    {
+     "id": "shoulders.normal-f",
+     "sex": "female",
+     "phrase": "average narrow female shoulders",
+     "vi": "vai nữ bình thường, hẹp",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00072",
+      "k00074"
+     ]
+    },
+    {
+     "id": "shoulders.narrow-f",
+     "sex": "female",
+     "phrase": "very narrow small shoulders",
+     "vi": "vai rất hẹp",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "shoulders.sloping-f",
+     "sex": "female",
+     "phrase": "soft sloping shoulders",
+     "vi": "vai xuôi mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "shoulders.broad-f",
+     "sex": "female",
+     "phrase": "broad shoulders for a woman",
+     "vi": "vai rộng so với nữ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "sport"
+     ],
+     "src": [
+      "k00084"
+     ]
+    },
+    {
+     "id": "shoulders.square-f",
+     "sex": "female",
+     "phrase": "square straight shoulders",
+     "vi": "vai ngang thẳng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00084"
+     ]
+    },
+    {
+     "id": "shoulders.bony-f",
+     "sex": "female",
+     "phrase": "bony shoulders with sharp collarbones",
+     "vi": "vai xương, xương đòn sắc",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "dieting",
+      "poverty",
+      "ageing"
+     ],
+     "src": [
+      "k00004",
+      "k00012",
+      "k00103"
+     ]
+    },
+    {
+     "id": "shoulders.rounded-f",
+     "sex": "female",
+     "phrase": "rounded shoulders rolled forward",
+     "vi": "vai tròn, đổ về trước",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "big-bust"
+     ],
+     "src": [
+      "k00609",
+      "k00603"
+     ]
+    },
+    {
+     "id": "shoulders.uneven-f",
+     "sex": "female",
+     "phrase": "one shoulder lower than the other",
+     "vi": "vai lệch",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "carrying-child",
+      "scoliosis"
+     ],
+     "src": [
+      "k00404"
+     ]
+    },
+    {
+     "id": "shoulders.raised-f",
+     "sex": "female",
+     "phrase": "tense hunched-up shoulders",
+     "vi": "vai rụt lên căng thẳng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "stress"
+     ],
+     "src": [
+      "k00402",
+      "k00590"
+     ]
+    },
+    {
+     "id": "shoulders.fleshy-f",
+     "sex": "female",
+     "phrase": "soft plump rounded shoulders",
+     "vi": "vai tròn đầy thịt",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00653"
+     ]
+    },
+    {
+     "id": "shoulders.load-f",
+     "sex": "female",
+     "phrase": "strong rounded shoulders from carrying loads",
+     "vi": "vai chắc tròn do gánh gồng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "shoulders.swimmer-f",
+     "sex": "female",
+     "phrase": "athletic shoulders with visible muscle",
+     "vi": "vai thể thao, thấy cơ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00265"
+     ]
+    },
+    {
+     "id": "shoulders.blades-f",
+     "sex": "female",
+     "phrase": "shoulder blades clearly outlined on the back",
+     "vi": "xương bả vai lộ rõ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00000"
+     ]
+    },
+    {
+     "id": "shoulders.drooping-f",
+     "sex": "female",
+     "phrase": "shrunken drooping old shoulders",
+     "vi": "vai già teo, rũ xuống",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00644"
+     ]
+    }
+   ]
+  },
+  "chest": {
+   "group": "D",
+   "vi": "Ngực",
+   "values": [
+    {
+     "id": "chest.normal-m",
+     "sex": "male",
+     "phrase": "average flat male chest",
+     "vi": "ngực nam bình thường, phẳng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00185"
+     ]
+    },
+    {
+     "id": "chest.sunken-m",
+     "sex": "male",
+     "phrase": "sunken chest with hollow breastbone",
+     "vi": "ngực lõm, xương ức trũng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "chest.pigeon-m",
+     "sex": "male",
+     "phrase": "pigeon chest, breastbone jutting forward",
+     "vi": "ngực gà, xương ức nhô",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "chest.thin-m",
+     "sex": "male",
+     "phrase": "thin flat chest, ribs showing",
+     "vi": "ngực lép, lộ sườn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "genetics"
+     ],
+     "src": [
+      "k00241"
+     ]
+    },
+    {
+     "id": "chest.narrow-m",
+     "sex": "male",
+     "phrase": "narrow shallow chest",
+     "vi": "ngực hẹp, nông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "chest.barrel-m",
+     "sex": "male",
+     "phrase": "deep barrel chest",
+     "vi": "ngực thùng, sâu",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "chest.muscular-m",
+     "sex": "male",
+     "phrase": "broad muscular chest",
+     "vi": "ngực rộng, có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "manual-labour"
+     ],
+     "src": [
+      "k00185",
+      "k00213",
+      "k00250"
+     ]
+    },
+    {
+     "id": "chest.gym-pecs-m",
+     "sex": "male",
+     "phrase": "big square gym-built pecs with deep groove",
+     "vi": "cơ ngực vuông to do tập, rãnh sâu",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display"
+     ],
+     "src": [
+      "k00254",
+      "k00253",
+      "k00189"
+     ]
+    },
+    {
+     "id": "chest.overbuilt-m",
+     "sex": "male",
+     "phrase": "huge projecting pecs, small shoulders",
+     "vi": "ngực cực to, vai nhỏ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "enhanced"
+     ],
+     "src": [
+      "k00258"
+     ]
+    },
+    {
+     "id": "chest.labour-m",
+     "sex": "male",
+     "phrase": "solid thick chest from hard work",
+     "vi": "ngực dày chắc do lao động",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "k00089"
+     ]
+    },
+    {
+     "id": "chest.soft-m",
+     "sex": "male",
+     "phrase": "soft fleshy chest, no muscle shape",
+     "vi": "ngực mềm nhiều thịt",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00192",
+      "k00252"
+     ]
+    },
+    {
+     "id": "chest.moobs-m",
+     "sex": "male",
+     "phrase": "sagging fatty man breasts",
+     "vi": "ngực mỡ xệ kiểu vú đàn ông",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "sedentary"
+     ],
+     "src": [
+      "k00194",
+      "k00653"
+     ]
+    },
+    {
+     "id": "chest.gyno-m",
+     "sex": "male",
+     "phrase": "puffy swollen nipples on a slim chest",
+     "vi": "núm vú sưng phồng trên ngực gầy",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "illness",
+      "hormones"
+     ],
+     "src": [
+      "k00193"
+     ]
+    },
+    {
+     "id": "chest.sagging-m",
+     "sex": "male",
+     "phrase": "sagging old chest with loose skin",
+     "vi": "ngực già chùng nhão",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00642",
+      "k00195"
+     ]
+    },
+    {
+     "id": "chest.bony-old-m",
+     "sex": "male",
+     "phrase": "bony old chest, sternum and ribs showing",
+     "vi": "ngực già trơ xương ức, xương sườn",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness"
+     ],
+     "src": [
+      "k00647",
+      "k00646"
+     ]
+    },
+    {
+     "id": "chest.uneven-m",
+     "sex": "male",
+     "phrase": "one side of the chest larger than the other",
+     "vi": "ngực lệch một bên to hơn",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "genetics"
+     ],
+     "src": [
+      "k00323"
+     ]
+    },
+    {
+     "id": "chest.normal-f",
+     "sex": "female",
+     "phrase": "average medium bust",
+     "vi": "ngực nữ vừa phải",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00155",
+      "k00158"
+     ]
+    },
+    {
+     "id": "chest.flat-f",
+     "sex": "female",
+     "phrase": "nearly flat chest",
+     "vi": "ngực gần như phẳng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "chest.small-f",
+     "sex": "female",
+     "phrase": "small natural breasts",
+     "vi": "ngực nhỏ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00155"
+     ]
+    },
+    {
+     "id": "chest.small-high-f",
+     "sex": "female",
+     "phrase": "small high-set breasts",
+     "vi": "ngực nhỏ, nằm cao",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00173"
+     ]
+    },
+    {
+     "id": "chest.full-f",
+     "sex": "female",
+     "phrase": "full heavy bust",
+     "vi": "ngực đầy, nặng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "weight"
+     ],
+     "src": [
+      "k00155"
+     ]
+    },
+    {
+     "id": "chest.very-large-f",
+     "sex": "female",
+     "phrase": "very large heavy breasts",
+     "vi": "ngực rất to, nặng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "weight"
+     ],
+     "src": [
+      "k00174"
+     ]
+    },
+    {
+     "id": "chest.wide-set-f",
+     "sex": "female",
+     "phrase": "wide-set breasts with a wide gap",
+     "vi": "ngực cách xa nhau",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00175"
+     ]
+    },
+    {
+     "id": "chest.low-set-f",
+     "sex": "female",
+     "phrase": "low-set breasts far below the collarbone",
+     "vi": "ngực nằm thấp",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00173"
+     ]
+    },
+    {
+     "id": "chest.slight-droop-f",
+     "sex": "female",
+     "phrase": "slightly drooping natural breasts",
+     "vi": "ngực hơi trễ",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "childbirth"
+     ],
+     "src": [
+      "k00177",
+      "k00179"
+     ]
+    },
+    {
+     "id": "chest.sagging-f",
+     "sex": "female",
+     "phrase": "breasts sagging after years of nursing",
+     "vi": "ngực xệ sau nhiều năm cho con bú",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth"
+     ],
+     "src": [
+      "k00177",
+      "k00179"
+     ]
+    },
+    {
+     "id": "chest.deflated-f",
+     "sex": "female",
+     "phrase": "deflated breasts with loose empty skin",
+     "vi": "ngực xẹp, da lép",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight-loss",
+      "childbirth"
+     ],
+     "src": [
+      "k00182",
+      "k00178"
+     ]
+    },
+    {
+     "id": "chest.pendulous-f",
+     "sex": "female",
+     "phrase": "long pendulous old breasts",
+     "vi": "ngực già dài, chảy xệ",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00648"
+     ]
+    },
+    {
+     "id": "chest.uneven-f",
+     "sex": "female",
+     "phrase": "one breast noticeably larger than the other",
+     "vi": "một bên ngực to hơn rõ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00170"
+     ]
+    },
+    {
+     "id": "chest.tuberous-f",
+     "sex": "female",
+     "phrase": "narrow tube-shaped breasts",
+     "vi": "ngực hình ống, đáy hẹp",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00156"
+     ]
+    },
+    {
+     "id": "chest.implants-f",
+     "sex": "female",
+     "phrase": "round implant breasts, bulging upper slope",
+     "vi": "ngực độn tròn, phần trên căng phồng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "enhanced",
+      "wealth"
+     ],
+     "src": [
+      "k00162",
+      "k00171",
+      "k00163"
+     ]
+    },
+    {
+     "id": "chest.old-implant-f",
+     "sex": "female",
+     "phrase": "old implants sagging low inside stretched skin",
+     "vi": "ngực độn cũ trễ xuống",
+     "freq": "rare",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "enhanced",
+      "ageing"
+     ],
+     "src": [
+      "k00181"
+     ]
+    },
+    {
+     "id": "chest.bony-f",
+     "sex": "female",
+     "phrase": "small breasts over a bony ribbed chest",
+     "vi": "ngực nhỏ trên khung sườn lộ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "dieting"
+     ],
+     "src": [
+      "k00241"
+     ]
+    },
+    {
+     "id": "chest.athletic-f",
+     "sex": "female",
+     "phrase": "small breasts over firm chest muscle",
+     "vi": "ngực nhỏ trên cơ ngực săn",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "waist_belly": {
+   "group": "D",
+   "vi": "Eo, bụng",
+   "values": [
+    {
+     "id": "waist_belly.normal-m",
+     "sex": "male",
+     "phrase": "ordinary male waist and flattish belly",
+     "vi": "eo bụng nam bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "waist_belly.sixpack-m",
+     "sex": "male",
+     "phrase": "visible six-pack abs",
+     "vi": "bụng sáu múi rõ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "gym-display"
+     ],
+     "src": [
+      "k00237",
+      "k00345",
+      "k00348"
+     ]
+    },
+    {
+     "id": "waist_belly.lean-flat-m",
+     "sex": "male",
+     "phrase": "flat lean stomach, faint ab outline",
+     "vi": "bụng phẳng săn, thấy mờ cơ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "manual-labour",
+      "sport",
+      "poverty"
+     ],
+     "src": [
+      "k00239",
+      "k00224"
+     ]
+    },
+    {
+     "id": "waist_belly.vtaper-m",
+     "sex": "male",
+     "phrase": "narrow waist under a wide back",
+     "vi": "eo hẹp dưới lưng rộng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "sport"
+     ],
+     "src": [
+      "k00223",
+      "k00233"
+     ]
+    },
+    {
+     "id": "waist_belly.thick-m",
+     "sex": "male",
+     "phrase": "thick straight waist, no taper",
+     "vi": "eo dày thẳng, không thon",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00202",
+      "k00319"
+     ]
+    },
+    {
+     "id": "waist_belly.soft-m",
+     "sex": "male",
+     "phrase": "soft belly over the waistline",
+     "vi": "bụng mềm xệ qua cạp",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00651"
+     ]
+    },
+    {
+     "id": "waist_belly.beer-m",
+     "sex": "male",
+     "phrase": "hard round beer belly",
+     "vi": "bụng bia tròn cứng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "alcohol",
+      "ageing"
+     ],
+     "src": [
+      "k00328",
+      "k00211"
+     ]
+    },
+    {
+     "id": "waist_belly.gut-m",
+     "sex": "male",
+     "phrase": "large belly hanging over the hips",
+     "vi": "bụng to xệ qua hông",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "alcohol"
+     ],
+     "src": [
+      "k00458"
+     ]
+    },
+    {
+     "id": "waist_belly.loves-m",
+     "sex": "male",
+     "phrase": "love handles bulging over the hip bones",
+     "vi": "mỡ hông bánh mì",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00022",
+      "k00230"
+     ]
+    },
+    {
+     "id": "waist_belly.pot-thin-m",
+     "sex": "male",
+     "phrase": "potbelly on a skinny body",
+     "vi": "bụng phệ trên người gầy",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "alcohol",
+      "ageing",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "waist_belly.hollow-m",
+     "sex": "male",
+     "phrase": "sunken hollow stomach",
+     "vi": "bụng lép hõm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "illness"
+     ],
+     "src": [
+      "k00124"
+     ]
+    },
+    {
+     "id": "waist_belly.rolls-m",
+     "sex": "male",
+     "phrase": "belly folding into soft rolls",
+     "vi": "bụng gấp thành ngấn",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet"
+     ],
+     "src": [
+      "k00378",
+      "k00493"
+     ]
+    },
+    {
+     "id": "waist_belly.hernia-m",
+     "sex": "male",
+     "phrase": "small bulging navel hernia",
+     "vi": "lồi rốn",
+     "freq": "rare",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "waist_belly.loose-m",
+     "sex": "male",
+     "phrase": "loose wrinkled belly skin",
+     "vi": "da bụng chùng nhăn",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "weight-loss"
+     ],
+     "src": [
+      "k00340"
+     ]
+    },
+    {
+     "id": "waist_belly.twopack-m",
+     "sex": "male",
+     "phrase": "uneven half-visible abs, lopsided lines",
+     "vi": "cơ bụng mờ, lệch không đều",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00238",
+      "k00350"
+     ]
+    },
+    {
+     "id": "waist_belly.normal-f",
+     "sex": "female",
+     "phrase": "natural waist with a slightly rounded belly",
+     "vi": "eo tự nhiên, bụng hơi tròn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00236"
+     ]
+    },
+    {
+     "id": "waist_belly.narrow-f",
+     "sex": "female",
+     "phrase": "narrow defined waist",
+     "vi": "eo thon rõ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00226",
+      "k00481"
+     ]
+    },
+    {
+     "id": "waist_belly.straight-f",
+     "sex": "female",
+     "phrase": "straight waist with little curve",
+     "vi": "eo thẳng, ít cong",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00556",
+      "k00422"
+     ]
+    },
+    {
+     "id": "waist_belly.thick-meno-f",
+     "sex": "female",
+     "phrase": "thickened waist, little difference to the hips",
+     "vi": "eo dày lên, gần bằng hông",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "menopause"
+     ],
+     "src": [
+      "k00219"
+     ]
+    },
+    {
+     "id": "waist_belly.soft-f",
+     "sex": "female",
+     "phrase": "soft rounded lower belly",
+     "vi": "bụng dưới tròn mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00030",
+      "k00028"
+     ]
+    },
+    {
+     "id": "waist_belly.pooch-f",
+     "sex": "female",
+     "phrase": "loose lower belly after childbirth",
+     "vi": "bụng dưới chùng sau sinh",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth"
+     ],
+     "src": [
+      "k00240",
+      "k00337"
+     ]
+    },
+    {
+     "id": "waist_belly.diastasis-f",
+     "sex": "female",
+     "phrase": "belly bulging along the midline after pregnancy",
+     "vi": "bụng phình giữa do tách cơ sau sinh",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth"
+     ],
+     "src": [
+      "k00240",
+      "k00341",
+      "k00327"
+     ]
+    },
+    {
+     "id": "waist_belly.apron-f",
+     "sex": "female",
+     "phrase": "belly fold hanging over the lower abdomen",
+     "vi": "ngấn bụng xệ thành vạt",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth",
+      "weight"
+     ],
+     "src": [
+      "k00340"
+     ]
+    },
+    {
+     "id": "waist_belly.toned-f",
+     "sex": "female",
+     "phrase": "flat toned stomach with a faint midline",
+     "vi": "bụng phẳng săn, đường giữa mờ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00236"
+     ]
+    },
+    {
+     "id": "waist_belly.abs-f",
+     "sex": "female",
+     "phrase": "visible abdominal muscles on a woman",
+     "vi": "nữ thấy rõ cơ bụng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "gym-display"
+     ],
+     "src": [
+      "k00313"
+     ]
+    },
+    {
+     "id": "waist_belly.apple-f",
+     "sex": "female",
+     "phrase": "round firm apple belly",
+     "vi": "bụng tròn hình quả táo",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "diet"
+     ],
+     "src": [
+      "k00030"
+     ]
+    },
+    {
+     "id": "waist_belly.muffin-f",
+     "sex": "female",
+     "phrase": "soft roll above the hips",
+     "vi": "ngấn mỡ trên hông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00230",
+      "k00246"
+     ]
+    },
+    {
+     "id": "waist_belly.rolls-f",
+     "sex": "female",
+     "phrase": "belly folding into several soft rolls",
+     "vi": "bụng nhiều ngấn",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet"
+     ],
+     "src": [
+      "k00493",
+      "k00378"
+     ]
+    },
+    {
+     "id": "waist_belly.hollow-f",
+     "sex": "female",
+     "phrase": "concave stomach between jutting hip bones",
+     "vi": "bụng lõm, xương hông nhô",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "dieting",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "waist_belly.lownavel-f",
+     "sex": "female",
+     "phrase": "low-set navel on a heavy belly",
+     "vi": "rốn thấp trên bụng nặng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth",
+      "weight"
+     ],
+     "src": [
+      "k00243"
+     ]
+    },
+    {
+     "id": "waist_belly.hernia-f",
+     "sex": "female",
+     "phrase": "small bulge at the navel",
+     "vi": "lồi rốn",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth"
+     ],
+     "src": [
+      "k00326"
+     ]
+    },
+    {
+     "id": "waist_belly.loose-f",
+     "sex": "female",
+     "phrase": "soft wrinkled crepey belly skin",
+     "vi": "da bụng nhăn nheo mềm",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00340"
+     ]
+    }
+   ]
+  },
+  "hips": {
+   "group": "D",
+   "vi": "Hông, mông",
+   "values": [
+    {
+     "id": "hips.normal-m",
+     "sex": "male",
+     "phrase": "narrow male hips",
+     "vi": "hông nam hẹp bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00074"
+     ]
+    },
+    {
+     "id": "hips.flat-m",
+     "sex": "male",
+     "phrase": "flat buttocks, narrow hips",
+     "vi": "mông lép, hông hẹp",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "sedentary"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hips.muscular-m",
+     "sex": "male",
+     "phrase": "firm muscular buttocks",
+     "vi": "mông chắc có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "manual-labour"
+     ],
+     "src": [
+      "k00281",
+      "k00275"
+     ]
+    },
+    {
+     "id": "hips.wide-m",
+     "sex": "male",
+     "phrase": "wide hips for a man",
+     "vi": "hông rộng so với nam",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00108"
+     ]
+    },
+    {
+     "id": "hips.heavy-m",
+     "sex": "male",
+     "phrase": "heavy wide hips and seat",
+     "vi": "hông mông to nặng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "sedentary"
+     ],
+     "src": [
+      "k00026"
+     ]
+    },
+    {
+     "id": "hips.bony-m",
+     "sex": "male",
+     "phrase": "bony hips, hip points showing",
+     "vi": "hông xương, lộ mấu",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hips.dimples-m",
+     "sex": "male",
+     "phrase": "small dimples above the buttocks",
+     "vi": "lúm đồng tiền trên mông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "lean"
+     ],
+     "src": [
+      "k00001",
+      "k00277"
+     ]
+    },
+    {
+     "id": "hips.sagging-m",
+     "sex": "male",
+     "phrase": "flat sagging old buttocks",
+     "vi": "mông già lép chảy",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00648"
+     ]
+    },
+    {
+     "id": "hips.overhang-m",
+     "sex": "male",
+     "phrase": "flank fat spilling over the hip bones",
+     "vi": "mỡ hông tràn qua xương chậu",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00022",
+      "k00003"
+     ]
+    },
+    {
+     "id": "hips.tight-m",
+     "sex": "male",
+     "phrase": "small tight high buttocks",
+     "vi": "mông nhỏ gọn, nằm cao",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics",
+      "sport"
+     ],
+     "src": [
+      "k00281"
+     ]
+    },
+    {
+     "id": "hips.pear-m",
+     "sex": "male",
+     "phrase": "soft pear-shaped lower body for a man",
+     "vi": "thân dưới mềm hình quả lê",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "hormones",
+      "genetics"
+     ],
+     "src": [
+      "k00108"
+     ]
+    },
+    {
+     "id": "hips.uneven-m",
+     "sex": "male",
+     "phrase": "one hip set higher than the other",
+     "vi": "hông lệch, một bên cao",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "injury",
+      "scoliosis"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hips.bony-old-m",
+     "sex": "male",
+     "phrase": "bony narrow old hips",
+     "vi": "hông già gầy xương",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00647"
+     ]
+    },
+    {
+     "id": "hips.thighheavy-m",
+     "sex": "male",
+     "phrase": "broad pelvis over heavy thighs",
+     "vi": "xương chậu rộng, đùi to",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hips.normal-f",
+     "sex": "female",
+     "phrase": "medium hips with rounded buttocks",
+     "vi": "hông vừa, mông tròn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00078"
+     ]
+    },
+    {
+     "id": "hips.narrow-f",
+     "sex": "female",
+     "phrase": "narrow boyish hips",
+     "vi": "hông hẹp kiểu con trai",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00084",
+      "k00556"
+     ]
+    },
+    {
+     "id": "hips.wide-f",
+     "sex": "female",
+     "phrase": "wide hips and pelvis",
+     "vi": "hông rộng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "childbirth"
+     ],
+     "src": [
+      "k00072",
+      "k00074"
+     ]
+    },
+    {
+     "id": "hips.very-wide-f",
+     "sex": "female",
+     "phrase": "very wide hips and heavy thighs",
+     "vi": "hông rất rộng, đùi nặng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00489",
+      "k00589"
+     ]
+    },
+    {
+     "id": "hips.flat-f",
+     "sex": "female",
+     "phrase": "flat buttocks, little rear curve",
+     "vi": "mông lép",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "ageing"
+     ],
+     "src": [
+      "k00537"
+     ]
+    },
+    {
+     "id": "hips.round-f",
+     "sex": "female",
+     "phrase": "full round buttocks",
+     "vi": "mông tròn đầy",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00537",
+      "k00281"
+     ]
+    },
+    {
+     "id": "hips.large-f",
+     "sex": "female",
+     "phrase": "large heavy buttocks",
+     "vi": "mông to nặng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "weight"
+     ],
+     "src": [
+      "k00301"
+     ]
+    },
+    {
+     "id": "hips.shelf-f",
+     "sex": "female",
+     "phrase": "high shelf-like buttocks",
+     "vi": "mông cong cao",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00276"
+     ]
+    },
+    {
+     "id": "hips.sagging-f",
+     "sex": "female",
+     "phrase": "low sagging buttocks",
+     "vi": "mông chảy xệ",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00648",
+      "k00248"
+     ]
+    },
+    {
+     "id": "hips.dips-f",
+     "sex": "female",
+     "phrase": "hip dips, inward dent below the hip bone",
+     "vi": "hông lõm dưới xương chậu",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00282"
+     ]
+    },
+    {
+     "id": "hips.saddle-f",
+     "sex": "female",
+     "phrase": "bulging outer hips and thighs",
+     "vi": "hông và đùi ngoài phình",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00028",
+      "k00034"
+     ]
+    },
+    {
+     "id": "hips.dimples-f",
+     "sex": "female",
+     "phrase": "small dimples above the buttocks",
+     "vi": "lúm đồng tiền trên mông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "lean"
+     ],
+     "src": [
+      "k00001",
+      "k00311",
+      "k00277"
+     ]
+    },
+    {
+     "id": "hips.augmented-f",
+     "sex": "female",
+     "phrase": "surgically rounded lifted buttocks",
+     "vi": "mông nâng độn tròn",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "enhanced",
+      "wealth"
+     ],
+     "src": [
+      "k00227",
+      "k00273"
+     ]
+    },
+    {
+     "id": "hips.bony-old-f",
+     "sex": "female",
+     "phrase": "bony narrow old hips",
+     "vi": "hông già gầy xương",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00647"
+     ]
+    },
+    {
+     "id": "hips.uneven-f",
+     "sex": "female",
+     "phrase": "one hip set higher than the other",
+     "vi": "hông lệch, một bên cao",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "scoliosis",
+      "carrying-child"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hips.diamond-f",
+     "sex": "female",
+     "phrase": "soft diamond-shaped fat pad above the buttocks",
+     "vi": "đệm mỡ hình thoi trên mông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00025"
+     ]
+    }
+   ]
+  },
+  "back": {
+   "group": "D",
+   "vi": "Lưng",
+   "values": [
+    {
+     "id": "back.normal",
+     "sex": "any",
+     "phrase": "ordinary straight back",
+     "vi": "lưng thẳng bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00615"
+     ]
+    },
+    {
+     "id": "back.hunch",
+     "sex": "any",
+     "phrase": "rounded upper back, slight hunch",
+     "vi": "lưng trên tròn, hơi gù",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00603"
+     ]
+    },
+    {
+     "id": "back.kyphosis",
+     "sex": "any",
+     "phrase": "strongly hunched old back",
+     "vi": "lưng gù nặng",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness"
+     ],
+     "src": [
+      "k00644",
+      "k00645"
+     ]
+    },
+    {
+     "id": "back.hump-f",
+     "sex": "female",
+     "phrase": "dowager's hump at the base of the neck",
+     "vi": "bướu sau gáy",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "osteoporosis"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "back.fieldbent",
+     "sex": "any",
+     "phrase": "back bent from decades of stooped fieldwork",
+     "vi": "lưng còng do cúi làm đồng",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "back.sway",
+     "sex": "any",
+     "phrase": "swayback, deep inward lower curve",
+     "vi": "lưng võng, ưỡn sâu",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "pregnancy"
+     ],
+     "src": [
+      "k00611"
+     ]
+    },
+    {
+     "id": "back.flat",
+     "sex": "any",
+     "phrase": "flat back with no lower curve",
+     "vi": "lưng phẳng, mất đường cong",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00613"
+     ]
+    },
+    {
+     "id": "back.scoliosis",
+     "sex": "any",
+     "phrase": "spine curved sideways, uneven shoulder blades",
+     "vi": "cột sống cong vẹo",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "back.vback-m",
+     "sex": "male",
+     "phrase": "broad V-shaped muscular back",
+     "vi": "lưng chữ V có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "sport"
+     ],
+     "src": [
+      "k00255",
+      "k00233"
+     ]
+    },
+    {
+     "id": "back.broad-m",
+     "sex": "male",
+     "phrase": "broad thick back from heavy lifting",
+     "vi": "lưng rộng dày do khuân vác",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "k00260"
+     ]
+    },
+    {
+     "id": "back.columns",
+     "sex": "any",
+     "phrase": "thick muscle columns along the spine",
+     "vi": "hai dải cơ dày dọc sống lưng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "manual-labour"
+     ],
+     "src": [
+      "k00257",
+      "k00310"
+     ]
+    },
+    {
+     "id": "back.bony",
+     "sex": "any",
+     "phrase": "bony back, spine and ribs visible",
+     "vi": "lưng gầy, lộ cột sống, sườn",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "illness"
+     ],
+     "src": [
+      "k00103"
+     ]
+    },
+    {
+     "id": "back.blades",
+     "sex": "any",
+     "phrase": "sharp protruding shoulder blades",
+     "vi": "xương bả vai nhô sắc",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "k00103",
+      "k00000"
+     ]
+    },
+    {
+     "id": "back.rolls",
+     "sex": "any",
+     "phrase": "soft fat rolls across the back",
+     "vi": "ngấn mỡ ngang lưng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet",
+      "sedentary"
+     ],
+     "src": [
+      "k00256",
+      "k00548"
+     ]
+    },
+    {
+     "id": "back.slim-f",
+     "sex": "female",
+     "phrase": "slim female back with faint spine groove",
+     "vi": "lưng nữ mảnh, rãnh sống mờ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00235"
+     ]
+    },
+    {
+     "id": "back.stiff",
+     "sex": "any",
+     "phrase": "stiff rigid back, moves as one block",
+     "vi": "lưng cứng đơ",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "injury"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "back.lean-sideways",
+     "sex": "any",
+     "phrase": "spine leaning to one side from carrying loads",
+     "vi": "lưng nghiêng một bên do gánh",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "body_skin": {
+   "group": "D",
+   "vi": "Da thân",
+   "values": [
+    {
+     "id": "body_skin.normal-m",
+     "sex": "male",
+     "phrase": "ordinary body skin, light body hair",
+     "vi": "da thân bình thường, lông nhẹ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.hairless-m",
+     "sex": "male",
+     "phrase": "nearly hairless smooth male body",
+     "vi": "người gần như không lông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.hairychest-m",
+     "sex": "male",
+     "phrase": "hairy chest and belly",
+     "vi": "ngực bụng nhiều lông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.veryhairy-m",
+     "sex": "male",
+     "phrase": "very hairy body including shoulders and back",
+     "vi": "lông khắp người cả vai lưng",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.greyhair-m",
+     "sex": "male",
+     "phrase": "sparse grey chest hair",
+     "vi": "lông ngực bạc lưa thưa",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.farmertan-m",
+     "sex": "male",
+     "phrase": "sun-darkened arms and neck, pale torso",
+     "vi": "tay cổ cháy nắng, thân trắng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sun",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.leathery-m",
+     "sex": "male",
+     "phrase": "deeply sun-darkened leathery skin all over",
+     "vi": "da toàn thân sạm như da thuộc",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sun",
+      "manual-labour",
+      "fishing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.pale-m",
+     "sex": "male",
+     "phrase": "pale indoor skin that rarely sees sun",
+     "vi": "da trắng xanh ít nắng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "wealth"
+     ],
+     "src": [
+      "k00128",
+      "k00129"
+     ]
+    },
+    {
+     "id": "body_skin.ruddy-m",
+     "sex": "male",
+     "phrase": "ruddy blotchy skin with broken capillaries",
+     "vi": "da đỏ loang, mao mạch vỡ",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "alcohol"
+     ],
+     "src": [
+      "k00133",
+      "k00125"
+     ]
+    },
+    {
+     "id": "body_skin.stretch-m",
+     "sex": "male",
+     "phrase": "stretch marks on belly and sides",
+     "vi": "rạn da bụng và hông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight",
+      "gym-display"
+     ],
+     "src": [
+      "k00339"
+     ]
+    },
+    {
+     "id": "body_skin.loose-m",
+     "sex": "male",
+     "phrase": "loose hanging skin after weight loss",
+     "vi": "da chùng sau giảm cân",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight-loss"
+     ],
+     "src": [
+      "k00182",
+      "k00342"
+     ]
+    },
+    {
+     "id": "body_skin.crepey-m",
+     "sex": "male",
+     "phrase": "thin crepey wrinkled skin",
+     "vi": "da mỏng nhăn nheo",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00646"
+     ]
+    },
+    {
+     "id": "body_skin.spots-m",
+     "sex": "male",
+     "phrase": "age spots on shoulders and back",
+     "vi": "đồi mồi trên vai lưng",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "sun"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.acne-m",
+     "sex": "male",
+     "phrase": "acne spots on back and shoulders",
+     "vi": "mụn lưng và vai",
+     "freq": "uncommon",
+     "ages": [
+      "young"
+     ],
+     "causes": [
+      "youth",
+      "hormones"
+     ],
+     "src": [
+      "k00357"
+     ]
+    },
+    {
+     "id": "body_skin.fungal-m",
+     "sex": "male",
+     "phrase": "pale fungal patches on chest and back",
+     "vi": "lang ben trên ngực lưng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "tropical",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.dry-m",
+     "sex": "male",
+     "phrase": "dry ashy flaky skin",
+     "vi": "da khô bong vảy",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "ageing"
+     ],
+     "src": [
+      "k00135"
+     ]
+    },
+    {
+     "id": "body_skin.bruised-m",
+     "sex": "male",
+     "phrase": "scattered bruises on the skin",
+     "vi": "vết bầm rải rác",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport",
+      "fighting",
+      "manual-labour"
+     ],
+     "src": [
+      "k00597",
+      "k00125"
+     ]
+    },
+    {
+     "id": "body_skin.vitiligo-m",
+     "sex": "male",
+     "phrase": "white vitiligo patches on darker skin",
+     "vi": "bạch biến từng mảng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.psoriasis-m",
+     "sex": "male",
+     "phrase": "scaly red psoriasis patches on elbows and back",
+     "vi": "vảy nến từng mảng",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.rash-m",
+     "sex": "male",
+     "phrase": "prickly heat rash on chest and neck",
+     "vi": "rôm sảy ở ngực cổ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "tropical",
+      "heat"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.normal-f",
+     "sex": "female",
+     "phrase": "ordinary smooth body skin",
+     "vi": "da thân bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.hairless-f",
+     "sex": "female",
+     "phrase": "very smooth hairless skin",
+     "vi": "da trơn gần như không lông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.forearmhair-f",
+     "sex": "female",
+     "phrase": "visible dark hair on forearms",
+     "vi": "lông tay sẫm rõ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.farmertan-f",
+     "sex": "female",
+     "phrase": "sun-darkened arms and neck, pale torso",
+     "vi": "tay cổ cháy nắng, thân trắng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sun",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.leathery-f",
+     "sex": "female",
+     "phrase": "deeply sun-darkened weathered skin",
+     "vi": "da sạm dày vì nắng gió",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sun",
+      "manual-labour",
+      "fishing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.pale-f",
+     "sex": "female",
+     "phrase": "pale indoor skin that rarely sees sun",
+     "vi": "da trắng xanh ít nắng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "wealth"
+     ],
+     "src": [
+      "k00128",
+      "k00131"
+     ]
+    },
+    {
+     "id": "body_skin.stretch-f",
+     "sex": "female",
+     "phrase": "silvery stretch marks on belly and hips",
+     "vi": "rạn da bạc trên bụng hông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth",
+      "weight"
+     ],
+     "src": [
+      "k00339",
+      "k00325"
+     ]
+    },
+    {
+     "id": "body_skin.breaststretch-f",
+     "sex": "female",
+     "phrase": "stretch marks on breasts and thighs",
+     "vi": "rạn da ngực và đùi",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "growth",
+      "weight"
+     ],
+     "src": [
+      "k00339"
+     ]
+    },
+    {
+     "id": "body_skin.cellulite-f",
+     "sex": "female",
+     "phrase": "dimpled cellulite on thighs and buttocks",
+     "vi": "da sần vỏ cam ở đùi mông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00577"
+     ]
+    },
+    {
+     "id": "body_skin.loose-f",
+     "sex": "female",
+     "phrase": "loose hanging skin after weight loss",
+     "vi": "da chùng sau giảm cân",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight-loss"
+     ],
+     "src": [
+      "k00182",
+      "k00342"
+     ]
+    },
+    {
+     "id": "body_skin.crepey-f",
+     "sex": "female",
+     "phrase": "thin crepey wrinkled skin",
+     "vi": "da mỏng nhăn nheo",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00646"
+     ]
+    },
+    {
+     "id": "body_skin.spots-f",
+     "sex": "female",
+     "phrase": "age spots on shoulders and chest",
+     "vi": "đồi mồi trên vai ngực",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "sun"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.acne-f",
+     "sex": "female",
+     "phrase": "acne spots on back and shoulders",
+     "vi": "mụn lưng và vai",
+     "freq": "uncommon",
+     "ages": [
+      "young"
+     ],
+     "causes": [
+      "youth",
+      "hormones"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.ruddy-f",
+     "sex": "female",
+     "phrase": "ruddy blotchy skin with broken capillaries",
+     "vi": "da đỏ loang, mao mạch vỡ",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "alcohol",
+      "genetics"
+     ],
+     "src": [
+      "k00133"
+     ]
+    },
+    {
+     "id": "body_skin.fungal-f",
+     "sex": "female",
+     "phrase": "pale fungal patches on chest and back",
+     "vi": "lang ben trên ngực lưng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "tropical",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.dry-f",
+     "sex": "female",
+     "phrase": "dry ashy flaky skin",
+     "vi": "da khô bong vảy",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "ageing"
+     ],
+     "src": [
+      "k00135"
+     ]
+    },
+    {
+     "id": "body_skin.veins-f",
+     "sex": "female",
+     "phrase": "blue veins visible through pale chest skin",
+     "vi": "gân xanh lộ qua da ngực trắng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00128"
+     ]
+    },
+    {
+     "id": "body_skin.linea-f",
+     "sex": "female",
+     "phrase": "faint dark line down the belly",
+     "vi": "đường thâm dọc bụng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "childbirth"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.vitiligo-f",
+     "sex": "female",
+     "phrase": "white vitiligo patches on darker skin",
+     "vi": "bạch biến từng mảng",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "body_skin.bruised-f",
+     "sex": "female",
+     "phrase": "scattered bruises on the skin",
+     "vi": "vết bầm rải rác",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sport",
+      "abuse",
+      "illness"
+     ],
+     "src": [
+      "k00597"
+     ]
+    }
+   ]
+  },
+  "arms": {
+   "group": "E",
+   "vi": "Cánh tay",
+   "values": [
+    {
+     "id": "arms.normal-m",
+     "sex": "male",
+     "phrase": "average male arms",
+     "vi": "tay nam bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.skinny-m",
+     "sex": "male",
+     "phrase": "thin skinny arms",
+     "vi": "tay gầy nhỏ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "k00456"
+     ]
+    },
+    {
+     "id": "arms.wiry-m",
+     "sex": "male",
+     "phrase": "wiry veiny forearms",
+     "vi": "cẳng tay gân guốc nổi gân xanh",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "k00089"
+     ]
+    },
+    {
+     "id": "arms.forearms-m",
+     "sex": "male",
+     "phrase": "thick strong forearms from hard work",
+     "vi": "cẳng tay to khỏe do làm nặng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.muscular-m",
+     "sex": "male",
+     "phrase": "naturally muscular arms",
+     "vi": "tay có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00266",
+      "k00270"
+     ]
+    },
+    {
+     "id": "arms.biceps-m",
+     "sex": "male",
+     "phrase": "big round gym biceps",
+     "vi": "bắp tay tròn to do tập gym",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display"
+     ],
+     "src": [
+      "k00269",
+      "k00307"
+     ]
+    },
+    {
+     "id": "arms.huge-m",
+     "sex": "male",
+     "phrase": "huge bodybuilder arms with bulging veins",
+     "vi": "tay cực to kiểu thể hình",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "enhanced"
+     ],
+     "src": [
+      "k00323"
+     ]
+    },
+    {
+     "id": "arms.soft-m",
+     "sex": "male",
+     "phrase": "soft heavy upper arms",
+     "vi": "bắp tay mềm nặng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00653"
+     ]
+    },
+    {
+     "id": "arms.fat-m",
+     "sex": "male",
+     "phrase": "thick fat arms with no definition",
+     "vi": "tay to mỡ, không thấy cơ",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet"
+     ],
+     "src": [
+      "k00653"
+     ]
+    },
+    {
+     "id": "arms.long-m",
+     "sex": "male",
+     "phrase": "long arms, hands reaching mid-thigh",
+     "vi": "tay dài, buông quá giữa đùi",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00009",
+      "k00056"
+     ]
+    },
+    {
+     "id": "arms.short-m",
+     "sex": "male",
+     "phrase": "short thick arms",
+     "vi": "tay ngắn to",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00086"
+     ]
+    },
+    {
+     "id": "arms.loose-m",
+     "sex": "male",
+     "phrase": "loose skin hanging under the upper arms",
+     "vi": "da bắp tay dưới chùng",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00330",
+      "k00052"
+     ]
+    },
+    {
+     "id": "arms.stick-m",
+     "sex": "male",
+     "phrase": "stick-thin old arms with bony elbows",
+     "vi": "tay già que củi, khuỷu xương",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness"
+     ],
+     "src": [
+      "k00647"
+     ]
+    },
+    {
+     "id": "arms.onesided-m",
+     "sex": "male",
+     "phrase": "one arm thicker than the other",
+     "vi": "một tay to hơn tay kia",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.hairy-m",
+     "sex": "male",
+     "phrase": "thick dark hair on the forearms",
+     "vi": "cẳng tay nhiều lông sẫm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.normal-f",
+     "sex": "female",
+     "phrase": "slim average female arms",
+     "vi": "tay nữ thon bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00077"
+     ]
+    },
+    {
+     "id": "arms.thin-f",
+     "sex": "female",
+     "phrase": "thin bony arms",
+     "vi": "tay gầy xương",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "dieting"
+     ],
+     "src": [
+      "k00558"
+     ]
+    },
+    {
+     "id": "arms.soft-f",
+     "sex": "female",
+     "phrase": "soft rounded upper arms",
+     "vi": "bắp tay tròn mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00652"
+     ]
+    },
+    {
+     "id": "arms.heavy-f",
+     "sex": "female",
+     "phrase": "heavy fleshy upper arms",
+     "vi": "bắp tay nhiều thịt",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight",
+      "ageing"
+     ],
+     "src": [
+      "k00330",
+      "k00652"
+     ]
+    },
+    {
+     "id": "arms.batwing-f",
+     "sex": "female",
+     "phrase": "loose skin hanging under the upper arms",
+     "vi": "da bắp tay chảy xệ",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "weight-loss"
+     ],
+     "src": [
+      "k00330",
+      "k00331"
+     ]
+    },
+    {
+     "id": "arms.toned-f",
+     "sex": "female",
+     "phrase": "toned slim arms with faint definition",
+     "vi": "tay thon săn, hơi thấy cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00332"
+     ]
+    },
+    {
+     "id": "arms.muscular-f",
+     "sex": "female",
+     "phrase": "visibly muscular arms on a woman",
+     "vi": "nữ tay có cơ rõ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "gym-display",
+      "sport"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.forearms-f",
+     "sex": "female",
+     "phrase": "strong work-hardened forearms",
+     "vi": "cẳng tay cứng chắc do làm lụng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.wiry-f",
+     "sex": "female",
+     "phrase": "wiry sinewy arms with raised veins",
+     "vi": "tay gân guốc nổi gân",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.plump-f",
+     "sex": "female",
+     "phrase": "short plump arms",
+     "vi": "tay ngắn mũm mĩm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "arms.long-f",
+     "sex": "female",
+     "phrase": "long thin arms",
+     "vi": "tay dài mảnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00009"
+     ]
+    },
+    {
+     "id": "arms.stick-f",
+     "sex": "female",
+     "phrase": "stick-thin old arms with bony elbows",
+     "vi": "tay già que củi, khuỷu xương",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness"
+     ],
+     "src": [
+      "k00647"
+     ]
+    },
+    {
+     "id": "arms.crepey-f",
+     "sex": "female",
+     "phrase": "crepey wrinkled skin on the arms",
+     "vi": "da tay nhăn mỏng",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00577"
+     ]
+    }
+   ]
+  },
+  "hands": {
+   "group": "E",
+   "vi": "Bàn tay",
+   "values": [
+    {
+     "id": "hands.normal-m",
+     "sex": "male",
+     "phrase": "average male hands with broad palms",
+     "vi": "tay nam bình thường, lòng rộng",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00093",
+      "k00045"
+     ]
+    },
+    {
+     "id": "hands.normal-f",
+     "sex": "female",
+     "phrase": "average female hands, slim and smaller",
+     "vi": "tay nữ bình thường, nhỏ thon",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00076"
+     ]
+    },
+    {
+     "id": "hands.large",
+     "sex": "any",
+     "phrase": "large hands with long palms",
+     "vi": "bàn tay to",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00009",
+      "k00048"
+     ]
+    },
+    {
+     "id": "hands.small",
+     "sex": "any",
+     "phrase": "small short hands",
+     "vi": "bàn tay nhỏ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00076"
+     ]
+    },
+    {
+     "id": "hands.long-fingers",
+     "sex": "any",
+     "phrase": "long thin fingers",
+     "vi": "ngón tay dài mảnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.stubby",
+     "sex": "any",
+     "phrase": "short stubby fingers",
+     "vi": "ngón tay ngắn mập",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00399"
+     ]
+    },
+    {
+     "id": "hands.sausage",
+     "sex": "any",
+     "phrase": "thick puffy sausage fingers",
+     "vi": "ngón tay to múp",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.plump",
+     "sex": "any",
+     "phrase": "plump soft dimpled hands",
+     "vi": "bàn tay mập mềm có lúm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.bony-m",
+     "sex": "male",
+     "phrase": "large bony muscular hands",
+     "vi": "tay to xương, gân guốc",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "manual-labour"
+     ],
+     "src": [
+      "k00093"
+     ]
+    },
+    {
+     "id": "hands.square-m",
+     "sex": "male",
+     "phrase": "broad square work hands",
+     "vi": "bàn tay vuông rộng của người lao động",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.calloused",
+     "sex": "any",
+     "phrase": "thick calloused palms",
+     "vi": "lòng bàn tay chai dày",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.cracked",
+     "sex": "any",
+     "phrase": "rough cracked skin on the hands",
+     "vi": "da tay thô nứt nẻ",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.stained",
+     "sex": "any",
+     "phrase": "hands stained dark from work",
+     "vi": "tay ám màu do công việc",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.soft-smooth",
+     "sex": "any",
+     "phrase": "soft smooth uncalloused hands",
+     "vi": "tay mềm mịn không chai",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "wealth",
+      "sedentary"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.veiny",
+     "sex": "any",
+     "phrase": "prominent veins on the backs of the hands",
+     "vi": "gân xanh nổi mu bàn tay",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "lean",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.old-thin",
+     "sex": "any",
+     "phrase": "thin bony old hands with loose skin",
+     "vi": "tay già gầy, da nhăn chùng",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00052"
+     ]
+    },
+    {
+     "id": "hands.arthritic",
+     "sex": "any",
+     "phrase": "swollen knuckles and bent arthritic fingers",
+     "vi": "khớp ngón sưng, ngón cong vẹo",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.spots",
+     "sex": "any",
+     "phrase": "age spots on the backs of the hands",
+     "vi": "đồi mồi mu bàn tay",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "sun"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.red-chapped",
+     "sex": "any",
+     "phrase": "red chapped hands",
+     "vi": "tay đỏ nứt nẻ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "cold",
+      "washing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.waterlogged",
+     "sex": "any",
+     "phrase": "pale wrinkled water-soaked hands",
+     "vi": "tay trắng nhăn vì ngâm nước",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "fishing",
+      "washing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.clubbed",
+     "sex": "any",
+     "phrase": "clubbed rounded fingertips",
+     "vi": "đầu ngón tay dùi trống",
+     "freq": "rare",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.dupuytren",
+     "sex": "any",
+     "phrase": "ring finger curled stiffly into the palm",
+     "vi": "ngón áp út co quắp vào lòng",
+     "freq": "rare",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.hairy-m",
+     "sex": "male",
+     "phrase": "hairy knuckles and backs of hands",
+     "vi": "lông ở mu tay, đốt ngón",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.delicate-f",
+     "sex": "female",
+     "phrase": "small delicate hands with thin fingers",
+     "vi": "tay nhỏ thanh, ngón mảnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00076"
+     ]
+    },
+    {
+     "id": "hands.crooked",
+     "sex": "any",
+     "phrase": "one crooked finger from an old break",
+     "vi": "một ngón tay cong do gãy cũ",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "injury",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "hands.tense",
+     "sex": "any",
+     "phrase": "tense knotted hands, fingers held stiff",
+     "vi": "tay gồng cứng, ngón căng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "stress"
+     ],
+     "src": [
+      "k00396",
+      "k00402"
+     ]
+    }
+   ]
+  },
+  "nails": {
+   "group": "E",
+   "vi": "Móng tay",
+   "values": [
+    {
+     "id": "nails.normal",
+     "sex": "any",
+     "phrase": "short clean natural nails",
+     "vi": "móng ngắn sạch",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.dirty",
+     "sex": "any",
+     "phrase": "short nails with dirt under them",
+     "vi": "móng ngắn có đất bẩn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.bitten",
+     "sex": "any",
+     "phrase": "bitten-down nails with ragged edges",
+     "vi": "móng cắn trụi, mép nham nhở",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "stress"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.broken",
+     "sex": "any",
+     "phrase": "chipped and broken nails",
+     "vi": "móng mẻ gãy",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.thick-yellow",
+     "sex": "any",
+     "phrase": "thick yellowed nails",
+     "vi": "móng dày ố vàng",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "fungal"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.ridged",
+     "sex": "any",
+     "phrase": "ridged brittle nails",
+     "vi": "móng có gờ, giòn",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.nicotine",
+     "sex": "any",
+     "phrase": "nicotine-stained fingertips and nails",
+     "vi": "đầu ngón, móng ám vàng thuốc lá",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "smoking"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.long-uncut",
+     "sex": "any",
+     "phrase": "long uncut natural nails",
+     "vi": "móng dài không cắt",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "neglect"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.pinky-m",
+     "sex": "male",
+     "phrase": "one long grown-out pinky nail",
+     "vi": "để móng út dài",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "custom"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.trimmed",
+     "sex": "any",
+     "phrase": "neatly trimmed buffed nails",
+     "vi": "móng cắt gọn, đánh bóng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "wealth"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.black",
+     "sex": "any",
+     "phrase": "one blackened bruised nail",
+     "vi": "một móng bầm đen",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "injury",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.pale",
+     "sex": "any",
+     "phrase": "pale bluish nails",
+     "vi": "móng nhợt tái xanh",
+     "freq": "rare",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.cuticles",
+     "sex": "any",
+     "phrase": "torn ragged cuticles",
+     "vi": "da quanh móng xước tưa",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "stress"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.spoon",
+     "sex": "any",
+     "phrase": "thin spoon-shaped nails",
+     "vi": "móng mỏng lõm hình thìa",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "anemia"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.shaped-f",
+     "sex": "female",
+     "phrase": "natural nails kept slightly long and shaped",
+     "vi": "móng để hơi dài, dũa gọn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "grooming"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "nails.stained-betel-f",
+     "sex": "female",
+     "phrase": "reddish-stained fingertips from chewing betel",
+     "vi": "đầu ngón ám đỏ trầu",
+     "freq": "rare",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "custom"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "legs": {
+   "group": "F",
+   "vi": "Chân",
+   "values": [
+    {
+     "id": "legs.normal-m",
+     "sex": "male",
+     "phrase": "ordinary straight male legs",
+     "vi": "chân nam thẳng bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.long-m",
+     "sex": "male",
+     "phrase": "long legs, short torso",
+     "vi": "chân dài",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00011"
+     ]
+    },
+    {
+     "id": "legs.short-m",
+     "sex": "male",
+     "phrase": "short legs under a long torso",
+     "vi": "chân ngắn, thân dài",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.bow-m",
+     "sex": "male",
+     "phrase": "bow legs, knees curving apart",
+     "vi": "chân vòng kiềng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "rickets",
+      "riding"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.knock-m",
+     "sex": "male",
+     "phrase": "knock knees, knees touching",
+     "vi": "chân chữ X",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.skinny-m",
+     "sex": "male",
+     "phrase": "skinny legs with thin calves",
+     "vi": "chân gầy, bắp nhỏ",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.chicken-m",
+     "sex": "male",
+     "phrase": "thin legs under a heavy upper body",
+     "vi": "chân gầy dưới thân trên nặng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "gym-display"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.thighs-m",
+     "sex": "male",
+     "phrase": "thick muscular thighs",
+     "vi": "đùi to có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00283",
+      "k00293"
+     ]
+    },
+    {
+     "id": "legs.calves-m",
+     "sex": "male",
+     "phrase": "big hard calves from walking and carrying",
+     "vi": "bắp chân to cứng do đi bộ, gánh vác",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "walking"
+     ],
+     "src": [
+      "k00289"
+     ]
+    },
+    {
+     "id": "legs.cyclist-m",
+     "sex": "male",
+     "phrase": "lean sinewy legs from years of pedalling",
+     "vi": "chân gân guốc của người đạp xích lô",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.heavy-m",
+     "sex": "male",
+     "phrase": "heavy fleshy thighs",
+     "vi": "đùi to nhiều thịt",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "diet"
+     ],
+     "src": [
+      "k00653"
+     ]
+    },
+    {
+     "id": "legs.varicose-m",
+     "sex": "male",
+     "phrase": "bulging varicose veins on the calves",
+     "vi": "giãn tĩnh mạch nổi ở bắp chân",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "standing-work",
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.knobbly-m",
+     "sex": "male",
+     "phrase": "thin old legs with knobbly knees",
+     "vi": "chân già gầy, gối lồi",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00647"
+     ]
+    },
+    {
+     "id": "legs.swollen-m",
+     "sex": "male",
+     "phrase": "swollen puffy ankles",
+     "vi": "mắt cá sưng phù",
+     "freq": "uncommon",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.hairy-m",
+     "sex": "male",
+     "phrase": "thick dark hair on the legs",
+     "vi": "chân nhiều lông sẫm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.hairless-m",
+     "sex": "male",
+     "phrase": "smooth nearly hairless legs",
+     "vi": "chân nhẵn gần như không lông",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.wasted-m",
+     "sex": "male",
+     "phrase": "one leg thin and wasted",
+     "vi": "một chân teo nhỏ",
+     "freq": "rare",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "injury"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.normal-f",
+     "sex": "female",
+     "phrase": "ordinary legs with slightly soft thighs",
+     "vi": "chân nữ bình thường, đùi hơi mềm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00063"
+     ]
+    },
+    {
+     "id": "legs.long-f",
+     "sex": "female",
+     "phrase": "long slim legs",
+     "vi": "chân dài thon",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00085"
+     ]
+    },
+    {
+     "id": "legs.short-f",
+     "sex": "female",
+     "phrase": "short legs with heavier thighs",
+     "vi": "chân ngắn, đùi to",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00063"
+     ]
+    },
+    {
+     "id": "legs.thighs-touch-f",
+     "sex": "female",
+     "phrase": "full thighs that touch",
+     "vi": "đùi đầy chạm nhau",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00299"
+     ]
+    },
+    {
+     "id": "legs.thin-f",
+     "sex": "female",
+     "phrase": "thin straight legs with a gap between thighs",
+     "vi": "chân gầy thẳng, đùi hở",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "genetics",
+      "dieting"
+     ],
+     "src": [
+      "k00555"
+     ]
+    },
+    {
+     "id": "legs.calves-f",
+     "sex": "female",
+     "phrase": "thick sturdy calves",
+     "vi": "bắp chân to chắc",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "walking"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.cankles-f",
+     "sex": "female",
+     "phrase": "thick ankles with little taper",
+     "vi": "cổ chân to, không thon",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "weight"
+     ],
+     "src": [
+      "k00295"
+     ]
+    },
+    {
+     "id": "legs.bow-f",
+     "sex": "female",
+     "phrase": "bow legs, knees curving apart",
+     "vi": "chân vòng kiềng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.knock-f",
+     "sex": "female",
+     "phrase": "knock knees, knees touching",
+     "vi": "chân chữ X",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.varicose-f",
+     "sex": "female",
+     "phrase": "bulging varicose veins on the calves",
+     "vi": "giãn tĩnh mạch nổi ở bắp chân",
+     "freq": "common",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth",
+      "standing-work"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.spider-f",
+     "sex": "female",
+     "phrase": "fine spider veins on the thighs",
+     "vi": "mạch máu li ti trên đùi",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "childbirth",
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.athletic-f",
+     "sex": "female",
+     "phrase": "muscular athletic thighs and calves",
+     "vi": "đùi bắp chân thể thao có cơ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "sport"
+     ],
+     "src": [
+      "k00080",
+      "k00289"
+     ]
+    },
+    {
+     "id": "legs.fatknees-f",
+     "sex": "female",
+     "phrase": "soft knees blurred by fat",
+     "vi": "đầu gối mờ vì mỡ",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight"
+     ],
+     "src": [
+      "k00287",
+      "k00291"
+     ]
+    },
+    {
+     "id": "legs.knobbly-f",
+     "sex": "female",
+     "phrase": "thin old legs with knobbly knees",
+     "vi": "chân già gầy, gối lồi",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00647"
+     ]
+    },
+    {
+     "id": "legs.swollen-f",
+     "sex": "female",
+     "phrase": "swollen puffy ankles",
+     "vi": "mắt cá sưng phù",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "pregnancy"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "legs.heavy-f",
+     "sex": "female",
+     "phrase": "heavy column-like legs",
+     "vi": "chân to như cột",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight",
+      "illness"
+     ],
+     "src": [
+      "k00653"
+     ]
+    },
+    {
+     "id": "legs.hairy-f",
+     "sex": "female",
+     "phrase": "visible dark hair on the shins",
+     "vi": "ống chân có lông sẫm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "feet": {
+   "group": "F",
+   "vi": "Bàn chân",
+   "values": [
+    {
+     "id": "feet.normal",
+     "sex": "any",
+     "phrase": "ordinary average-sized feet",
+     "vi": "bàn chân bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.normal-f",
+     "sex": "female",
+     "phrase": "small narrow female feet with an arch",
+     "vi": "bàn chân nữ nhỏ thon có vòm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00079"
+     ]
+    },
+    {
+     "id": "feet.large",
+     "sex": "any",
+     "phrase": "large long feet",
+     "vi": "bàn chân to dài",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00011"
+     ]
+    },
+    {
+     "id": "feet.small",
+     "sex": "any",
+     "phrase": "small short feet",
+     "vi": "bàn chân nhỏ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.wide-flat",
+     "sex": "any",
+     "phrase": "wide flat feet with splayed toes",
+     "vi": "bàn chân bè phẳng, ngón xòe",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "barefoot",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.high-arch",
+     "sex": "any",
+     "phrase": "high-arched bony feet",
+     "vi": "bàn chân vòm cao, xương",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "k00079"
+     ]
+    },
+    {
+     "id": "feet.flat",
+     "sex": "any",
+     "phrase": "flat feet with no arch",
+     "vi": "bàn chân bẹt, không vòm",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "weight"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.bunion",
+     "sex": "any",
+     "phrase": "bunion with the big toe bent inward",
+     "vi": "ngón cái vẹo vào trong, u xương",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "tight-shoes"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.hammer",
+     "sex": "any",
+     "phrase": "curled hammer toes",
+     "vi": "ngón chân quặp",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "tight-shoes"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.cracked",
+     "sex": "any",
+     "phrase": "deeply cracked dry heels",
+     "vi": "gót chân nứt nẻ sâu",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "barefoot"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.calloused",
+     "sex": "any",
+     "phrase": "thick calloused soles from walking barefoot",
+     "vi": "lòng bàn chân chai dày do đi chân đất",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "barefoot",
+      "manual-labour",
+      "poverty"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.splayed",
+     "sex": "any",
+     "phrase": "toes spread wide from years of going barefoot",
+     "vi": "ngón chân xòe rộng do quen đi chân đất",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "barefoot"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.gnarled",
+     "sex": "any",
+     "phrase": "gnarled bony old feet with thick nails",
+     "vi": "bàn chân già xương xẩu, móng dày",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.swollen",
+     "sex": "any",
+     "phrase": "swollen puffy feet",
+     "vi": "bàn chân sưng phù",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "standing-work"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.soft",
+     "sex": "any",
+     "phrase": "soft pale uncalloused feet",
+     "vi": "bàn chân trắng mềm không chai",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "wealth"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.dirty",
+     "sex": "any",
+     "phrase": "dusty feet with dirt in the toe creases",
+     "vi": "bàn chân bụi bặm, kẽ ngón dính đất",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "poverty",
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.toenails",
+     "sex": "any",
+     "phrase": "thick yellow fungal toenails",
+     "vi": "móng chân dày vàng do nấm",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "fungal"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.long-toe",
+     "sex": "any",
+     "phrase": "second toe longer than the big toe",
+     "vi": "ngón trỏ dài hơn ngón cái",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.broad-m",
+     "sex": "male",
+     "phrase": "broad heavy male feet",
+     "vi": "bàn chân nam to bè",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "feet.water-feet",
+     "sex": "any",
+     "phrase": "pale wrinkled feet from standing in water",
+     "vi": "chân trắng nhăn vì ngâm nước",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "fishing",
+      "farming"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  },
+  "posture": {
+   "group": "G",
+   "vi": "Tư thế đứng",
+   "values": [
+    {
+     "id": "posture.normal",
+     "sex": "any",
+     "phrase": "relaxed ordinary upright stance",
+     "vi": "đứng thẳng thoải mái bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "k00095"
+     ]
+    },
+    {
+     "id": "posture.upright",
+     "sex": "any",
+     "phrase": "tall upright posture, long spine",
+     "vi": "đứng thẳng, sống lưng vươn",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "discipline"
+     ],
+     "src": [
+      "k00600",
+      "k00617",
+      "k00601"
+     ]
+    },
+    {
+     "id": "posture.rigid",
+     "sex": "any",
+     "phrase": "rigid upright military bearing",
+     "vi": "đứng thẳng cứng kiểu nhà binh",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "discipline"
+     ],
+     "src": [
+      "k00380"
+     ]
+    },
+    {
+     "id": "posture.slouched",
+     "sex": "any",
+     "phrase": "slouching posture, chest caved in",
+     "vi": "đứng khom, ngực thụt",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary",
+      "low-mood"
+     ],
+     "src": [
+      "k00375",
+      "k00581",
+      "k00618"
+     ]
+    },
+    {
+     "id": "posture.desk-hunch",
+     "sex": "any",
+     "phrase": "hunched upper back from desk work",
+     "vi": "lưng trên gù do ngồi bàn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00603"
+     ]
+    },
+    {
+     "id": "posture.headforward",
+     "sex": "any",
+     "phrase": "head jutting forward of the shoulders",
+     "vi": "đầu chồm ra trước vai",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "sedentary"
+     ],
+     "src": [
+      "k00645"
+     ]
+    },
+    {
+     "id": "posture.stooped-old",
+     "sex": "any",
+     "phrase": "stooped elderly posture with bent knees",
+     "vi": "dáng còng của người già, gối khuỵu",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing"
+     ],
+     "src": [
+      "k00644",
+      "k00645"
+     ]
+    },
+    {
+     "id": "posture.labour-bent",
+     "sex": "any",
+     "phrase": "permanently stooped from years of fieldwork",
+     "vi": "dáng cúi lom khom do làm đồng",
+     "freq": "uncommon",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "posture.chestout-m",
+     "sex": "male",
+     "phrase": "chest puffed out, chin raised",
+     "vi": "ưỡn ngực, hếch cằm",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "confidence",
+      "status"
+     ],
+     "src": [
+      "k00606",
+      "k00608",
+      "k00143"
+     ]
+    },
+    {
+     "id": "posture.bellyfwd",
+     "sex": "any",
+     "phrase": "leaning back with the belly pushed forward",
+     "vi": "ngả người ra sau, bụng đẩy tới",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight",
+      "pregnancy"
+     ],
+     "src": [
+      "k00461",
+      "k00442"
+     ]
+    },
+    {
+     "id": "posture.oneleg",
+     "sex": "any",
+     "phrase": "standing with weight on one leg",
+     "vi": "đứng dồn trọng lượng một chân",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "relaxed"
+     ],
+     "src": [
+      "k00095",
+      "k00658"
+     ]
+    },
+    {
+     "id": "posture.shouldersfwd",
+     "sex": "any",
+     "phrase": "shoulders hanging forward, listless stance",
+     "vi": "vai thõng về trước, dáng uể oải",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "low-mood"
+     ],
+     "src": [
+      "k00609"
+     ]
+    },
+    {
+     "id": "posture.raised-shoulders",
+     "sex": "any",
+     "phrase": "tense stance with raised shoulders",
+     "vi": "đứng căng, vai nhô",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "stress"
+     ],
+     "src": [
+      "k00402",
+      "k00467"
+     ]
+    },
+    {
+     "id": "posture.shrinking",
+     "sex": "any",
+     "phrase": "shoulders drawn in, making the body small",
+     "vi": "thu vai, thu người nhỏ lại",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "timidity"
+     ],
+     "src": [
+      "k00145",
+      "k00618"
+     ]
+    },
+    {
+     "id": "posture.heels",
+     "sex": "any",
+     "phrase": "slumped stance resting back on the heels",
+     "vi": "đứng sụm, dồn trọng lượng về gót",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "tall",
+      "low-mood"
+     ],
+     "src": [
+      "k00117"
+     ]
+    },
+    {
+     "id": "posture.listing",
+     "sex": "any",
+     "phrase": "body listing to one side",
+     "vi": "người nghiêng lệch một bên",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "carrying-loads",
+      "scoliosis",
+      "injury"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "posture.weary",
+     "sex": "any",
+     "phrase": "collapsed weary stance, heavy shoulders, head low",
+     "vi": "dáng mệt rã, vai nặng, đầu cúi",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "exhaustion"
+     ],
+     "src": [
+      "k00116",
+      "k00123"
+     ]
+    },
+    {
+     "id": "posture.planted-m",
+     "sex": "male",
+     "phrase": "wide planted square stance",
+     "vi": "đứng chân rộng, vững như cọc",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "dominance"
+     ],
+     "src": [
+      "k00423",
+      "k00110"
+     ]
+    },
+    {
+     "id": "posture.handsonhips",
+     "sex": "any",
+     "phrase": "standing with hands on hips, elbows out",
+     "vi": "đứng chống nạnh",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "dominance"
+     ],
+     "src": [
+      "k00424"
+     ]
+    },
+    {
+     "id": "posture.armscrossed",
+     "sex": "any",
+     "phrase": "habitually crossed arms, leaning back",
+     "vi": "hay khoanh tay, ngả ra sau",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "guarded"
+     ],
+     "src": [
+      "k00122"
+     ]
+    },
+    {
+     "id": "posture.neck-lifted-f",
+     "sex": "female",
+     "phrase": "upright with a lifted neck and level chin",
+     "vi": "thẳng người, cổ vươn, cằm ngang",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "discipline"
+     ],
+     "src": [
+      "k00605",
+      "k00377"
+     ]
+    },
+    {
+     "id": "posture.hipcocked-f",
+     "sex": "female",
+     "phrase": "one hip cocked out in a relaxed stance",
+     "vi": "đứng lệch hông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "relaxed"
+     ],
+     "src": [
+      "k00433",
+      "k00513"
+     ]
+    },
+    {
+     "id": "posture.square-child-like",
+     "sex": "any",
+     "phrase": "standing square and symmetrical, feet together",
+     "vi": "đứng vuông vức, hai chân khép",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "awkward"
+     ],
+     "src": [
+      "k00622",
+      "k00462"
+     ]
+    }
+   ]
+  },
+  "gait": {
+   "group": "G",
+   "vi": "Dáng đi",
+   "values": [
+    {
+     "id": "gait.normal",
+     "sex": "any",
+     "phrase": "ordinary even walk",
+     "vi": "đi bình thường",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.brisk",
+     "sex": "any",
+     "phrase": "quick brisk stride",
+     "vi": "đi nhanh gọn",
+     "freq": "common",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "busy"
+     ],
+     "src": [
+      "k00144"
+     ]
+    },
+    {
+     "id": "gait.heavy",
+     "sex": "any",
+     "phrase": "slow heavy-footed walk",
+     "vi": "đi chậm, bước nặng",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight",
+      "exhaustion"
+     ],
+     "src": [
+      "k00634"
+     ]
+    },
+    {
+     "id": "gait.shuffle",
+     "sex": "any",
+     "phrase": "shuffling small steps, feet barely lifted",
+     "vi": "lê bước nhỏ, chân không nhấc",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.limp",
+     "sex": "any",
+     "phrase": "walks with a limp",
+     "vi": "đi khập khiễng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "injury",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.waddle",
+     "sex": "any",
+     "phrase": "waddling side-to-side walk",
+     "vi": "đi lạch bạch lắc sang hai bên",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "weight",
+      "pregnancy",
+      "hip-problem"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.bouncy",
+     "sex": "any",
+     "phrase": "bouncy springy step",
+     "vi": "bước nảy nhẹ",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "youth",
+      "cheerful"
+     ],
+     "src": [
+      "k00634",
+      "k00144"
+     ]
+    },
+    {
+     "id": "gait.loping",
+     "sex": "any",
+     "phrase": "long loping stride",
+     "vi": "sải bước dài lòng thòng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle"
+     ],
+     "causes": [
+      "tall"
+     ],
+     "src": [
+      "k00117"
+     ]
+    },
+    {
+     "id": "gait.toesout",
+     "sex": "any",
+     "phrase": "walks with toes pointed out",
+     "vi": "đi chân chữ bát",
+     "freq": "common",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics",
+      "weight"
+     ],
+     "src": [
+      "k00118"
+     ]
+    },
+    {
+     "id": "gait.toesin",
+     "sex": "any",
+     "phrase": "pigeon-toed walk, toes turned in",
+     "vi": "đi chân chụm mũi vào trong",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "genetics"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.hipsway-f",
+     "sex": "female",
+     "phrase": "walk with swaying hips",
+     "vi": "đi lắc hông",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "confidence"
+     ],
+     "src": [
+      "k00144",
+      "k00635",
+      "k00075"
+     ]
+    },
+    {
+     "id": "gait.armswing",
+     "sex": "any",
+     "phrase": "walk with wide swinging arms",
+     "vi": "đi vung tay rộng",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "confidence"
+     ],
+     "src": [
+      "k00075",
+      "k00144"
+     ]
+    },
+    {
+     "id": "gait.stiffarms",
+     "sex": "any",
+     "phrase": "stiff walk with arms held still",
+     "vi": "đi cứng, tay không vung",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "tension"
+     ],
+     "src": [
+      "k00145"
+     ]
+    },
+    {
+     "id": "gait.swagger-m",
+     "sex": "male",
+     "phrase": "rolling swagger, shoulders swinging",
+     "vi": "đi nghênh ngang, vai lắc",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult"
+     ],
+     "causes": [
+      "dominance"
+     ],
+     "src": [
+      "k00144"
+     ]
+    },
+    {
+     "id": "gait.mincing-f",
+     "sex": "female",
+     "phrase": "small quick mincing steps",
+     "vi": "bước nhỏ vội",
+     "freq": "uncommon",
+     "ages": [
+      "young",
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "timidity"
+     ],
+     "src": [
+      "k00145"
+     ]
+    },
+    {
+     "id": "gait.hardheel",
+     "sex": "any",
+     "phrase": "hard-heeled purposeful walk",
+     "vi": "bước gót chắc nịch, dứt khoát",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "authority"
+     ],
+     "src": [
+      "k00634"
+     ]
+    },
+    {
+     "id": "gait.cautious",
+     "sex": "any",
+     "phrase": "unsteady cautious steps",
+     "vi": "bước chậm dè dặt, chao đảo",
+     "freq": "common",
+     "ages": [
+      "elderly"
+     ],
+     "causes": [
+      "ageing",
+      "illness"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.hurried-stoop",
+     "sex": "any",
+     "phrase": "hurried stooped walk, head first",
+     "vi": "đi vội, lom khom, đầu đi trước",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "busy",
+      "manual-labour"
+     ],
+     "src": [
+      "k00645"
+     ]
+    },
+    {
+     "id": "gait.rolling-sailor",
+     "sex": "any",
+     "phrase": "wide rolling gait of someone used to boats",
+     "vi": "dáng đi lắc lư của người quen sông nước",
+     "freq": "rare",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "fishing"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.plod",
+     "sex": "any",
+     "phrase": "flat-footed plodding walk",
+     "vi": "đi bệt chân, lì lợm",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour",
+      "weight"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.dragfoot",
+     "sex": "any",
+     "phrase": "dragging one foot slightly",
+     "vi": "đi hơi kéo lê một chân",
+     "freq": "rare",
+     "ages": [
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "illness",
+      "stroke"
+     ],
+     "src": [
+      "general"
+     ]
+    },
+    {
+     "id": "gait.load-trot",
+     "sex": "any",
+     "phrase": "quick short trot of a load carrier",
+     "vi": "bước ngắn nhanh của người gánh hàng",
+     "freq": "uncommon",
+     "ages": [
+      "adult",
+      "middle",
+      "elderly"
+     ],
+     "causes": [
+      "manual-labour"
+     ],
+     "src": [
+      "general"
+     ]
+    }
+   ]
+  }
+ }
+}

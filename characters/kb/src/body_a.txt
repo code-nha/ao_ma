@@ -1,0 +1,124 @@
+## height|A|Chiều cao
+normal-m|m|average height man|nam cao trung bình|c|YAME||69
+short-m|m|short man, below average height|nam thấp|c|YAME|genetics,poverty|
+very-short-m|m|very short man, small slight stature|nam rất thấp, nhỏ con|u|YAME|genetics,poverty|
+tall-m|m|tall man, a head above most|nam cao|u|YAME|genetics,wealth|58,204
+very-tall-m|m|very tall lanky man towering over others|nam rất cao, lêu nghêu|r|YAME|genetics|117
+gangly-m|m|gangly young man, tall and not filled out|thanh niên cao gầy chưa đầy đặn|u|Y|genetics,youth|
+shrunken-m|m|shrunken old man, lost height with age|ông già teo lùn đi|c|E|ageing|42,644,643
+dwarf-m|m|man with dwarfism, short limbs, normal-sized torso|nam lùn bẩm sinh, tay chân ngắn|r|YAME|genetics|
+normal-f|f|average height woman|nữ cao trung bình|c|YAME||69
+short-f|f|short woman, petite stature|nữ thấp|c|YAME|genetics,poverty|63
+very-short-f|f|very short small woman, tiny stature|nữ rất thấp, nhỏ xíu|u|YAME|genetics,poverty|
+tall-f|f|tall woman, taller than most women|nữ cao|u|YAME|genetics,wealth|553
+very-tall-f|f|very tall woman, as tall as tall men|nữ rất cao, ngang đàn ông cao|r|YAME|genetics|587
+shrunken-f|f|tiny shrunken old woman, lost height with age|bà cụ teo lùn|c|E|ageing|42,644,643
+dwarf-f|f|woman with dwarfism, short limbs, normal-sized torso|nữ lùn bẩm sinh|r|YAME|genetics|
+## frame|A|Khung xương
+normal-m|m|medium-boned male frame|khung xương vừa|c|YAME||200,318
+small-m|m|small-boned slight male frame, thin wrists|khung nhỏ, cổ tay mảnh|c|YAME|genetics|199
+narrow-m|m|narrow lanky frame, long thin bones|khung hẹp, xương dài mảnh|u|YAME|genetics|198,317
+broad-m|m|broad heavy-boned frame, thick wrists|khung to, xương thô|u|YAME|genetics|202,319
+stocky-m|m|short stocky square-built frame|khung thấp, vuông, chắc|c|YAME|genetics,manual-labour|110,632
+barrel-m|m|barrel-shaped thick torso frame|thân hình thùng phi|u|AME|genetics|115
+pyramid-m|m|narrow shoulders over wide hips frame|vai hẹp hông rộng|u|YAME|genetics|108
+wedge-m|m|wide-shouldered narrow-hipped frame|vai rộng hông hẹp|u|YA|genetics,sport|107,632
+angular-m|m|bony angular frame, joints and bones jutting|khung gầy góc cạnh, khớp nhô|u|YAME|genetics,ageing|103,81
+normal-f|f|medium-boned female frame|khung xương vừa|c|YAME||72
+small-f|f|small delicate fine-boned frame, thin wrists|khung nhỏ, xương mảnh|c|YAME|genetics|79
+narrow-f|f|narrow straight frame, little curve|khung hẹp, thẳng đuột|u|YAME|genetics|556,555
+broad-f|f|broad big-boned female frame|khung to, xương thô|u|YAME|genetics,manual-labour|
+sturdy-f|f|short sturdy square-built female frame|khung thấp chắc nịch|c|YAME|genetics,manual-labour|632
+pear-f|f|narrow shoulders and wide pelvis frame|vai hẹp, xương chậu rộng|c|YAME|genetics|74,489
+wideshoulder-f|f|broad-shouldered narrow-hipped female frame|vai rộng hông hẹp|u|YAME|genetics,sport|84
+angular-f|f|bony angular frame, joints and bones jutting|khung gầy góc cạnh|u|YAME|genetics,ageing|81,555
+## fat|A|Mỡ toàn thân
+normal-m|m|average weight, neither thin nor fat|cân nặng trung bình|c|YAME||
+emaciated-m|m|emaciated, skin stretched over bones|gầy trơ xương|r|YAME|illness,poverty,addiction|124,81
+very-thin-m|m|very thin, ribs and hip bones showing|rất gầy, lộ sườn|u|YAME|poverty,illness,genetics|241,81
+thin-m|m|thin slight body|gầy|c|YAME|genetics,poverty|199
+lean-m|m|lean, very little body fat|săn, ít mỡ|c|YAM|manual-labour,sport|89,345
+softish-m|m|slightly soft, a little extra weight|hơi mềm, dư chút cân|c|AME|sedentary|201
+chubby-m|m|chubby, soft and round|mũm mĩm|c|YAME|diet,sedentary|
+skinnyfat-m|m|thin limbs with a soft paunch|tay chân gầy, bụng mềm|c|AME|sedentary,ageing|
+overweight-m|m|overweight, heavy around the middle|thừa cân, nặng phần giữa|c|AME|sedentary,wealth,alcohol|651,92
+stout-m|m|stout, thick and heavy-set|chắc nịch, to nặng|c|AME|genetics,diet|632
+obese-m|m|obese, large rounded body|béo phì|u|YAME|diet,sedentary,genetics|109,653
+very-obese-m|m|severely obese, huge heavy body|béo phì nặng|r|YAME|diet,illness,genetics|
+gaunt-ill-m|m|gaunt and wasted from long illness|tiều tụy vì bệnh|r|AME|illness|646,124
+bloated-m|m|puffy bloated body, swollen soft look|phù nề, nung núc|u|ME|alcohol,illness|133
+normal-f|f|average weight, neither thin nor fat|cân nặng trung bình|c|YAME||221
+emaciated-f|f|emaciated, skin stretched over bones|gầy trơ xương|r|YAME|illness,poverty,dieting|124,81
+very-thin-f|f|very thin, collarbones and ribs showing|rất gầy, lộ xương đòn, xương sườn|u|YAME|dieting,poverty,illness|241,555
+thin-f|f|thin slight body|gầy|c|YAME|genetics|553
+lean-f|f|lean wiry body, little fat|gọn, săn, ít mỡ|u|YAM|manual-labour,sport|236
+plump-f|f|plump, soft and rounded|đẫy đà, tròn mềm|c|YAME|genetics,childbirth|32
+skinnyfat-f|f|slim limbs with a soft belly|tay chân thon, bụng mềm|c|YAME|sedentary,childbirth|
+overweight-f|f|overweight, heavy through waist and hips|thừa cân, nặng eo hông|c|AME|sedentary,childbirth,ageing|652
+stout-f|f|stout, thick and heavy-set|chắc nịch, to nặng|c|AME|genetics,manual-labour|632
+obese-f|f|obese, large rounded body|béo phì|u|YAME|diet,sedentary,genetics|109,653
+very-obese-f|f|severely obese, huge heavy body|béo phì nặng|r|YAME|diet,illness,genetics|
+gaunt-ill-f|f|gaunt and wasted from long illness|tiều tụy vì bệnh|r|AME|illness|646,124
+loose-after-loss-f|f|deflated body with loose skin after big weight loss|người xẹp, da chùng sau giảm cân lớn|r|AME|weight-loss|182,329
+loose-after-loss-m|m|deflated body with loose skin after big weight loss|người xẹp, da chùng sau giảm cân lớn|r|AME|weight-loss|342,329
+## muscle|A|Cơ
+normal-m|m|ordinary untrained muscle tone|cơ bình thường, không tập|c|YAME||
+slack-m|m|slack wasted muscles, thin and soft|cơ teo nhão|u|ME|ageing,illness,sedentary|646,209
+soft-m|m|soft body, no visible muscle definition|người mềm, không thấy cơ|c|YAME|sedentary|642,653
+wiry-m|m|wiry, stringy lean muscles|cơ dẻo dai, gân guốc|c|YAME|manual-labour,poverty|89
+ropy-labour-m|m|hard ropy muscles from years of manual labour|cơ cứng như thừng do lao động|c|YAME|manual-labour|89
+thick-labour-m|m|thick work-built muscle, strong but undefined|cơ dày do làm nặng, không nét|c|AME|manual-labour|
+toned-m|m|toned body, some visible muscle|cơ săn, thấy nhẹ đường cơ|c|YA|sport|205,232
+athletic-m|m|athletic muscular build|vóc thể thao, có cơ|u|YA|sport|200,229
+gym-bulky-m|m|bulky gym-built chest and arms|cơ ngực tay to do tập gym|u|YA|gym-display,wealth|196,269,307
+bodybuilder-m|m|massive bodybuilder muscles, veins standing out|cơ cực to kiểu thể hình|r|YA|gym-display|258
+overbuilt-m|m|over-defined steroid-look muscles, unnaturally even|cơ quá nét, kiểu dùng thuốc|r|YA|gym-display,enhanced|323,258
+padded-strong-m|m|strong muscles padded with fat|khỏe nhưng phủ mỡ|c|AM|sedentary,manual-labour|201
+powerlifter-m|m|thick powerful build with a solid gut|to khỏe, bụng chắc|u|AM|sport|105
+runner-m|m|lean runner's build, thin upper body|vóc chạy bộ, thân trên mảnh|u|YAM|sport|
+swimmer-m|m|broad smooth swimmer's back and shoulders|lưng vai rộng kiểu bơi lội|u|YA|sport|225
+gone-soft-m|m|former athlete's build gone soft|vóc từng tập nay đã mềm|c|AM|ageing,sedentary|642,201
+onesided-m|m|one arm and shoulder more muscled from repetitive work|một bên tay vai to hơn do làm lặp|u|AME|manual-labour|
+old-strong-m|m|old but still hard sinewy muscles|già mà cơ vẫn cứng, gân guốc|u|E|manual-labour|89
+normal-f|f|ordinary soft muscle tone|cơ bình thường, mềm|c|YAME||77,80
+slack-f|f|slack wasted muscles, thin and soft|cơ teo nhão|u|ME|ageing,illness,sedentary|646,209
+soft-f|f|soft body, no visible muscle|người mềm, không thấy cơ|c|YAME|sedentary|80
+slight-f|f|slender with little visible muscle|mảnh, gần như không thấy cơ|c|YAME|genetics|77
+toned-f|f|toned body, faint muscle lines|cơ săn, đường cơ mờ|u|YA|sport|236,205
+athletic-f|f|athletic strong female build|vóc nữ thể thao, khỏe|u|YA|sport|228
+gym-muscular-f|f|visibly muscular gym-trained woman|nữ tập gym, cơ rõ|r|YA|gym-display|
+bodybuilder-f|f|heavily muscled female bodybuilder physique|nữ thể hình cơ to|r|YA|gym-display,enhanced|
+dancer-f|f|long lean dancer's muscles|cơ dài mảnh kiểu múa|u|YA|sport|
+farm-strong-f|f|sturdy strong body from field work|người chắc khỏe do làm đồng|c|AME|manual-labour|
+wiry-f|f|wiry sinewy woman, hard thin muscles|gầy mà gân guốc, dẻo dai|u|AME|manual-labour,poverty|89
+strong-legs-f|f|strong thighs and calves, soft arms|đùi bắp chân khỏe, tay mềm|c|YAME|walking,manual-labour|80
+gone-soft-f|f|once-fit body gone soft|từng khỏe nay đã mềm|c|AM|ageing,childbirth|642
+old-strong-f|f|old but still tough sinewy muscles|già mà vẫn gân guốc dẻo dai|u|E|manual-labour|
+## fat_where|A|Mỡ dồn ở đâu
+normal-m|m|fat spread evenly over the body|mỡ phân bố đều|c|YAME||
+none-m|m|no visible fat anywhere|không thấy mỡ chỗ nào|u|YAM|manual-labour,sport,poverty|303
+belly-m|m|weight carried in the belly|mỡ dồn bụng|c|YAME|ageing,alcohol,sedentary|651,302
+visceral-m|m|hard round belly on thin limbs|bụng tròn cứng, tay chân gầy|c|AME|alcohol,ageing|328,211
+flanks-m|m|fat on the flanks, love handles|mỡ hai bên hông, bánh mì|c|AME|sedentary|26,22,230
+chest-m|m|fat on the chest, soft fleshy pecs|mỡ dồn ngực|u|AME|sedentary,genetics|194,192
+neck-face-m|m|fat in the neck and jowls, thick short neck|mỡ dồn cổ, nọng|u|AME|diet|151,653
+nape-m|m|fat pad on the upper back and nape|mỡ dồn gáy, lưng trên|u|ME|diet,illness|
+lowback-m|m|soft fat pad over the lower back|mỡ lưng dưới|c|AME|sedentary|256
+saghip-m|m|sagging fat below the hip line|mỡ chảy xuống dưới hông|u|ME|ageing|248
+seat-m|m|fat in the buttocks and thighs|mỡ dồn mông đùi|r|AME|genetics|26
+knees-m|m|fat pads around the knees|mỡ quanh đầu gối|u|AME|diet|26,33
+normal-f|f|fat spread evenly over the body|mỡ phân bố đều|c|YAME||
+none-f|f|very little fat anywhere|gần như không có mỡ|u|YA|sport,poverty,dieting|303
+pear-f|f|weight carried in the hips and thighs|mỡ dồn hông đùi|c|YAME|genetics|299,301,489
+apple-f|f|weight carried in the belly, slim legs|mỡ dồn bụng, chân thon|c|AME|ageing,sedentary|30,219
+pooch-f|f|soft fat pouch on the lower belly|ngấn mỡ bụng dưới|c|YAME|childbirth|28,240
+flanks-f|f|soft rolls on the flanks above the hips|ngấn mỡ hai bên eo|c|AME|sedentary|230,246
+bust-f|f|weight carried in the bust and upper body|mỡ dồn ngực, thân trên|u|AME|genetics|652
+upperarm-f|f|heavy fleshy upper arms|bắp tay trên nhiều mỡ|c|AME|ageing|652,330
+backroll-f|f|soft rolls of fat on the upper back|ngấn mỡ lưng trên|u|ME|ageing,sedentary|256
+saddle-f|f|fat on the outer thighs, saddlebags|mỡ đùi ngoài|c|YAME|genetics|28,34
+innerthigh-f|f|full inner thighs that rub together|đùi trong đầy, cọ vào nhau|c|YAME|genetics|28,299
+buttocks-f|f|fat carried mostly in the buttocks|mỡ dồn mông|u|YAME|genetics|24,301
+neck-f|f|fat under the chin and on the neck|mỡ dưới cằm, cổ|u|AME|ageing,diet|626,151
+knees-f|f|fat pads above the knees|mỡ trên đầu gối|u|AME|genetics|287,28
+lipedema-f|f|heavy column-like legs, slim upper body|chân to như cột, thân trên nhỏ|r|AME|illness,genetics|

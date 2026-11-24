@@ -1,0 +1,19 @@
+{"id": "R0001", "kind": "exclude", "a": "frame.pyramid-m", "b": ["shoulders.broad-m", "shoulders.very-broad-m", "shoulders.square-m"], "why": "narrow-shouldered frame vs broad shoulders", "status": "active", "since": 2}
+{"id": "R0002", "kind": "exclude", "a": "frame.wedge-m", "b": ["shoulders.narrow-m", "hips.wide-m"], "why": "wide-shouldered narrow-hipped frame vs narrow shoulders or wide hips", "status": "active", "since": 2}
+{"id": "R0003", "kind": "exclude", "a": "frame.pear-f", "b": ["shoulders.broad-f"], "why": "narrow-shouldered frame vs broad shoulders", "status": "active", "since": 2}
+{"id": "R0004", "kind": "exclude", "a": "frame.wideshoulder-f", "b": ["shoulders.narrow-f", "hips.wide-f", "hips.very-wide-f"], "why": "broad-shouldered narrow-hipped frame vs narrow shoulders or wide hips", "status": "active", "since": 2}
+{"id": "R0005", "kind": "exclude", "a": "height.dwarf-m", "b": ["legs.long-m"], "why": "dwarfism means short limbs", "status": "active", "since": 2}
+{"id": "R0006", "kind": "exclude", "a": "height.dwarf-f", "b": ["legs.long-f"], "why": "dwarfism means short limbs", "status": "active", "since": 2}
+{"id": "R0007", "kind": "exclude", "a": "legs.wasted-m", "b": ["gait.bouncy", "gait.loping", "gait.brisk", "gait.swagger-m"], "why": "a wasted leg does not give a springy or long stride", "status": "active", "since": 2}
+{"id": "R0008", "kind": "exclude", "a": "muscle.onesided-m", "b": ["arms.onesided-m"], "why": "the same uneven arm described twice", "status": "active", "since": 2}
+{"id": "R0009", "kind": "exclude", "a": "posture.stooped-old", "b": ["posture.upright", "gait.bouncy"], "why": "stooped vs upright or bouncy", "status": "active", "since": 2}
+{"id": "R0010", "kind": "exclude", "a": "back.scoliosis", "b": ["back.lean-sideways"], "why": "the same sideways spine described twice", "status": "active", "since": 2}
+{"id": "R0011", "kind": "exclude", "a": "back.fieldbent", "b": ["posture.labour-bent"], "why": "the same forward bend at the waist described twice", "status": "active", "since": 2}
+{"id": "R0012", "kind": "exclude", "a": "back.hunch", "b": ["posture.desk-hunch"], "why": "the same hunched upper back described twice", "status": "active", "since": 2}
+{"id": "R0013", "kind": "exclude", "a": "face_shape.oval-narrow-f", "b": ["jaw_chin.double", "jaw_chin.lost", "jaw_chin.heavy"], "why": "a narrow oval face with a pointed chin has no soft double chin", "status": "active", "since": 4, "basis": "proxy", "ev": "maad.cooc"}
+{"id": "H0001", "kind": "hint", "a": "height.very-short-m", "b": ["shoulders.very-broad-m", "shoulders.broad-m"], "why": "very short men rarely have broad shoulders", "p": 0.005, "basis": "proxy", "status": "active", "since": 4, "ev": "ansur.frame"}
+{"id": "H0002", "kind": "hint", "a": "height.very-short-m", "b": ["frame.broad-m"], "why": "very short men rarely have heavy bones and thick wrists", "p": 0.01, "basis": "proxy", "status": "active", "since": 4, "ev": "ansur.frame"}
+{"id": "H0003", "kind": "hint", "a": "height.very-tall-m", "b": ["shoulders.narrow-m"], "why": "very tall men rarely have narrow shoulders", "p": 0.012, "basis": "proxy", "status": "active", "since": 4, "ev": "ansur.frame"}
+{"id": "H0004", "kind": "hint", "a": "height.very-short-f", "b": ["shoulders.broad-f", "frame.broad-f"], "why": "very short women rarely have broad shoulders or heavy bones", "p": 0.005, "basis": "proxy", "status": "active", "since": 4, "ev": "ansur.frame"}
+{"id": "H0005", "kind": "hint", "a": "height.very-short-m", "b": ["legs.long-m"], "why": "short people have relatively short legs", "basis": "proxy", "status": "active", "since": 4, "ev": "ansur.bmi"}
+{"id": "H0006", "kind": "hint", "a": "height.very-tall-m", "b": ["legs.short-m"], "why": "tall people have relatively long legs", "basis": "proxy", "status": "active", "since": 4, "ev": "ansur.bmi"}
