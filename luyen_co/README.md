@@ -4,8 +4,10 @@ Lọc ra **đúng những frame có một người cụ thể** trong folder ả
 ưu tiên giữ các frame có **góc mặt và dáng đa dạng nhất**, xuất thành ảnh crop
 sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân dung…).
 
-- **Đầu vào:** 1 folder chứa ảnh và/hoặc video, + 1 ảnh tham chiếu rõ nhất của
-  người cần tìm.
+- **Đầu vào:** 1 folder chứa ảnh và/hoặc video, + **một hoặc nhiều ảnh tham chiếu**
+  (có thể trỏ vào folder ảnh). Mỗi frame được so với **cả bộ tham chiếu, lấy điểm
+  cao nhất** — đúng thực tế: một người có thể xuất hiện nhiều lần, nhiều năm,
+  nhiều trang phục/góc khác nhau trong cùng khu vực.
 - **Đầu ra:** `crops/` (**mặc định là nguyên frame** — giữ bối cảnh để biết người
   đó ở đâu, truy ra camera nào; `--save both` để có thêm ảnh crop quanh người),
   `metadata.jsonl` (nguồn, giây, bbox, điểm khớp, góc đầu, pose), `report.csv`,
@@ -43,12 +45,11 @@ sẵn để đưa vào dataset (train LoRA nhân vật, dựng bộ ảnh chân 
 
 Sau khi lọc trùng, ảnh được chọn theo `--select`:
 
-- `coverage` (mặc định): nhóm theo **(nguồn, cảnh, góc mặt)** — thẳng / trái /
-  phải / trái nhiều / phải nhiều / **sau lưng** (frame không thấy mặt hoặc mặt
-  khớp yếu) — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm các ảnh **khác biệt
-  nhất** với ảnh đã giữ (tối đa `--per-bucket`, mặc định 2). Nhờ vậy frame quay
-  lưng ở xa/nhỏ vẫn được lấy nếu nó là tư thế khác, không bị ảnh gần-đẹp hơn
-  "đè" mất.
+- `coverage` (mặc định): nhóm theo **(nguồn, cảnh, góc)** — thẳng / trái / phải /
+  trái nhiều / phải nhiều / **ngửa** / **cúi** / **sau lưng** (không thấy mặt,
+  hoặc thấy vai mà không thấy mũi) — mỗi nhóm giữ ảnh chất lượng nhất, rồi thêm
+  ảnh **khác biệt nhất** nếu `--per-bucket` > 1. Nhờ vậy frame quay lưng ở xa
+  vẫn được lấy nếu nó là tư thế khác, không bị ảnh gần-đẹp hơn "đè" mất.
 - `diversity`: chỉ giữ frame khác quá ngưỡng `--min-yaw` / `--min-pose`.
 
 Trước khi ghi ảnh còn một bước **lọc đa dạng**: một frame bị bỏ nếu **vừa** gần
@@ -98,7 +99,7 @@ Tham số đáng chú ý:
 | Tham số | Mặc định | Ý nghĩa |
 |---|---|---|
 | `--fps` | 2 | số frame lấy mỗi giây; CCTV người đi bộ 1–2 là đủ, cần nhiều dáng hơn thì 3–5 |
-| `--face-th` | 0.45 | cosine ArcFace tối thiểu; máy ảnh mờ/nén mạnh có thể hạ 0.35–0.40 |
+| `--face-th` | 0.40 | cosine ArcFace tối thiểu; máy ảnh mờ/nén mạnh có thể hạ 0.30–0.35 |
 | `--body-th` | 0.72 | cosine CLIP toàn thân; chỉ dùng khi không thấy mặt |
 | `--color-th` | 0.3 | tương quan màu áo/quần tối thiểu khi so toàn thân (0 = tắt) |
 | `--min-person` | 64 | chiều cao người tối thiểu (px) — bỏ người quá nhỏ, không dùng được |
@@ -114,7 +115,7 @@ Tham số đáng chú ý:
 | `--confirm-window` | 0 | giới hạn giây tới mốc đã khớp mặt khi nhận frame quay lưng (0 = không giới hạn) |
 | `--anchor-th` | 0.60 | cosine tối thiểu với neo ngoại hình của video |
 | `--select` | coverage | `coverage` = đủ góc mỗi cảnh; `diversity` = theo ngưỡng yaw/pose |
-| `--per-bucket` | 2 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`) |
+| `--per-bucket` | 1 | số ảnh tối đa cho mỗi nhóm góc (khi `--select coverage`) |
 | `--limit` | 0 | 0 = giữ hết sau lọc trùng; >0 = chọn N ảnh đa dạng nhất |
 | `--tiles` | 1 | chia frame thành lưới tiles×tiles trước khi detect; dùng cho CCTV 4K/góc rộng có người rất nhỏ |
 | `--allow-body-only` | tắt | nhận track không hề khớp mặt, chỉ dựa vào toàn thân |

@@ -32,8 +32,8 @@ from .frames import iter_video, list_inputs, video_duration
 from .onnx_models import POSE_MODEL, ensure_models, log
 from .reid import BodyEmbedder, hist_similarity, torso_hist
 from .scrfd import FaceDetector
-from .select import (coverage_pick, dedupe, diverse_gate, head_pose, pick_diverse,
-                     pose_vector, yaw_histogram)
+from .select import (coverage_pick, dedupe, diverse_gate, drop_similar, head_pose,
+                     pick_diverse, pose_vector, yaw_histogram)
 from .tracker import IoUTracker
 from .types import Candidate
 from .utils import (crop_xyxy, encode_jpeg, expand_box, iou_matrix, laplacian_var,
@@ -43,10 +43,10 @@ from .yolo_pose import PersonDetector
 
 @dataclass
 class Config:
-    ref: Path
+    refs: list[Path]
     out: Path
     fps: float = 2.0
-    face_th: float = 0.45
+    face_th: float = 0.40
     body_th: float = 0.72
     color_th: float = 0.3
     min_person: int = 64
@@ -61,7 +61,7 @@ class Config:
     confirm_window: float = 0.0     # giây: 0 = không giới hạn (neo theo video)
     anchor_th: float = 0.60         # cosine với "neo" (ngoại hình đã xác nhận trong video)
     select: str = "coverage"        # coverage = đủ góc; diversity = ngưỡng yaw/pose
-    per_bucket: int = 2             # số ảnh tối đa mỗi nhóm góc (coverage)
+    per_bucket: int = 1             # số ảnh tối đa mỗi nhóm góc (coverage)
     dup_sim: float = 0.97
     min_gap: float = 0.35
     limit: int = 0
@@ -123,59 +123,72 @@ class Pipeline:
         self.confirmed: dict[str, list[list[float]]] = {}
         # "neo" ngoại hình theo từng video: lấy từ track đã khớp mặt
         self.anchors: dict[str, dict] = {}
-        self.ref_face: np.ndarray | None = None
-        self.ref_body: np.ndarray | None = None
-        self.ref_torso: np.ndarray | None = None
+        # nhiều ảnh tham chiếu: so với cả bộ, lấy điểm cao nhất (đối tượng có thể
+        # xuất hiện nhiều lần, nhiều năm, nhiều trang phục/góc khác nhau)
+        self.ref_faces: list[np.ndarray] = []
+        self.ref_bodies: list[np.ndarray] = []
+        self.ref_torsos: list[np.ndarray] = []
         self.ref_note = ""
         self.ref_warnings: list[str] = []
         self.ref_info: dict = {}
-        self._ref_path = cfg.ref.resolve()
+        self._ref_paths = {p.resolve() for p in cfg.refs}
         self._staging = cfg.out / ".staging"
         self._stage_idx = 0
         self._frame_cache: tuple[tuple[str, int], bytes] | None = None
-        self._load_ref()
+        self._load_refs()
 
     # ------------------------------------------------------------------ tham chiếu
-    def _load_ref(self) -> None:
-        img = read_image(self.cfg.ref)
-        if img is None:
-            raise FileNotFoundError(f"không đọc được ảnh tham chiếu: {self.cfg.ref}")
-        h, w = img.shape[:2]
-        persons = self.detector.detect(img)
-        if persons:
-            person = max(persons, key=lambda p: (p.box[2] - p.box[0]) * (p.box[3] - p.box[1]))
-            box = person.box
-        else:
-            box = np.array([0, 0, w - 1, h - 1], dtype=np.float32)
-        crop = crop_xyxy(img, expand_box(box, 0.2, w, h))
-        tight = crop_xyxy(img, box) if crop.size else crop
-        self.ref_body = self.body_emb.embed(tight) if tight.size else None
-        self.ref_torso = torso_hist(tight) if tight.size else None
+    def _load_refs(self) -> None:
+        loaded = 0
+        for ref_path in self.cfg.refs:
+            img = read_image(ref_path)
+            if img is None:
+                self.ref_warnings.append(f"không đọc được ảnh tham chiếu: {ref_path}")
+                continue
+            h, w = img.shape[:2]
+            persons = self.detector.detect(img)
+            if persons:
+                person = max(persons, key=lambda p: (p.box[2] - p.box[0]) * (p.box[3] - p.box[1]))
+                box = person.box
+            else:
+                box = np.array([0, 0, w - 1, h - 1], dtype=np.float32)
+            crop = crop_xyxy(img, expand_box(box, 0.2, w, h))
+            tight = crop_xyxy(img, box) if crop.size else crop
+            body = self.body_emb.embed(tight) if tight.size else None
+            torso = torso_hist(tight) if tight.size else None
+            if body is not None:
+                self.ref_bodies.append(body)
+            if torso is not None:
+                self.ref_torsos.append(torso)
 
-        faces = self.face_det.detect(crop if crop.size else img)
-        if not faces:
-            faces = self.face_det.detect(img)
-        if faces:
-            face = max(faces, key=lambda f: (f.box[2] - f.box[0]) * (f.box[3] - f.box[1]))
-            self.ref_face = self.face_emb.embed_face(crop if crop.size else img, face.kps)
-            self.ref_info = {
-                "face_px": int(max(face.box[2] - face.box[0], face.box[3] - face.box[1])),
-                "face_score": round(face.score, 2),
-                "person_h": int(box[3] - box[1]) if persons else 0,
-                "blur": round(laplacian_var(crop if crop.size else img), 1),
-            }
-        self.ref_note = (f"tham chiếu: {w}×{h}, người={'có' if persons else 'không'}, "
-                         f"mặt={'có' if self.ref_face is not None else 'KHÔNG'}")
-        if self.ref_face is None:
+            faces = self.face_det.detect(crop if crop.size else img)
+            if not faces:
+                faces = self.face_det.detect(img)
+            if faces:
+                face = max(faces, key=lambda f: (f.box[2] - f.box[0]) * (f.box[3] - f.box[1]))
+                emb = self.face_emb.embed_face(crop if crop.size else img, face.kps)
+                if emb is not None:
+                    self.ref_faces.append(emb)
+                    if not self.ref_info:
+                        self.ref_info = {
+                            "face_px": int(max(face.box[2] - face.box[0], face.box[3] - face.box[1])),
+                            "face_score": round(face.score, 2),
+                            "person_h": int(box[3] - box[1]) if persons else 0,
+                            "blur": round(laplacian_var(crop if crop.size else img), 1),
+                            "size": f"{w}×{h}",
+                        }
+            loaded += 1
+
+        self.ref_note = (f"{loaded} ảnh tham chiếu · {len(self.ref_faces)} có mặt, "
+                         f"{len(self.ref_bodies)} có toàn thân")
+        if not self.ref_faces:
             self.ref_warnings.append(
-                "ảnh tham chiếu không phát hiện được mặt → chỉ so khớp toàn thân "
-                "(nên dùng ảnh thấy rõ mặt để chính xác hơn)")
-        elif self.ref_info["face_px"] < 50:
+                "không ảnh tham chiếu nào phát hiện được mặt → chỉ so khớp toàn thân "
+                "(nên thêm ảnh thấy rõ mặt để chính xác hơn)")
+        elif self.ref_info.get("face_px", 0) < 50:
             self.ref_warnings.append(
-                f"mặt trong ảnh tham chiếu chỉ ~{self.ref_info['face_px']}px — nên dùng ảnh "
-                f"lớn hơn/rõ hơn, điểm khớp sẽ thấp và dễ nhầm")
-        elif self.ref_info["blur"] < 30:
-            self.ref_warnings.append("ảnh tham chiếu khá nhoè — nên chọn frame nét hơn")
+                f"mặt trong ảnh tham chiếu đầu tiên chỉ ~{self.ref_info['face_px']}px — "
+                f"nên thêm ảnh lớn/rõ hơn")
 
     # ------------------------------------------------------------------ frame
     def _match_person(self, frame: np.ndarray, person, t: float, frame_idx: int,
@@ -220,13 +233,14 @@ class Pipeline:
                 return (f.box[2] - f.box[0]) * (f.box[3] - f.box[1]) * f.score * up
 
             best_face = max(faces, key=rank)
-            face_sim = cosine(self.ref_face, self.face_emb.embed_face(ctx, best_face.kps))
+            emb = self.face_emb.embed_face(ctx, best_face.kps)
+            face_sim = max((cosine(r, emb) for r in self.ref_faces), default=-1.0)
             yaw, pitch = head_pose(best_face.kps)
 
         tight = crop_xyxy(frame, person.box)
         clip_vec = self.body_emb.embed(tight) if tight.size else None
-        body_sim = cosine(self.ref_body, clip_vec)
-        color_sim = hist_similarity(self.ref_torso, torso_hist(tight)) if tight.size else -1.0
+        body_sim = max((cosine(r, clip_vec) for r in self.ref_bodies), default=-1.0)
+        color_sim = max((hist_similarity(r, torso_hist(tight)) for r in self.ref_torsos), default=-1.0) if tight.size else -1.0
 
         full_jpeg = None
         if self.cfg.save in ("full", "both"):
@@ -266,7 +280,7 @@ class Pipeline:
         cfg = self.cfg
         face_max = max((c.face_sim for c in buf if c.has_face), default=-1.0)
         body_med = float(statistics.median([c.body_sim for c in buf])) if buf else -1.0
-        confirmed = self.ref_face is not None and face_max >= cfg.face_th
+        confirmed = bool(self.ref_faces) and face_max >= cfg.face_th
         anchor = self.anchors.get(buf[0].source)
 
         def anchor_ok(c: Candidate) -> bool:
@@ -275,7 +289,7 @@ class Pipeline:
                 return False
             return float(np.dot(anchor["clip"], c.clip_vec)) >= cfg.anchor_th
 
-        if self.ref_face is None:
+        if not self.ref_faces:
             # tham chiếu không có mặt → buộc phải dựa vào toàn thân
             kept = ([c for c in buf if self._body_ok(c)]
                     if body_med >= cfg.body_th and len(buf) >= cfg.min_track else [])
@@ -340,7 +354,7 @@ class Pipeline:
         self.stats.track_scores.append((face_max, body_med,
                                         [c.face_sim for c in buf],
                                         [c.body_sim for c in buf]))
-        if self.ref_face is not None and face_max >= self.cfg.face_th:
+        if bool(self.ref_faces) and face_max >= self.cfg.face_th:
             self._remember(buf[0].source, buf)
         if not kept:
             return
@@ -481,8 +495,8 @@ class Pipeline:
         videos, images = list_inputs(input_dir, recursive)
         if self.cfg.skip_ref:
             before = len(videos) + len(images)
-            videos = [v for v in videos if v.resolve() != self._ref_path]
-            images = [i for i in images if i.resolve() != self._ref_path]
+            videos = [v for v in videos if v.resolve() not in self._ref_paths]
+            images = [i for i in images if i.resolve() not in self._ref_paths]
             if before != len(videos) + len(images):
                 log("bỏ qua ảnh tham chiếu nằm trong folder quét (--include-ref để giữ)")
         if not videos and not images:
@@ -508,8 +522,10 @@ class Pipeline:
         before = len(cands)
         if cfg.select == "coverage":
             cands = coverage_pick(cands, cfg.per_bucket)
+            after_cov = len(cands)
+            cands = drop_similar(cands, 0.93)
             log(f"chọn theo độ phủ góc (tối đa {cfg.per_bucket} ảnh/nhóm): "
-                f"{before} → {len(cands)} ảnh")
+                f"{before} → {after_cov} → {len(cands)} ảnh")
         else:
             cands = diverse_gate(cands, cfg.min_yaw, cfg.min_pose)
             if len(cands) != before:
@@ -598,7 +614,7 @@ class Pipeline:
             )
             mark = "  ← đang dùng" if abs(th - cfg.face_th) < 1e-6 else ""
             out.append(f"  --face-th {th:.2f} → {frames:6d} frame{mark}")
-        if cfg.allow_body_only or self.ref_face is None:
+        if cfg.allow_body_only or not self.ref_faces:
             out.append("  (chế độ chỉ toàn thân)")
             for th in (0.70, 0.75, 0.80, 0.85):
                 frames = sum(
@@ -617,7 +633,7 @@ class Pipeline:
         lines = [
             "luyen_co — báo cáo lọc frame theo người tham chiếu",
             f"thời điểm: {time.strftime('%Y-%m-%d %H:%M:%S')}",
-            f"tham chiếu: {cfg.ref}  ({self.ref_note})",
+            f"tham chiếu: {len(cfg.refs)} ảnh ({self.ref_note})",
             f"input: {self._input_dir}  ·  {st.videos} video, {st.images} ảnh",
             f"frame đã xử lý: {st.frames} · người phát hiện: {st.persons} · "
             f"ứng viên qua lọc chất lượng: {st.candidates}",

@@ -42,7 +42,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     p.add_argument("--input", required=True, type=Path, help="folder chứa ảnh và video cần quét")
-    p.add_argument("--ref", required=True, type=Path, help="ảnh tham chiếu rõ nhất của người cần tìm")
+    p.add_argument("--ref", required=True, type=Path, nargs="+",
+                   help="một hoặc nhiều ảnh tham chiếu (có thể là folder ảnh); "
+                        "khớp với cả bộ, lấy điểm cao nhất")
     p.add_argument("--out", type=Path, default=Path("out"), help="thư mục xuất kết quả")
     p.add_argument("--clean", action="store_true",
                    help="xoá ảnh cũ trong <out>/crops trước khi ghi kết quả mới")
@@ -58,7 +60,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="vẫn xử lý ảnh tham chiếu nếu nó nằm trong folder quét (mặc định bỏ qua)")
 
     g = p.add_argument_group("ngưỡng khớp danh tính")
-    g.add_argument("--face-th", type=float, default=0.45, help="cosine ArcFace tối thiểu coi là đúng người")
+    g.add_argument("--face-th", type=float, default=0.40, help="cosine ArcFace tối thiểu coi là đúng người")
     g.add_argument("--body-th", type=float, default=0.72, help="cosine CLIP toàn thân tối thiểu khi không thấy mặt")
     g.add_argument("--color-th", type=float, default=0.3,
                    help="tương quan màu áo/quần tối thiểu khi so khớp toàn thân "
@@ -94,7 +96,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     g.add_argument("--select", choices=["coverage", "diversity"], default="coverage",
                    help="coverage = đảm bảo đủ góc (mặt trái/phải/thẳng + sau lưng); "
                         "diversity = chỉ giữ frame khác nhau quá ngưỡng --min-yaw/--min-pose")
-    g.add_argument("--per-bucket", type=int, default=2,
+    g.add_argument("--per-bucket", type=int, default=1,
                    help="số ảnh tối đa cho mỗi nhóm góc khi dùng --select coverage")
 
     g = p.add_argument_group("lọc trùng & đa dạng")
@@ -121,17 +123,32 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return p.parse_args(argv)
 
 
+def expand_refs(paths: list[Path]) -> list[Path]:
+    """Nhận file ảnh hoặc folder ảnh, trả danh sách ảnh tham chiếu."""
+    from core.frames import IMAGE_EXTS
+
+    out: list[Path] = []
+    for p in paths:
+        if p.is_dir():
+            out.extend(sorted(q for q in p.iterdir()
+                             if q.is_file() and q.suffix.lower() in IMAGE_EXTS))
+        elif p.is_file():
+            out.append(p)
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     if not args.input.is_dir():
         log(f"lỗi: --input không phải thư mục: {args.input}")
         return 2
-    if not args.ref.is_file():
-        log(f"lỗi: không thấy ảnh tham chiếu: {args.ref}")
+    refs = expand_refs(args.ref)
+    if not refs:
+        log(f"lỗi: không tìm thấy ảnh tham chiếu trong: {', '.join(map(str, args.ref))}")
         return 2
 
     cfg = Config(
-        ref=args.ref, out=args.out, fps=args.fps,
+        refs=refs, out=args.out, fps=args.fps,
         face_th=args.face_th, body_th=args.body_th, color_th=args.color_th,
         min_person=args.min_person, min_blur=args.min_blur,
         min_person_score=args.min_person_score, max_overlap=args.max_overlap,

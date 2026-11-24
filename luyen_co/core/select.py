@@ -143,10 +143,23 @@ YAW_BUCKETS = [
 ]
 
 
+def _facing_away(c: Candidate) -> bool:
+    """Đoán người đang quay lưng: không thấy mũi nhưng thấy vai."""
+    if c.kpts is None or len(c.kpts) < 7:
+        return False
+    nose = float(c.kpts[0, 2])
+    shoulders = max(float(c.kpts[5, 2]), float(c.kpts[6, 2]))
+    return nose < 0.25 and shoulders > 0.45
+
+
 def yaw_bucket(c: Candidate) -> str:
-    """Nhóm góc: mặt không đủ tin cậy = 'sau lưng/nghiêng'; còn lại theo yaw."""
-    if not c.has_face or c.face_sim < 0.35:
+    """Nhóm góc: quay lưng/không rõ mặt → 'sau lưng'; còn lại theo yaw/pitch."""
+    if _facing_away(c) or not c.has_face or c.face_sim < 0.35:
         return "sau lưng"
+    if c.pitch > 15:          # camera/đầu ngửa lên
+        return "ngửa"
+    if c.pitch < -15:         # cúi xuống
+        return "cúi"
     for label, lo, hi in YAW_BUCKETS:
         if lo <= c.yaw < hi:
             return label
@@ -194,6 +207,21 @@ def coverage_pick(cands: list[Candidate], per_bucket: int = 2,
         picked.extend(chosen)
     picked.sort(key=lambda c: (c.source, c.t))
     return picked
+
+
+def drop_similar(cands: list[Candidate], th: float = 0.93) -> list[Candidate]:
+    """Loại lần cuối: ảnh quá giống một ảnh đã giữ trong cùng nguồn (cosine ≥ th)."""
+    mat: np.ndarray | None = None
+    kept: list[Candidate] = []
+    for c in sorted(cands, key=lambda x: (x.source, x.t)):
+        if c.clip_vec is None:
+            kept.append(c)
+            continue
+        if mat is not None and float((mat @ c.clip_vec).max()) >= th:
+            continue
+        kept.append(c)
+        mat = c.clip_vec[None].copy() if mat is None else np.vstack([mat, c.clip_vec[None]])
+    return kept
 
 
 def pick_diverse(cands: list[Candidate], n: int, pose_weight: float = 1.0,
