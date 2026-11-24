@@ -54,6 +54,7 @@ class Job:
     eta: int | None = None
     file: str = ""
     size: int = 0
+    codec: str = ""
     error: str = ""
     created: float = field(default_factory=time.time)
 
@@ -61,7 +62,7 @@ class Job:
 JOBS: dict[str, Job] = {}
 ORDER: list[str] = []
 LOCK = threading.Lock()
-QUEUE: "Queue[tuple[str, str]]" = Queue()
+QUEUE: "Queue[tuple[str, str, bool]]" = Queue()
 
 
 # --------------------------------------------------------------------- tải file
@@ -168,7 +169,7 @@ def _direct_download(url: str, job: Job) -> Path:
     raise RuntimeError(f"tải link media thất bại: {last_err}")
 
 
-def _ydl_download(url: str, job: Job, cookies: str) -> Path:
+def _ydl_download(url: str, job: Job, cookies: str, overwrite: bool = False) -> Path:
     def hook(d: dict) -> None:
         if d.get("status") == "downloading":
             total = d.get("total_bytes") or d.get("total_bytes_estimate") or 0
@@ -184,8 +185,15 @@ def _ydl_download(url: str, job: Job, cookies: str) -> Path:
 
     opts = {
         "outtmpl": {"default": str(OUT_DIR / "%(title).110s [%(id)s].%(ext)s")},
-        "format": f"bv*[height<={MAX_HEIGHT}]+ba/b[height<={MAX_HEIGHT}]/b",
+        # Ưu tiên H.264 + AAC: combo AV1/VP9 + Opus trong MP4 làm VLC nháy/khựng
+        # vài giây đầu (cảnh báo của ffmpeg: non-standard codec trong mp4).
+        "format": (f"bv*[vcodec^=avc1][height<={MAX_HEIGHT}]+ba[acodec^=mp4a]/"
+                   f"bv*[vcodec^=avc1][height<={MAX_HEIGHT}]+ba/"
+                   f"bv*[height<={MAX_HEIGHT}]+ba/b[height<={MAX_HEIGHT}]/b"),
+        "format_sort": ["vcodec:h264", "acodec:aac", "res", "fps"],
         "merge_output_format": "mp4",
+        # moov lên đầu file: mở/seek mượt hơn trên VLC, TV, điện thoại
+        "postprocessor_args": {"merger": ["-movflags", "+faststart"]},
         "noplaylist": True,
         "playlist_items": "1",       # trang có nhiều <video> chỉ lấy cái đầu
         "quiet": True,
@@ -199,6 +207,8 @@ def _ydl_download(url: str, job: Job, cookies: str) -> Path:
     }
     if cookies and cookies != "none":
         opts["cookiesfrombrowser"] = (cookies,)
+    if overwrite:
+        opts["overwrites"] = True          # tải đè bản cũ (vd. bản AV1/VP9 bị nháy)
 
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=True)
@@ -209,6 +219,26 @@ def _ydl_download(url: str, job: Job, cookies: str) -> Path:
         path = downloads[0].get("filepath") if downloads else None
         path = path or ydl.prepare_filename(info)
         return Path(path)
+
+
+def _probe_codec(path: Path) -> str:
+    """Chuỗi 'video/audio' để kiểm tra file có dễ phát không."""
+    try:
+        r = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+                            "stream=codec_type,codec_name", "-of", "csv=p=0", str(path)],
+                           capture_output=True, text=True, timeout=20)
+        found: dict[str, str] = {}
+        for line in r.stdout.splitlines():
+            parts = [x.strip() for x in line.split(",") if x.strip()]
+            kinds = [p for p in parts if p in ("video", "audio")]
+            if not kinds:
+                continue
+            kind = kinds[0]
+            codec = next((p for p in parts if p != kind), "")
+            found.setdefault(kind, codec)
+        return "/".join(found.get(k, "") for k in ("video", "audio"))
+    except Exception:
+        return ""
 
 
 def _newest_video(since: float) -> Path | None:
@@ -222,14 +252,14 @@ def _newest_video(since: float) -> Path | None:
     return max(cands, key=lambda p: p.stat().st_mtime)
 
 
-def _run(job: Job, cookies: str) -> None:
+def _run(job: Job, cookies: str, overwrite: bool = False) -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     started = time.time()
     try:
         path: Path | None = None
         if yt_dlp is not None:
             try:
-                path = _ydl_download(job.url, job, cookies)
+                path = _ydl_download(job.url, job, cookies, overwrite)
             except Exception as exc:
                 job.error = str(exc)[:300]
                 path = None
@@ -243,6 +273,12 @@ def _run(job: Job, cookies: str) -> None:
 
         job.file = Path(path).name
         job.size = Path(path).stat().st_size if Path(path).exists() else 0
+        job.codec = _probe_codec(Path(path)) if Path(path).exists() else ""
+        if job.codec and "/" in job.codec:
+            vcodec = job.codec.split("/")[0]
+            if vcodec not in ("h264", "hevc"):
+                print(f"cảnh báo: {job.file} là {job.codec} — một số player (VLC) có thể "
+                      f"nháy vài giây đầu; nên tải lại hoặc remux sang h264.")
         job.progress = 1.0
         job.status = "done"
     except Exception as exc:
@@ -252,13 +288,13 @@ def _run(job: Job, cookies: str) -> None:
 
 def _worker() -> None:
     while True:
-        job_id, cookies = QUEUE.get()
+        job_id, cookies, overwrite = QUEUE.get()
         with LOCK:
             job = JOBS.get(job_id)
         if job is None:
             continue
         try:
-            _run(job, cookies)
+            _run(job, cookies, overwrite)
         finally:
             QUEUE.task_done()
 
@@ -319,6 +355,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/api/download":
             urls = [u.strip() for u in re.split(r"[\r\n]+", str(payload.get("urls", ""))) if u.strip()]
             cookies = str(payload.get("cookies", "none"))
+            overwrite = bool(payload.get("overwrite", False))
             if not urls:
                 return self._json({"error": "chưa nhập URL"}, 400)
             if len(urls) > 10:
@@ -331,7 +368,7 @@ class Handler(BaseHTTPRequestHandler):
                 with LOCK:
                     JOBS[job.id] = job
                     ORDER.append(job.id)
-                QUEUE.put((job.id, cookies))
+                QUEUE.put((job.id, cookies, overwrite))
                 created.append(job.id)
             return self._json({"ids": created})
 
@@ -411,6 +448,8 @@ https://example.com/trang-co-video"></textarea>
         <option value="edge">Cookie Edge</option>
         <option value="firefox">Cookie Firefox</option>
       </select>
+      <label class="hint" title="Tải đè bản cũ (vd. bản AV1/VP9 bị VLC nháy)"><input type="checkbox"
+        id="overwrite"> tải lại/ghi đè</label>
       <button class="primary" id="go">Tải về</button>
       <button class="ghost" id="clear">Xoá danh sách đã xong</button>
       <span id="out" class="hint"></span>
@@ -441,7 +480,7 @@ async function submit() {
   $('go').disabled = true;
   try {
     const r = await fetch('/api/download', {method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({urls, cookies: $('cookies').value})});
+      body: JSON.stringify({urls, cookies: $('cookies').value, overwrite: $('overwrite').checked})});
     const j = await r.json();
     if (j.error) alert(j.error);
     else $('urls').value = '';
@@ -458,8 +497,8 @@ async function tick() {
     const pct = Math.round((j.progress || 0) * 100);
     const label = j.status === 'done' ? 'xong' : j.status === 'error' ? 'lỗi'
       : j.status === 'merging' ? 'đang ghép' : j.status === 'queued' ? 'chờ' : pct + '%';
-    const meta = [label, fmtSpeed(j.speed), j.eta ? 'còn ' + fmtEta(j.eta) : '']
-      .filter(Boolean).join(' · ');
+    const meta = [label, fmtSpeed(j.speed), j.eta ? 'còn ' + fmtEta(j.eta) : '',
+                  j.codec].filter(Boolean).join(' · ');
     return `<div class="job">
       <div class="t"><span class="name">${esc(j.title || j.url)}</span>
       <span class="meta">${esc(meta)}</span></div>
