@@ -206,18 +206,18 @@ so **tương đối** với trung vị của chính cảnh đó (`--face-sharp-r
 
 Cả ba so với **trung vị của chính cảnh** nên clip vốn tối/nhoè sẵn không bị bỏ oan.
 
-### Ảnh na ná nhau: cùng bên quay + cùng cỡ cảnh
+### Ảnh na ná nhau: cùng phía quay + cùng cỡ cảnh
 
-Bộ lọc 3 trục ở trên vẫn để lọt 4 ảnh MC đang nói (cùng váy, cùng bối cảnh,
-cùng khung hình) chỉ khác **góc đầu vài chục độ**, vì mỗi ảnh rơi vào nhóm góc
-khác nhau (`nghiêng` / `trái nhiều`). Bổ sung luật: **cùng bên quay** (cùng âm
-hoặc cùng dương, |yaw| ≥ 20°) **+ cùng cỡ cảnh + cosine ngoại hình ≥
-`--near-dup-th`** (mặc định 0.84) ⇒ coi là trùng, giữ ảnh tốt nhất.
+Bộ lọc 3 trục ở trên vẫn để lọt các ảnh cùng váy / cùng bối cảnh / cùng khung
+hình, chỉ khác **góc đầu vài chục độ**, vì mỗi ảnh rơi vào nhóm góc khác nhau
+(`thẳng` / `trái` / `nghiêng`). Bổ sung luật: **cùng phía quay** — chính diện
+(\|yaw\| < 20°), trái (≤ −20°), phải (≥ +20°) — **+ cùng cỡ cảnh + cosine ngoại
+hình ≥ `--near-dup-th`** (mặc định 0.84) ⇒ coi là trùng, giữ ảnh tốt nhất.
 
-- Đo trên 4 ảnh đó: CLIP 0.843–0.893, trong khi cặp "khác người/khác cảnh" cùng
-  clip chỉ 0.73–0.79 ⇒ 0.84 tách sạch.
-- Ảnh cùng bên nhưng **khác ngoại hình** (CLIP thấp) vẫn được giữ, nên không
-  mất độ phủ góc: 110 → **80 ảnh** nhưng phân bố góc/cỡ cảnh vẫn đủ.
+- Đo trên obj_1: 4 ảnh MC đang nói có CLIP 0.843–0.893; 3 ảnh 67.0/68.0/68.5 s
+  (đều gần chính diện) có CLIP 0.953–0.966; trong khi cặp "khác người/khác cảnh"
+  cùng clip chỉ 0.73–0.79 ⇒ 0.84 tách sạch.
+- Ảnh cùng phía nhưng **khác ngoại hình** (CLIP thấp) vẫn được giữ.
 - Muốn giữ nhiều hơn thì nâng `--near-dup-th` (0.90 = gần như chỉ gộp ảnh trùng
   hẳn); đặt 0 để tắt luật này.
 

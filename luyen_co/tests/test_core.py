@@ -625,6 +625,22 @@ def test_cung_ben_va_giong_ngoai_hinh_thi_gop():
     assert len(distinct_pose_pick([a, e], min_yaw=25.0, min_pose=0.08)) == 2
 
 
+def test_chinh_dien_cung_ngoai_hinh_thi_gop():
+    # 3 ảnh 67.0 / 68.0 / 68.5 s: yaw −12.4 / 2.7 / 0 → đều gần chính diện,
+    # CLIP 0.953–0.966 → phải gộp còn 1.
+    same = [1.0, 0.0, 0.0] + [0.0] * 5
+    base = dict(h=900, face_px=200, blur=600.0, face_blur=150.0)
+    a = make_cand(t=67.0, yaw=-12.4, clip=same, **base)
+    b = make_cand(t=68.0, yaw=2.7, clip=same, **base)
+    c = make_cand(t=68.5, yaw=0.0, clip=same, face=-1.0, **base)
+    assert len(distinct_pose_pick([a, b, c], min_yaw=25.0, min_pose=0.08)) == 1
+    # nhưng ảnh chính diện khác cỡ cảnh thì vẫn giữ (trục cỡ cảnh độc lập)
+    twin = make_cand(t=90.0, yaw=3.0, clip=same, h=400, face_px=40, blur=600.0,
+                     face_blur=150.0)
+    assert shot_scale(twin) != shot_scale(a)
+    assert len(distinct_pose_pick([a, twin], min_yaw=25.0, min_pose=0.08)) == 2
+
+
 def test_goc_quay_khac_nhau_van_giu_du_cung_dang():
     # Cùng dáng nhưng đầu quay khác hẳn: góc khớp (không dùng mắt/mũi) coi là cùng
     # dáng, còn trục góc quay tách ra → giữ cả hai ảnh.

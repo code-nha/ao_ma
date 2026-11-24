@@ -133,10 +133,18 @@ NO_FACE_BUCKETS = {"sau lưng", "sau lưng 3/4", "không rõ mặt", "nghiêng"}
 SOFT_BUCKETS = NO_FACE_BUCKETS
 
 
-def _same_side(a: Candidate, b: Candidate, min_yaw: float = 20.0) -> bool:
-    """Hai ảnh cùng bên quay (cùng âm hoặc cùng dương, đủ lớn)."""
-    return ((a.yaw <= -min_yaw and b.yaw <= -min_yaw)
-            or (a.yaw >= min_yaw and b.yaw >= min_yaw))
+def _yaw_family(c: Candidate, min_yaw: float = 20.0) -> int:
+    """Phía quay: −1 = quay trái, 0 = gần chính diện, +1 = quay phải."""
+    if c.yaw <= -min_yaw:
+        return -1
+    if c.yaw >= min_yaw:
+        return 1
+    return 0
+
+
+def _same_side(a: Candidate, b: Candidate) -> bool:
+    """Hai ảnh cùng phía quay (cùng trái / cùng phải / cùng chính diện)."""
+    return _yaw_family(a) == _yaw_family(b)
 
 
 def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
@@ -165,12 +173,13 @@ def _same_pose(a: Candidate, b: Candidate, min_yaw: float, min_pose: float,
     """
     if shot_scale(a) != shot_scale(b):
         return False
-    # Cùng BÊN quay + cùng cỡ cảnh + ngoại hình gần như y hệt ⇒ trùng nhau về ý
-    # nghĩa, dù góc đầu lệch vài chục độ. Đo trên clip 1750183430: 4 ảnh MC đang
-    # nói (45.0 / 52.5 / 56.5 / 60.5 s) cùng váy, cùng bối cảnh, cùng khung hình,
-    # CLIP 0.843–0.893, nhưng lọt qua bộ lọc vì mỗi ảnh rơi vào nhóm góc khác
-    # nhau (nghiêng / trái nhiều) — đúng lỗi "pose lặp quá nhiều" người dùng báo.
-    # Ảnh cùng bên nhưng KHÁC ngoại hình (CLIP thấp) vẫn được giữ.
+    # Cùng PHÍA quay (chính diện / trái / phải) + cùng cỡ cảnh + ngoại hình gần
+    # như y hệt ⇒ trùng nhau về ý nghĩa, dù góc đầu lệch vài chục độ. Đo trên
+    # clip 1750183430: 4 ảnh MC đang nói (45.0 / 52.5 / 56.5 / 60.5 s) cùng váy,
+    # cùng bối cảnh, cùng khung hình, CLIP 0.843–0.893; và 3 ảnh 67.0 / 68.0 /
+    # 68.5 s (CLIP 0.953–0.966) lọt qua bộ lọc vì mỗi ảnh rơi vào nhóm góc khác
+    # nhau (thẳng / trái / không rõ mặt) — đúng lỗi "pose lặp quá nhiều".
+    # Ảnh cùng phía nhưng KHÁC ngoại hình (CLIP thấp) vẫn được giữ.
     if near_dup_th > 0 and a.clip_vec is not None and b.clip_vec is not None \
             and _same_side(a, b) and float(np.dot(a.clip_vec, b.clip_vec)) >= near_dup_th:
         return True
