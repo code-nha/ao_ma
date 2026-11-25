@@ -14,10 +14,10 @@ Cần tìm nguồn khác, ví dụ:
 Việc cần làm: chọn nguồn, xin phép tải nếu cần, chưng cất vào kho nét với nguồn ghi rõ, thay dần các giá trị `general`.
 
 ## Còn lại sau đợt nghiệm thu tầng chọn nét (2026-11-25)
-- SOUL hiện chỉ được giải thích nét mặt khi nghỉ, dáng đứng, dáng đi. Nếp nhăn do thói quen biểu cảm (cau mày) có nên dẫn SOUL
-  không: chờ người dùng quyết.
-- `teeth.veneers` (bọc sứ) bị chọn cho người từng niềng răng: cần giá trị "răng đều sau niềng" riêng.
-- Nhánh "hết lượt kiểm mà còn mâu thuẫn thì đưa ô về nét nền" đã có code nhưng chưa gặp trong lần chạy thật nào.
+- Đã quyết (2026-11-25): SOUL chỉ giải thích nét mặt khi nghỉ, dáng đứng, dáng đi; nếp nhăn do thói quen biểu cảm không dẫn SOUL.
+- Đã quyết (2026-11-25): người từng niềng răng được chọn `teeth.veneers` (bọc sứ) thì cứ để, hơi vô lý nhưng thú vị; không thêm giá trị riêng.
+- Nhánh "hết lượt kiểm mà còn mâu thuẫn thì đưa ô về nét nền" đã chạy thử (2026-11-25, t_lan, bước kiểm giả lập luôn báo
+  mâu thuẫn): bỏ đúng ô phụ chọn sau cùng, mâu thuẫn thứ hai dùng chung ô đó được coi là đã giải. Chưa gặp trong lần chạy thật.
 - Luân hồi kiểm mâu thuẫn đôi khi trả lời lan man rồi tự rút lại; code bỏ qua câu dài hơn 300 ký tự nhưng vẫn ghi vào
   `rule_candidates.jsonl`.
 - Nhân vật thử `t_lan`, `t_lao_bay_twin` và các story `acc*` là dữ liệu nghiệm thu, chưa commit.

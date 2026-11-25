@@ -427,11 +427,13 @@ def main():
             # no rounds left: a contradiction must not reach LOOK. Per conflict, the slot to let go back to ordinary:
             # an extra before a signature, then the slot picked last (the latest re-pick is the least settled).
             order = {s: i for i, s in enumerate(picks)}
+            dropped = set()
             for c in conf:
                 cand = [s for s in c["slots"] if s in picks]
-                if not cand:
+                if not cand or dropped & set(c["slots"]):     # an earlier drop already settled this one
                     continue
                 s = max(cand, key=lambda x: (role.get(x) != "signature", order.get(x, 0)))
+                dropped.add(s)
                 picks.pop(s, None)
                 unresolved.append({"slots": c["slots"], "why": c.get("why"), "dropped": s})
                 print("   unresolved after checks; slot back to ordinary:", s, flush=True)
