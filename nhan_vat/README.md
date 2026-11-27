@@ -23,6 +23,7 @@ Trạng thái và việc còn lại: `characters/BACKLOG.md`.
 
 | Đường dẫn | Là gì |
 |---|---|
+| `HARNESS.md` | kiến trúc harness: lời gọi model, đạo diễn, Luân hồi, vòng ảnh, log, cách mở rộng, chỗ yếu |
 | `look_and_feel.md` | mục tiêu, bài học từ thí nghiệm, định hướng |
 | `characters/SPEC.md` | bộ file nhân vật: IDENTITY, SOUL, LIFE, STYLE, LOOK (bản cho model: `SPEC.en.md`) |
 | `characters/LOOK_SLOTS.md` | khung 42 ô LOOK |
