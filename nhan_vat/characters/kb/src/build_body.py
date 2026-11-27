@@ -34,7 +34,7 @@ for s, d in slots.items():
     if not ok: errs.append('no normal '+s)
 print('\n'.join(errs) or 'OK')
 out = {'version': 1, 'age_bands': {'young':[18,30],'adult':[30,45],'middle':[45,65],'elderly':[65,120]}, 'slots': slots}
-path = r'C:/Users/khoa/code_nha/ao_ma-nhan_vat/characters/kb/body.json'
+path = r'C:/Users/khoa/code_nha/ao_ma-nhan_vat/nhan_vat/characters/kb/body.json'
 json.dump(out, open(path,'w',encoding='utf-8'), ensure_ascii=False, indent=1)
 d = json.load(open(path, encoding='utf-8'))
 tot=0; book=0; books=set()
