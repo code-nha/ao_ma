@@ -12,15 +12,31 @@ có đạo diễn).
 
 Ba khối:
 
-```
-                    ┌───────────────────── hạ tầng chung ─────────────────────┐
-                    │ call() tới Ollama  ·  log JSONL  ·  viewer  ·  kho nét  │
-                    └─────────────────────────────────────────────────────────┘
-  HỘI THOẠI                                   NGOẠI HÌNH
-  dialogue_director_v2.py                     luan_hoi.py ──► LOOK.kb.json ──► look_loop.py
-  cảnh -> lượt -> kiểm -> sinh lại             (chọn nét)                       (vẽ, mắt, nhân vật sửa)
-  -> tóm tắt cảnh                                  ▲                                │
-                                                   └──────── luan_hoi --redo ◄──────┘
+```mermaid
+flowchart LR
+    subgraph HT["Hội thoại"]
+        D["dialogue_director_v2.py<br/>cảnh, lượt, kiểm, sinh lại, tóm tắt cảnh"]
+    end
+    subgraph NH["Ngoại hình"]
+        LH["luan_hoi.py<br/>chọn nét"] --> LOOK[("LOOK.kb.json")]
+        LOOK --> LL["look_loop.py<br/>vẽ, mắt chấm, nhân vật sửa"]
+        LL -- "--redo" --> LH
+    end
+    subgraph CHUNG["Hạ tầng chung"]
+        CALL["call() tới Ollama"]
+        KB[("kho nét<br/>kbq.py")]
+        LOG[("log JSONL")]
+        V["viewer"]
+    end
+    D --> CALL
+    LH --> CALL
+    LL --> CALL
+    LH --> KB
+    LL --> KB
+    D --> LOG
+    LH --> LOG
+    LL --> LOG
+    LOG --> V
 ```
 
 Mỗi script là một file chạy độc lập (`python -I <script>`), chỉ dùng thư viện chuẩn. Code dùng chung duy nhất là module kho nét
@@ -48,20 +64,22 @@ Code luôn kiểm lại sau khi nhận (schema không đủ chặn ý sai).
 Hai nhân vật cùng một model, mỗi bên một system prompt riêng. Đạo diễn là luật, không phải LLM (LLM chỉ dùng để tóm tắt cảnh).
 
 **Vòng chạy**
-```
-while tổng token thoại < giới hạn:
-    cảnh = SCENES[i]            # bối cảnh, mục tiêu, 3 diễn biến (beats), ý riêng của từng nhân vật
-    while cảnh chưa cắt:
-        ghi chú riêng = diễn biến kế tiếp (mỗi BEAT_EVERY lượt) + cấm ý lặp (theme ban) + ghi chú để lại từ lượt trước
-        msgs = build(...)        # xem dưới
-        txt = call(msgs)
-        nếu lẫn vai (regex) -> sinh lại với STRONG_REMIND, tối đa 2 lần
-        nếu chào tạm biệt (từ lượt 4) mà đã tới diễn biến cuối -> cắt cảnh
-        nếu đủ SCENE_MAX_TURNS lượt -> cắt cảnh
-        nếu giống các lượt trước (Jaccard từ nội dung >= SIM_THRESHOLD) -> xen kẽ: chèn sự kiện của người dẫn truyện,
-            hoặc ghi chú cho người kia "hỏi hay kể chuyện mới"
-        nếu chào tạm biệt sớm -> ghi chú cho người kia "cảnh chưa xong, chưa ai được về"
-    tóm tắt cảnh = call(chỉ ghi sự kiện và điều đã biết, không bài học)
+```mermaid
+flowchart TD
+    S["Cảnh mới: SCENES[i]<br/>bối cảnh, mục tiêu, 3 diễn biến, ý riêng từng nhân vật"] --> N
+    N["Ghi chú riêng cho người nói:<br/>diễn biến kế (mỗi BEAT_EVERY lượt), cấm ý lặp,<br/>ghi chú để lại từ lượt trước"] --> B["build() rồi call()"]
+    B --> BL{"Lẫn vai? (regex)"}
+    BL -- "có, chưa quá 2 lần" --> R["Thêm STRONG_REMIND"] --> B
+    BL -- "không, hoặc đã sinh lại 2 lần" --> C{"Kiểm sau lượt"}
+    C -- "chào tạm biệt từ lượt 4 và đã tới diễn biến cuối" --> CUT["Cắt cảnh"]
+    C -- "đủ SCENE_MAX_TURNS lượt" --> CUT
+    C -- "giống lượt trước (Jaccard >= SIM_THRESHOLD)" --> EV["Xen kẽ: chèn sự kiện của người dẫn truyện,<br/>hoặc ghi chú cho người kia: hỏi hay kể chuyện mới"] --> N
+    C -- "chào tạm biệt sớm" --> FW["Ghi chú cho người kia:<br/>cảnh chưa xong, chưa ai được về"] --> N
+    C -- "bình thường" --> N
+    CUT --> SUM["Tóm tắt cảnh bằng call():<br/>chỉ sự kiện và điều đã biết, không bài học"]
+    SUM --> T{"Tổng token thoại<br/>còn dưới giới hạn?"}
+    T -- "còn" --> S
+    T -- "hết" --> END["Kết thúc"]
 ```
 
 **Dựng prompt mỗi lượt (`build`)**
@@ -107,15 +125,18 @@ chặn kể lại: kể lại ít hẳn nhưng chậm hơn khoảng 35%, đang g
 | `kb.items(picks)` | duyệt (ô, giá trị), kể cả ô nhiều giá trị (`marks`) |
 
 ### 4.2 Luân hồi (`experiments/luan_hoi.py`)
-```
-facts = kb.facts(IDENTITY, LIFE, STYLE)
-menu  = code lọc cứng (giới, tuổi, needs theo facts, trần dùng lại trong story)
-menu  = Luân hồi (LLM, không đóng vai) gạch giá trị không thể có
-bước 1: nhân vật chọn ô nào là nét nhận diện (2-5), ô nào là nét phụ (tối đa 6)
-bước 2: nhân vật chọn giá trị cho các ô đó, từ menu        ── code kiểm, sai thì hỏi lại (FIX_ROUNDS 2)
-kiểm:  mâu thuẫn (kb.check) + lý do (giá trị hiếm/nổi bật phải dẫn LIFE hoặc IDENTITY)
-       + Luân hồi kiểm mâu thuẫn bằng LLM (LLM_CHECKS 2); hết lượt mà còn lỗi thì đưa ô chọn sau cùng về nét nền
-ô không chọn -> nét nền; ghi characters/<id>/LOOK.kb.json + stories/<story>/registry.json
+```mermaid
+flowchart TD
+    F["Code đọc facts từ IDENTITY, LIFE, STYLE<br/>kb.facts()"] --> M1["Code lọc cứng menu:<br/>giới, tuổi, needs theo facts, trần dùng lại trong story"]
+    M1 --> M2["Luân hồi (LLM, không đóng vai)<br/>gạch giá trị không thể có"]
+    M2 --> S1["Bước 1: nhân vật chọn ô nhận diện (2-5)<br/>và ô phụ (tối đa 6)"]
+    S1 --> S2["Bước 2: nhân vật chọn giá trị cho các ô đó, từ menu"]
+    S2 --> K{"Code kiểm:<br/>mâu thuẫn (kb.check),<br/>lý do cho giá trị hiếm hoặc nổi bật"}
+    K -- "sai, còn lượt (FIX_ROUNDS 2)" --> S2
+    K -- "đạt" --> LC{"Luân hồi kiểm mâu thuẫn bằng LLM<br/>(LLM_CHECKS 2)"}
+    LC -- "còn mâu thuẫn, còn lượt" --> S2
+    LC -- "còn mâu thuẫn, hết lượt" --> DROP["Đưa ô chọn sau cùng về nét nền"] --> OUT
+    LC -- "đạt" --> OUT["Ô không chọn nhận nét nền;<br/>ghi LOOK.kb.json và sổ nét registry.json"]
 ```
 Giới hạn: tối đa 5 nét nổi bật; nét nhận diện tối đa 3 trong một nhóm ô; trùng nét nhận diện với một nhân vật khác cùng story
 tối đa 1; một giá trị chỉ được bấy nhiêu nhân vật cùng nhóm (giới x tuổi) trong story dùng: `max(CAP_MIN 2, CAP_SHARE 0.2 x số
@@ -128,19 +149,19 @@ Log: `experiments/logs/luan_hoi.jsonl` (mỗi lần chạy một dòng, có từ
 `acted` cho biết code có hành động không, để người duyệt thành luật kho).
 
 ### 4.3 Vòng ảnh (`experiments/look_loop.py`)
+```mermaid
+flowchart TD
+    P["Dựng prompt từ picks:<br/>câu mở cố định + câu nhấn (tối đa 3 ô, dùng paint) + kb.prompt()"] --> R["Vẽ 2 ảnh trên ComfyUI senlab<br/>Qwen Image 2.1, 896x1152, 30 bước, seed 1101 và 2202, từng ảnh một"]
+    R --> E1["Mắt, SYS_DESC (vision, không thấy LOOK):<br/>tả từng bộ phận"]
+    E1 --> E2["Mắt, SYS_CMP (text): so lời tả với LOOK từng ô<br/>yes / partly / no / not visible"]
+    E2 --> G["Code: cổng (giới, tuổi ±10, không đẹp hóa)<br/>và điểm (nét nhận diện x2)"]
+    G --> ME["Nhân vật, SYS_ME (vision + bảng mắt):<br/>is_me yes / almost / no, tối đa 3 sửa<br/>vòng cuối: không được sửa"]
+    ME --> STOP{"yes và qua cổng,<br/>không sửa gì,<br/>hoặc vòng cuối?"}
+    STOP -- "không" --> FIX["Nhấn mạnh: thêm vào câu nhấn<br/>repick / plain: luan_hoi --redo<br/>chọn lại trùng giá trị cũ thì chuyển thành nhấn mạnh"] --> P
+    STOP -- "có" --> KEEP["Giữ bản theo thứ tự: yes qua cổng, yes > almost > no, qua cổng, điểm<br/>ghi LOOK.kb.json (thêm khối render) và sổ nét"]
 ```
-for k in 1..5:
-    prompt = câu mở cố định + câu nhấn (<= 3 ô, dùng paint) + kb.prompt(picks)       # dựng lại từ picks mỗi vòng
-    2 ảnh = ComfyUI senlab, Qwen Image 2.1, 896x1152, 30 bước, seed 1101 và 2202     # gửi từng ảnh một
-    mắt:  SYS_DESC (vision, KHÔNG thấy LOOK) tả từng bộ phận
-          SYS_CMP (text) so lời tả với cụm LOOK từng ô -> yes / partly / no / not visible
-    code: cổng (giới, tuổi ±10, không đẹp hóa) + điểm (nét nhận diện x2)
-    nhân vật: SYS_ME (vision + bảng mắt) -> is_me yes/almost/no + tối đa 3 sửa (emphasize / repick / plain)
-              vòng cuối: không được sửa (maxItems 0); sửa nào trả về vẫn chỉ ghi vào changes_ignored
-    dừng nếu yes và qua cổng, hoặc không sửa gì
-    repick/plain -> luan_hoi --redo; chọn lại trùng giá trị cũ -> chuyển thành nhấn mạnh
-giữ bản: (yes và qua cổng, yes > almost > no, qua cổng, điểm) -> ghi LOOK.kb.json (+ khối render) và sổ nét
-```
+
+Vòng cuối model vẫn có thể trả về sửa (nếu server bỏ qua `maxItems 0`): code chỉ ghi vào `changes_ignored`, không áp.
 Cần harness ngoài repo `render_t2i.py` (`C:\Users\khoa\xyz\hoa_si\qwen\research_v2\harness`) để dựng workflow ComfyUI.
 Ghi: `experiments/look_loop/<id>/<ts>/` (LOOK, prompt, log redo từng vòng; ảnh PNG chỉ ở máy, bị `.gitignore`) và
 `experiments/logs/look_loop.jsonl` (một dòng mỗi vòng: prompt, ảnh, lời mắt, điểm, cổng, câu trả lời của nhân vật, `stop`).
