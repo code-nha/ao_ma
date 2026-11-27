@@ -1,0 +1,15 @@
+male-elderly kb 3.d2b314ad1c cap 2 facts: era=born-pre1960; place=coastal,rural; alcohol=drinks; eth=kinh; life=outdoor-manual,sea; diet=plain-diet; means=poor; smoke=smoker
+plan: {'height': 'extra: short man, below average height', 'frame': 'extra: short stocky square-built frame', 'muscle': 'signature: wiry, stringy lean muscles from constant manual labor', 'face_shape': 'extra: older face, sunken temples, loose jawline', 'eyes': 'signature: dark eyes with heavy, weathered lids', 'mouth': 'extra: thin, weathered lips', 'teeth': 'signature: brown tobacco-stained teeth, worn down from years of hard food', 'ears': 'extra: large ears for the head size', 'skin_texture': 'signature: thick leathery face skin, deep creases from salt and sun', 'wrinkles': 'extra: deep vertical frown lines between the brows', 'facial_hair': 'extra: sparse grey stubble on chin and lip', 'arms': 'signature: thick strong forearms with ropy tendons from hauling nets'}
+character step2 ['face_shape'] {'secs': 2.2, 'prompt_tokens': 2161, 'eval_tokens': 57, 'est_tokens': 2427} errors 0
+check 1 {'secs': 1.2, 'prompt_tokens': 289, 'eval_tokens': 47, 'est_tokens': 314} conflicts 1
+   - LLM: ['muscle', 'arms'] Hard ropy muscles and lean corded muscles are incompatible with wiry/veiny description which implies very low muscle mass/atrophy.
+character step2 ['muscle', 'arms'] {'secs': 3.7, 'prompt_tokens': 2200, 'eval_tokens': 133, 'est_tokens': 2432} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+character step2 ['muscle', 'arms'] {'secs': 3.3, 'prompt_tokens': 2366, 'eval_tokens': 135, 'est_tokens': 2615} errors 1
+   - "ordinary untrained muscle tone" (muscle) and "thick strong forearms with ropy tendons" (arms) cannot be the same person (muscle: 2-2 vs 3-4).
+character step2 ['muscle', 'arms'] {'secs': 3.4, 'prompt_tokens': 2387, 'eval_tokens': 145, 'est_tokens': 2634} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+   dropped after fixes: []
+check 2 {'secs': 1.1, 'prompt_tokens': 300, 'eval_tokens': 7, 'est_tokens': 331} conflicts 0
+tokens per call: [('character_step2', 2161), ('check', 289), ('character_step2', 2200), ('character_step2', 2366), ('character_step2', 2387), ('check', 300)]
+PROMPT: overall: short man, below average height; short broad thick-set body, wide shoulders, deep barrel chest, thick neck; average weight, neither thin nor fat; old but still hard sinewy muscles | face: deflated face, hollow temples and cheeks; eyes held narrowed, peering; dry cracked lips; brown tobacco-stained teeth; large ears for the head size; deep brown sun-darkened skin; thick leathery face skin, deep creases; deep vertical frown lines between the brows; almost hairless face, no beard growth | hair: mostly grey hair | body: thick strong forearms with ropy tendons

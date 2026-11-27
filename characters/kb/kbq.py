@@ -193,6 +193,12 @@ class KB:
         ph = self.values[vid]["phrase"]
         return ph.replace("{loc}", self.loc_word(loc)) if "{loc}" in ph else ph
 
+    def paint(self, pick):
+        """Image-prompt wording: the value's "paint" if it has one (concrete shapes the painter renders), else its phrase."""
+        vid, loc = split_pick(pick)
+        ph = self.values[vid].get("paint") or self.values[vid]["phrase"]
+        return ph.replace("{loc}", self.loc_word(loc)) if "{loc}" in ph else ph
+
     def vi(self, pick):
         vid, loc = split_pick(pick)
         if self._vi is None:
@@ -682,7 +688,7 @@ class KB:
                 continue
             for p in (full[s] if isinstance(full[s], list) else [full[s]]):
                 if p and (s in req or not self.is_baseline(p, ctx)):
-                    out.append(self.phrase(p))
+                    out.append(self.paint(p))
         return "; ".join(out)
 
 

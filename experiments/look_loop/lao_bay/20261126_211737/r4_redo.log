@@ -1,0 +1,21 @@
+male-elderly kb 3.d2b314ad1c cap 2 facts: era=born-pre1960; place=coastal,rural; alcohol=drinks; eth=kinh; life=outdoor-manual,sea; diet=plain-diet; means=poor; smoke=smoker
+plan: {'height': 'extra: short man, below average height', 'frame': 'extra: short stocky square-built frame', 'muscle': 'signature: wiry, stringy lean muscles from constant manual labor', 'face_shape': 'extra: deflated face, hollow temples and cheeks', 'eyes': 'signature: dark eyes with heavy, weathered lids', 'mouth': 'extra: thin, weathered lips', 'teeth': 'signature: brown tobacco-stained teeth, worn down from years of hard food', 'ears': 'extra: large ears for the head size', 'skin_texture': 'signature: thick leathery face skin, deep creases from salt and sun', 'wrinkles': 'extra: deep vertical frown lines between the brows', 'facial_hair': 'extra: sparse grey stubble on chin and lip', 'arms': 'signature: thick strong forearms with ropy tendons from hauling nets'}
+character step2 ['face_shape'] {'secs': 1.8, 'prompt_tokens': 2165, 'eval_tokens': 49, 'est_tokens': 2437} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+character step2 ['face_shape'] {'secs': 1.1, 'prompt_tokens': 2248, 'eval_tokens': 47, 'est_tokens': 2523} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+character step2 ['face_shape'] {'secs': 0.8, 'prompt_tokens': 2246, 'eval_tokens': 47, 'est_tokens': 2518} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+   dropped after fixes: []
+check 1 {'secs': 1.0, 'prompt_tokens': 300, 'eval_tokens': 38, 'est_tokens': 331} conflicts 1
+   - LLM: ['face_shape', 'fat'] deflated face, hollow temples and cheeks contradicts average weight, neither thin nor fat
+character step2 ['face_shape'] {'secs': 1.4, 'prompt_tokens': 2082, 'eval_tokens': 61, 'est_tokens': 2338} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+character step2 ['face_shape'] {'secs': 1.1, 'prompt_tokens': 2177, 'eval_tokens': 61, 'est_tokens': 2443} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+character step2 ['face_shape'] {'secs': 1.0, 'prompt_tokens': 2177, 'eval_tokens': 61, 'est_tokens': 2443} errors 1
+   - 6 notable values; at most 5. Use near-plain values for the others.
+   dropped after fixes: []
+check 2 {'secs': 0.9, 'prompt_tokens': 291, 'eval_tokens': 7, 'est_tokens': 319} conflicts 0
+tokens per call: [('character_step2', 2165), ('character_step2', 2248), ('character_step2', 2246), ('check', 300), ('character_step2', 2082), ('character_step2', 2177), ('character_step2', 2177), ('check', 291)]
+PROMPT: overall: short man, below average height; short broad thick-set body, wide shoulders, deep barrel chest, thick neck; old but still hard sinewy muscles | face: gaunt narrow face, skin tight over bone; eyes held narrowed, peering; dry cracked lips; brown tobacco-stained teeth; large ears for the head size; deep brown sun-darkened skin; thick leathery face skin, deep creases; deep vertical frown lines between the brows; almost hairless face, no beard growth | hair: mostly grey hair | body: thick strong forearms with ropy tendons

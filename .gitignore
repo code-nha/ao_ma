@@ -1,2 +1,4 @@
 __pycache__/
 *.pyc
+# look_loop renders (~1.7 MB each); kept locally, paths are in experiments/logs/look_loop.jsonl
+experiments/look_loop/**/*.png

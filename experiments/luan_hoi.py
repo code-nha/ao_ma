@@ -6,6 +6,10 @@ hoặc nổi bật phải dẫn một mục LIFE hoặc một trường IDENTITY
 -> ô không chọn nhận giá trị nền theo giới x tuổi (x dân tộc) -> sổ nét của story.
 
     python -I luan_hoi.py lao_bay [--story demo] [--api http://wee:11435] [--model gemma4:26b] [--dry]
+    python -I luan_hoi.py lao_bay --redo redo.json      (look_loop: re-pick some slots of the existing LOOK.kb.json)
+
+redo.json: {"repick": {"<slot>": "<what the character wants there>"}, "plain": ["<slot>"], "note": "<why>"}. Luan hoi and
+step 1 are skipped; the other picks stay locked; re-picked slots go through the same code checks and Luan hoi check.
 
 Nét nhận diện: 2-5 trên toàn bộ các ô, tối đa 3 trong một nhóm (A thân tổng thể, B mặt, C tóc, D-G thân, H dấu vết).
 Nét phụ: tối đa 6. Mỗi lời gọi model <= ~3.5k token đầu vào (kbq.plan_calls). Ghi:
@@ -40,11 +44,12 @@ def opt(name, default):
 API = opt("--api", "http://wee:11435") + "/api/chat"
 MODEL = opt("--model", "gemma4:26b")
 STORY = opt("--story", "demo")
+REDO = opt("--redo", None)
 DRY = "--dry" in sys.argv
 if DRY:
     sys.argv.remove("--dry")
 if any(a.startswith("-") for a in sys.argv[1:]):
-    sys.exit("usage: luan_hoi.py [char_id] [--story S] [--api URL] [--model M] [--dry]")
+    sys.exit("usage: luan_hoi.py [char_id] [--story S] [--api URL] [--model M] [--dry] [--redo FILE]")
 CID =sys.argv[1] if len(sys.argv) > 1 else "lao_bay"
 
 CAP_SHARE, CAP_MIN = 0.2, 2
@@ -97,8 +102,9 @@ def read(name):
 
 def call(system, user, schema):
     body = {"model": MODEL, "stream": False, "think": False, "format": schema,
-            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-            "options": {"temperature": 0.8, "num_predict": 3000}}
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}
+    # no "options" (temperature, num_predict...): wee is shared and wee_admin asked for none (removed 2026-11-26);
+    # the schema's maxLength fields and the retry loop below guard against runaway output
     t = time.time()
     bad = []
     for attempt in range(3):            # Gemma sometimes stops inside a JSON string or loops on one phrase: ask again (sequential)
@@ -157,8 +163,8 @@ def main():
     rendered = {s: kb.render(s, menus[s], ctx, "luan_hoi", counts) for s in kb.slots}
     fixed = kbq.est_tokens(SYS_LUAN_HOI + f"CHARACTER\n{lh_profile}\n\nMENUS\n") + 60
     plan = kb.plan_calls(kb.slots, {s: kbq.est_tokens(rendered[s][0]) for s in kb.slots}, budget, fixed)
-    short = {}
-    for slots in plan:
+    short = {s: [v["id"] for v in menus[s]] for s in kb.slots} if REDO else {}
+    for slots in ([] if REDO else plan):
         user = f"CHARACTER\n{lh_profile}\n\nMENUS\n" + "\n".join(rendered[s][0] for s in slots)
         if DRY:
             print("luan_hoi", len(slots), "slots ~", kbq.est_tokens(SYS_LUAN_HOI + user), "tokens")
@@ -205,7 +211,7 @@ def main():
     def n_role(kind, g=None):
         return sum(1 for s, r in role.items() if r == kind and (g is None or grp[s] == g))
 
-    for pi, part in enumerate(parts):
+    for pi, part in enumerate([] if REDO else parts):
         last = pi == len(parts) - 1
         sig_ok = [s for s in part if notable[s] and n_role("signature", grp[s]) < MAX_SIG_GROUP]
         ext_ok = [s for s in part if nearpl[s] or notable[s]]
@@ -241,6 +247,21 @@ def main():
                 if kind == "extra" and (s not in ext_ok or n_role("extra") >= MAX_EXTRA):
                     continue
                 role[s], idea[s] = kind, x.get("idea", "")
+    redo = {}
+    touched = None                      # redo: the slots allowed to change (set below)
+    if REDO:
+        # restore the earlier LOOK: its plan, ideas, picks (non-baseline only) and cites; new slots become extras
+        redo = json.loads(Path(REDO).read_text(encoding="utf-8"))
+        prev = json.loads((CHARS / CID / "LOOK.kb.json").read_text(encoding="utf-8"))
+        role.update(prev.get("planned", {}))
+        idea.update(prev.get("ideas", {}))
+        for s, note in redo.get("repick", {}).items():
+            if s in kb.slots:
+                role.setdefault(s, "extra")
+                idea[s] = note or idea.get(s, "")
+        for s in redo.get("plain", []):
+            role.pop(s, None)
+        log["redo"] = redo
     chosen = [s for s in kb.slots if s in role]
     print("plan:", {s: f"{role[s]}: {idea[s]}" for s in chosen}, flush=True)
 
@@ -249,10 +270,12 @@ def main():
     head2 = f"YOU\n{profile}\n\nYOUR PLAN\n{plan_txt}\n\n"
     fixed2 = kbq.est_tokens(SYS_STEP2 + head2 + "ALREADY PICKED\n" + "x" * 600 + "\n\nSLOTS\n") + 80
 
-    def role_menu(s, locked, exclude=()):
+    def role_menu(s, locked, exclude=(), include=()):
         # every non-baseline value of the shortlist; the planned kind first. Whether a pick counts as a signature is
-        # decided by the value (notable), not by the plan.
+        # decided by the value (notable), not by the plan. include: ids put first even if baseline (redo: the value the
+        # character has now, so "keep it" is possible; baselines are otherwise never on the menu)
         pool = notable[s] + nearpl[s] if role[s] == "signature" else nearpl[s] + notable[s]
+        pool = [kb.get(i) for i in include if kb.get(i)["id"] not in {v["id"] for v in pool}] + pool
         lv = [kb.get(p) for _, p in kb.items(locked)]
         return [v for v in pool if v["id"] not in exclude and not any(kb.pair_conflicts(v, p, ctx) for p in lv)]
 
@@ -298,11 +321,11 @@ def main():
             errs.append(f"{len(nn)} notable values; at most {MAX_SIG}. Use near-plain values for the others.")
         return errs + errs_sh
 
-    def step2(slots, extra_msg="", exclude=()):
+    def step2(slots, extra_msg="", exclude=(), include=None):
         locked = {s: picks[s] for s in picks if s not in slots}
         lists = {}
         for s in slots:
-            m = role_menu(s, locked, exclude)
+            m = role_menu(s, locked, exclude, (include or {}).get(s, ()))
             if m:
                 lists[s] = m
             else:
@@ -378,6 +401,10 @@ def main():
             n_locked_rare = len(unexplained_rares(locked))
             bad |= set(extra_rares[max(0, 1 - n_locked_rare):])
             bad |= {x for x, _ in shared_overflow({**locked, **new}, new)}
+            # too many notable values: the new notable picks go first (a redo once wrote 6 of max 5, 2026-11-26)
+            n_nn = sum(kb.notable(kb.get(x), ctx, kbq.split_pick(x)[1]) for _, x in kb.items({**locked, **new}))
+            new_nn = [x for _, x in kb.items(new) if kb.notable(kb.get(x), ctx, kbq.split_pick(x)[1])]
+            bad |= set(new_nn[max(0, len(new_nn) - (n_nn - MAX_SIG)):]) if n_nn > MAX_SIG else set()
             for s in list(new):
                 keep = [x for x in as_list(new[s]) if x not in bad]
                 if not keep:
@@ -388,7 +415,29 @@ def main():
         picks.update(new)
         why.update({s: (res.get(s) or {}).get("why", "") for s in new})
 
-    for slots in plan2:
+    if REDO:
+        prev_picks = {s: prev["picks"][s] for s in prev.get("planned", {}) if s in prev.get("picks", {})}
+        for s, p in prev_picks.items():
+            if s in role and s not in redo.get("repick", {}):
+                keep = [x for x in as_list(p) if x in prev.get("cites", {})]      # cites lists exactly the picked values
+                if keep:
+                    picks[s] = keep if kb.multi(s) else keep[0]
+                    cites.update({x: prev["cites"][x] for x in keep})
+        why.update({s: w for s, w in prev.get("why", {}).items() if s in picks})
+        rs = [s for s in kb.slots if s in redo.get("repick", {}) and s in role]
+        touched = set(rs)               # only these may change; checks below ignore conflicts among the locked rest
+        msg = ("\n\nYOU SAW A PICTURE OF YOURSELF AND WANT TO CHANGE THESE SLOTS:\n- "
+               + "\n- ".join(f"{s}: {redo['repick'][s]}" for s in rs)
+               + (f"\nWhat was WRONG in the picture (not how you are): {redo['note']}" if redo.get("note") else "")
+               + "\nPick the value closest to what you want above, not the value that matches the wrong picture.")
+        # the note used to read "Why: I look too weak..." and step 2 picked a frail muscle value from it (2026-11-26)
+        if rs:
+            # the old value stays on the menu: a character may "repick" the value it already has (look_loop then
+            # emphasizes it); excluding it once forced "stocky" -> "bony" (2026-11-26). A baseline value is not on any
+            # menu, so the current value is added explicitly (single-value slots only; marks keep their menu)
+            cur = {s: [prev["picks"][s]] for s in rs if not kb.multi(s) and isinstance(prev["picks"].get(s), str)}
+            step2(rs, msg, include=cur)
+    for slots in ([] if REDO else plan2):
         step2(slots)
 
     # ---------------------------------------------------------------- lưới cuối: Luân hồi kiểm mâu thuẫn
@@ -407,6 +456,10 @@ def main():
         log["calls"].append({"role": "check", "n": n + 1, "out": chk, **cstat})
         conf = [c for c in chk.get("conflicts", []) if any(s in picks for s in c.get("slots", []))
                 and len(c.get("why", "")) <= 300]
+        if touched is not None:
+            # redo: the locked slots already passed these checks; a "conflict" between two of them is noise (it once
+            # turned "ropy muscles" + "wiry forearms" into thinner values while only face_shape was re-picked, 2026-11-26)
+            conf = [c for c in conf if touched & set(c.get("slots", []))]
         print("check", n + 1, cstat, "conflicts", len(chk.get("conflicts", [])), flush=True)
         if not chk.get("conflicts"):
             break
@@ -429,7 +482,7 @@ def main():
             order = {s: i for i, s in enumerate(picks)}
             dropped = set()
             for c in conf:
-                cand = [s for s in c["slots"] if s in picks]
+                cand = [s for s in c["slots"] if s in picks and (touched is None or s in touched)]   # redo: never a locked slot
                 if not cand or dropped & set(c["slots"]):     # an earlier drop already settled this one
                     continue
                 s = max(cand, key=lambda x: (role.get(x) != "signature", order.get(x, 0)))
@@ -438,7 +491,8 @@ def main():
                 unresolved.append({"slots": c["slots"], "why": c.get("why"), "dropped": s})
                 print("   unresolved after checks; slot back to ordinary:", s, flush=True)
             break
-        redo = sorted({s for c in conf for s in c["slots"] if s in picks}, key=kb.slots.index)
+        redo = sorted({s for c in conf for s in c["slots"] if s in picks and (touched is None or s in touched)},
+                      key=kb.slots.index)
         old_ids = {kbq.split_pick(p)[0] for s in redo for p in as_list(picks[s])}
         msg = "\n\nLUAN HOI FOUND THESE CONTRADICTIONS; PICK THESE SLOTS AGAIN:\n- " + "\n- ".join(
             f"{', '.join(c['slots'])}: {c['why']}" for c in conf)
@@ -458,7 +512,7 @@ def main():
             "facts": {t: facts.src.get(t) for t in sorted(facts.tags)},
             "picks": full, "covered": covered, "signature": sig, "extras": ext, "planned": role, "ideas": idea, "why": why,
             "cites": {p: cites.get(p, "") for _, p in kb.items(picks)}, "rounds_step2": rounds[0],
-            "remaining_errors": len(kb.check(picks, ctx)),
+            "remaining_errors": len(kb.check(picks, ctx)) + (len(sig) > MAX_SIG),     # conflicts + over the notable cap
             "phrases": {s: ([kb.phrase(x) for x in p] if isinstance(p, list) else kb.phrase(p)) for s, p in full.items()},
             "vi": {s: ([kb.vi(x) for x in p] if isinstance(p, list) else kb.vi(p)) for s, p in full.items()},
             "prompt_sections": prompt_parts, "prompt": prompt,

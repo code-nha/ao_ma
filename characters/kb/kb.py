@@ -185,6 +185,13 @@ def check(verbose=True):
         wc = len(ph.replace(",", " ").split())
         if not 3 <= wc <= 10:
             errs.append(f"{loc}: phrase has {wc} words")
+        # optional "paint": image-prompt wording when the phrase does not render (concrete shapes, not abstract words)
+        pt = v.get("paint")
+        if pt is not None:
+            if not isinstance(pt, str) or not pt.isascii() or not 3 <= len(pt.replace(",", " ").split()) <= 20:
+                errs.append(f"{loc}: paint must be ASCII, 3-20 words")
+            elif ("{loc}" in pt) != ("{loc}" in v["phrase"]):
+                errs.append(f"{loc}: paint and phrase must both have or both lack {{loc}}")
         if not ph.isascii():
             errs.append(f"{loc}: phrase not ASCII")
         for rx, what in ((BEAUTY, "beauty word"), (CAUSE_WORDS, "cause word"), (CLOTHING, "clothing/object word")):
