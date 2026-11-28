@@ -95,3 +95,59 @@ Câu hỏi còn mở:
   - 26B hay chốt lượt bằng một câu đạo lý.
 - Chưa test gemma4:12b.
 - Session `ebook_maker` đang cần định dạng profile nhân vật để làm skill tạo ảnh chân dung. Định dạng này nên lấy từ IDENTITY và phần ngoại hình, sau khi chốt cấu trúc persona.
+
+---
+
+## 4. Ảnh nhân vật trên Kling (tra cứu 2026-11-28, chưa test)
+
+Kling MCP có bộ tool **Element** để lưu nhân vật rồi dùng lại qua nhiều cảnh, giúp giữ cùng một khuôn mặt. Tài khoản đang dùng gói VIP Standard. Mọi job tạo ảnh hoặc video đều tốn credit, nên phải chốt tham số trước khi chạy. Riêng tạo, sửa, xem element thì không phải là job tạo ảnh.
+
+**Giới hạn khi tạo (chốt 2026-11-28):**
+- **Ảnh:** độ phân giải **từ 2K trở xuống**. Không dùng 4K, 8K.
+- **Video:** độ phân giải **từ 2K trở xuống**, tức chọn `720p` hoặc `1080p`, không dùng `4k`. Thời lượng **tối đa 5s**.
+- Luôn truyền rõ `duration` và độ phân giải, đừng dựa vào mặc định. Ví dụ `kling-video-v4_0` mặc định `duration` 10s.
+- Theo `who_am_i` (MCP 1.3.3), `kling-video-v2_5`, `v2_6` chỉ có 5s hoặc 10s, `kling-video-o1` ở `text_to_video` cũng vậy, nên với mấy lựa chọn này chỉ được chọn 5s.
+
+### 4.1 Tool
+| Tool | Việc |
+|---|---|
+| `element_create` | Tạo nhân vật từ ảnh có sẵn. Tool này **không tự vẽ** |
+| `element_list` / `element_get` | Xem danh sách / chi tiết |
+| `element_update` / `element_delete` | Sửa / xoá. Update ghi đè toàn bộ, nên phải `element_get` trước rồi gửi lại đủ trường |
+| `file_upload` | Đưa ảnh trên máy lên Kling để lấy URL. Element chỉ nhận URL public |
+
+Dùng được ở đâu:
+- **Element kiểu ảnh:** `image_to_image` (kể cả kling-image-o1) và `image_to_video` với model nào có tham số `elements`.
+- **Element kiểu video:** chỉ `image_to_video` với `kling-video-v3_0` / `v3_0_omni`.
+- `text_to_image` và `text_to_video` **không dùng được element**.
+
+### 4.2 Spec cứng
+Hai nguồn lệch nhau thì lấy mức chặt hơn.
+- PNG/JPG, ≤ 30MB, dưới 4K, mỗi cạnh ≥ 300px.
+- Tỉ lệ khung **từ 1:2 tới 2:1**. Tool upload của MCP chặn ở 1:2, còn docs API của Kling cho tới 1:2.5.
+- Kiểu ảnh: **1 ảnh cover + 1–3 ảnh phụ**, tổng 2–4 ảnh, không tạo được từ 1 ảnh.
+  - **Cover không đổi được sau khi tạo**, muốn đổi phải xoá rồi tạo lại.
+  - Ảnh phụ thì thay được, nhưng mỗi lần update là thay cả danh sách.
+- Kiểu video: 1 clip 3–60s, fps > 23.8, cạnh ngắn ≥ 700px, ≤ 4K, không HDR.
+- Phải có ít nhất 1 tag (`Characters / Animals / Items / Costumes / Scenes / Effects / Others`). Giọng `.mp3` thì không bắt buộc.
+
+### 4.3 Cách làm ảnh tham chiếu
+Phần này lấy từ guide, chủ yếu của bên thứ ba.
+- **Cover chụp chính diện**, rõ mặt, đủ sáng, nhân vật nổi bật, nền trơn. Chỉ 1 người, không chữ, không watermark.
+- **Ảnh phụ phải khác góc.** Gợi ý hay gặp là đủ 4 ảnh: chính diện, nghiêng, sau lưng, cận chi tiết. Chưa có tài liệu chính thức nào của Kling xác nhận con số 4.
+- **Cả bộ chung một mặt, một dáng người.** Đúng nguyên tắc chân dung đã chốt: cố định mặt và dáng, còn tóc và quần áo đổi theo cảnh. Đồ trong ảnh tham chiếu dễ bị bê nguyên sang cảnh mới, nên để đồ đơn giản, trung tính, rồi tả trang phục trong prompt của từng cảnh.
+- Thiếu góc thì vẽ bổ sung bằng model ảnh trước, rồi mới tạo element.
+- Nên ghi thêm **mô tả bằng chữ** cho element.
+
+### 4.4 Quy trình và cách dùng
+1. Vẽ nhân vật bằng `text_to_image`. Bước này tốn credit. Có thể bật `story_mode` của kling-image-v4 để ra một bộ ảnh nhiều góc.
+2. Chọn cover và ảnh phụ, `file_upload` nếu ảnh đang ở trên máy, rồi `element_create`.
+3. **Gắn element vào job** `image_to_image` / `image_to_video`. Lỗi hay gặp nhất là tạo element xong mà quên gắn.
+4. **Test 1 shot ngắn trước**, xem nhân vật ở vài góc, ổn rồi mới làm nhiều cảnh.
+
+Khi viết prompt:
+- Prompt từng cảnh **tả hành động, không tả lại ngoại hình**, vì ngoại hình đã nằm trong element. Câu mô tả nhân vật nếu có thì giữ y nguyên chữ giữa các lần chạy, viết lại kiểu khác là dễ trôi.
+- Mặt bị trôi thì **sửa ảnh tham chiếu**, đừng cố chỉnh prompt.
+- Image-to-video giữ nhân vật tốt hơn text-to-video. Kling 3.0 giữ mặt khá ổn nhưng vẫn có lúc trôi.
+
+Nguồn: [Kling Element Library guide](https://kling.ai/quickstart/klingai-element-library-3-user-guide), [Kling character consistency](https://kling.ai/quickstart/ai-video-character-consistency), [Kling API – Elements](https://kling.ai/document-api/api/video/4-0/elements.md), [Magic Hour – Kling 3.0 guide](https://magichour.ai/blog/kling-30-reference-guide), [Atlas Cloud – Kling 3.0 consistency](https://www.atlascloud.ai/blog/guides/how-to-use-kling-3.0-for-character-consistency), [invideo – Kling Omni Elements](https://invideo.io/blog/kling-omni-elements/), và mô tả tool của Kling MCP 1.3.3.
