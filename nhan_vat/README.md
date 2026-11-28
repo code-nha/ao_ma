@@ -25,6 +25,7 @@ Trạng thái và việc còn lại: `characters/BACKLOG.md`.
 |---|---|
 | `HARNESS.md` | kiến trúc harness: lời gọi model, đạo diễn, Luân hồi, vòng ảnh, log, cách mở rộng, chỗ yếu |
 | `look_and_feel.md` | mục tiêu, bài học từ thí nghiệm, định hướng |
+| `kling_look_and_feel.md` | dùng Kling cho hình ảnh nhân vật: element, giới hạn, credit, quy trình, nhật ký thử |
 | `characters/SPEC.md` | bộ file nhân vật: IDENTITY, SOUL, LIFE, STYLE, LOOK (bản cho model: `SPEC.en.md`) |
 | `characters/LOOK_SLOTS.md` | khung 42 ô LOOK |
 | `characters/LOOP.md` | thiết kế vòng ảnh |
